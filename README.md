@@ -53,3 +53,22 @@ Then start the production server:
 ```bash
 npm start
 ```
+
+### Vercel Deployment
+
+The site is currently deployed on Vercel at:
+- Production URL: https://hedgepayments-website-1airiwujh-jackson-fitzgeralds-projects.vercel.app
+
+To deploy to Vercel:
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Deploy
+vercel
+```
+
+To update the production deployment:
+```bash
+vercel --prod
+```
