@@ -77,11 +77,28 @@ export default function SideBet() {
 
   return (
     <div className={styles.container}>
+      {/* Vegas-style Welcome Sign */}
+      <div className={styles.vegasSign}>
+        <h1 className={styles.vegasSignText}>SideBet</h1>
+        <p className={styles.vegasSignSubtext}>Where sports betting meets fun</p>
+      </div>
+
+      {/* Waitlist Form Section */}
       <div className={styles.waitlistSection}>
+        <div className={styles.waitlistImageContainer}>
+          <Image 
+            src="/images/sidebet-icon.svg" 
+            alt="SideBet Logo" 
+            width={200} 
+            height={200} 
+            className={styles.waitlistImage}
+          />
+        </div>
+        
         <div className={styles.waitlistContent}>
-          <h2 className={styles.waitlistTitle}>Join the SideBet Waitlist</h2>
+          <h2 className={styles.waitlistTitle}>Join the Exclusive Waitlist</h2>
           <p className={styles.waitlistDescription}>
-            Be the first to know when SideBet launches with your favorite casino platform.
+            Be the first to experience the future of sports betting. Sign up now for early access.
           </p>
           
           <form className={styles.waitlistForm} onSubmit={handleSubmit}>
@@ -133,18 +150,45 @@ export default function SideBet() {
             </button>
           </form>
         </div>
-        
-        <div className={styles.waitlistImageContainer}>
-          <Image 
-            src="/images/sidebet-icon.svg" 
-            alt="SideBet Logo" 
-            width={200} 
-            height={200} 
-            className={styles.waitlistImage}
-          />
-        </div>
       </div>
       
+      {/* Features Section */}
+      <div className={styles.features}>
+        <h2 className={styles.sectionTitle}>Why Choose SideBet</h2>
+        <div className={styles.featureGrid}>
+          <div className={styles.featureCard}>
+            <div className={styles.iconContainer}>
+              <span className={styles.icon}>🏆</span>
+            </div>
+            <h3 className={styles.featureTitle}>All Major Sports</h3>
+            <p className={styles.featureDescription}>
+              Bet on NFL, NBA, MLB, NHL, and all other major sports leagues worldwide with competitive odds.
+            </p>
+          </div>
+          
+          <div className={styles.featureCard}>
+            <div className={styles.iconContainer}>
+              <span className={styles.icon}>⚡</span>
+            </div>
+            <h3 className={styles.featureTitle}>Instant Payouts</h3>
+            <p className={styles.featureDescription}>
+              Receive your winnings instantly, with no delays or complicated withdrawal processes.
+            </p>
+          </div>
+          
+          <div className={styles.featureCard}>
+            <div className={styles.iconContainer}>
+              <span className={styles.icon}>🔒</span>
+            </div>
+            <h3 className={styles.featureTitle}>Secure Platform</h3>
+            <p className={styles.featureDescription}>
+              Industry-leading security measures to protect your information and funds at all times.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Popup */}
       {showPopup && (
         <div className={styles.popupOverlay}>
           <div className={styles.popup}>
@@ -157,7 +201,7 @@ export default function SideBet() {
               className={styles.popupLogo}
             />
             <h3 className={styles.popupTitle}>
-              Thank you for joining our waitlist!
+              You're on the List!
             </h3>
             <p className={styles.popupMessage}>
               We'll notify you when SideBet is live with <strong>{formData.site}</strong>
@@ -184,60 +228,6 @@ export default function SideBet() {
           </div>
         </div>
       )}
-
-      <div className={styles.hero}>
-        <Image 
-          src="/images/sidebet-logo.svg" 
-          alt="SideBet by Hedge Payments" 
-          width={600} 
-          height={200} 
-          className={styles.logo}
-        />
-        <h1 className={styles.title}>Sports betting, simplified.</h1>
-        <p className={styles.description}>
-          SideBet provides the fastest and most user-friendly sports betting experience, 
-          with real-time odds and instant payouts.
-        </p>
-        <div className={styles.buttonGroup}>
-          <a href="#download" className={styles.primaryButton}>Download App</a>
-          <a href="#learn-more" className={styles.secondaryButton}>Learn More</a>
-        </div>
-      </div>
-      
-      <div className={styles.features}>
-        <h2 className={styles.sectionTitle}>Features</h2>
-        <div className={styles.featureGrid}>
-          <div className={styles.featureCard}>
-            <div className={styles.iconContainer}>
-              <span className={styles.icon}>🏆</span>
-            </div>
-            <h3 className={styles.featureTitle}>All Major Sports</h3>
-            <p className={styles.featureDescription}>
-              Bet on NFL, NBA, MLB, NHL, and all other major sports leagues worldwide.
-            </p>
-          </div>
-          
-          <div className={styles.featureCard}>
-            <div className={styles.iconContainer}>
-              <span className={styles.icon}>⚡</span>
-            </div>
-            <h3 className={styles.featureTitle}>Instant Payouts</h3>
-            <p className={styles.featureDescription}>
-              Receive your winnings instantly, with no delays or complicated withdrawal processes.
-            </p>
-          </div>
-          
-          <div className={styles.featureCard}>
-            <div className={styles.iconContainer}>
-              <span className={styles.icon}>🔒</span>
-            </div>
-            <h3 className={styles.featureTitle}>Secure Platform</h3>
-            <p className={styles.featureDescription}>
-              Industry-leading security measures to protect your information and funds.
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   )
 } 

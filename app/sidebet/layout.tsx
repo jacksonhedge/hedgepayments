@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import './layout.css'
 
 export const metadata: Metadata = {
   title: 'SideBet by Hedge Payments',
@@ -11,8 +12,8 @@ export default function SideBetLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
+    <div className="sidebet-layout">
       {children}
-    </>
+    </div>
   )
 } 

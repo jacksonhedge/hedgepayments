@@ -1,114 +1,54 @@
+/* Casino-themed Dark Mode Variables */
+:root {
+  --neon-blue: #00c5ff;
+  --neon-orange: #ff9900;
+  --neon-green: #00ff8c;
+  --neon-pink: #ff00c8;
+  --dark-bg: #121212;
+  --darker-bg: #0a0a0a;
+  --card-bg: #1e1e1e;
+  --text-color: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --spacing-unit: 1rem;
+}
+
 .container {
-  padding: 2rem 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Waitlist Section Styles */
-.waitlistSection {
-  display: flex;
-  align-items: center;
-  background: linear-gradient(135deg, #f4f9ff 0%, #e6f4ff 100%);
-  border-radius: 12px;
-  padding: 3rem;
-  margin-bottom: 3rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.waitlistContent {
-  flex: 1;
-  padding-right: 2rem;
-}
-
-.waitlistTitle {
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #333;
-  background: linear-gradient(90deg, #30c5ff, #ff9900);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.waitlistDescription {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
-
-.waitlistForm {
+  background-color: var(--dark-bg);
+  color: var(--text-color);
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
-  max-width: 500px;
-}
-
-.formGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.formLabel {
-  font-weight: 600;
-  color: #444;
-  font-size: 0.95rem;
-}
-
-.formInput, .formSelect {
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  border: 2px solid #e0e0e0;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-}
-
-.formInput:focus, .formSelect:focus {
-  border-color: #30c5ff;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(48, 197, 255, 0.2);
-}
-
-.inputError {
-  border-color: #ff4545;
-}
-
-.errorMessage {
-  color: #ff4545;
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-}
-
-.joinButton {
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(90deg, #30c5ff, #ff9900);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: 0.5rem;
-  align-self: flex-start;
-}
-
-.joinButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(48, 197, 255, 0.3);
-}
-
-.waitlistImageContainer {
-  flex: 0 0 250px;
-  display: flex;
-  justify-content: center;
   align-items: center;
 }
 
-.waitlistImage {
-  animation: float 3s ease-in-out infinite;
+/* Neon Glow Effects */
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px rgba(0, 197, 255, 0.7), 0 0 10px rgba(0, 197, 255, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(0, 197, 255, 0.9), 0 0 25px rgba(0, 197, 255, 0.7), 0 0 35px rgba(0, 197, 255, 0.5);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(0, 197, 255, 0.7), 0 0 10px rgba(0, 197, 255, 0.5);
+  }
+}
+
+@keyframes borderGlow {
+  0% {
+    box-shadow: 0 0 5px var(--neon-blue);
+  }
+  50% {
+    box-shadow: 0 0 15px var(--neon-blue), 0 0 20px var(--neon-orange);
+  }
+  100% {
+    box-shadow: 0 0 5px var(--neon-blue);
+  }
 }
 
 @keyframes float {
@@ -123,6 +63,272 @@
   }
 }
 
+/* Header Section with Vegas-style welcome sign */
+.vegasSign {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.vegasSignText {
+  font-size: 4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+  animation: glow 2s infinite;
+  letter-spacing: 3px;
+}
+
+.vegasSignSubtext {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+/* Waitlist Section */
+.waitlistSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  padding: 3rem;
+  margin: 1rem 2rem 4rem;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 0 20px rgba(0, 197, 255, 0.3);
+  animation: borderGlow 3s infinite;
+}
+
+.waitlistContent {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.waitlistTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: glow 2s infinite;
+}
+
+.waitlistDescription {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.waitlistImageContainer {
+  margin: 2rem 0;
+}
+
+.waitlistImage {
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px var(--neon-blue));
+}
+
+.waitlistForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.formLabel {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.formInput, .formSelect {
+  padding: 0.9rem 1.2rem;
+  border-radius: 6px;
+  border: 2px solid var(--neon-blue);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.formInput:focus, .formSelect:focus {
+  border-color: var(--neon-pink);
+  outline: none;
+  box-shadow: 0 0 10px rgba(255, 0, 200, 0.5);
+}
+
+.inputError {
+  border-color: #ff4545;
+}
+
+.errorMessage {
+  color: #ff4545;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.joinButton {
+  padding: 0.9rem 2rem;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
+  color: var(--dark-bg);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  align-self: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.joinButton:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 197, 255, 0.4);
+}
+
+.joinButton::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  transition: all 0.3s ease;
+}
+
+.joinButton:hover::after {
+  left: 100%;
+}
+
+/* Features Section */
+.features {
+  padding: 4rem 2rem;
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
+  bottom: -10px;
+  left: 20%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--neon-blue);
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+}
+
+.featureCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  background-color: var(--card-bg);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.featureCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
+}
+
+.featureCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 197, 255, 0.3);
+}
+
+.iconContainer {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0, 197, 255, 0.1), rgba(255, 153, 0, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  border: 2px solid rgba(0, 197, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 197, 255, 0.3);
+}
+
+.icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 8px rgba(0, 197, 255, 0.8));
+}
+
+.featureTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  letter-spacing: 1px;
+}
+
+.featureDescription {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
 /* Popup Styles */
 .popupOverlay {
   position: fixed;
@@ -130,23 +336,25 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
 }
 
 .popup {
-  background-color: white;
-  border-radius: 12px;
-  padding: 2.5rem;
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  padding: 3rem;
   max-width: 500px;
   width: 90%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 30px rgba(0, 197, 255, 0.4);
   position: relative;
   text-align: center;
+  border: 1px solid rgba(0, 197, 255, 0.3);
+  animation: borderGlow 3s infinite;
 }
 
 .closeButton {
@@ -157,41 +365,44 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #999;
+  color: var(--text-secondary);
   transition: color 0.2s ease;
 }
 
 .closeButton:hover {
-  color: #333;
+  color: var(--text-color);
 }
 
 .popupLogo {
   margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 10px rgba(0, 197, 255, 0.5));
 }
 
 .popupTitle {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #333;
+  color: var(--text-color);
+  animation: glow 2s infinite;
 }
 
 .popupMessage {
   font-size: 1.1rem;
-  color: #555;
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
 }
 
 .popupDivider {
-  height: 1px;
-  background-color: #e0e0e0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
   margin: 1.5rem 0;
+  box-shadow: 0 0 10px rgba(0, 197, 255, 0.5);
 }
 
 .otherSitesText {
   font-weight: 600;
-  color: #444;
-  margin-bottom: 1rem;
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
 }
 
 .otherSitesButtons {
@@ -202,10 +413,10 @@
 }
 
 .siteButton {
-  padding: 0.6rem 1.2rem;
-  background-color: white;
-  border: 2px solid #30c5ff;
-  color: #30c5ff;
+  padding: 0.8rem 1.5rem;
+  background-color: transparent;
+  border: 2px solid var(--neon-blue);
+  color: var(--neon-blue);
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
@@ -213,144 +424,23 @@
 }
 
 .siteButton:hover {
-  background-color: #30c5ff;
-  color: white;
-}
-
-/* Existing Hero Section Styles */
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 3rem 0;
-}
-
-.logo {
-  margin-bottom: 2rem;
-}
-
-.title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  background: linear-gradient(90deg, #30c5ff, #ff9900);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.description {
-  font-size: 1.25rem;
-  max-width: 700px;
-  margin-bottom: 2rem;
-  color: #555;
-}
-
-.buttonGroup {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.primaryButton {
-  background-color: #30c5ff;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: all 0.2s ease;
-}
-
-.primaryButton:hover {
-  background-color: #20a0e0;
-  transform: translateY(-2px);
-}
-
-.secondaryButton {
-  background-color: white;
-  color: #30c5ff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: 600;
-  border: 2px solid #30c5ff;
-  transition: all 0.2s ease;
-}
-
-.secondaryButton:hover {
-  background-color: #f0f9ff;
-  transform: translateY(-2px);
-}
-
-.features {
-  padding: 3rem 0;
-}
-
-.sectionTitle {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 3rem;
-  color: #333;
-}
-
-.featureGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.featureCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.featureCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.iconContainer {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: #f5f5f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-.icon {
-  font-size: 2.5rem;
-}
-
-.featureTitle {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.featureDescription {
-  color: #666;
-  line-height: 1.6;
+  background-color: var(--neon-blue);
+  color: var(--dark-bg);
+  box-shadow: 0 0 15px rgba(0, 197, 255, 0.5);
 }
 
 /* Media Queries */
 @media (max-width: 768px) {
-  .waitlistSection {
-    flex-direction: column;
-    padding: 2rem 1rem;
+  .vegasSignText {
+    font-size: 2.5rem;
   }
   
-  .waitlistContent {
-    padding-right: 0;
-    margin-bottom: 2rem;
+  .vegasSignSubtext {
+    font-size: 1.2rem;
+  }
+  
+  .waitlistSection {
+    padding: 2rem 1.5rem;
   }
   
   .waitlistTitle {
@@ -362,30 +452,20 @@
   }
   
   .joinButton {
-    align-self: center;
     width: 100%;
+    padding: 0.8rem 1.5rem;
   }
   
   .popup {
     padding: 2rem 1.5rem;
   }
   
-  .title {
+  .sectionTitle {
     font-size: 2rem;
   }
   
-  .description {
-    font-size: 1rem;
-  }
-  
-  .buttonGroup {
-    flex-direction: column;
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  .primaryButton, .secondaryButton {
-    width: 100%;
-    text-align: center;
+  .featureGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 } 
