@@ -24,6 +24,28 @@
   color: var(--primary-color);
 }
 
+.sidebetButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  transition: all 0.2s ease;
+}
+
+.sidebetButton:hover {
+  border-color: #30c5ff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebetLogo {
+  height: 30px;
+  width: auto;
+}
+
 .navLinks {
   display: flex;
   align-items: center;
@@ -114,5 +136,11 @@
   .signupBtn:hover {
     background-color: transparent;
     color: #0051b3;
+  }
+  
+  .sidebetButton {
+    margin: 1rem 0;
+    width: 90%;
+    justify-content: center;
   }
 }

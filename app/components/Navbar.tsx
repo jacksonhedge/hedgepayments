@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import styles from './Navbar.module.css'
 
 const Navbar = () => {
@@ -36,6 +37,15 @@ const Navbar = () => {
           </Link>
           <Link href="/signup" className={`${styles.navLink} ${styles.signupBtn}`} onClick={() => setIsMenuOpen(false)}>
             Sign Up
+          </Link>
+          <Link href="/sidebet" className={styles.sidebetButton} onClick={() => setIsMenuOpen(false)}>
+            <Image 
+              src="/images/sidebet-logo.svg" 
+              alt="SideBet by Hedge Payments" 
+              width={120} 
+              height={30} 
+              className={styles.sidebetLogo} 
+            />
           </Link>
         </div>
       </div>
