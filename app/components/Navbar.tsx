@@ -16,7 +16,7 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          Hedge Payments
+          Hedge
         </Link>
         
         <div className={styles.menuButton} onClick={toggleMenu}>

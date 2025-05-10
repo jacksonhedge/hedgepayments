@@ -1,31 +1,32 @@
 /* Global styles for SideBet section */
 .sidebet-layout {
-  background-color: #121212;
-  color: #ffffff;
+  color: #2c4a63;
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
+  position: relative;
+  backdrop-filter: blur(8px);
 }
 
-/* Custom scrollbar for the dark theme */
+/* Custom scrollbar for the light theme */
 .sidebet-layout ::-webkit-scrollbar {
   width: 10px;
 }
 
 .sidebet-layout ::-webkit-scrollbar-track {
-  background: #1e1e1e;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .sidebet-layout ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: rgba(70, 170, 255, 0.4);
   border-radius: 10px;
 }
 
 .sidebet-layout ::-webkit-scrollbar-thumb:hover {
-  background: #00c5ff;
+  background: rgba(255, 150, 50, 0.6);
 }
 
-/* Animated background gradients */
+/* Light orange animated background */
 .sidebet-layout::before {
   content: '';
   position: fixed;
@@ -33,17 +34,69 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 15% 25%, rgba(0, 197, 255, 0.05) 0%, transparent 25%),
-              radial-gradient(circle at 85% 75%, rgba(255, 153, 0, 0.05) 0%, transparent 25%);
+  background:
+    /* Light orange/peach base */
+    linear-gradient(135deg, #fff2e6 0%, #ffe6cc 25%, #ffd9b3 50%, #ffcc99 75%, #fff0e6 100%),
+    /* Deeper orange accents */
+    radial-gradient(circle at 30% 40%, rgba(255, 150, 50, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 70% 20%, rgba(255, 130, 0, 0.1) 0%, transparent 40%),
+    /* Warm glow accents */
+    radial-gradient(circle at 20% 80%, rgba(255, 180, 120, 0.2) 0%, transparent 50%),
+    /* Light peach accent */
+    radial-gradient(circle at 80% 60%, rgba(255, 210, 180, 0.25) 0%, transparent 50%);
+  background-size: 400% 400%, 200% 200%, 200% 200%, 200% 200%, 200% 200%;
   z-index: -1;
-  animation: bgGlow 15s ease infinite alternate;
+  animation: casinoBackground 45s ease infinite;
 }
 
-@keyframes bgGlow {
+/* Floating light particles */
+.sidebet-layout::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    /* Golden sparkles */
+    radial-gradient(circle at 10% 10%, rgba(255, 200, 100, 0.3) 0%, transparent 0.5%),
+    radial-gradient(circle at 20% 30%, rgba(255, 180, 80, 0.2) 0%, transparent 0.3%),
+    /* Orange sparkles */
+    radial-gradient(circle at 30% 70%, rgba(255, 150, 50, 0.25) 0%, transparent 0.4%),
+    radial-gradient(circle at 70% 40%, rgba(255, 160, 80, 0.2) 0%, transparent 0.3%),
+    /* Warm highlights */
+    radial-gradient(circle at 80% 80%, rgba(255, 220, 180, 0.3) 0%, transparent 0.5%),
+    radial-gradient(circle at 90% 10%, rgba(255, 190, 125, 0.25) 0%, transparent 0.4%);
+  background-size: 200% 200%;
+  opacity: 0.6;
+  filter: blur(1px);
+  z-index: -1;
+  animation: floatingLights 30s ease infinite;
+}
+
+@keyframes casinoBackground {
   0% {
-    background-position: 0% 0%;
+    background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   }
   100% {
+    background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+@keyframes floatingLights {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.5;
+  }
+  50% {
     background-position: 100% 100%;
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 0% 0%;
+    opacity: 0.5;
   }
 } 

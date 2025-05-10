@@ -1,0 +1,366 @@
+.jackpotContainer {
+  display: flex;
+  max-width: 1200px;
+  margin: 3rem auto 2rem;
+  gap: 2rem;
+  overflow: hidden;
+  font-family: 'Montserrat', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  z-index: 20;
+  position: relative;
+}
+
+/* Left side - Round-up section */
+.roundupSection {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.heading {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #0d2858;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.subheading {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 3rem;
+}
+
+.coffeeExample {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.coffeeImageWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.coffeeImage {
+  width: 200px;
+  height: 250px;
+  background-image: url('/images/coffee-cup.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+.arrowAmount {
+  position: absolute;
+  top: 30%;
+  right: 20%;
+  display: flex;
+  align-items: center;
+  color: #4a57ff;
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.arrow {
+  width: 40px;
+  height: 30px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234a57ff'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: rotate(-45deg);
+  margin-right: 5px;
+}
+
+.purchaseDetail {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.purchaseIcon {
+  margin-right: 1rem;
+}
+
+.iconCircle {
+  width: 40px;
+  height: 40px;
+  background-color: #4a57ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.purchaseInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.purchaseName {
+  font-weight: 600;
+  color: #333;
+}
+
+.purchaseDate {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.purchaseAmount {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.roundupButton {
+  width: 100%;
+  background-color: #4caf50;
+  border-radius: 12px;
+  padding: 1rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.roundupIcon {
+  margin-right: 1rem;
+}
+
+.roundupCircle {
+  width: 36px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.roundupText {
+  flex: 1;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.roundupAmount {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Right side - Jackpots section */
+.jackpotsSection {
+  flex: 1;
+  background-color: #5935af;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  color: white;
+}
+
+.jackpotsHeading {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.jackpotsTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 2px;
+  color: #ffd700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  -webkit-text-stroke: 2px #ff9800;
+}
+
+.jackpotInfo {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.jackpotChance {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.jackpotSubtext {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.jackpotTiers {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.jackpotTier {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.7rem;
+}
+
+.jackpotBadge {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.jackpotName {
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.tierInfo {
+  flex: 1;
+}
+
+.tierName {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.3rem;
+}
+
+.tierAmount {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* Animation for jackpot numbers */
+@keyframes glowNumber {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.tierAmount {
+  animation: glowNumber 2s infinite alternate;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .jackpotContainer {
+    flex-direction: column;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+  }
+  
+  .heading {
+    font-size: 2rem;
+  }
+  
+  .jackpotsTitle {
+    font-size: 3rem;
+  }
+  
+  .jackpotChance {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 1.8rem;
+  }
+  
+  .subheading {
+    font-size: 1rem;
+  }
+  
+  .arrowAmount {
+    font-size: 1.4rem;
+  }
+  
+  .jackpotsTitle {
+    font-size: 2.5rem;
+  }
+  
+  .jackpotChance {
+    font-size: 1.1rem;
+  }
+  
+  .tierAmount {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .roundupSection, .jackpotsSection {
+    padding: 1.5rem;
+  }
+  
+  .heading {
+    font-size: 1.6rem;
+  }
+  
+  .coffeeImage {
+    width: 150px;
+    height: 200px;
+  }
+  
+  .arrowAmount {
+    right: 18%;
+    font-size: 1.2rem;
+  }
+  
+  .iconCircle, .roundupCircle {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  
+  .jackpotsTitle {
+    font-size: 2.2rem;
+  }
+  
+  .jackpotBadge {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .tierAmount {
+    font-size: 1.3rem;
+  }
+}

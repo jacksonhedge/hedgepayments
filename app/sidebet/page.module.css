@@ -1,27 +1,29 @@
-/* Casino-themed Dark Mode Variables are now applied to the container class */
+/* Light Orange Variables for container class */
 .container {
-  --neon-blue: #00c5ff;
-  --neon-orange: #ff9900;
-  --neon-green: #00ff8c;
-  --neon-pink: #ff00c8;
-  --dark-bg: #121212;
-  --darker-bg: #0a0a0a;
-  --card-bg: #1e1e1e;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
+  --main-orange: #ff9a32;
+  --light-orange: #ffd1a3;
+  --dark-orange: #e67300;
+  --accent-orange: #ff7b00;
+  --light-peach: #fff0e6;
+  --dark-peach: #ffcc99;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --text-color: #633c21;
+  --text-secondary: rgba(99, 60, 33, 0.75);
+  --highlight-color: #ff5500;
   --spacing-unit: 1rem;
-  
-  background-color: var(--dark-bg);
+
+  background-color: transparent;
   color: var(--text-color);
   min-height: 100vh;
   padding: 0;
   margin: 0;
   width: 100%;
-  max-width: 100%;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Neon Glow Effects */
@@ -63,267 +65,477 @@
 
 /* Header Section with Vegas-style welcome sign */
 .vegasSign {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  background: rgba(255, 245, 235, 0.9);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
   text-align: center;
+  margin-bottom: 2.5rem;
+  border: 3px solid var(--accent-orange);
+  box-shadow: 0 0 25px rgba(255, 120, 0, 0.25), 0 0 40px rgba(255, 160, 80, 0.15);
   position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+  max-width: 600px;
+  width: 100%;
+}
+
+.vegasSign::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(circle at center, rgba(255, 150, 50, 0.05) 0%, transparent 70%);
+  z-index: -1;
+  animation: pulseGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
 }
 
 .vegasSignText {
-  font-size: 4rem;
+  color: var(--main-orange);
+  font-size: 3.5rem;
   font-weight: 800;
-  text-transform: uppercase;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  margin-bottom: 0.5rem;
-  animation: glow 2s infinite;
-  letter-spacing: 3px;
+  margin: 0;
+  text-shadow:
+    0 0 8px rgba(255, 150, 50, 0.4),
+    0 0 15px rgba(255, 150, 50, 0.2);
+  animation: orangeFlicker 5s infinite;
+}
+
+@keyframes orangeFlicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 8px rgba(255, 150, 50, 0.4),
+      0 0 15px rgba(255, 150, 50, 0.2);
+  }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+    opacity: 0.7;
+    text-shadow: none;
+  }
 }
 
 .vegasSignSubtext {
-  font-size: 1.5rem;
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-  font-style: italic;
+  color: var(--dark-blue);
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+  text-shadow: 0 0 8px rgba(70, 170, 255, 0.3);
 }
 
 /* Waitlist Section */
 .waitlistSection {
+  background: rgba(255, 245, 235, 0.8);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(255, 150, 50, 0.15), 0 0 15px rgba(255, 120, 0, 0.1);
+  border: 1px solid rgba(255, 210, 180, 0.4);
+  backdrop-filter: blur(5px);
+  width: 100%;
+}
+
+.waitlistHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.waitlistLogo {
+  max-width: 300px;
+  height: auto;
+}
+
+.waitlistHeaderText {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--card-bg);
-  border-radius: 16px;
-  padding: 3rem;
-  margin: 1rem 2rem 4rem;
-  width: 90%;
-  max-width: 800px;
-  box-shadow: 0 0 20px rgba(0, 197, 255, 0.3);
-  animation: borderGlow 3s infinite;
+}
+
+.waitlistTagline {
+  font-size: 1.5rem;
+  color: var(--dark-orange);
+  text-shadow: 0 0 8px rgba(255, 150, 50, 0.5);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  animation: orangePulse 2s infinite alternate;
+}
+
+@keyframes orangePulse {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 150, 50, 0.5), 0 0 10px rgba(255, 150, 50, 0.3);
+  }
+  100% {
+    text-shadow: 0 0 12px rgba(255, 150, 50, 0.7), 0 0 20px rgba(255, 150, 50, 0.5);
+  }
 }
 
 .waitlistContent {
-  width: 100%;
-  max-width: 600px;
-  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .waitlistTitle {
-  font-size: 2.2rem;
-  font-weight: 700;
+  font-size: 2rem;
+  color: var(--dark-orange);
   margin-bottom: 1rem;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: glow 2s infinite;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(255, 150, 50, 0.3);
 }
 
 .waitlistDescription {
   font-size: 1.1rem;
-  color: var(--text-secondary);
+  color: var(--text-color);
+  text-align: center;
   margin-bottom: 2rem;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
-.waitlistImageContainer {
-  margin: 2rem 0;
-}
-
-.waitlistImage {
-  animation: float 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 10px var(--neon-blue));
-}
-
+/* Form Styles */
 .waitlistForm {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
+  gap: 2.5rem;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  text-align: left;
 }
 
 .formLabel {
   font-weight: 600;
-  color: var(--text-color);
-  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: var(--dark-orange);
+  font-size: 1.1rem;
 }
 
 .formInput, .formSelect {
-  padding: 0.9rem 1.2rem;
-  border-radius: 6px;
-  border: 2px solid var(--neon-blue);
-  background-color: rgba(0, 0, 0, 0.6);
-  color: var(--text-color);
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 150, 50, 0.3);
+  border-radius: 4px;
   font-size: 1rem;
-  transition: all 0.2s ease;
+  background-color: rgba(255, 252, 250, 0.8);
+  color: var(--text-color);
+  backdrop-filter: blur(2px);
 }
 
 .formInput:focus, .formSelect:focus {
-  border-color: var(--neon-pink);
   outline: none;
-  box-shadow: 0 0 10px rgba(255, 0, 200, 0.5);
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 0 2px rgba(255, 150, 50, 0.2);
 }
 
 .inputError {
-  border-color: #ff4545;
+  border-color: #ff3b30;
 }
 
 .errorMessage {
-  color: #ff4545;
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
+  color: #ff3b30;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Casino Selection Styles */
+.casinoSelectionHint {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.casinoSelectionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.personalInfoSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.casinoSelectionCard {
+  background: rgba(255, 250, 245, 0.85);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 170, 100, 0.3);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(230, 115, 0, 0.05);
+}
+
+.casinoSelectionCard:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 252, 250, 0.95);
+  box-shadow: 0 8px 25px rgba(255, 150, 50, 0.15), 0 0 15px rgba(255, 130, 0, 0.1);
+  border-color: rgba(255, 170, 80, 0.5);
+}
+
+.casinoSelected {
+  background: rgba(255, 150, 50, 0.15);
+  border-color: rgba(255, 150, 50, 0.5);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05), 0 0 20px rgba(255, 150, 50, 0.25);
+}
+
+.casinoSelected:hover {
+  background: rgba(255, 150, 50, 0.2);
+}
+
+.casinoLogoContainer {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(255, 170, 100, 0.3);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(230, 115, 0, 0.1);
+}
+
+.casinoSelected .casinoLogoContainer {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(255, 150, 50, 0.5);
+  box-shadow: 0 0 15px rgba(255, 150, 50, 0.3);
+}
+
+.casinoSelectionLogo {
+  object-fit: contain;
+  width: 60px;
+  height: 60px;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+.casinoSelected .casinoSelectionLogo {
+  filter: drop-shadow(0 0 8px rgba(0, 197, 255, 0.7));
+}
+
+.casinoSelectionName {
+  color: var(--dark-orange);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.casinoSelected .casinoSelectionName {
+  color: var(--accent-orange);
+}
+
+.casinoSelectionPrize {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.prizeLabel {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.prizeAmount {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--main-orange);
+  transition: all 0.3s ease;
+}
+
+.casinoSelected .prizeAmount {
+  color: #ff9900;
+  text-shadow: 0 0 15px rgba(255, 136, 0, 0.8);
+}
+
+.checkmark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 150, 50, 0.1);
+  border: 1px solid rgba(255, 150, 50, 0.4);
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s ease;
+}
+
+.checkmark::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid var(--accent-orange);
+  border-bottom: 2px solid var(--accent-orange);
+  transform: rotate(-45deg);
+}
+
+.casinoSelected .checkmark {
+  opacity: 1;
+  transform: scale(1);
+  background: white;
 }
 
 .joinButton {
-  padding: 0.9rem 2rem;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
-  color: var(--dark-bg);
+  background: linear-gradient(135deg, var(--main-orange), var(--dark-orange));
+  color: white;
+  padding: 1rem 2rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
+  font-size: 1.2rem;
   font-weight: 600;
-  font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 1rem;
-  align-self: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  position: relative;
-  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 150, 50, 0.3), 0 5px 15px rgba(0, 0, 0, 0.05);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  display: block;
+  width: auto;
+  min-width: 200px;
 }
 
 .joinButton:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 197, 255, 0.4);
+  background: linear-gradient(135deg, #ffaa40, var(--main-orange));
+  box-shadow: 0 0 20px rgba(255, 150, 50, 0.4), 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px) scale(1.05);
 }
 
-.joinButton::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transform: rotate(45deg);
+/* Casino Logos Section */
+.casinoLogosSection {
+  margin-bottom: 3rem;
+}
+
+.casinoLogosTitle {
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(0, 197, 255, 0.7);
+}
+
+.casinoLogosGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.casinoLogoCard {
+  background: rgba(30, 30, 30, 0.8);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 15px rgba(0, 197, 255, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.casinoLogoCard:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(0, 197, 255, 0.25), 0 0 15px rgba(255, 153, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(40, 40, 40, 0.85);
+}
+
+.partnerLogo {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
   transition: all 0.3s ease;
 }
 
-.joinButton:hover::after {
-  left: 100%;
+.casinoLogoCard:hover .partnerLogo {
+  filter: drop-shadow(0 0 8px rgba(0, 197, 255, 0.5));
+  transform: scale(1.05);
+}
+
+.partnerName {
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 0 5px rgba(0, 197, 255, 0.5);
 }
 
 /* Features Section */
 .features {
-  padding: 4rem 2rem;
-  width: 100%;
-  max-width: 1200px;
-  text-align: center;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 3rem;
 }
 
 .sectionTitle {
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  color: var(--text-color);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  position: relative;
-  display: inline-block;
-}
-
-.sectionTitle::after {
-  content: '';
-  position: absolute;
-  width: 60%;
-  height: 4px;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
-  bottom: -10px;
-  left: 20%;
-  border-radius: 10px;
-  box-shadow: 0 0 10px var(--neon-blue);
+  font-size: 2.25rem;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 15px rgba(0, 197, 255, 0.8);
 }
 
 .featureGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
 .featureCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2.5rem 2rem;
+  background: rgba(30, 30, 35, 0.8);
   border-radius: 12px;
-  background-color: var(--card-bg);
-  transition: all 0.3s ease;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25), 0 0 15px rgba(255, 136, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.featureCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
-}
-
-.featureCard:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-  border-color: rgba(0, 197, 255, 0.3);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
 }
 
 .iconContainer {
+  background: linear-gradient(135deg, rgba(0, 197, 255, 0.2), rgba(255, 136, 0, 0.2));
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(0, 197, 255, 0.1), rgba(255, 153, 0, 0.1));
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
-  border: 2px solid rgba(0, 197, 255, 0.3);
-  box-shadow: 0 0 15px rgba(0, 197, 255, 0.3);
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 0 20px rgba(0, 197, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .icon {
-  font-size: 2.5rem;
-  filter: drop-shadow(0 0 8px rgba(0, 197, 255, 0.8));
+  font-size: 2rem;
 }
 
 .featureTitle {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--text-color);
-  letter-spacing: 1px;
+  font-size: 1.4rem;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 8px rgba(0, 197, 255, 0.5);
 }
 
 .featureDescription {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
 }
 
@@ -332,138 +544,282 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 1000;
-  backdrop-filter: blur(8px);
 }
 
 .popup {
-  background-color: var(--card-bg);
-  border-radius: 16px;
-  padding: 3rem;
-  max-width: 500px;
+  background: rgba(255, 245, 235, 0.95);
+  border-radius: 12px;
+  padding: 2.5rem;
   width: 90%;
-  box-shadow: 0 0 30px rgba(0, 197, 255, 0.4);
+  max-width: 500px;
   position: relative;
-  text-align: center;
-  border: 1px solid rgba(0, 197, 255, 0.3);
-  animation: borderGlow 3s infinite;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 0 30px rgba(255, 150, 50, 0.15);
+  border: 1px solid rgba(255, 210, 180, 0.5);
+  backdrop-filter: blur(10px);
+  color: var(--text-color);
 }
 
 .closeButton {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 1.8rem;
-  background: none;
-  border: none;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 250, 245, 0.9);
+  border: 1px solid rgba(255, 150, 50, 0.3);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
   cursor: pointer;
-  color: var(--text-secondary);
-  transition: color 0.2s ease;
+  color: var(--dark-orange);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 150, 50, 0.1);
 }
 
 .closeButton:hover {
-  color: var(--text-color);
+  background: white;
+  box-shadow: 0 0 15px rgba(255, 150, 50, 0.3);
+  transform: rotate(90deg);
+  border-color: rgba(255, 150, 50, 0.5);
 }
 
-.popupLogo {
+.popupLogos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
   margin-bottom: 1.5rem;
-  filter: drop-shadow(0 0 10px rgba(0, 197, 255, 0.5));
+}
+
+.popupLogo, .popupCasinoLogo {
+  object-fit: contain;
 }
 
 .popupTitle {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 2rem;
+  color: var(--dark-orange);
+  text-align: center;
   margin-bottom: 1rem;
-  color: var(--text-color);
-  animation: glow 2s infinite;
+  text-shadow: 0 0 8px rgba(255, 150, 50, 0.3);
 }
 
 .popupMessage {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
+  text-align: center;
+  color: var(--text-color);
+  line-height: 1.5;
   margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.selectedCasinosContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.selectedCasinoItem {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 250, 245, 0.8);
+  border-radius: 8px;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 170, 100, 0.3);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(230, 115, 0, 0.05);
+}
+
+.selectedCasinoItem:hover {
+  background: rgba(255, 150, 50, 0.1);
+  border-color: rgba(255, 150, 50, 0.4);
+  box-shadow: 0 0 10px rgba(255, 150, 50, 0.15);
+}
+
+.selectedCasinoLogo {
+  background: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  border: 1px solid rgba(70, 170, 255, 0.2);
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.selectedCasinoInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.selectedCasinoName {
+  font-weight: 600;
+  color: var(--dark-blue);
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.selectedCasinoPrize {
+  font-size: 0.85rem;
+  color: var(--main-orange);
 }
 
 .popupDivider {
-  height: 2px;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-orange));
+  height: 1px;
+  background: rgba(70, 170, 255, 0.2);
   margin: 1.5rem 0;
-  box-shadow: 0 0 10px rgba(0, 197, 255, 0.5);
+  box-shadow: 0 0 5px rgba(70, 170, 255, 0.1);
 }
 
-.otherSitesText {
-  font-weight: 600;
+.totalPrizeMessage {
+  text-align: center;
   color: var(--text-color);
-  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
 }
 
-.otherSitesButtons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
+.totalPrizeAmount {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--main-orange);
+  text-shadow: 0 0 8px rgba(255, 150, 50, 0.3);
+  animation: pulsePrize 2s infinite alternate;
+  margin: 0 0.25rem;
 }
 
-.siteButton {
-  padding: 0.8rem 1.5rem;
-  background-color: transparent;
-  border: 2px solid var(--neon-blue);
-  color: var(--neon-blue);
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.siteButton:hover {
-  background-color: var(--neon-blue);
-  color: var(--dark-bg);
-  box-shadow: 0 0 15px rgba(0, 197, 255, 0.5);
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-  .vegasSignText {
-    font-size: 2.5rem;
+@keyframes pulsePrize {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 150, 50, 0.3);
   }
-  
+  100% {
+    text-shadow: 0 0 12px rgba(255, 150, 50, 0.5), 0 0 15px rgba(255, 150, 50, 0.3);
+  }
+}
+
+.popupNoteText {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .waitlistHeader {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .waitlistLogo {
+    max-width: 250px;
+  }
+
+  .featureGrid, .casinoLogosGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .vegasSignText {
+    font-size: 2.8rem;
+  }
+
   .vegasSignSubtext {
     font-size: 1.2rem;
   }
-  
-  .waitlistSection {
-    padding: 2rem 1.5rem;
+
+  .popupLogos {
+    flex-direction: column;
   }
-  
-  .waitlistTitle {
-    font-size: 1.8rem;
+
+  .casinoSelectionGrid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
-  
-  .waitlistDescription {
+
+  .selectedCasinoItem {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .selectedCasinoLogo {
+    margin-right: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .personalInfoSection {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .waitlistSection, .popup {
+    padding: 1.5rem;
+  }
+
+  .vegasSignText {
+    font-size: 2.2rem;
+  }
+
+  .vegasSignSubtext {
     font-size: 1rem;
   }
-  
+
+  .vegasSign {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .casinoSelectionGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .casinoLogoContainer {
+    width: 60px;
+    height: 60px;
+  }
+
+  .casinoSelectionLogo {
+    width: 45px;
+    height: 45px;
+  }
+
+  .casinoSelectionName {
+    font-size: 0.8rem;
+  }
+
+  .prizeLabel {
+    font-size: 0.7rem;
+  }
+
+  .prizeAmount {
+    font-size: 0.95rem;
+  }
+
+  .personalInfoSection {
+    gap: 1rem;
+  }
+
   .joinButton {
     width: 100%;
-    padding: 0.8rem 1.5rem;
-  }
-  
-  .popup {
-    padding: 2rem 1.5rem;
-  }
-  
-  .sectionTitle {
-    font-size: 2rem;
-  }
-  
-  .featureGrid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    padding: 0.75rem;
   }
 } 
