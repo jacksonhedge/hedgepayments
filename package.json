@@ -15,14 +15,14 @@
   "description": "Website for Hedge Payments",
   "dependencies": {
     "@supabase/supabase-js": "^1.35.7",
-    "next": "12.3.4",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "next": "^13.4.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
-    "@types/react": "^17.0.52",
-    "@types/react-dom": "^17.0.18",
+    "@types/react": "^18.3.21",
+    "@types/react-dom": "^18.3.7",
     "typescript": "^4.9.4"
   }
 }

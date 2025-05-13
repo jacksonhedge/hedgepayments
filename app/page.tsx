@@ -6,13 +6,13 @@ import Features from './components/Features'
 import JackpotDisplay from './components/JackpotDisplay'
 
 export default function Home() {
-  // Use the new placeholder images for the ticker
+  // Use the actual casino logos from the assets folder
   const casinoLogos = [
-    { src: '/images/placeholder-logo-1.png', alt: 'Partner 1' },
-    { src: '/images/placeholder-logo-2.png', alt: 'Partner 2' },
-    { src: '/images/placeholder-logo-3.png', alt: 'Partner 3' },
-    { src: '/images/placeholder-logo-4.png', alt: 'Partner 4' },
-    { src: '/images/placeholder-logo-5.png', alt: 'Partner 5' }
+    { src: '/images/assets/draftkings-casino-alt 3.png', alt: 'DraftKings' },
+    { src: '/images/assets/fanduel-casino.jpg', alt: 'FanDuel' },
+    { src: '/images/assets/betmgm 2.png', alt: 'BetMGM' },
+    { src: '/images/assets/caesarsCasino 2.png', alt: 'Caesars' },
+    { src: '/images/assets/fanatics.png', alt: 'Fanatics' }
   ];
 
   return (
