@@ -2,6 +2,8 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import styles from './page.module.css'
+import { states } from '../utils/statesList'
+import { sportsbooks } from '../utils/sportsbooksList'
 
 export default function Signup() {
   return (
@@ -38,6 +40,35 @@ export default function Signup() {
             <div className={styles.formGroup}>
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input type="password" id="confirmPassword" placeholder="Confirm your password" required />
+            </div>
+            
+            <div className={styles.formGroup}>
+              <label htmlFor="state">State</label>
+              <select id="state" required>
+                <option value="">Select your state</option>
+                {states.map((state) => (
+                  <option key={state.value} value={state.value}>
+                    {state.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            <div className={styles.formGroup}>
+              <label>Which sportsbooks do you use?</label>
+              <div className={styles.sportsbooksContainer}>
+                {sportsbooks.map((sportsbook) => (
+                  <div key={sportsbook.value} className={styles.sportsbookOption}>
+                    <input 
+                      type="checkbox" 
+                      id={`sportsbook-${sportsbook.value}`} 
+                      name="sportsbooks" 
+                      value={sportsbook.value} 
+                    />
+                    <label htmlFor={`sportsbook-${sportsbook.value}`}>{sportsbook.label}</label>
+                  </div>
+                ))}
+              </div>
             </div>
             
             <div className={styles.accountType}>
