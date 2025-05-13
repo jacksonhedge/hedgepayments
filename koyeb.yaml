@@ -1,0 +1,18 @@
+name: hedgepayments
+services:
+  - name: web
+    git:
+      repository: github.com/jacksonhedge/hedgepayments
+      branch: main
+    build:
+      builder: nodejs
+      nodejs:
+        version: 18
+        build_command: npm run build
+        run_command: npm run start
+    ports:
+      - port: 3009
+        http: public
+    env:
+      - key: PORT
+        value: "3009"
