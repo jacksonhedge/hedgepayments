@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <rect width="240" height="240" fill="#000000"/>
+  
+  <!-- Create the neon glow effect -->
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feFlood flood-color="#00c5ff" flood-opacity="1" result="glow1"/>
+      <feComposite in="glow1" in2="blur" operator="in" result="softGlow_1"/>
+      
+      <feFlood flood-color="#ff3366" flood-opacity="1" result="glow2"/>
+      <feComposite in="glow2" in2="blur" operator="in" result="softGlow_2"/>
+      
+      <feBlend in="softGlow_1" in2="softGlow_2" mode="screen" result="softGlow"/>
+      
+      <feMerge>
+        <feMergeNode in="softGlow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Crown with 3D effect -->
+  <path d="M120,40 L160,60 L180,100 L150,130 L120,140 L90,130 L60,100 L80,60 Z" 
+        fill="none" 
+        stroke="#30c5ff" 
+        stroke-width="4"
+        filter="url(#glow)"/>
+  
+  <!-- Left point -->
+  <path d="M70,110 L50,80 L60,100 L90,130 Z" 
+        fill="none" 
+        stroke="#30c5ff" 
+        stroke-width="4"
+        filter="url(#glow)"/>
+  
+  <!-- Right point -->
+  <path d="M170,110 L190,80 L180,100 L150,130 Z" 
+        fill="none" 
+        stroke="#30c5ff" 
+        stroke-width="4"
+        filter="url(#glow)"/>
+  
+  <!-- Middle point -->
+  <path d="M120,40 L120,20 L130,30 L120,40 Z" 
+        fill="none" 
+        stroke="#30c5ff" 
+        stroke-width="4"
+        filter="url(#glow)"/>
+        
+  <!-- Letter D -->
+  <text x="120" y="120" 
+        font-family="Arial, sans-serif" 
+        font-size="70" 
+        font-weight="bold" 
+        fill="none"
+        stroke="#ff3366" 
+        stroke-width="2"
+        text-anchor="middle"
+        filter="url(#glow)">D</text>
+        
+  <!-- Reflection effect -->
+  <ellipse cx="120" cy="200" rx="70" ry="15" fill="url(#reflection-gradient)" opacity="0.7"/>
+  
+  <defs>
+    <linearGradient id="reflection-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#30c5ff;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#30c5ff;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+</svg> 

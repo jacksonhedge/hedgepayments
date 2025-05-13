@@ -1,0 +1,98 @@
+.tickerContainer {
+  width: 100%;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  padding: 20px 0;
+  margin-top: 30px;
+}
+
+.tickerWrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.tickerContent {
+  display: flex;
+  animation: ticker 20s linear infinite;
+  white-space: nowrap;
+}
+
+.logoWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30px;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.logoText {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2e7d32;
+  padding: 10px 15px;
+  background-color: rgba(46, 125, 50, 0.1);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.logoText:hover {
+  background-color: rgba(46, 125, 50, 0.2);
+  transform: translateY(-3px);
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .logoWrapper {
+    padding: 0 15px;
+  }
+  
+  .logo {
+    height: 40px;
+    max-width: 90px;
+  }
+  
+  .logoText {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logoWrapper {
+    padding: 0 10px;
+  }
+  
+  .logo {
+    height: 30px;
+    max-width: 70px;
+  }
+  
+  .logoText {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+}
