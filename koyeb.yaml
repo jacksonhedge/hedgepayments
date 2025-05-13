@@ -11,8 +11,8 @@ services:
         build_command: npm run build
         run_command: npm run start
     ports:
-      - port: 3009
+      - port: 3000
         http: public
     env:
       - key: PORT
-        value: "3009"
+        value: "3000"
