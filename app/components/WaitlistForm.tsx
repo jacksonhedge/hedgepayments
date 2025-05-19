@@ -139,7 +139,7 @@ export default function WaitlistForm({ onSuccess, initialReferralCode }: Waitlis
             type="text"
             value={referralCode}
             onChange={handleReferralCodeChange}
-            placeholder="Referral code (optional)"
+            placeholder="Referral Code or User Email (optional)"
             className={styles.referralInput}
           />
         </div>
