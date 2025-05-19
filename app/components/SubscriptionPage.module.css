@@ -1,22 +1,169 @@
 .container {
+  position: relative;
   min-height: 100vh;
+  width: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  position: relative;
+  color: #333;
   overflow: hidden;
 }
 
-.videoBackground {
+/* Mint background */
+.mintBackground {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  background-color: #DEFFE6; /* Light mint color */
+  z-index: -2;
+}
+
+/* Wires container and styling */
+.wiresContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: -1;
+  pointer-events: none;
+}
+
+.wire {
+  position: absolute;
+  background: linear-gradient(90deg, #0070f3, #00c4a7);
+  height: 3px;
+  border-radius: 4px;
+  transform-origin: left center;
+  box-shadow: 0 0 8px rgba(0, 112, 243, 0.5);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.wire::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  animation: pulseLight 2s infinite linear;
+}
+
+@keyframes pulseLight {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Position wires - we'll use percentages for responsive positioning */
+.wireDraftKings {
+  width: 30vw; /* Use viewport width for more responsive wire length */
+  bottom: 40%;
+  left: 55%;
+  transform: rotate(20deg);
+}
+
+.wireFanDuel {
+  width: 28vw;
+  bottom: 30%;
+  left: 55%;
+  transform: rotate(-15deg);
+}
+
+/* Add connector dots where wires meet form */
+.wire::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #0070f3;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px #0070f3;
+  z-index: 3;
+  animation: pulse 2s infinite alternate;
+}
+
+/* Add connector to the right side of the wires */
+.wireEndPoint {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: #0070f3;
+  border-radius: 50%;
+  transform: translate(50%, -50%);
+  box-shadow: 0 0 8px #0070f3;
+  z-index: 3;
+  animation: pulse 2s infinite alternate;
+}
+
+.wireDraftKings::after {
+  right: 0;
+  left: auto;
+  transform: translate(50%, -50%);
+}
+
+.wireFanDuel::after {
+  right: 0;
+  left: auto;
+  transform: translate(50%, -50%);
+}
+
+/* Animation for the pulse effect */
+.wire::after, .wire::before {
+  animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 8px #0070f3;
+  }
+  100% {
+    box-shadow: 0 0 15px #0070f3, 0 0 20px rgba(0, 112, 243, 0.5);
+  }
+}
+
+/* Position specific logos to connect with wires */
+.draftKingsLogo {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.draftKingsLogo:hover {
+  transform: scale(1.05);
+}
+
+.fanDuelLogo {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.fanDuelLogo:hover {
+  transform: scale(1.05);
+}
+
+.partnerLogosContainer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Remove video background styles */
+.videoBackground {
+  display: none;
 }
 
 .overlay {
@@ -25,7 +172,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.1); /* Lighter overlay */
   z-index: -1;
 }
 
@@ -268,50 +415,103 @@
 
 /* Partners Section Styles */
 .partnersSection {
-  margin-top: 1.5rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  padding-top: 1.5rem;
+  margin-top: 2rem;
+  width: 100%;
 }
 
 .partnersTitle {
-  font-size: 0.9rem;
-  color: #555;
+  font-size: 1.2rem;
   font-weight: 500;
+  color: #555;
   margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.partnerLogosContainer {
+  position: relative;
+  z-index: 2;
+  padding: 1rem;
 }
 
 .partnerLogos {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  align-items: center;
 }
 
 .partnerLogo {
-  background-color: white;
+  width: 100px;
+  height: 80px;
   padding: 0.5rem;
-  border-radius: 6px;
-  width: 70px;
-  height: 40px;
+  background-color: white;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
-}
-
-.partnerLogo:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .partnerLogo img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+/* Specific styling for DraftKings and FanDuel that connect to wires */
+.draftKingsLogo {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 15px rgba(0, 112, 243, 0.3);
+  border: 2px solid rgba(0, 112, 243, 0.3);
+  z-index: 2;
+}
+
+.draftKingsLogo::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #0070f3;
+  border-radius: 50%;
+  transform: translate(0, -50%);
+  box-shadow: 0 0 10px rgba(0, 112, 243, 0.8);
+}
+
+.draftKingsLogo:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 112, 243, 0.4);
+}
+
+.fanDuelLogo {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 15px rgba(0, 112, 243, 0.3);
+  border: 2px solid rgba(0, 112, 243, 0.3);
+  z-index: 2;
+}
+
+.fanDuelLogo::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #0070f3;
+  border-radius: 50%;
+  transform: translate(0, -50%);
+  box-shadow: 0 0 10px rgba(0, 112, 243, 0.8);
+}
+
+.fanDuelLogo:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 112, 243, 0.4);
 }
 
 @keyframes fadeIn {
@@ -479,4 +679,11 @@
 
 .waitlistFormWrapper :global(.submitButton:hover) {
   background-color: #f44336;
+}
+
+/* Customize referral section to appear connected to wires */
+.referralCodeSection {
+  position: relative;
+  border: 2px solid #0070f3;
+  box-shadow: 0 0 15px rgba(0, 112, 243, 0.3);
 }

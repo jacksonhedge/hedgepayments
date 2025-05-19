@@ -64,15 +64,19 @@ const ModifiedSubscriptionPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <video
-        className={styles.videoBackground}
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source src="/videos/background.mp4" type="video/mp4" />
-      </video>
+      {/* Replace video with mint background */}
+      <div className={styles.mintBackground}></div>
+      
+      {/* Wires connecting to partner logos */}
+      <div className={styles.wiresContainer}>
+        <div className={`${styles.wire} ${styles.wireDraftKings}`}>
+          <span className={styles.wireEndPoint}></span>
+        </div>
+        <div className={`${styles.wire} ${styles.wireFanDuel}`}>
+          <span className={styles.wireEndPoint}></span>
+        </div>
+      </div>
+      
       <div className={styles.overlay}></div>
       
       {!isSubscribed ? (
@@ -99,15 +103,17 @@ const ModifiedSubscriptionPage: React.FC = () => {
             Turn spare change into winnings with SideBet! Sign up to get early access.
           </p>
           
-          {/* Partner Logos */}
+          {/* Partner Logos with wrapper for wires */}
           <div className={styles.partnersSection}>
             <p className={styles.partnersTitle}>Our Marketing Partners</p>
-            <div className={styles.partnerLogos}>
-              {partnerInfo.map((partner, index) => (
-                <div key={index} className={styles.partnerLogo}>
-                  <img src={partner.src} alt={partner.alt} />
-                </div>
-              ))}
+            <div className={styles.partnerLogosContainer}>
+              <div className={styles.partnerLogos}>
+                {partnerInfo.map((partner, index) => (
+                  <div key={index} className={`${styles.partnerLogo} ${partner.alt === 'DraftKings' ? styles.draftKingsLogo : ''} ${partner.alt === 'FanDuel' ? styles.fanDuelLogo : ''}`}>
+                    <img src={partner.src} alt={partner.alt} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -146,12 +152,14 @@ const ModifiedSubscriptionPage: React.FC = () => {
           {/* Partner Logos */}
           <div className={styles.partnersSection}>
             <p className={styles.partnersTitle}>Our Marketing Partners</p>
-            <div className={styles.partnerLogos}>
-              {partnerInfo.map((partner, index) => (
-                <div key={index} className={styles.partnerLogo}>
-                  <img src={partner.src} alt={partner.alt} />
-                </div>
-              ))}
+            <div className={styles.partnerLogosContainer}>
+              <div className={styles.partnerLogos}>
+                {partnerInfo.map((partner, index) => (
+                  <div key={index} className={`${styles.partnerLogo} ${partner.alt === 'DraftKings' ? styles.draftKingsLogo : ''} ${partner.alt === 'FanDuel' ? styles.fanDuelLogo : ''}`}>
+                    <img src={partner.src} alt={partner.alt} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
