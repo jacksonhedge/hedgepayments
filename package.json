@@ -15,6 +15,7 @@
   "description": "Website for Hedge Payments",
   "dependencies": {
     "@supabase/supabase-js": "^1.35.7",
+    "encoding": "^0.1.13",
     "next": "^13.4.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
