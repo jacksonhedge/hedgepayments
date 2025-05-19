@@ -1,11 +1,23 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import styles from './SubscriptionPage.module.css'
 import WaitlistForm from './WaitlistForm'
 
 const ModifiedSubscriptionPage: React.FC = () => {
   const [isSubscribed, setIsSubscribed] = useState(false)
+  const [initialReferralCode, setInitialReferralCode] = useState<string>('')
+  
+  const searchParams = useSearchParams()
+  
+  useEffect(() => {
+    // Check for referral code in URL params
+    const refCode = searchParams?.get('ref') || ''
+    if (refCode) {
+      setInitialReferralCode(refCode)
+    }
+  }, [searchParams])
 
   // Partner logos and jackpot information
   const partnerInfo = [
@@ -77,7 +89,10 @@ const ModifiedSubscriptionPage: React.FC = () => {
           <h2 className={styles.title}>Join our waitlist for a free $10 on your favorite sportsbook</h2>
           
           <div className={styles.waitlistFormWrapper}>
-            <WaitlistForm onSuccess={handleWaitlistSubmitted} />
+            <WaitlistForm 
+              onSuccess={handleWaitlistSubmitted} 
+              initialReferralCode={initialReferralCode}
+            />
           </div>
           
           <p className={styles.description}>

@@ -153,4 +153,61 @@
   font-size: 1.1rem;
   color: #555;
   line-height: 1.6;
+}
+
+/* Referral code section */
+.referralCodeSection {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.referralCodeLabel {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.referralCodeBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0.5rem 0 1rem;
+}
+
+.referralCodeText {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0070f3;
+  letter-spacing: 1px;
+  padding: 0.5rem;
+  background-color: #e6f7ff;
+  border-radius: 4px;
+  border: 1px dashed #0070f3;
+}
+
+.copyButton {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.copyButton:hover {
+  background-color: #005bcc;
+}
+
+.referralInstructions {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+  font-style: italic;
 } 
