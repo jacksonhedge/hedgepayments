@@ -1,9 +1,8 @@
 'use client'
 
-import SubscriptionPage from './components/SubscriptionPage'
 import PartnerLogos from './components/PartnerLogos'
 import JackpotDisplay from './components/JackpotDisplay'
-import WaitlistForm from './components/WaitlistForm'
+import ModifiedSubscriptionPage from './components/ModifiedSubscriptionPage'
 
 export default function Home() {
   // Use the actual casino logos from the assets folder
@@ -17,10 +16,7 @@ export default function Home() {
 
   return (
     <main>
-      <div style={{ marginBottom: '2rem' }}>
-        <WaitlistForm />
-      </div>
-      <SubscriptionPage />
+      <ModifiedSubscriptionPage />
       <PartnerLogos logos={partnerLogos} />
       <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f8f9fa' }}>
         <p style={{ margin: 0, color: '#555', fontSize: '14px' }}>Copyright, Hedge, Inc. 2025</p>

@@ -443,3 +443,40 @@
   border-radius: 12px;
   letter-spacing: 0.5px;
 }
+
+/* Add this at an appropriate place in the file */
+.waitlistFormWrapper {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+.waitlistFormWrapper :global(.formContainer) {
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
+}
+
+/* Remove title from the inner form since we have our own */
+.waitlistFormWrapper :global(.title) {
+  display: none;
+}
+
+/* Add more contrast to checkbox labels for better visibility on dark backgrounds */
+.waitlistFormWrapper :global(.label) {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+
+.waitlistFormWrapper :global(.emailInput) {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.waitlistFormWrapper :global(.submitButton) {
+  background-color: #ff5722;
+  font-weight: bold;
+}
+
+.waitlistFormWrapper :global(.submitButton:hover) {
+  background-color: #f44336;
+}

@@ -3,7 +3,11 @@ import styles from './WaitlistForm.module.css';
 
 type Sportsbook = 'FanDuel' | 'DraftKings' | 'Caesars' | 'BetMGM' | 'Fanatics';
 
-export default function WaitlistForm() {
+interface WaitlistFormProps {
+  onSuccess?: () => void;
+}
+
+export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
   const [email, setEmail] = useState('');
   const [selectedBooks, setSelectedBooks] = useState<Sportsbook[]>([]);
   const [submitted, setSubmitted] = useState(false);
@@ -41,6 +45,11 @@ export default function WaitlistForm() {
         setSubmitted(true);
         setEmail('');
         setSelectedBooks([]);
+        
+        // Call the onSuccess callback if provided
+        if (onSuccess) {
+          onSuccess();
+        }
       } else {
         alert('There was an error submitting your information. Please try again.');
       }
@@ -50,7 +59,7 @@ export default function WaitlistForm() {
     }
   };
   
-  if (submitted) {
+  if (submitted && !onSuccess) {
     return (
       <div className={styles.formContainer}>
         <h2 className={styles.thankYouTitle}>Thank you for joining our waitlist!</h2>
@@ -63,8 +72,6 @@ export default function WaitlistForm() {
   
   return (
     <div className={styles.formContainer}>
-      <h2 className={styles.title}>Join our waitlist for a free $10 on your favorite sportsbook</h2>
-      
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
           <input
