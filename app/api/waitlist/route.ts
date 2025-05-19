@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, sportsbooks } = body;
+    const { email, referralCode, sportsbooks } = body;
 
     // Basic validation
     if (!email || !sportsbooks || !Array.isArray(sportsbooks) || sportsbooks.length === 0) {
@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
         .from('waitlist')
         .update({ 
           sportsbooks,
+          referral_code: referralCode || null,
           updated_at: new Date().toISOString()
         })
         .eq('id', existingUser.id);
@@ -50,6 +51,7 @@ export async function POST(request: NextRequest) {
         .insert({
           email,
           sportsbooks,
+          referral_code: referralCode || null,
           created_at: new Date().toISOString()
         });
 

@@ -9,6 +9,7 @@ interface WaitlistFormProps {
 
 export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
   const [email, setEmail] = useState('');
+  const [referralCode, setReferralCode] = useState('');
   const [selectedBooks, setSelectedBooks] = useState<Sportsbook[]>([]);
   const [submitted, setSubmitted] = useState(false);
   
@@ -16,6 +17,10 @@ export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
   
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+  };
+  
+  const handleReferralCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setReferralCode(e.target.value);
   };
   
   const toggleSportsbook = (book: Sportsbook) => {
@@ -37,6 +42,7 @@ export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
         },
         body: JSON.stringify({ 
           email,
+          referralCode: referralCode || null,
           sportsbooks: selectedBooks
         }),
       });
@@ -44,6 +50,7 @@ export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
       if (response.ok) {
         setSubmitted(true);
         setEmail('');
+        setReferralCode('');
         setSelectedBooks([]);
         
         // Call the onSuccess callback if provided
@@ -81,6 +88,16 @@ export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
             placeholder="Your email address"
             required
             className={styles.emailInput}
+          />
+        </div>
+        
+        <div className={styles.inputGroup}>
+          <input
+            type="text"
+            value={referralCode}
+            onChange={handleReferralCodeChange}
+            placeholder="Referral code (optional)"
+            className={styles.referralInput}
           />
         </div>
         

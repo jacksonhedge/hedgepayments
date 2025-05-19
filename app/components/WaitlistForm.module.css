@@ -21,7 +21,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .inputGroup {
@@ -29,7 +29,7 @@
   position: relative;
 }
 
-.emailInput {
+.emailInput, .referralInput {
   width: 100%;
   padding: 14px 18px;
   border: 2px solid #e0e0e0;
@@ -39,8 +39,14 @@
   transition: border-color 0.2s;
 }
 
-.emailInput:focus {
+.emailInput:focus, .referralInput:focus {
   border-color: #0070f3;
+}
+
+.referralInput {
+  border-color: #e8e8e8;
+  background-color: #fafafa;
+  font-size: 14px;
 }
 
 .selectPrompt {
