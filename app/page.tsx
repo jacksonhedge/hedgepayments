@@ -1,56 +1,31 @@
 'use client'
 
-import React from 'react';
-import styles from './page.module.css';
-import WaitlistForm from './components/WaitlistForm';
-import JackpotDisplay from './components/JackpotDisplay';
-import Features from './components/Features';
-import LogoTicker from './components/LogoTicker';
-import Footer from './components/Footer';
+import SubscriptionPage from './components/SubscriptionPage'
+import PartnerLogos from './components/PartnerLogos'
+import JackpotDisplay from './components/JackpotDisplay'
+import WaitlistForm from './components/WaitlistForm'
 
 export default function Home() {
+  // Use the actual casino logos from the assets folder
   const partnerLogos = [
-    { src: '/images/assets/mgm.svg', alt: 'MGM' },
-    { src: '/images/assets/draftkings.svg', alt: 'DraftKings' },
-    { src: '/images/assets/fanatics.svg', alt: 'Fanatics' },
-    { src: '/images/assets/fanduel.svg', alt: 'FanDuel' },
-    { src: '/images/assets/pokerstars.svg', alt: 'PokerStars' },
-    { src: '/images/assets/caesars.svg', alt: 'Caesars' },
+    { src: '/images/assets/draftkings-casino-alt 3.png', alt: 'DraftKings' },
+    { src: '/images/assets/fanduel-casino.jpg', alt: 'FanDuel' },
+    { src: '/images/assets/betmgm 2.png', alt: 'BetMGM' },
+    { src: '/images/assets/caesarsCasino 2.png', alt: 'Caesars' },
+    { src: '/images/assets/fanatics.png', alt: 'Fanatics' }
   ];
 
   return (
-    <main className={styles.main}>
-      <section className={styles.heroSection}>
-        <div className={styles.container}>
-          <h1 className={styles.title}>Hedge Payments</h1>
-          <p className={styles.description}>
-            The best way to manage payments for sports betting and gaming.
-          </p>
-          <WaitlistForm />
-        </div>
-      </section>
-      
-      <section className={styles.jackpotSection}>
-        <div className={styles.container}>
-          <JackpotDisplay />
-        </div>
-      </section>
-      
-      <section className={styles.featuresSection}>
-        <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Why Choose Hedge Payments</h2>
-          <Features />
-        </div>
-      </section>
-      
-      <section className={styles.partnersSection}>
-        <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Our Partners</h2>
-          <LogoTicker logos={partnerLogos} />
-        </div>
-      </section>
-      
-      <Footer />
+    <main>
+      <div style={{ marginBottom: '2rem' }}>
+        <WaitlistForm />
+      </div>
+      <SubscriptionPage />
+      <PartnerLogos logos={partnerLogos} />
+      <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f8f9fa' }}>
+        <p style={{ margin: 0, color: '#555', fontSize: '14px' }}>Copyright, Hedge, Inc. 2025</p>
+      </div>
+      <JackpotDisplay />
     </main>
-  );
+  )
 }
