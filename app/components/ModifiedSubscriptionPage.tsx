@@ -100,7 +100,8 @@ const ModifiedSubscriptionPage: React.FC = () => {
         <div className={styles.successMessage}>
           <h2 className={styles.successTitle}>Thank you for joining our waitlist!</h2>
           <p className={styles.successText}>
-            We've recorded your sportsbook preferences and will notify you when SideBet is ready to launch.
+            We've recorded your information and will notify you when SideBet is ready to launch. 
+            You'll receive your free $10 gift card when we go live!
           </p>
           
           {/* Jackpot information */}
