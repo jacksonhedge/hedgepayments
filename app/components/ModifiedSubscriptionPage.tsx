@@ -67,6 +67,22 @@ const ModifiedSubscriptionPage: React.FC = () => {
       {/* Replace video with mint background */}
       <div className={styles.mintBackground}></div>
       
+      {/* Background partner images */}
+      <div className={styles.backgroundImageContainer}>
+        <div className={`${styles.backgroundImage} ${styles.fanDuelLeft}`}>
+          <img src="/images/assets/FanDuel-Casino-Round-ups-Transparent.png" alt="FanDuel Round-ups" />
+        </div>
+        <div className={`${styles.backgroundImage} ${styles.draftKingsRight}`}>
+          <img src="/images/assets/DraftKings-RoundUps-Transparent.png" alt="DraftKings Round-ups" />
+        </div>
+        <div className={`${styles.backgroundImage} ${styles.fanDuelJackpotLeft}`}>
+          <img src="/images/assets/FanDuel-Jackpot.png" alt="FanDuel Jackpot" />
+        </div>
+        <div className={`${styles.backgroundImage} ${styles.draftKingsJackpotRight}`}>
+          <img src="/images/assets/DraftKingsJackpot.svg" alt="DraftKings Jackpot" />
+        </div>
+      </div>
+      
       {/* Wires connecting to partner logos */}
       <div className={styles.wiresContainer}>
         <div className={`${styles.wire} ${styles.wireDraftKings}`}>

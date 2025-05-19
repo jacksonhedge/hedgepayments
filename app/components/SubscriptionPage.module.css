@@ -64,17 +64,17 @@
 
 /* Position wires - we'll use percentages for responsive positioning */
 .wireDraftKings {
-  width: 30vw; /* Use viewport width for more responsive wire length */
-  bottom: 40%;
-  left: 55%;
-  transform: rotate(20deg);
+  width: 40vw;
+  top: 40%;
+  left: 45%;
+  transform: rotate(25deg);
 }
 
 .wireFanDuel {
-  width: 28vw;
-  bottom: 30%;
-  left: 55%;
-  transform: rotate(-15deg);
+  width: 45vw;
+  top: 60%;
+  left: 45%;
+  transform: rotate(-20deg);
 }
 
 /* Add connector dots where wires meet form */
@@ -686,4 +686,113 @@
   position: relative;
   border: 2px solid #0070f3;
   box-shadow: 0 0 15px rgba(0, 112, 243, 0.3);
+}
+
+/* Background partner images */
+.backgroundImageContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Behind the content, but above the mint background */
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.backgroundImage {
+  position: absolute;
+  z-index: 0;
+  transition: all 0.5s ease;
+}
+
+.backgroundImage img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(0, 112, 243, 0.3));
+}
+
+/* Position each background image */
+.fanDuelLeft {
+  left: -80px;
+  top: 20%;
+  width: 280px;
+  opacity: 0.75;
+  transform: rotate(-5deg);
+  animation: floatLeft 8s ease-in-out infinite;
+}
+
+.draftKingsRight {
+  right: -80px;
+  top: 15%;
+  width: 280px;
+  opacity: 0.75;
+  transform: rotate(5deg);
+  animation: floatRight 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.fanDuelJackpotLeft {
+  left: -30px;
+  bottom: 10%;
+  width: 220px;
+  opacity: 0.65;
+  transform: rotate(-8deg);
+  animation: floatLeft 8s ease-in-out infinite;
+  animation-delay: 3s;
+}
+
+.draftKingsJackpotRight {
+  right: -30px;
+  bottom: 10%;
+  width: 220px;
+  opacity: 0.65;
+  transform: rotate(8deg);
+  animation: floatRight 8s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+@media (max-width: 768px) {
+  .fanDuelLeft, .draftKingsRight {
+    width: 200px;
+  }
+  
+  .fanDuelJackpotLeft, .draftKingsJackpotRight {
+    width: 150px;
+  }
+  
+  .fanDuelLeft {
+    left: -60px;
+  }
+  
+  .draftKingsRight {
+    right: -60px;
+  }
+  
+  .fanDuelJackpotLeft {
+    left: -20px;
+  }
+  
+  .draftKingsJackpotRight {
+    right: -20px;
+  }
+}
+
+@keyframes floatLeft {
+  0%, 100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(-3deg);
+  }
+}
+
+@keyframes floatRight {
+  0%, 100% {
+    transform: translateY(0) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(3deg);
+  }
 }
