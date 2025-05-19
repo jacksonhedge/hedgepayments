@@ -20,8 +20,8 @@
   z-index: -2;
 }
 
-/* Wires container and styling */
-.wiresContainer {
+/* Background partner images - simplified */
+.backgroundImageContainer {
   position: absolute;
   top: 0;
   left: 0;
@@ -29,141 +29,42 @@
   height: 100%;
   z-index: -1;
   pointer-events: none;
-}
-
-.wire {
-  position: absolute;
-  background: linear-gradient(90deg, #0070f3, #00c4a7);
-  height: 3px;
-  border-radius: 4px;
-  transform-origin: left center;
-  box-shadow: 0 0 8px rgba(0, 112, 243, 0.5);
-  z-index: 1;
   overflow: hidden;
 }
 
-.wire::before {
-  content: "";
+.backgroundImage {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-  animation: pulseLight 2s infinite linear;
+  z-index: 0;
+  animation: bounce 4s ease-in-out infinite;
 }
 
-@keyframes pulseLight {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+.backgroundImage img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.6;
 }
 
-/* Position wires - we'll use percentages for responsive positioning */
-.wireDraftKings {
-  width: 40vw;
-  top: 40%;
-  left: 45%;
-  transform: rotate(25deg);
+/* Position each background image - simplified */
+.fanDuelLeft {
+  left: -80px;
+  top: 20%;
+  width: 280px;
+  animation-delay: 0s;
 }
 
-.wireFanDuel {
-  width: 45vw;
-  top: 60%;
-  left: 45%;
-  transform: rotate(-20deg);
+.draftKingsRight {
+  right: -80px;
+  top: 15%;
+  width: 280px;
+  animation-delay: 1s;
 }
 
-/* Add connector dots where wires meet form */
-.wire::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 10px;
-  height: 10px;
-  background-color: #0070f3;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px #0070f3;
-  z-index: 3;
-  animation: pulse 2s infinite alternate;
-}
-
-/* Add connector to the right side of the wires */
-.wireEndPoint {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  width: 8px;
-  height: 8px;
-  background-color: #0070f3;
-  border-radius: 50%;
-  transform: translate(50%, -50%);
-  box-shadow: 0 0 8px #0070f3;
-  z-index: 3;
-  animation: pulse 2s infinite alternate;
-}
-
-.wireDraftKings::after {
-  right: 0;
-  left: auto;
-  transform: translate(50%, -50%);
-}
-
-.wireFanDuel::after {
-  right: 0;
-  left: auto;
-  transform: translate(50%, -50%);
-}
-
-/* Animation for the pulse effect */
-.wire::after, .wire::before {
-  animation: pulse 2s infinite alternate;
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 8px #0070f3;
-  }
-  100% {
-    box-shadow: 0 0 15px #0070f3, 0 0 20px rgba(0, 112, 243, 0.5);
-  }
-}
-
-/* Position specific logos to connect with wires */
-.draftKingsLogo {
-  position: relative;
-  z-index: 2;
-  transition: transform 0.3s ease;
-}
-
-.draftKingsLogo:hover {
-  transform: scale(1.05);
-}
-
-.fanDuelLogo {
-  position: relative;
-  z-index: 2;
-  transition: transform 0.3s ease;
-}
-
-.fanDuelLogo:hover {
-  transform: scale(1.05);
-}
-
-.partnerLogosContainer {
-  position: relative;
-  z-index: 2;
-}
-
-/* Remove video background styles */
-.videoBackground {
-  display: none;
+.fanDuelJackpotLeft {
+  left: -30px;
+  bottom: 10%;
+  width: 220px;
+  animation-delay: 2s;
 }
 
 .overlay {
@@ -240,56 +141,6 @@
   opacity: 0.85;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.inputGroup {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.label {
-  font-size: 0.9rem;
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #455a64;
-}
-
-.input {
-  padding: 12px 16px;
-  border: 1px solid #dde1e5;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.2s ease;
-}
-
-.input:focus {
-  outline: none;
-  border-color: #1e88e5;
-  box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
-}
-
-.subscribeButton {
-  background-color: #2e7d32;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 14px 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 16px;
-  transition: background-color 0.2s ease;
-}
-
-.subscribeButton:hover {
-  background-color: #1b5e20;
-}
-
 .successMessage {
   text-align: center;
   background-color: rgba(255, 255, 255, 0.9);
@@ -329,90 +180,6 @@
   background-color: rgba(46, 125, 50, 0.1);
 }
 
-.errorMessage {
-  color: #d32f2f;
-  font-size: 0.9rem;
-  margin-bottom: 12px;
-  background-color: rgba(211, 47, 47, 0.1);
-  padding: 8px 12px;
-  border-radius: 4px;
-}
-
-/* Referral Section Styles */
-.referralSection {
-  margin: 1.5rem 0;
-  padding: 1.5rem;
-  background-color: rgba(46, 125, 50, 0.1);
-  border-radius: 8px;
-  text-align: left;
-}
-
-.referralTitle {
-  font-size: 1.4rem;
-  color: #2e7d32;
-  margin-bottom: 0.75rem;
-}
-
-.referralDescription {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 1.5rem;
-  line-height: 1.4;
-}
-
-.referralLinkContainer {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid #ddd;
-}
-
-.referralLink {
-  flex: 1;
-  padding: 0.75rem;
-  font-size: 0.9rem;
-  color: #555;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.copyButton {
-  background-color: #2e7d32;
-  color: white;
-  border: none;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
-}
-
-.copyButton:hover {
-  background-color: #1b5e20;
-}
-
-.copiedMessage {
-  position: absolute;
-  top: -30px;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  opacity: 0;
-  animation: fadeInOut 2s ease;
-}
-
-@keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  10%, 90% { opacity: 1; }
-}
-
 /* Partners Section Styles */
 .partnersSection {
   margin-top: 2rem;
@@ -427,12 +194,6 @@
   text-align: center;
 }
 
-.partnerLogosContainer {
-  position: relative;
-  z-index: 2;
-  padding: 1rem;
-}
-
 .partnerLogos {
   display: flex;
   flex-wrap: wrap;
@@ -442,8 +203,8 @@
 }
 
 .partnerLogo {
-  width: 100px;
-  height: 80px;
+  width: 80px;
+  height: 60px;
   padding: 0.5rem;
   background-color: white;
   border-radius: 8px;
@@ -451,67 +212,17 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.partnerLogo:hover {
+  transform: translateY(-5px);
 }
 
 .partnerLogo img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-}
-
-/* Specific styling for DraftKings and FanDuel that connect to wires */
-.draftKingsLogo {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 15px rgba(0, 112, 243, 0.3);
-  border: 2px solid rgba(0, 112, 243, 0.3);
-  z-index: 2;
-}
-
-.draftKingsLogo::after {
-  content: "";
-  position: absolute;
-  right: -5px;
-  top: 50%;
-  width: 10px;
-  height: 10px;
-  background-color: #0070f3;
-  border-radius: 50%;
-  transform: translate(0, -50%);
-  box-shadow: 0 0 10px rgba(0, 112, 243, 0.8);
-}
-
-.draftKingsLogo:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 112, 243, 0.4);
-}
-
-.fanDuelLogo {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 15px rgba(0, 112, 243, 0.3);
-  border: 2px solid rgba(0, 112, 243, 0.3);
-  z-index: 2;
-}
-
-.fanDuelLogo::after {
-  content: "";
-  position: absolute;
-  right: -5px;
-  top: 50%;
-  width: 10px;
-  height: 10px;
-  background-color: #0070f3;
-  border-radius: 50%;
-  transform: translate(0, -50%);
-  box-shadow: 0 0 10px rgba(0, 112, 243, 0.8);
-}
-
-.fanDuelLogo:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 112, 243, 0.4);
 }
 
 @keyframes fadeIn {
@@ -531,35 +242,6 @@
   .logoText {
     font-size: 2.5rem;
   }
-}
-
-.convertKitContainer {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-  padding: 2rem;
-}
-
-.alternateFormButton {
-  margin-top: 1rem;
-  background-color: transparent;
-  border: 1px solid rgba(46, 125, 50, 0.5);
-  color: rgba(46, 125, 50, 0.8);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: block;
-  width: fit-content;
-  margin: 1rem auto 0;
-}
-
-.alternateFormButton:hover {
-  background-color: rgba(46, 125, 50, 0.1);
-  color: rgba(46, 125, 50, 1);
 }
 
 /* Jackpot Section Styles */
@@ -681,118 +363,42 @@
   background-color: #f44336;
 }
 
-/* Customize referral section to appear connected to wires */
-.referralCodeSection {
-  position: relative;
-  border: 2px solid #0070f3;
-  box-shadow: 0 0 15px rgba(0, 112, 243, 0.3);
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
 }
 
-/* Background partner images */
-.backgroundImageContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* Behind the content, but above the mint background */
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.backgroundImage {
-  position: absolute;
-  z-index: 0;
-  transition: all 0.5s ease;
-}
-
-.backgroundImage img {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(0, 112, 243, 0.3));
-}
-
-/* Position each background image */
+/* Add a slight rotation to different images */
 .fanDuelLeft {
-  left: -80px;
-  top: 20%;
-  width: 280px;
-  opacity: 0.75;
-  transform: rotate(-5deg);
-  animation: floatLeft 8s ease-in-out infinite;
+  animation: bounceLeft 4s ease-in-out infinite;
 }
 
 .draftKingsRight {
-  right: -80px;
-  top: 15%;
-  width: 280px;
-  opacity: 0.75;
-  transform: rotate(5deg);
-  animation: floatRight 8s ease-in-out infinite;
-  animation-delay: 2s;
+  animation: bounceRight 4s ease-in-out infinite;
 }
 
 .fanDuelJackpotLeft {
-  left: -30px;
-  bottom: 10%;
-  width: 220px;
-  opacity: 0.65;
-  transform: rotate(-8deg);
-  animation: floatLeft 8s ease-in-out infinite;
-  animation-delay: 3s;
+  animation: bounceLeft 5s ease-in-out infinite;
 }
 
-.draftKingsJackpotRight {
-  right: -30px;
-  bottom: 10%;
-  width: 220px;
-  opacity: 0.65;
-  transform: rotate(8deg);
-  animation: floatRight 8s ease-in-out infinite;
-  animation-delay: 4s;
-}
-
-@media (max-width: 768px) {
-  .fanDuelLeft, .draftKingsRight {
-    width: 200px;
-  }
-  
-  .fanDuelJackpotLeft, .draftKingsJackpotRight {
-    width: 150px;
-  }
-  
-  .fanDuelLeft {
-    left: -60px;
-  }
-  
-  .draftKingsRight {
-    right: -60px;
-  }
-  
-  .fanDuelJackpotLeft {
-    left: -20px;
-  }
-  
-  .draftKingsJackpotRight {
-    right: -20px;
-  }
-}
-
-@keyframes floatLeft {
+@keyframes bounceLeft {
   0%, 100% {
-    transform: translateY(0) rotate(-5deg);
+    transform: translateY(0) rotate(-2deg);
   }
   50% {
-    transform: translateY(-15px) rotate(-3deg);
+    transform: translateY(-15px) rotate(-4deg);
   }
 }
 
-@keyframes floatRight {
+@keyframes bounceRight {
   0%, 100% {
-    transform: translateY(0) rotate(5deg);
+    transform: translateY(0) rotate(2deg);
   }
   50% {
-    transform: translateY(-15px) rotate(3deg);
+    transform: translateY(-15px) rotate(4deg);
   }
 }
