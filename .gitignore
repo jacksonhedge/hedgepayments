@@ -1,5 +1,6 @@
 # Dependencies
-node_modules/
+node_modules
+/node_modules/
 /.pnp
 .pnp.js
 
@@ -28,3 +29,7 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Temp files
+tmp_backup/
+.gitignore.bak
