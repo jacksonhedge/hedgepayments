@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 
 // Create a single supabase client for the entire app
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY || ''
 
 // Use service role for server-side operations to bypass RLS
 export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)

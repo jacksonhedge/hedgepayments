@@ -29,4 +29,27 @@ CREATE POLICY read_own_waitlist ON public.waitlist
   USING (auth.uid() = user_id OR user_id IS NULL);
 
 -- Grant service role full access
-GRANT ALL ON public.waitlist TO service_role; 
+GRANT ALL ON public.waitlist TO service_role;
+
+-- Create subscribers table for the subscribe API
+CREATE TABLE IF NOT EXISTS public.subscribers (
+  id SERIAL PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  subscribed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  referral_code TEXT -- Optional referral code 
+);
+
+-- Add indexes for subscribers table
+CREATE INDEX IF NOT EXISTS idx_subscribers_email ON public.subscribers(email);
+
+-- Grant anonymous access for subscribers table
+ALTER TABLE public.subscribers ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow anonymous inserts to subscribers" ON public.subscribers FOR INSERT TO anon, authenticated WITH CHECK (true);
+CREATE POLICY "Allow anonymous reads from subscribers" ON public.subscribers FOR SELECT USING (true);
+
+-- Grant service role full access to subscribers
+GRANT ALL ON public.subscribers TO service_role;
+GRANT USAGE, SELECT ON SEQUENCE subscribers_id_seq TO anon;
+GRANT USAGE, SELECT ON SEQUENCE subscribers_id_seq TO authenticated; 
