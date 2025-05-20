@@ -13,19 +13,20 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({ children }) => {
       <header className={styles.header}>
         <div className={styles.headerContent}>
           <Link href="/" passHref>
-            <div className={styles.logoContainer} >
+            <div className={styles.logoContainer}>
               <Image
                 src="/sidebet-logo.png" // Path to your logo in the public folder
                 alt="SideBet Logo"
-                width={150} // Adjust as needed
-                height={50} // Adjust as needed
+                width={40} // Adjusted for a more compact, likely square logo
+                height={40} // Adjusted for a more compact, likely square logo
                 className={styles.logo}
+                priority // Preload logo as it's likely LCP for blog pages
               />
             </div>
           </Link>
           <nav className={styles.navigation}>
             <Link href="/contact" passHref>
-              <div className={styles.navLink} >Contact</div>
+              <div className={styles.navLink}>Contact</div>
             </Link>
             {/* Add other navigation links here if needed */}
           </nav>

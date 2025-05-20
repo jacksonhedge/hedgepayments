@@ -26,12 +26,13 @@
 
 .logoContainer {
   cursor: pointer;
+  display: flex; /* Ensures the container sizes to the image */
+  align-items: center;
 }
 
 .logo {
-  /* Styles for your logo image if needed */
-  /* Example: */
-  /* filter: brightness(0) invert(1); /* If your logo is dark and needs to be white on dark bg */
+  object-fit: contain; /* Ensures the image scales correctly within its bounds */
+  height: auto; /* Allow height to adjust based on width and aspect ratio */
 }
 
 .navigation {
