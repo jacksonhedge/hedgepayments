@@ -1,0 +1,70 @@
+.blogPageContainer {
+  padding: 40px 20px;
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  color: #132A45; /* Dark Naval Blue */
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.pageSubtitle {
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.postListPlaceholder {
+  text-align: center;
+  padding: 50px 0;
+  border: 2px dashed #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.postListPlaceholder p {
+  font-size: 1.1rem;
+  color: #777;
+}
+
+/* Styles for individual post previews (example) */
+.blogPostPreview {
+  background-color: #fff;
+  border: 1px solid #eee;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.blogPostPreview h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.blogPostPreview h2 a {
+  color: #0070f3; /* Next.js blue or your primary link color */
+  text-decoration: none;
+}
+
+.blogPostPreview h2 a:hover {
+  text-decoration: underline;
+}
+
+.blogPostPreview p {
+  color: #666;
+  line-height: 1.6;
+}
+
+.blogPostPreview a[href*="/blog/"] {
+  display: inline-block;
+  margin-top: 10px;
+  color: #0070f3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.blogPostPreview a[href*="/blog/"]:hover {
+  text-decoration: underline;
+} 

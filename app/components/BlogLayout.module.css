@@ -1,0 +1,67 @@
+.blogLayoutContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f7f9; /* Light gray background for the blog area */
+  color: #333;
+  font-family: 'Inter', sans-serif;
+}
+
+.header {
+  background-color: #ffffff; /* White header background */
+  padding: 15px 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.headerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoContainer {
+  cursor: pointer;
+}
+
+.logo {
+  /* Styles for your logo image if needed */
+  /* Example: */
+  /* filter: brightness(0) invert(1); /* If your logo is dark and needs to be white on dark bg */
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  color: #132A45; /* Dark Naval Blue for text */
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+.navLink:hover,
+.navLink:focus {
+  background-color: #DEFFE6; /* Light Mint Green on hover/focus */
+  color: #132A45;
+}
+
+.mainContent {
+  flex-grow: 1;
+  max-width: 1000px; /* Adjust for desired content width */
+  width: 100%;
+  margin: 40px auto; /* Top/bottom margin and auto for left/right centering */
+  padding: 0 20px; /* Horizontal padding */
+  background-color: #ffffff; /* White background for content area */
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.05);
+} 
