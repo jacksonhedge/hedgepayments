@@ -20,93 +20,69 @@ export default function Icon() {
           height: '100%',
           position: 'relative',
           backgroundColor: '#DEFFE6', // Light mint background for apple icon
-          borderRadius: '22%', // Slightly rounded corners
+          borderRadius: '27%', // Slightly rounded corners for apple icon
         }}
       >
-        {/* First coin - Washington profile */}
+        {/* Single Washington coin with poker chip styling */}
         <div style={{
-          width: 110,
-          height: 110,
+          width: 140,
+          height: 140,
           borderRadius: '50%',
           backgroundColor: '#132A45',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          border: '3px solid #213E65',
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
-          marginRight: -30,
+          border: '3px solid #1e3c5a',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
           position: 'relative',
-          zIndex: 1,
+          overflow: 'hidden',
         }}>
+          {/* Inner circle */}
           <div style={{
-            width: '80%',
-            height: '80%',
+            width: '84%',
+            height: '84%',
             borderRadius: '50%',
             backgroundColor: '#132A45',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            border: '1px solid #213E65',
+            border: '2px solid #1e3c5a',
+            position: 'relative',
+            zIndex: 2,
           }}>
-            {/* Simplified profile silhouette */}
+            {/* Washington profile silhouette */}
             <div style={{
-              width: '70%',
-              height: '75%',
-              borderRadius: '40% 40% 40% 40% / 50% 50% 50% 50%',
-              backgroundColor: 'rgba(200, 215, 230, 0.85)',
-              transform: 'rotate(-15deg)',
+              width: '80%',
+              height: '80%',
+              position: 'absolute',
+              backgroundColor: 'rgba(220, 225, 235, 0.9)',
+              maskImage: 'radial-gradient(circle, transparent 0%, black 50%)',
+              WebkitMaskImage: 'radial-gradient(circle, transparent 0%, black 50%)',
+              clipPath: 'polygon(30% 10%, 65% 10%, 75% 20%, 80% 30%, 75% 40%, 80% 50%, 70% 70%, 60% 80%, 40% 85%, 20% 70%, 25% 40%, 20% 25%)',
             }}></div>
           </div>
-        </div>
-        
-        {/* Second coin - SB chip */}
-        <div style={{
-          width: 110,
-          height: 110,
-          borderRadius: '50%',
-          backgroundColor: '#132A45',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          border: '3px solid #213E65',
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
-        }}>
-          <div style={{
-            width: '80%',
-            height: '80%',
-            borderRadius: '50%',
-            backgroundColor: '#132A45',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'relative',
-            border: '1px solid #213E65',
-          }}>
-            {/* SB Text */}
-            <div style={{
-              fontSize: 46,
-              fontWeight: 'bold',
-              color: 'white',
-              textAlign: 'center',
+          
+          {/* Colored segments */}
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => (
+            <div key={i} style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'transparent',
+              transform: `rotate(${deg}deg)`,
+              zIndex: 1,
             }}>
-              SB
-            </div>
-            
-            {/* Colored segments */}
-            {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => (
-              <div key={i} style={{
+              <div style={{
                 position: 'absolute',
-                width: '30%',
-                height: '8%',
-                backgroundColor: i % 3 === 0 ? '#4AB3FF' : i % 3 === 1 ? '#FF6B4A' : 'transparent',
-                transformOrigin: 'center right',
-                transform: `rotate(${deg}deg)`,
-                right: '10%',
-                top: '46%',
-                borderRadius: '1px',
+                top: '0%',
+                right: '50%',
+                width: '50%',
+                height: '15%',
+                backgroundColor: i % 6 === 0 ? '#4AB3FF' : i % 3 === 0 ? '#FF6B4A' : 'transparent',
+                clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
               }}></div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     ),

@@ -21,88 +21,66 @@ export default function Icon() {
           position: 'relative',
         }}
       >
-        {/* First coin - Washington profile */}
+        {/* Single Washington coin with poker chip styling */}
         <div style={{
-          width: 26,
-          height: 26,
+          width: 32,
+          height: 32,
           borderRadius: '50%',
           backgroundColor: '#132A45',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          border: '1px solid #213E65',
+          border: '1px solid #1e3c5a',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)',
-          marginRight: -10,
           position: 'relative',
-          zIndex: 1,
+          overflow: 'hidden',
         }}>
+          {/* Inner circle */}
           <div style={{
-            width: '80%',
-            height: '80%',
+            width: '82%',
+            height: '82%',
             borderRadius: '50%',
             backgroundColor: '#132A45',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            border: '1px solid #1e3c5a',
+            position: 'relative',
+            zIndex: 2,
           }}>
-            {/* Simplified profile silhouette */}
+            {/* Washington profile silhouette */}
             <div style={{
-              width: '70%',
-              height: '75%',
-              borderRadius: '40% 40% 40% 40% / 50% 50% 50% 50%',
-              backgroundColor: 'rgba(200, 215, 230, 0.85)',
-              transform: 'rotate(-15deg)',
+              width: '80%',
+              height: '80%',
+              position: 'absolute',
+              backgroundColor: 'rgba(220, 225, 235, 0.9)',
+              maskImage: 'radial-gradient(circle, transparent 0%, black 50%)',
+              WebkitMaskImage: 'radial-gradient(circle, transparent 0%, black 50%)',
+              clipPath: 'polygon(30% 10%, 65% 10%, 75% 20%, 80% 30%, 75% 40%, 80% 50%, 70% 70%, 60% 80%, 40% 85%, 20% 70%, 25% 40%, 20% 25%)',
             }}></div>
           </div>
-        </div>
-        
-        {/* Second coin - SB chip */}
-        <div style={{
-          width: 26,
-          height: 26,
-          borderRadius: '50%',
-          backgroundColor: '#132A45',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          border: '1px solid #213E65',
-          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)',
-        }}>
-          <div style={{
-            width: '80%',
-            height: '80%',
-            borderRadius: '50%',
-            backgroundColor: '#132A45',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'relative',
-          }}>
-            {/* SB Text */}
-            <div style={{
-              fontSize: 14,
-              fontWeight: 'bold',
-              color: 'white',
-              textAlign: 'center',
-              marginTop: -1,
+          
+          {/* Colored segments */}
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => (
+            <div key={i} style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'transparent',
+              transform: `rotate(${deg}deg)`,
+              zIndex: 1,
             }}>
-              SB
-            </div>
-            
-            {/* Colored segments - simplified for small size */}
-            {[0, 90, 180, 270].map((deg, i) => (
-              <div key={i} style={{
+              <div style={{
                 position: 'absolute',
-                width: '30%',
-                height: '10%',
-                backgroundColor: i % 2 === 0 ? '#4AB3FF' : '#FF6B4A',
-                transformOrigin: 'center right',
-                transform: `rotate(${deg}deg)`,
-                right: '10%',
-                top: '45%',
+                top: '0%',
+                right: '50%',
+                width: '50%',
+                height: '18%',
+                backgroundColor: i % 6 === 0 ? '#4AB3FF' : i % 3 === 0 ? '#FF6B4A' : 'transparent',
+                clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
               }}></div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     ),
