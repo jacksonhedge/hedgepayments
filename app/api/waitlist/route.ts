@@ -28,77 +28,61 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Step 1: First check if the table exists, create it if it doesn't
-    const { error: tableCheckError } = await supabase
-      .from('waitlist')
-      .select('count(*)', { count: 'exact', head: true });
-
-    if (tableCheckError && tableCheckError.code === '42P01') {
-      console.log('Table does not exist, creating it now');
-      // Here you would actually use createTable, but for brevity we're just handling the error
-    }
-
-    // Check if email already exists in waitlist
-    const { data: existingUser, error: queryError } = await supabase
-      .from('waitlist')
-      .select('id, own_referral_code')
-      .eq('email', email)
-      .maybeSingle();
-
-    if (queryError) {
-      console.error('Error querying waitlist:', queryError);
-      return NextResponse.json(
-        { error: 'Database query error', details: queryError.message },
-        { status: 500 }
-      );
-    }
-
-    let userReferralCode;
-
-    if (existingUser) {
-      userReferralCode = existingUser.own_referral_code || generateReferralCode(email);
-      
-      // Update existing record with new preferences
-      const { error: updateError } = await supabase
+    // Generate a referral code for this user upfront
+    const userReferralCode = generateReferralCode(email);
+    
+    try {
+      // First, try to see if the email already exists
+      const { data: existingUser, error: queryError } = await supabase
         .from('waitlist')
-        .update({ 
-          sportsbooks,
-          referral_code: referralCode || null,
-          own_referral_code: userReferralCode,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', existingUser.id);
+        .select('id, own_referral_code')
+        .eq('email', email)
+        .single();
 
-      if (updateError) {
-        console.error('Error updating waitlist record:', updateError);
-        return NextResponse.json(
-          { error: 'Failed to update waitlist preferences', details: updateError.message },
-          { status: 500 }
-        );
-      }
-    } else {
-      // Generate a unique referral code for this user
-      userReferralCode = generateReferralCode(email);
-      
-      // Create new waitlist record
-      const { error: insertError } = await supabase
-        .from('waitlist')
-        .insert({
-          email,
-          sportsbooks,
-          referral_code: referralCode || null,
-          own_referral_code: userReferralCode,
-          created_at: new Date().toISOString()
-          // user_id will be null for anonymous users
+      if (existingUser) {
+        console.log('Updating existing user:', existingUser);
+        // Update existing record
+        const { error: updateError } = await supabase
+          .from('waitlist')
+          .update({ 
+            sportsbooks,
+            referral_code: referralCode || null,
+            own_referral_code: existingUser.own_referral_code || userReferralCode,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', existingUser.id);
+
+        if (updateError) {
+          console.error('Error updating waitlist record:', updateError);
+          throw updateError;
+        }
+        
+        return NextResponse.json({ 
+          success: true, 
+          referralCode: existingUser.own_referral_code || userReferralCode 
         });
-
-      if (insertError) {
-        console.error('Error creating waitlist record:', insertError);
-        return NextResponse.json(
-          { error: 'Failed to join waitlist', details: insertError.message },
-          { status: 500 }
-        );
       }
+    } catch (err: any) {
+      // If the error is because the user doesn't exist, that's fine
+      // We'll create a new user below
+      console.log('User lookup error (probably new user):', err);
+    }
+    
+    // Create new waitlist record
+    console.log('Creating new waitlist entry for:', email);
+    const { error: insertError } = await supabase
+      .from('waitlist')
+      .insert({
+        email,
+        sportsbooks,
+        referral_code: referralCode || null,
+        own_referral_code: userReferralCode,
+        created_at: new Date().toISOString()
+      });
+
+    if (insertError) {
+      console.error('Error creating waitlist record:', insertError);
+      throw insertError;
     }
 
     // Return success with the user's own referral code
@@ -109,7 +93,11 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('Error processing waitlist request:', error);
     return NextResponse.json(
-      { error: 'Internal server error', details: error?.message || 'Unknown error' },
+      { 
+        error: 'Internal server error', 
+        details: error?.message || 'Unknown error',
+        code: error?.code
+      },
       { status: 500 }
     );
   }
