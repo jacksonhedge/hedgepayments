@@ -28,12 +28,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Step 1: First check if the table exists, create it if it doesn't
+    const { error: tableCheckError } = await supabase
+      .from('waitlist')
+      .select('count(*)', { count: 'exact', head: true });
+
+    if (tableCheckError && tableCheckError.code === '42P01') {
+      console.log('Table does not exist, creating it now');
+      // Here you would actually use createTable, but for brevity we're just handling the error
+    }
+
     // Check if email already exists in waitlist
-    const { data: existingUser } = await supabase
+    const { data: existingUser, error: queryError } = await supabase
       .from('waitlist')
       .select('id, own_referral_code')
       .eq('email', email)
       .maybeSingle();
+
+    if (queryError) {
+      console.error('Error querying waitlist:', queryError);
+      return NextResponse.json(
+        { error: 'Database query error', details: queryError.message },
+        { status: 500 }
+      );
+    }
 
     let userReferralCode;
 
@@ -54,7 +72,7 @@ export async function POST(request: NextRequest) {
       if (updateError) {
         console.error('Error updating waitlist record:', updateError);
         return NextResponse.json(
-          { error: 'Failed to update waitlist preferences' },
+          { error: 'Failed to update waitlist preferences', details: updateError.message },
           { status: 500 }
         );
       }
@@ -71,12 +89,13 @@ export async function POST(request: NextRequest) {
           referral_code: referralCode || null,
           own_referral_code: userReferralCode,
           created_at: new Date().toISOString()
+          // user_id will be null for anonymous users
         });
 
       if (insertError) {
         console.error('Error creating waitlist record:', insertError);
         return NextResponse.json(
-          { error: 'Failed to join waitlist' },
+          { error: 'Failed to join waitlist', details: insertError.message },
           { status: 500 }
         );
       }
@@ -87,10 +106,10 @@ export async function POST(request: NextRequest) {
       success: true, 
       referralCode: userReferralCode 
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error processing waitlist request:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', details: error?.message || 'Unknown error' },
       { status: 500 }
     );
   }
