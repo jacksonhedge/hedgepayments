@@ -1,0 +1,46 @@
+[
+  {
+    "id": "hedge-payments-launches-round-up-feature",
+    "title": "Hedge Payments Launches Round-Up Feature to Power Up Betting Wallets",
+    "subtitle": "New integration allows users to link bank accounts and automatically round up spare change into DraftKings, FanDuel, and more.",
+    "publishDate": "2025-05-20",
+    "location": "New York, NY",
+    "author": "Hedge Payments Team",
+    "tags": ["product launch", "round-ups", "integrations", "fintech", "gaming", "sports betting"],
+    "imageUrl": "/images/blog/round-up-launch-banner.png",
+    "imageAlt": "Hedge Payments Round-Up Feature Banner",
+    "contentBlocks": [
+      {
+        "type": "paragraph",
+        "text": "Hedge Payments has officially launched its highly anticipated Round-Up feature, enabling users to effortlessly invest spare change from everyday purchases into their favorite gaming and sports betting platforms."
+      },
+      {
+        "type": "paragraph",
+        "text": "With the Round-Up feature, Hedge users can now link their existing bank accounts — including Chase, Bank of America, and PNC — to automatically round each transaction to the nearest dollar. The spare change is then funneled directly into supported wallets like DraftKings, FanDuel, Caesars, and PrizePicks, giving users a seamless way to grow their gaming balances without lifting a finger."
+      },
+      {
+        "type": "quote",
+        "text": "We're building the bridge between daily spending and daily entertainment. With Round-Ups, every coffee, ride share, or grocery bill becomes a step toward your next jackpot.",
+        "attribution": "Jon Marino, Chief Product Officer at Hedge Payments"
+      },
+      {
+        "type": "paragraph",
+        "text": "The integration is secure, fast, and entirely opt-in. Once connected, users can view their round-up history, manage deposit thresholds, and even pause or redirect funds based on promotions across platforms."
+      },
+      {
+        "type": "heading",
+        "level": 3,
+        "text": "Use Case Example:"
+      },
+      {
+        "type": "paragraph",
+        "text": "A user buys lunch for $9.45. Hedge rounds up $0.55 and transfers it to their DraftKings wallet. Over the course of a month, those small change deposits can total more than $30 in betting credit — all without changing spending habits."
+      },
+      {
+        "type": "paragraph",
+        "text": "The Round-Up feature is available now to all verified Hedge Payments users through the latest app update. To start rounding up and cashing in, visit [hedgepayments.com/roundup](https://hedgepayments.com/roundup)."
+      }
+    ],
+    "slug": "hedge-payments-launches-round-up-feature"
+  }
+] 
