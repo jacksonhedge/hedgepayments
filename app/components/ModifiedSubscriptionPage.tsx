@@ -64,32 +64,20 @@ const ModifiedSubscriptionPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {/* Replace video with mint background */}
+      {/* Mint background */}
       <div className={styles.mintBackground}></div>
       
-      {/* Background partner images */}
+      {/* Background partner images - simplified with only verified images */}
       <div className={styles.backgroundImageContainer}>
         <div className={`${styles.backgroundImage} ${styles.fanDuelLeft}`}>
-          <img src="/images/assets/FanDuel-Casino-Round-ups-Transparent.png" alt="FanDuel Round-ups" />
+          <img src="/images/assets/FanDuel Casino Round-ups TRANSPARENT.png" alt="FanDuel Round-ups" />
         </div>
         <div className={`${styles.backgroundImage} ${styles.draftKingsRight}`}>
-          <img src="/images/assets/DraftKings-RoundUps-Transparent.png" alt="DraftKings Round-ups" />
+          <img src="/images/assets/DraftKings Round-Ups TRANSPARENT.png" alt="DraftKings Round-ups" />
         </div>
+        {/* Only include image files we've verified exist */}
         <div className={`${styles.backgroundImage} ${styles.fanDuelJackpotLeft}`}>
-          <img src="/images/assets/FanDuel-Jackpot.png" alt="FanDuel Jackpot" />
-        </div>
-        <div className={`${styles.backgroundImage} ${styles.draftKingsJackpotRight}`}>
-          <img src="/images/assets/DraftKingsJackpot.svg" alt="DraftKings Jackpot" />
-        </div>
-      </div>
-      
-      {/* Wires connecting to partner logos */}
-      <div className={styles.wiresContainer}>
-        <div className={`${styles.wire} ${styles.wireDraftKings}`}>
-          <span className={styles.wireEndPoint}></span>
-        </div>
-        <div className={`${styles.wire} ${styles.wireFanDuel}`}>
-          <span className={styles.wireEndPoint}></span>
+          <img src="/images/assets/FanDuel Jackpot.png" alt="FanDuel Jackpot" />
         </div>
       </div>
       
@@ -105,7 +93,6 @@ const ModifiedSubscriptionPage: React.FC = () => {
             />
           </div>
           
-          {/* Modified section - use WaitlistForm instead of the original form */}
           <h2 className={styles.title}>Join our waitlist for a free $10 on your favorite sportsbook</h2>
           
           <div className={styles.waitlistFormWrapper}>
@@ -119,17 +106,15 @@ const ModifiedSubscriptionPage: React.FC = () => {
             Turn spare change into winnings with SideBet! Sign up to get early access.
           </p>
           
-          {/* Partner Logos with wrapper for wires */}
+          {/* Partner Logos */}
           <div className={styles.partnersSection}>
             <p className={styles.partnersTitle}>Our Marketing Partners</p>
-            <div className={styles.partnerLogosContainer}>
-              <div className={styles.partnerLogos}>
-                {partnerInfo.map((partner, index) => (
-                  <div key={index} className={`${styles.partnerLogo} ${partner.alt === 'DraftKings' ? styles.draftKingsLogo : ''} ${partner.alt === 'FanDuel' ? styles.fanDuelLogo : ''}`}>
-                    <img src={partner.src} alt={partner.alt} />
-                  </div>
-                ))}
-              </div>
+            <div className={styles.partnerLogos}>
+              {partnerInfo.map((partner, index) => (
+                <div key={index} className={styles.partnerLogo}>
+                  <img src={partner.src} alt={partner.alt} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -168,14 +153,12 @@ const ModifiedSubscriptionPage: React.FC = () => {
           {/* Partner Logos */}
           <div className={styles.partnersSection}>
             <p className={styles.partnersTitle}>Our Marketing Partners</p>
-            <div className={styles.partnerLogosContainer}>
-              <div className={styles.partnerLogos}>
-                {partnerInfo.map((partner, index) => (
-                  <div key={index} className={`${styles.partnerLogo} ${partner.alt === 'DraftKings' ? styles.draftKingsLogo : ''} ${partner.alt === 'FanDuel' ? styles.fanDuelLogo : ''}`}>
-                    <img src={partner.src} alt={partner.alt} />
-                  </div>
-                ))}
-              </div>
+            <div className={styles.partnerLogos}>
+              {partnerInfo.map((partner, index) => (
+                <div key={index} className={styles.partnerLogo}>
+                  <img src={partner.src} alt={partner.alt} />
+                </div>
+              ))}
             </div>
           </div>
         </div>

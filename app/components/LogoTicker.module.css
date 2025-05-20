@@ -30,14 +30,12 @@
   width: auto;
   max-width: 120px;
   object-fit: contain;
-  filter: grayscale(100%);
-  opacity: 0.7;
+  opacity: 1;
   transition: all 0.3s ease;
 }
 
 .logo:hover {
-  filter: grayscale(0%);
-  opacity: 1;
+  transform: translateY(-3px);
 }
 
 .logoText {
