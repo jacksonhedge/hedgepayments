@@ -12,9 +12,9 @@ export const metadata: Metadata = {
     siteName: 'SideBet',
     images: [
       {
-        url: '/opengraph-image',
+        url: '/images/social/sidebet-og.png',
         width: 1200,
-        height: 630,
+        height: 1200,
         alt: 'SideBet - Turn Spare Change Into Winnings',
       },
     ],
@@ -25,12 +25,24 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'SideBet - Turn Spare Change Into Winnings',
     description: 'Swipe your card, and in moments, see if your round-ups won you money on your favorite sportsbooks.',
-    images: ['/twitter-image'],
+    images: ['/images/social/sidebet-og.png'],
     creator: '@sidebetapp',
   },
   icons: {
-    icon: '/icon',
-    apple: '/apple-icon',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/sidebet-logo.png', sizes: 'any' },
+    ],
+    apple: {
+      url: '/apple-touch-icon.png',
+      sizes: '180x180',
+    },
+    other: [
+      {
+        rel: 'apple-touch-icon-precomposed',
+        url: '/apple-touch-icon.png',
+      },
+    ],
   },
   alternates: {
     canonical: 'https://www.sidebet.io',
@@ -54,6 +66,12 @@ export default function RootLayout({
         <meta property="fb:app_id" content="your-fb-app-id" />
         <meta name="format-detection" content="telephone=no" />
         <link rel="canonical" href="https://www.sidebet.io" />
+        <link rel="icon" href="/sidebet-logo.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
+        <meta property="og:image" content="https://www.sidebet.io/images/social/sidebet-og.png" />
+        <meta name="twitter:image" content="https://www.sidebet.io/images/social/sidebet-og.png" />
       </head>
       <body>{children}</body>
     </html>
