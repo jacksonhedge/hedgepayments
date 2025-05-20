@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/server';
 
 export const runtime = 'edge';
 
-export const alt = 'SideBet - Turn Spare Change Into Winnings';
+export const alt = 'SideBet - Join the Waitlist for Your Favorite Sportsbooks';
 export const size = {
   width: 1200,
   height: 630,
@@ -38,79 +38,30 @@ export default async function Image() {
           }}
         />
         
-        {/* Main coin */}
+        {/* SideBet Icon - Use actual image URL */}
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            marginBottom: 40,
-          }}
-        >
-          {/* Single Washington coin with poker chip styling */}
-          <div style={{
+            marginBottom: 30,
             width: 300,
             height: 300,
-            borderRadius: '50%',
-            backgroundColor: '#132A45',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            border: '6px solid #1e3c5a',
-            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
             position: 'relative',
-            overflow: 'hidden',
-          }}>
-            {/* Inner circle */}
-            <div style={{
-              width: '85%',
-              height: '85%',
-              borderRadius: '50%',
-              backgroundColor: '#132A45',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              border: '3px solid #1e3c5a',
-              position: 'relative',
-              zIndex: 2,
-            }}>
-              {/* Washington profile silhouette */}
-              <div style={{
-                width: '80%',
-                height: '80%',
-                position: 'absolute',
-                backgroundColor: 'rgba(220, 225, 235, 0.9)',
-                maskImage: 'radial-gradient(circle, transparent 0%, black 50%)',
-                WebkitMaskImage: 'radial-gradient(circle, transparent 0%, black 50%)',
-                clipPath: 'polygon(30% 10%, 65% 10%, 75% 20%, 80% 30%, 75% 40%, 80% 50%, 70% 70%, 60% 80%, 40% 85%, 20% 70%, 25% 40%, 20% 25%)',
-              }}></div>
-            </div>
-            
-            {/* Colored segments */}
-            {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => (
-              <div key={i} style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'transparent',
-                transform: `rotate(${deg}deg)`,
-                zIndex: 1,
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '0%',
-                  right: '50%',
-                  width: '50%',
-                  height: '15%',
-                  backgroundColor: i % 6 === 0 ? '#4AB3FF' : i % 3 === 0 ? '#FF6B4A' : 'transparent',
-                  clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-                }}></div>
-              </div>
-            ))}
-          </div>
+          }}
+        >
+          <img
+            src="https://raw.githubusercontent.com/jacksonhedge/hedgepayments/main/public/images/social/sidebet-og.png"
+            width={300}
+            height={300}
+            alt="SideBet logo"
+            style={{
+              objectFit: 'contain',
+            }}
+          />
         </div>
         
-        {/* Tagline */}
+        {/* Title */}
         <div
           style={{
             fontSize: 60,
@@ -118,36 +69,40 @@ export default async function Image() {
             color: '#132A45',
             marginBottom: 20,
             textAlign: 'center',
-            marginTop: 30,
           }}
         >
           SideBet
         </div>
         
-        {/* Description */}
+        {/* Main CTA */}
         <div
           style={{
             fontSize: 36,
             fontWeight: 'bold',
-            color: '#132A45',
             maxWidth: '80%',
             textAlign: 'center',
             marginBottom: 20,
+            background: 'linear-gradient(90deg, #0070f3, #00d1d1)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            color: 'transparent',
+            padding: '10px 20px',
           }}
         >
-          Turn Spare Change Into Winnings
+          Join the Waitlist for Your Favorite Sportsbooks
         </div>
         
-        {/* Subtitle */}
+        {/* Description */}
         <div
           style={{
             fontSize: 24,
             color: '#444',
             maxWidth: '80%',
             textAlign: 'center',
+            marginBottom: 30,
           }}
         >
-          Swipe your card, and in moments, see if your round-ups won you money on your favorite sportsbooks.
+          Turn spare change into winnings! Automatically round up your purchases and place bets on DraftKings, FanDuel, and more.
         </div>
       </div>
     ),

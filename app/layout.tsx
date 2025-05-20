@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'SideBet - Turn Spare Change Into Winnings',
-  description: 'Swipe your card, and in moments, see if your round-ups won you money on your favorite sportsbooks.',
+  title: 'SideBet - Join the Waitlist for Your Favorite Sportsbooks',
+  description: 'Turn spare change into winnings! Join the waitlist to automatically round up your purchases and place bets on your favorite sportsbooks.',
   metadataBase: new URL('https://www.sidebet.io'),
   openGraph: {
-    title: 'SideBet - Turn Spare Change Into Winnings',
-    description: 'Swipe your card, and in moments, see if your round-ups won you money on your favorite sportsbooks.',
+    title: 'SideBet - Join the Waitlist for Your Favorite Sportsbooks',
+    description: 'Turn spare change into winnings! Join the waitlist to automatically round up your purchases and place bets on your favorite sportsbooks.',
     url: 'https://www.sidebet.io',
     siteName: 'SideBet',
     images: [
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SideBet - Turn Spare Change Into Winnings',
-    description: 'Swipe your card, and in moments, see if your round-ups won you money on your favorite sportsbooks.',
+    title: 'SideBet - Join the Waitlist for Your Favorite Sportsbooks',
+    description: 'Turn spare change into winnings! Join the waitlist to automatically round up your purchases and place bets on your favorite sportsbooks.',
     images: ['/images/social/sidebet-og.png'],
     creator: '@sidebetapp',
   },
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://www.sidebet.io',
   },
-  keywords: ['SideBet', 'betting', 'gambling', 'round-ups', 'DraftKings', 'FanDuel', 'sportsbook'],
+  keywords: ['SideBet', 'betting', 'gambling', 'round-ups', 'DraftKings', 'FanDuel', 'sportsbook', 'waitlist'],
   authors: [{ name: 'SideBet Team' }],
   creator: 'SideBet',
   publisher: 'SideBet',
@@ -72,6 +72,10 @@ export default function RootLayout({
         <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
         <meta property="og:image" content="https://www.sidebet.io/images/social/sidebet-og.png" />
         <meta name="twitter:image" content="https://www.sidebet.io/images/social/sidebet-og.png" />
+        <meta property="og:title" content="SideBet - Join the Waitlist for Your Favorite Sportsbooks" />
+        <meta property="og:description" content="Turn spare change into winnings! Join the waitlist to automatically round up your purchases and place bets on your favorite sportsbooks." />
+        <meta name="twitter:title" content="SideBet - Join the Waitlist for Your Favorite Sportsbooks" />
+        <meta name="twitter:description" content="Turn spare change into winnings! Join the waitlist to automatically round up your purchases and place bets on your favorite sportsbooks." />
       </head>
       <body>{children}</body>
     </html>
