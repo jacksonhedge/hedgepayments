@@ -38,68 +38,114 @@ export default async function Image() {
           }}
         />
         
-        {/* Wire graphics */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 40,
-            left: 40,
-            width: 120,
-            height: 80,
-            border: '3px solid #0070f3',
-            borderRadius: 20,
-            opacity: 0.4,
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            top: 60,
-            right: 80,
-            width: 80,
-            height: 80,
-            border: '3px solid #0070f3',
-            borderRadius: '50%',
-            opacity: 0.4,
-          }}
-        />
-        
-        {/* Logo */}
+        {/* SB Logo - Two Coins */}
         <div
           style={{
             display: 'flex',
+            justifyContent: 'center',
             alignItems: 'center',
             marginBottom: 40,
           }}
         >
-          <img
-            src="https://raw.githubusercontent.com/jacksonhedge/hedgepayments/main/public/favicon/sidebet-icon.svg"
-            width={100}
-            height={100}
-            alt="SideBet Logo"
-            style={{ marginRight: 24 }}
-          />
-          <div
-            style={{
-              fontSize: 72,
-              fontWeight: 'bold',
-              background: 'linear-gradient(90deg, #0070f3, #00d1d1)',
-              backgroundClip: 'text',
-              color: 'transparent',
-            }}
-          >
-            SideBet
+          {/* First coin - Washington profile */}
+          <div style={{
+            width: 300,
+            height: 300,
+            borderRadius: '50%',
+            backgroundColor: '#132A45',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            border: '10px solid #213E65',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+            marginRight: -40,
+            position: 'relative',
+            zIndex: 1,
+          }}>
+            <div style={{
+              width: '80%',
+              height: '80%',
+              borderRadius: '50%',
+              backgroundColor: '#132A45',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              border: '2px solid #213E65',
+            }}>
+              {/* Simplified profile silhouette in light color */}
+              <div style={{
+                width: '70%',
+                height: '75%',
+                borderRadius: '40% 40% 40% 40% / 50% 50% 50% 50%',
+                backgroundColor: 'rgba(200, 215, 230, 0.85)',
+                transform: 'rotate(-15deg)',
+                position: 'relative',
+              }}></div>
+            </div>
+          </div>
+          
+          {/* Second coin - SB chip */}
+          <div style={{
+            width: 300,
+            height: 300,
+            borderRadius: '50%',
+            backgroundColor: '#132A45',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            border: '10px solid #213E65',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+            position: 'relative',
+          }}>
+            <div style={{
+              width: '80%',
+              height: '80%',
+              borderRadius: '50%',
+              backgroundColor: '#132A45',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'relative',
+              border: '2px solid #213E65',
+            }}>
+              {/* SB Text */}
+              <div style={{
+                fontSize: 120,
+                fontWeight: 'bold',
+                color: 'white',
+                textAlign: 'center',
+                letterSpacing: '-2px',
+              }}>
+                SB
+              </div>
+              
+              {/* Colored segments */}
+              {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => (
+                <div key={i} style={{
+                  position: 'absolute',
+                  width: '30%',
+                  height: '6%',
+                  backgroundColor: i % 3 === 0 ? '#4AB3FF' : i % 3 === 1 ? '#FF6B4A' : 'transparent',
+                  transformOrigin: 'center right',
+                  transform: `rotate(${deg}deg)`,
+                  right: '10%',
+                  top: '47%',
+                  borderRadius: '2px',
+                }}></div>
+              ))}
+            </div>
           </div>
         </div>
         
         {/* Tagline */}
         <div
           style={{
-            fontSize: 36,
+            fontSize: 40,
             fontWeight: 'bold',
-            color: '#111',
+            color: '#132A45',
             marginBottom: 20,
             textAlign: 'center',
+            marginTop: 30,
           }}
         >
           Turn Spare Change Into Winnings
@@ -108,35 +154,14 @@ export default async function Image() {
         {/* Description */}
         <div
           style={{
-            fontSize: 24,
-            color: '#555',
+            fontSize: 28,
+            color: '#444',
             maxWidth: '80%',
             textAlign: 'center',
-            marginBottom: 40,
+            marginBottom: 30,
           }}
         >
           Swipe your card, and in moments, see if your round-ups won you money on your favorite sportsbooks.
-        </div>
-        
-        {/* Partner logos */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 40,
-          }}
-        >
-          <img
-            src="https://raw.githubusercontent.com/jacksonhedge/hedgepayments/main/public/images/assets/DraftKings%20Round-Ups%20TRANSPARENT.png"
-            height={60}
-            alt="DraftKings"
-          />
-          <img
-            src="https://raw.githubusercontent.com/jacksonhedge/hedgepayments/main/public/images/assets/FanDuel.png"
-            height={60}
-            alt="FanDuel"
-          />
         </div>
       </div>
     ),
