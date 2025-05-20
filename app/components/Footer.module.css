@@ -1,87 +1,107 @@
-.footer {
-  background-color: #f8f9fa;
-  padding: 4rem 0 2rem;
-  border-top: 1px solid #eaeaea;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+.footerContainer {
+  background-color: #132A45; /* Dark Naval Blue */
+  color: #E0E0E0; /* Light Gray */
+  padding: 40px 20px;
+  font-family: 'Inter', sans-serif; /* Using a common sans-serif font */
 }
 
 .footerContent {
   display: flex;
   flex-wrap: wrap;
-  gap: 3rem;
-  margin-bottom: 3rem;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.footerBrand {
+.footerSection {
   flex: 1;
-  min-width: 240px;
+  min-width: 200px;
+  margin-bottom: 30px;
+  padding: 0 15px;
 }
 
-.footerLogo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  color: var(--primary-color);
+.footerHeading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4AB3FF; /* Light Blue Accent */
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.footerTagline {
-  color: #666;
+.footerText {
+  font-size: 0.9rem;
   line-height: 1.6;
+  color: #B0B0B0; /* Medium Gray */
 }
 
 .footerLinks {
-  flex: 2;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerLinks li {
+  margin-bottom: 10px;
+}
+
+.footerLink {
+  color: #B0B0B0; /* Medium Gray */
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footerLink:hover,
+.footerLink:focus {
+  color: #FFFFFF; /* White */
+  text-decoration: underline;
+}
+
+.socialIcons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  gap: 15px;
 }
 
-.linkColumn {
-  min-width: 160px;
+.socialIcon {
+  color: #B0B0B0; /* Medium Gray */
+  font-size: 1.3rem; /* Adjust as needed */
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-.linkTitle {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 1.25rem;
-  color: var(--text-color);
-}
-
-.link {
-  display: block;
-  color: #666;
-  margin-bottom: 0.75rem;
-  transition: color 0.2s ease;
-}
-
-.link:hover {
-  color: var(--primary-color);
+.socialIcon:hover,
+.socialIcon:focus {
+  color: #4AB3FF; /* Light Blue Accent */
 }
 
 .footerBottom {
-  padding-top: 2rem;
-  border-top: 1px solid #eaeaea;
   text-align: center;
+  padding-top: 30px;
+  margin-top: 30px;
+  border-top: 1px solid #2A4460; /* Slightly lighter than background */
+  font-size: 0.8rem;
+  color: #808080; /* Darker Gray */
 }
 
-.copyright {
-  color: #888;
-  font-size: 0.875rem;
+.footerBottom p {
+  margin: 5px 0;
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .footerContent {
     flex-direction: column;
-    gap: 2rem;
+    align-items: center;
+    text-align: center;
   }
-  
-  .footerLinks {
-    flex-direction: column;
-    gap: 2rem;
+
+  .footerSection {
+    min-width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .socialIcons {
+    justify-content: center;
   }
 }
