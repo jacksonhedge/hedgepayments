@@ -1,6 +1,8 @@
 // emailService.ts
 // This file contains email notification functionality for the waitlist
 
+import { sendEmail, sendBulkEmail, addToContactList, sendSMS } from './sendgrid';
+
 type WaitlistUser = {
   name: string;
   email: string;
@@ -16,32 +18,71 @@ type WaitlistUser = {
  * @returns Promise<boolean> Success status of the email sending operation
  */
 export async function sendWaitlistConfirmation(user: WaitlistUser): Promise<boolean> {
-  // In a production environment, you would integrate with an email service provider 
-  // like SendGrid, Mailchimp, AWS SES, etc.
-  
-  // This is a mock implementation for demonstration
   try {
-    console.log(`
-      MOCK EMAIL SERVICE:
-      ------------------
-      To: ${user.email}
-      Subject: Welcome to the SideBet Waitlist!
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background-color: #1a1a1a; color: white; padding: 20px; text-align: center; }
+          .content { padding: 20px; background-color: #f4f4f4; }
+          .button { display: inline-block; padding: 12px 24px; background-color: #ff6b6b; color: white; text-decoration: none; border-radius: 5px; margin-top: 20px; }
+          .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>Welcome to SideBet!</h1>
+          </div>
+          <div class="content">
+            <h2>Hey ${user.name}! 🎰</h2>
+            <p>Thank you for joining the SideBet waitlist! We're thrilled to have you as part of our exclusive community.</p>
+            <p>You're now on the list to be among the first to experience SideBet when we launch. We'll notify you as soon as we're ready!</p>
+            <h3>What's SideBet?</h3>
+            <p>With SideBet, you can round up your spare change from everyday purchases and put it towards your favorite casino games. Every 10¢ could win you thousands!</p>
+            <h3>Your Selected Casinos:</h3>
+            <ul>
+              ${user.selectedCasinos.map(casino => `<li>${casino}</li>`).join('')}
+            </ul>
+            ${user.referralCode ? `
+            <h3>Your Referral Code: <strong>${user.referralCode}</strong></h3>
+            <p>Share this code with friends to move up the waitlist!</p>
+            ` : ''}
+          </div>
+          <div class="footer">
+            <p>&copy; 2025 SideBet. All rights reserved.</p>
+            <p>You're receiving this email because you signed up for the SideBet waitlist.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    const text = `
+      Hey ${user.name}!
       
-      Email content:
-      Dear ${user.name},
+      Thank you for joining the SideBet waitlist! We're thrilled to have you as part of our exclusive community.
       
-      Thank you for joining the SideBet waitlist! We're excited to have you as part of our 
-      exclusive community. We'll notify you as soon as SideBet is ready to launch.
+      You're now on the list to be among the first to experience SideBet when we launch.
       
-      With SideBet, you can round up your spare change from everyday purchases and
-      put it towards your favorite casino games. Every 10¢ could win you thousands!
+      With SideBet, you can round up your spare change from everyday purchases and put it towards your favorite casino games.
       
-      Stay tuned,
+      Your selected casinos: ${user.selectedCasinos.join(', ')}
+      ${user.referralCode ? `Your referral code: ${user.referralCode}` : ''}
+      
+      Stay tuned!
       The SideBet Team
-    `);
-    
-    // Return true to simulate successful email sending
-    return true;
+    `;
+
+    return await sendEmail({
+      to: user.email,
+      subject: 'Welcome to the SideBet Waitlist! 🎰',
+      text: text.trim(),
+      html
+    });
   } catch (error) {
     console.error('Error sending waitlist confirmation email:', error);
     return false;
@@ -86,26 +127,45 @@ export async function subscribeToWaitlist(user: WaitlistUser): Promise<boolean> 
  * 
  * @param subject The email subject
  * @param message The email message
+ * @param recipients Array of email addresses
  * @returns Promise<boolean> Success status
  */
-export async function notifyWaitlistUsers(subject: string, message: string): Promise<boolean> {
-  // In a production environment, you would retrieve all subscribers from your database
-  // and send them an email via your email service provider
-  
-  // Mock implementation
+export async function notifyWaitlistUsers(subject: string, message: string, recipients: string[]): Promise<boolean> {
   try {
-    console.log(`
-      MOCK BULK EMAIL:
-      --------------
-      Subject: ${subject}
-      
-      Message:
-      ${message}
-      
-      This would be sent to all waitlist subscribers.
-    `);
-    
-    return true;
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background-color: #1a1a1a; color: white; padding: 20px; text-align: center; }
+          .content { padding: 20px; background-color: #f4f4f4; }
+          .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>SideBet Update</h1>
+          </div>
+          <div class="content">
+            ${message.replace(/\n/g, '<br>')}
+          </div>
+          <div class="footer">
+            <p>&copy; 2025 SideBet. All rights reserved.</p>
+            <p>You're receiving this email because you're on the SideBet waitlist.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    return await sendBulkEmail(recipients, {
+      subject,
+      text: message,
+      html
+    });
   } catch (error) {
     console.error('Error sending bulk notification:', error);
     return false;
@@ -123,4 +183,45 @@ export async function getWaitlistCount(): Promise<number> {
   
   // Mock implementation with random number between 500-600
   return Promise.resolve(Math.floor(Math.random() * 100) + 500);
+}
+
+/**
+ * Send SMS notification to a user
+ * 
+ * @param phoneNumber The user's phone number (with country code, e.g., +1234567890)
+ * @param message The SMS message
+ * @returns Promise<boolean> Success status
+ */
+export async function sendWaitlistSMS(phoneNumber: string, message: string): Promise<boolean> {
+  try {
+    return await sendSMS({
+      to: phoneNumber,
+      body: message
+    });
+  } catch (error) {
+    console.error('Error sending SMS:', error);
+    return false;
+  }
+}
+
+/**
+ * Add user to SendGrid marketing list
+ * 
+ * @param user The user to add
+ * @param listId The SendGrid list ID
+ * @returns Promise<boolean> Success status
+ */
+export async function addUserToMarketingList(user: WaitlistUser, listId: string): Promise<boolean> {
+  try {
+    return await addToContactList(user.email, listId, {
+      first_name: user.name.split(' ')[0],
+      last_name: user.name.split(' ').slice(1).join(' '),
+      state: user.state,
+      selected_casinos: user.selectedCasinos.join(', '),
+      referral_code: user.referralCode
+    });
+  } catch (error) {
+    console.error('Error adding user to marketing list:', error);
+    return false;
+  }
 }

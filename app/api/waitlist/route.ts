@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
+import { sendWaitlistConfirmation, addUserToMarketingList } from '../../utils/emailService';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -83,6 +84,32 @@ export async function POST(request: NextRequest) {
     if (insertError) {
       console.error('Error creating waitlist record:', insertError);
       throw insertError;
+    }
+
+    // Send welcome email
+    try {
+      await sendWaitlistConfirmation({
+        name: email.split('@')[0], // Use email prefix as name if not provided
+        email,
+        state: '', // You might want to add state to the form
+        selectedCasinos: sportsbooks,
+        referralCode: userReferralCode
+      });
+
+      // Add to SendGrid marketing list if configured
+      const marketingListId = process.env.SENDGRID_MARKETING_LIST_ID;
+      if (marketingListId) {
+        await addUserToMarketingList({
+          name: email.split('@')[0],
+          email,
+          state: '',
+          selectedCasinos: sportsbooks,
+          referralCode: userReferralCode
+        }, marketingListId);
+      }
+    } catch (emailError) {
+      console.error('Error sending welcome email:', emailError);
+      // Don't fail the request if email fails
     }
 
     // Return success with the user's own referral code

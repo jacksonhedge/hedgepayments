@@ -1,6 +1,7 @@
 # Dependencies
 node_modules
 /node_modules/
+docs/node_modules/
 /.pnp
 .pnp.js
 
@@ -33,3 +34,4 @@ next-env.d.ts
 # Temp files
 tmp_backup/
 .gitignore.bak
+.env.local

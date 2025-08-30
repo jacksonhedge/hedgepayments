@@ -1,0 +1,30 @@
+{
+  "name": "@hedge/sdk-core",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "test": "jest",
+    "generate:client": "openapi-generator generate -i ../docs/api-spec.yaml -g typescript-axios -o ./src/generated"
+  },
+  "dependencies": {
+    "@hedge/shared": "^1.0.0",
+    "axios": "^1.4.0",
+    "eventemitter3": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "typescript": "^5.1.6",
+    "jest": "^29.6.1",
+    "@types/jest": "^29.5.3",
+    "@openapitools/openapi-generator-cli": "^2.7.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

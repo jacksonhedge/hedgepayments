@@ -1,0 +1,434 @@
+---
+title: 'Quickstart'
+description: 'Start accepting round-ups in under 5 minutes'
+---
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+<CardGroup cols={2}>
+  <Card title="Hedge Pay Account" icon="user">
+    Sign up at [dashboard.hedgepay.com](https://dashboard.hedgepay.com)
+  </Card>
+  <Card title="API Credentials" icon="key">
+    Get your API key and Partner ID from the dashboard
+  </Card>
+</CardGroup>
+
+## Installation
+
+Choose your preferred SDK:
+
+<Tabs>
+  <Tab title="JavaScript/TypeScript">
+    ```bash
+    npm install @hedge/sdk-core
+    # or
+    yarn add @hedge/sdk-core
+    ```
+  </Tab>
+  <Tab title="React">
+    ```bash
+    npm install @hedge/sdk-react @hedge/sdk-core
+    # or
+    yarn add @hedge/sdk-react @hedge/sdk-core
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```bash
+    pip install hedge-roundups
+    ```
+  </Tab>
+  <Tab title="cURL">
+    No installation needed - use any HTTP client
+  </Tab>
+</Tabs>
+
+## Initialize the SDK
+
+<CodeGroup>
+
+```javascript JavaScript
+import { HedgeSDK } from '@hedge/sdk-core';
+
+const hedge = new HedgeSDK({
+  apiKey: process.env.HEDGE_API_KEY,
+  partnerId: process.env.HEDGE_PARTNER_ID,
+  environment: 'sandbox' // or 'production'
+});
+
+// Authenticate
+await hedge.authenticate();
+```
+
+```python Python
+from hedge_roundups import HedgeClient
+
+hedge = HedgeClient(
+    api_key=os.environ['HEDGE_API_KEY'],
+    partner_id=os.environ['HEDGE_PARTNER_ID'],
+    environment='sandbox'  # or 'production'
+)
+
+# Authentication is handled automatically
+```
+
+```bash cURL
+# Set your credentials
+export HEDGE_API_KEY="your-api-key"
+export HEDGE_PARTNER_ID="your-partner-id"
+
+# Generate access token
+curl -X POST https://api-sandbox.hedgepay.com/v1/auth/token \
+  -H "Content-Type: application/json" \
+  -d '{
+    "api_key": "'$HEDGE_API_KEY'",
+    "partner_id": "'$HEDGE_PARTNER_ID'"
+  }'
+```
+
+</CodeGroup>
+
+## Step 1: Create a User
+
+Every round-up account needs a user. Create one for your customer:
+
+<CodeGroup>
+
+```javascript JavaScript
+const user = await hedge.users.create({
+  email: 'customer@example.com',
+  firstName: 'Jane',
+  lastName: 'Smith',
+  partnerId: 'your-partner-id',
+  externalId: 'your-internal-user-id' // Optional
+});
+
+console.log('User created:', user.id);
+```
+
+```python Python
+user = hedge.users.create(
+    email='customer@example.com',
+    first_name='Jane',
+    last_name='Smith',
+    partner_id='your-partner-id',
+    external_id='your-internal-user-id'  # Optional
+)
+
+print(f'User created: {user.id}')
+```
+
+```bash cURL
+curl -X POST https://api-sandbox.hedgepay.com/v1/users \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "customer@example.com",
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "partner_id": "your-partner-id"
+  }'
+```
+
+</CodeGroup>
+
+## Step 2: Connect a Bank Account
+
+Generate a link token for your user to connect their bank account:
+
+<CodeGroup>
+
+```javascript JavaScript
+// Generate link token
+const { linkToken } = await hedge.accounts.connect(user.id);
+
+// Use this token with our UI component or build your own
+// The user will be redirected to connect their bank
+```
+
+```python Python
+# Generate link token
+link_response = hedge.accounts.connect(user.id)
+link_token = link_response['link_token']
+
+# Use this token with our UI component or build your own
+```
+
+```bash cURL
+curl -X POST https://api-sandbox.hedgepay.com/v1/users/$USER_ID/accounts/connect \
+  -H "Authorization: Bearer $ACCESS_TOKEN"
+```
+
+</CodeGroup>
+
+<Note>
+  For React applications, use our pre-built `<BankConnection>` component for the smoothest integration
+</Note>
+
+## Step 3: Configure Round-up Settings
+
+Set up how round-ups should work for this user:
+
+<CodeGroup>
+
+```javascript JavaScript
+const settings = await hedge.roundups.updateSettings(user.id, {
+  enabled: true,
+  multiplier: 1,        // 1x, 2x, 3x, or 5x
+  maxRoundupAmount: 5,  // Cap at $5 per transaction
+  destinationAccountId: 'dest-account-id'
+});
+
+console.log('Round-ups enabled:', settings.enabled);
+```
+
+```python Python
+settings = hedge.roundups.update_settings(
+    user_id=user.id,
+    enabled=True,
+    multiplier=1,        # 1x, 2x, 3x, or 5x
+    max_roundup_amount=5, # Cap at $5 per transaction
+    destination_account_id='dest-account-id'
+)
+
+print(f'Round-ups enabled: {settings["enabled"]}')
+```
+
+```bash cURL
+curl -X PUT https://api-sandbox.hedgepay.com/v1/users/$USER_ID/roundup-settings \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "enabled": true,
+    "multiplier": 1,
+    "max_roundup_amount": 5
+  }'
+```
+
+</CodeGroup>
+
+## Step 4: Process a Transaction
+
+When a transaction occurs, calculate and process the round-up:
+
+<CodeGroup>
+
+```javascript JavaScript
+// Process a $4.25 purchase
+const transaction = await hedge.transactions.process({
+  userId: user.id,
+  amount: 4.25,
+  merchantName: 'Coffee Shop',
+  transactionId: 'txn-123'
+});
+
+// Round-up amount: $0.75 (rounds to $5.00)
+console.log('Round-up amount:', transaction.roundupAmount);
+```
+
+```python Python
+# Process a $4.25 purchase
+transaction = hedge.transactions.process(
+    user_id=user.id,
+    amount=4.25,
+    merchant_name='Coffee Shop',
+    transaction_id='txn-123'
+)
+
+# Round-up amount: $0.75 (rounds to $5.00)
+print(f'Round-up amount: {transaction["roundup_amount"]}')
+```
+
+```bash cURL
+curl -X POST https://api-sandbox.hedgepay.com/v1/transactions/process \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": "'$USER_ID'",
+    "amount": 4.25,
+    "merchant_name": "Coffee Shop",
+    "transaction_id": "txn-123"
+  }'
+```
+
+</CodeGroup>
+
+## Step 5: Listen for Webhooks
+
+Set up webhooks to receive real-time updates:
+
+<CodeGroup>
+
+```javascript JavaScript
+// Register webhook endpoint
+await hedge.webhooks.register({
+  url: 'https://your-app.com/webhooks/hedge',
+  events: ['transfer.completed', 'transfer.failed', 'roundup.processed']
+});
+
+// Handle webhook in your server
+app.post('/webhooks/hedge', (req, res) => {
+  const signature = req.headers['x-hedge-signature'];
+  
+  if (hedge.webhooks.verify(req.body, signature)) {
+    const { event, data } = req.body;
+    
+    switch(event) {
+      case 'transfer.completed':
+        console.log('Transfer completed:', data.transferId);
+        break;
+      case 'roundup.processed':
+        console.log('Round-up processed:', data.amount);
+        break;
+    }
+    
+    res.status(200).send('OK');
+  } else {
+    res.status(401).send('Invalid signature');
+  }
+});
+```
+
+```python Python
+# Register webhook endpoint
+hedge.webhooks.register(
+    url='https://your-app.com/webhooks/hedge',
+    events=['transfer.completed', 'transfer.failed', 'roundup.processed']
+)
+
+# Handle webhook in your server (Flask example)
+@app.route('/webhooks/hedge', methods=['POST'])
+def handle_webhook():
+    signature = request.headers.get('x-hedge-signature')
+    
+    if hedge.webhooks.verify(request.data, signature):
+        data = request.json
+        event = data['event']
+        
+        if event == 'transfer.completed':
+            print(f'Transfer completed: {data["data"]["transfer_id"]}')
+        elif event == 'roundup.processed':
+            print(f'Round-up processed: {data["data"]["amount"]}')
+        
+        return 'OK', 200
+    else:
+        return 'Invalid signature', 401
+```
+
+</CodeGroup>
+
+## Complete React Example
+
+Here's a full React component with round-ups:
+
+```jsx
+import React, { useState } from 'react';
+import { 
+  HedgeProvider, 
+  RoundupSettings, 
+  BankConnection,
+  useHedge 
+} from '@hedge/sdk-react';
+
+function RoundupApp() {
+  const { user, createUser, isLoading } = useHedge();
+  const [email, setEmail] = useState('');
+
+  const handleSignup = async () => {
+    await createUser({
+      email,
+      firstName: 'John',
+      lastName: 'Doe'
+    });
+  };
+
+  if (!user) {
+    return (
+      <div>
+        <input 
+          type="email" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter email"
+        />
+        <button onClick={handleSignup} disabled={isLoading}>
+          Sign Up for Round-ups
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <h2>Welcome, {user.firstName}!</h2>
+      
+      <BankConnection 
+        userId={user.id}
+        onSuccess={(account) => {
+          console.log('Bank connected:', account);
+        }}
+      />
+      
+      <RoundupSettings 
+        userId={user.id}
+        theme="minimal"
+      />
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <HedgeProvider 
+      apiKey={process.env.REACT_APP_HEDGE_API_KEY}
+      partnerId={process.env.REACT_APP_HEDGE_PARTNER_ID}
+    >
+      <RoundupApp />
+    </HedgeProvider>
+  );
+}
+```
+
+## Testing in Sandbox
+
+<Info>
+  The sandbox environment provides test bank accounts and simulated transactions. Use these test credentials:
+  - Bank: Test Bank
+  - Username: `user_good`
+  - Password: `pass_good`
+</Info>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference/introduction"
+  >
+    Explore all available endpoints
+  </Card>
+  <Card
+    title="Webhook Events"
+    icon="webhook"
+    href="/guides/handling-webhooks"
+  >
+    Learn about webhook events
+  </Card>
+  <Card
+    title="Going to Production"
+    icon="rocket"
+    href="/guides/going-to-production"
+  >
+    Production deployment checklist
+  </Card>
+  <Card
+    title="Security Best Practices"
+    icon="shield"
+    href="/guides/security/best-practices"
+  >
+    Secure your integration
+  </Card>
+</CardGroup>

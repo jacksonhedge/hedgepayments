@@ -18,9 +18,6 @@ export default function Home() {
     <main>
       <ModifiedSubscriptionPage />
       <PartnerLogos logos={partnerLogos} />
-      <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f8f9fa' }}>
-        <p style={{ margin: 0, color: '#555', fontSize: '14px' }}>Copyright, Hedge, Inc. 2025</p>
-      </div>
       <JackpotDisplay />
     </main>
   )

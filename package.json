@@ -2,9 +2,16 @@
   "name": "hedgepayments-website",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "packages/*",
+    "docs"
+  ],
   "scripts": {
     "dev": "next dev --port 3000",
+    "dev:api": "cd packages/api && npm run dev",
+    "dev:docs": "cd docs && npm run dev",
     "build": "next build",
+    "build:all": "npm run build && cd packages/api && npm run build",
     "start": "next start --port 3000",
     "lint": "next lint",
     "clean": "rm -rf .next node_modules package-lock.json"
@@ -14,9 +21,11 @@
   "license": "ISC",
   "description": "Website for Hedge Payments",
   "dependencies": {
+    "@sendgrid/client": "^8.1.5",
+    "@sendgrid/mail": "^8.1.5",
     "@supabase/supabase-js": "^1.35.7",
     "encoding": "^0.1.13",
-    "next": "^13.4.10",
+    "next": "^14.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

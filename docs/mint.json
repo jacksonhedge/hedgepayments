@@ -1,0 +1,246 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Hedge Pay Round-ups API",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#00D395",
+    "light": "#4DFFD2",
+    "dark": "#00A876",
+    "background": {
+      "dark": "#0F0F0F",
+      "light": "#FFFFFF"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:support@hedgepay.com"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://dashboard.hedgepay.com"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    },
+    {
+      "name": "SDKs",
+      "url": "sdks"
+    },
+    {
+      "name": "Guides",
+      "url": "guides"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Documentation",
+      "icon": "book-open-cover",
+      "url": "https://docs.hedgepay.com"
+    },
+    {
+      "name": "Community",
+      "icon": "discord",
+      "url": "https://discord.gg/hedgepay"
+    },
+    {
+      "name": "Blog",
+      "icon": "newspaper",
+      "url": "https://hedgepay.com/blog"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": [
+        "introduction",
+        "quickstart",
+        "authentication",
+        "environments"
+      ]
+    },
+    {
+      "group": "Core Concepts",
+      "pages": [
+        "concepts/round-ups",
+        "concepts/partners",
+        "concepts/providers",
+        "concepts/webhooks"
+      ]
+    },
+    {
+      "group": "API Documentation",
+      "pages": [
+        "api-reference/introduction"
+      ]
+    },
+    {
+      "group": "Authentication",
+      "pages": [
+        "api-reference/auth/generate-token",
+        "api-reference/auth/refresh-token",
+        "api-reference/auth/revoke-token"
+      ]
+    },
+    {
+      "group": "Users",
+      "pages": [
+        "api-reference/users/create-user",
+        "api-reference/users/get-user",
+        "api-reference/users/update-user",
+        "api-reference/users/delete-user",
+        "api-reference/users/list-users"
+      ]
+    },
+    {
+      "group": "Bank Accounts",
+      "pages": [
+        "api-reference/accounts/create-link-token",
+        "api-reference/accounts/exchange-public-token",
+        "api-reference/accounts/list-accounts",
+        "api-reference/accounts/get-account",
+        "api-reference/accounts/remove-account",
+        "api-reference/accounts/get-balance"
+      ]
+    },
+    {
+      "group": "Round-ups",
+      "pages": [
+        "api-reference/roundups/get-settings",
+        "api-reference/roundups/update-settings",
+        "api-reference/roundups/enable",
+        "api-reference/roundups/disable",
+        "api-reference/roundups/calculate",
+        "api-reference/roundups/get-history"
+      ]
+    },
+    {
+      "group": "Transfers",
+      "pages": [
+        "api-reference/transfers/initiate",
+        "api-reference/transfers/get-transfer",
+        "api-reference/transfers/list-transfers",
+        "api-reference/transfers/cancel",
+        "api-reference/transfers/get-status"
+      ]
+    },
+    {
+      "group": "Webhooks",
+      "pages": [
+        "api-reference/webhooks/register",
+        "api-reference/webhooks/update",
+        "api-reference/webhooks/delete",
+        "api-reference/webhooks/list",
+        "api-reference/webhooks/test"
+      ]
+    },
+    {
+      "group": "JavaScript/TypeScript",
+      "pages": [
+        "sdks/javascript/installation",
+        "sdks/javascript/quickstart",
+        "sdks/javascript/authentication",
+        "sdks/javascript/users",
+        "sdks/javascript/accounts",
+        "sdks/javascript/roundups",
+        "sdks/javascript/transfers",
+        "sdks/javascript/webhooks",
+        "sdks/javascript/error-handling"
+      ]
+    },
+    {
+      "group": "React",
+      "pages": [
+        "sdks/react/installation",
+        "sdks/react/provider",
+        "sdks/react/hooks",
+        "sdks/react/components",
+        "sdks/react/theming",
+        "sdks/react/examples"
+      ]
+    },
+    {
+      "group": "Python",
+      "pages": [
+        "sdks/python/installation",
+        "sdks/python/quickstart",
+        "sdks/python/examples"
+      ]
+    },
+    {
+      "group": "Integration Guides",
+      "pages": [
+        "guides/partner-onboarding",
+        "guides/bank-connection-flow",
+        "guides/implementing-roundups",
+        "guides/handling-webhooks",
+        "guides/testing-sandbox",
+        "guides/going-to-production"
+      ]
+    },
+    {
+      "group": "Provider Guides",
+      "pages": [
+        "guides/providers/meld",
+        "guides/providers/plaid",
+        "guides/providers/dwolla",
+        "guides/providers/stripe"
+      ]
+    },
+    {
+      "group": "Security",
+      "pages": [
+        "guides/security/best-practices",
+        "guides/security/pci-compliance",
+        "guides/security/data-encryption",
+        "guides/security/api-keys"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://twitter.com/hedgepay",
+    "github": "https://github.com/hedgepay",
+    "linkedin": "https://www.linkedin.com/company/hedgepay"
+  },
+  "api": {
+    "baseUrl": "https://api.hedgepay.com",
+    "auth": {
+      "method": "bearer"
+    },
+    "playground": {
+      "mode": "show"
+    }
+  },
+  "openapi": [
+    "/api-reference/openapi.json"
+  ],
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
+  },
+  "search": {
+    "prompt": "Search documentation..."
+  },
+  "metadata": {
+    "og:title": "Hedge Pay Round-ups API Documentation",
+    "og:description": "Transform spare change into investment opportunities with our white-label round-ups platform",
+    "og:image": "https://docs.hedgepay.com/images/og-image.png",
+    "twitter:card": "summary_large_image"
+  },
+  "analytics": {
+    "gtm": {
+      "tagId": "GTM-XXXXXX"
+    }
+  },
+  "versions": [
+    "v1"
+  ]
+}

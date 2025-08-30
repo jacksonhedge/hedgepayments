@@ -7,16 +7,36 @@ import styles from './Navbar.module.css'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
+  const [isDevelopersDropdownOpen, setIsDevelopersDropdownOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleBusinessDropdown = () => {
+    setIsBusinessDropdownOpen(!isBusinessDropdownOpen);
+  };
+
+  const toggleDevelopersDropdown = () => {
+    setIsDevelopersDropdownOpen(!isDevelopersDropdownOpen);
+  };
+
+  const closeAllDropdowns = () => {
+    setIsMenuOpen(false);
+    setIsBusinessDropdownOpen(false);
+    setIsDevelopersDropdownOpen(false);
   };
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          Hedge
+          <img
+            src="/images/round-ups/round-ups-logo.svg"
+            alt="Round-Ups Logo"
+            className={styles.logoImage}
+          />
         </Link>
         
         <div className={styles.menuButton} onClick={toggleMenu}>
@@ -26,24 +46,122 @@ const Navbar = () => {
         </div>
         
         <div className={`${styles.navLinks} ${isMenuOpen ? styles.active : ''}`}>
-          <Link href="/testing" className={styles.navLink} onClick={() => setIsMenuOpen(false)}>
-            App Testing
+          {/* Consumers Link */}
+          <Link href="#offer" className={styles.navLink} onClick={closeAllDropdowns}>
+            For Consumers
           </Link>
-          <Link href="/business-login" className={styles.navLink} onClick={() => setIsMenuOpen(false)}>
-            Login for Business
+
+          {/* For Business Dropdown */}
+          <div className={styles.dropdown}>
+            <button 
+              className={`${styles.navLink} ${styles.dropdownToggle}`}
+              onClick={toggleBusinessDropdown}
+              onMouseEnter={() => setIsBusinessDropdownOpen(true)}
+            >
+              For Business
+              <svg className={styles.chevron} width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M4.427 7.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 7H4.604a.25.25 0 00-.177.427z"/>
+              </svg>
+            </button>
+            <div 
+              className={`${styles.dropdownMenu} ${isBusinessDropdownOpen ? styles.show : ''}`}
+              onMouseLeave={() => setIsBusinessDropdownOpen(false)}
+            >
+              <Link href="/business/overview" className={styles.dropdownItem} onClick={closeAllDropdowns}>
+                <div className={styles.dropdownItemContent}>
+                  <span className={styles.dropdownItemTitle}>Business Solutions</span>
+                  <span className={styles.dropdownItemDesc}>Round-up savings for your customers</span>
+                </div>
+              </Link>
+              <Link href="/business/gaming" className={styles.dropdownItem} onClick={closeAllDropdowns}>
+                <div className={styles.dropdownItemContent}>
+                  <span className={styles.dropdownItemTitle}>Gaming & Sports Betting</span>
+                  <span className={styles.dropdownItemDesc}>Boost engagement with micro-savings</span>
+                </div>
+              </Link>
+              <Link href="/business/banking" className={styles.dropdownItem} onClick={closeAllDropdowns}>
+                <div className={styles.dropdownItemContent}>
+                  <span className={styles.dropdownItemTitle}>Banking & Fintech</span>
+                  <span className={styles.dropdownItemDesc}>White-label savings solutions</span>
+                </div>
+              </Link>
+              <Link href="/business/case-studies" className={styles.dropdownItem} onClick={closeAllDropdowns}>
+                <div className={styles.dropdownItemContent}>
+                  <span className={styles.dropdownItemTitle}>Case Studies</span>
+                  <span className={styles.dropdownItemDesc}>See real results from partners</span>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          {/* Developers Dropdown */}
+          <div className={styles.dropdown}>
+            <button 
+              className={`${styles.navLink} ${styles.dropdownToggle}`}
+              onClick={toggleDevelopersDropdown}
+              onMouseEnter={() => setIsDevelopersDropdownOpen(true)}
+            >
+              Developers
+              <svg className={styles.chevron} width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M4.427 7.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 7H4.604a.25.25 0 00-.177.427z"/>
+              </svg>
+            </button>
+            <div 
+              className={`${styles.dropdownMenu} ${isDevelopersDropdownOpen ? styles.show : ''}`}
+              onMouseLeave={() => setIsDevelopersDropdownOpen(false)}
+            >
+              <Link href="/developers" className={styles.dropdownItem} onClick={closeAllDropdowns}>
+                <div className={styles.dropdownItemContent}>
+                  <span className={styles.dropdownItemTitle}>🚀 API Overview</span>
+                  <span className={styles.dropdownItemDesc}>Get started with Round-Up API</span>
+                </div>
+              </Link>
+              <Link href="/docs" className={styles.dropdownItem} onClick={closeAllDropdowns}>
+                <div className={styles.dropdownItemContent}>
+                  <span className={styles.dropdownItemTitle}>📚 Documentation</span>
+                  <span className={styles.dropdownItemDesc}>Complete API reference & guides</span>
+                </div>
+              </Link>
+              <Link href="/developers/playground" className={styles.dropdownItem} onClick={closeAllDropdowns}>
+                <div className={styles.dropdownItemContent}>
+                  <span className={styles.dropdownItemTitle}>🎮 API Playground</span>
+                  <span className={styles.dropdownItemDesc}>Test endpoints in real-time</span>
+                </div>
+              </Link>
+              <Link href="/developers/mcp" className={styles.dropdownItem} onClick={closeAllDropdowns}>
+                <div className={styles.dropdownItemContent}>
+                  <span className={styles.dropdownItemTitle}>🤖 AI Integration</span>
+                  <span className={styles.dropdownItemDesc}>MCP server for AI agents</span>
+                </div>
+              </Link>
+              <Link href="/developers/examples" className={styles.dropdownItem} onClick={closeAllDropdowns}>
+                <div className={styles.dropdownItemContent}>
+                  <span className={styles.dropdownItemTitle}>💻 Code Examples</span>
+                  <span className={styles.dropdownItemDesc}>SDKs & integration samples</span>
+                </div>
+              </Link>
+              <Link href="/developers/pricing" className={styles.dropdownItem} onClick={closeAllDropdowns}>
+                <div className={styles.dropdownItemContent}>
+                  <span className={styles.dropdownItemTitle}>💰 API Pricing</span>
+                  <span className={styles.dropdownItemDesc}>Flexible usage-based plans</span>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          {/* Partners Link */}
+          <Link href="/partners" className={styles.navLink} onClick={closeAllDropdowns}>
+            Partners
           </Link>
-          <Link href="/user-login" className={styles.navLink} onClick={() => setIsMenuOpen(false)}>
-            Login for Users
+
+          {/* Support Link */}
+          <Link href="#support" className={styles.navLink} onClick={closeAllDropdowns}>
+            Support
           </Link>
-          <Link href="/signup" className={`${styles.navLink} ${styles.signupBtn}`} onClick={() => setIsMenuOpen(false)}>
-            Sign Up
-          </Link>
-          <Link href="/sidebet" className={styles.sidebetButton} onClick={() => setIsMenuOpen(false)}>
-            <img
-              src="/images/sidebet-logo.svg"
-              alt="SideBet by Hedge Payments"
-              className={styles.sidebetLogo}
-            />
+
+          {/* Get Started Button */}
+          <Link href="/developers" className={`${styles.navLink} ${styles.getStartedBtn}`} onClick={closeAllDropdowns}>
+            Get API Key
           </Link>
         </div>
       </div>
