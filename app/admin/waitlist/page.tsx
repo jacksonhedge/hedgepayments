@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, FormEvent } from 'react'
 import styles from './page.module.css'
-import { notifyWaitlistUsers, getWaitlistCount } from '../../utils/emailService'
+import { notifyWaitlistUsers, getWaitlistCount } from '../../utils/clientEmailService'
 
 const WaitlistAdmin = () => {
   const [waitlistCount, setWaitlistCount] = useState<number>(0);

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { notifyWaitlistUsers, sendWaitlistSMS } from '../../../utils/emailService';
-import { sendEmail } from '../../../utils/sendgrid';
+import { notifyWaitlistUsers, sendWaitlistSMS } from '../../../../lib/emailService';
+import { sendEmail } from '../../../../lib/sendgrid';
 import { EMAIL_TEMPLATES, SMS_TEMPLATES, getLaunchAnnouncementData } from '../../../utils/emailTemplates';
 
 // Initialize Supabase client

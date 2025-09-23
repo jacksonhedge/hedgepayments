@@ -1566,7 +1566,9 @@ export default function DemoNewPage() {
                         </div>
                       </div>
                     </div>
-                  ) : activeSettingsSection === 'round-up-interactive' ? (
+                  )}
+
+                  {activeSettingsSection === 'round-up-interactive' ? (
                     /* Round-Up Interactive Tool (shown after intro screens) */
                     <div style={{ 
                       display: 'flex', 
@@ -2693,7 +2695,9 @@ export default function DemoNewPage() {
                     )}
                   </div>
                 </div>
-              ) : (
+              ) : null}
+
+              {showEarnScreen ? (
                 /* Earn $10 Screen */
                 <div style={{ 
                   position: 'absolute',

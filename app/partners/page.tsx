@@ -367,8 +367,8 @@ export default function PartnersPage() {
                         className={styles.partnerCard}
                       >
                         <div className={styles.partnerContent}>
-                          <div className={`${styles.partnerLogo} ${styles[getCategoryColorClass(category.name)]}`}>
-                            <span className={styles.partnerInitials}>
+                          <div>
+                            <span>
                               {getPartnerInitials(partner.name)}
                             </span>
                           </div>

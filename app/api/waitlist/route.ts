@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
-import { sendWaitlistConfirmation, addUserToMarketingList } from '../../utils/emailService';
+import { sendWaitlistConfirmation, addUserToMarketingList } from '../../../lib/emailService';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';

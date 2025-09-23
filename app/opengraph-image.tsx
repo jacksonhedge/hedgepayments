@@ -1,4 +1,4 @@
-import { ImageResponse } from 'next/server';
+import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
@@ -10,7 +10,7 @@ export const size = {
 export const contentType = 'image/png';
 
 export default async function Image() {
-  return new ImageResponse(
+  return new (ImageResponse as any)(
     (
       <div
         style={{

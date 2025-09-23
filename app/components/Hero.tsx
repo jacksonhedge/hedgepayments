@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, ChangeEvent, FormEvent } from 'reac
 import styles from './Hero.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
-import { subscribeToWaitlist, getWaitlistCount } from '../utils/emailService'
+import { subscribeToWaitlist, getWaitlistCount } from '../utils/clientEmailService'
 import { states } from '../utils/statesList'
 import { casinos } from '../utils/casinosList'
 
@@ -167,20 +167,18 @@ const Hero = () => {
       
       try {
         // Subscribe user to waitlist
-        const success = await subscribeToWaitlist({
-          name: formData.name,
-          email: formData.email,
-          state: formData.state,
-          selectedCasinos: formData.selectedCasinos,
-          referralCode: formData.referralCode
-        });
-        
-        if (success) {
+        const result = await subscribeToWaitlist(
+          formData.email,
+          formData.referralCode,
+          formData.selectedCasinos
+        );
+
+        if (result.success) {
           setSubmitSuccess(true);
           // Increment waitlist count locally
           setWaitlistCount(prevCount => prevCount + 1);
-          // Generate and store referral code
-          const newReferralCode = generateReferralCode();
+          // Use referral code from API response
+          const newReferralCode = result.referralCode || generateReferralCode();
           setReferralCode(newReferralCode);
           // Show success popup
           setShowPopup(true);

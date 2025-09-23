@@ -32,11 +32,7 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          <img
-            src="/images/round-ups/round-ups-logo.svg"
-            alt="Round-Ups Logo"
-            className={styles.logoImage}
-          />
+          <span className={styles.logoText}>Hedge Payments</span>
         </Link>
         
         <div className={styles.menuButton} onClick={toggleMenu}>
@@ -46,9 +42,14 @@ const Navbar = () => {
         </div>
         
         <div className={`${styles.navLinks} ${isMenuOpen ? styles.active : ''}`}>
-          {/* Consumers Link */}
-          <Link href="#offer" className={styles.navLink} onClick={closeAllDropdowns}>
-            For Consumers
+          {/* Home Link */}
+          <Link href="/" className={styles.navLink} onClick={closeAllDropdowns}>
+            Home
+          </Link>
+
+          {/* SideBet Link */}
+          <Link href="/sidebet" className={styles.navLink} onClick={closeAllDropdowns}>
+            SideBet
           </Link>
 
           {/* For Business Dropdown */}
@@ -159,10 +160,15 @@ const Navbar = () => {
             Support
           </Link>
 
-          {/* Get Started Button */}
-          <Link href="/developers" className={`${styles.navLink} ${styles.getStartedBtn}`} onClick={closeAllDropdowns}>
-            Get API Key
+          {/* Business Login Button */}
+          <Link href="/business-login" className={`${styles.navLink} ${styles.getStartedBtn}`} onClick={closeAllDropdowns}>
+            Business Login
           </Link>
+
+          {/* Visit Bankroll Button */}
+          <a href="https://bankroll.live" target="_blank" rel="noopener noreferrer" className={`${styles.navLink} ${styles.bankrollBtn}`} onClick={closeAllDropdowns}>
+            Visit Bankroll
+          </a>
         </div>
       </div>
     </nav>

@@ -24,7 +24,7 @@ export default function DemoNewPage() {
   const [multiplier, setMultiplier] = useState('1X');
   const [showImagePicker, setShowImagePicker] = useState(false);
   const [editingScreenIndex, setEditingScreenIndex] = useState(null);
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<any[]>([]);
   const [roundUpProgress, setRoundUpProgress] = useState(0);
   const [prizePicksLineup, setPrizePicksLineup] = useState('lineup-1');
   const [currentDateTime, setCurrentDateTime] = useState(() => {

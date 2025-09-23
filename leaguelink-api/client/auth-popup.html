@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect your ESPN account - LeagueLink</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.1),
+                0 0 0 1px rgba(255,255,255,0.1);
+            width: 100%;
+            max-width: 420px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 32px 32px 24px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .company-name {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            font-weight: 400;
+            margin-top: 8px;
+        }
+
+        .form-container {
+            padding: 32px;
+        }
+
+        .security-notice {
+            background: #f8fffe;
+            border: 1px solid #e6fffa;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .security-icon {
+            background: #10b981;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .security-text {
+            flex: 1;
+        }
+
+        .security-title {
+            font-weight: 600;
+            color: #065f46;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .security-description {
+            font-size: 13px;
+            color: #047857;
+            line-height: 1.4;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            background: #fafafa;
+            color: #111827;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .submit-button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .button-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .success-message {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #16a34a;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer {
+            background: #f9fafb;
+            padding: 20px 32px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .security-features {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        .security-feature {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .security-feature-icon {
+            color: #10b981;
+            font-size: 14px;
+        }
+
+        .powered-by {
+            font-size: 11px;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .step {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: #667eea;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .step.completed {
+            background: #10b981;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+                max-width: none;
+            }
+            
+            .header, .form-container, .footer {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo">🏆</div>
+                    <div class="company-name">LeagueLink</div>
+                </div>
+                <div class="subtitle">Connect your ESPN Fantasy account</div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="step-indicator">
+                <div class="step active" id="step1"></div>
+                <div class="step" id="step2"></div>
+                <div class="step" id="step3"></div>
+            </div>
+
+            <div class="security-notice">
+                <div class="security-icon">🔒</div>
+                <div class="security-text">
+                    <div class="security-title">Bank-level security</div>
+                    <div class="security-description">
+                        Your credentials are encrypted and never stored. We use the same security standards as leading financial institutions.
+                    </div>
+                </div>
+            </div>
+
+            <div id="error-message" class="error-message"></div>
+            <div id="success-message" class="success-message"></div>
+
+            <form id="loginForm" action="#" method="post" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="email" class="form-label">ESPN Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="Enter your ESPN email"
+                        required 
+                        autocomplete="email"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">ESPN Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="Enter your ESPN password"
+                        required 
+                        autocomplete="current-password"
+                    >
+                </div>
+                
+                <button type="submit" class="submit-button" id="submitBtn">
+                    <div class="button-text">
+                        <span id="button-text">Connect ESPN Account</span>
+                        <div class="spinner" id="spinner" style="display: none;"></div>
+                    </div>
+                </button>
+            </form>
+        </div>
+
+        <div class="footer">
+            <div class="security-features">
+                <div class="security-feature">
+                    <span class="security-feature-icon">🔐</span>
+                    <span>256-bit encryption</span>
+                </div>
+                <div class="security-feature">
+                    <span class="security-feature-icon">🛡️</span>
+                    <span>SOC 2 compliant</span>
+                </div>
+                <div class="security-feature">
+                    <span class="security-feature-icon">⚡</span>
+                    <span>Never stored</span>
+                </div>
+            </div>
+            <div class="powered-by">Secured by LeagueLink</div>
+        </div>
+    </div>
+
+    <script>
+        const sessionId = new URLSearchParams(window.location.search).get('session');
+        const form = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('spinner');
+        const buttonText = document.getElementById('button-text');
+        const errorDiv = document.getElementById('error-message');
+        const successDiv = document.getElementById('success-message');
+        
+        let currentStep = 1;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                showError('Please enter both email and password');
+                return;
+            }
+
+            setLoading(true);
+            hideMessages();
+
+            try {
+                const response = await fetch('http://localhost:3000/api/v1/auth/espn/credentials', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        session_id: sessionId,
+                        email: email,
+                        password: password
+                    })
+                });
+
+                const result = await response.json();
+                console.log('Auth response:', result);
+
+                if (result.success) {
+                    updateStep(3);
+                    showSuccess(`Connected successfully! Found ${result.leagues_found} league${result.leagues_found !== 1 ? 's' : ''}.`);
+                    
+                    // Notify parent window
+                    if (window.opener) {
+                        window.opener.postMessage({
+                            type: 'LEAGUELINK_AUTH_SUCCESS',
+                            public_token: result.public_token,
+                            platform: result.platform,
+                            leagues_found: result.leagues_found
+                        }, '*');
+                    }
+                    
+                    // Close popup after delay
+                    setTimeout(() => {
+                        window.close();
+                    }, 2500);
+                    
+                } else {
+                    console.error('Auth failed with result:', result);
+                    if (result.requires_2fa) {
+                        showError('Two-factor authentication is enabled on your ESPN account. Please disable it temporarily and try again.');
+                    } else if (result.error_message) {
+                        showError(`Error: ${result.error_message}`);
+                    } else if (result.error) {
+                        showError(`Error: ${result.error}`);
+                    } else {
+                        showError('Login failed. Please check your credentials.');
+                    }
+                    setLoading(false);
+                }
+
+            } catch (error) {
+                console.error('Auth error:', error);
+                let errorMessage = 'Connection failed. ';
+                if (error.message) {
+                    errorMessage += error.message;
+                } else {
+                    errorMessage += 'Please check your credentials and try again.';
+                }
+                showError(errorMessage);
+                setLoading(false);
+            }
+        });
+
+        function updateStep(step) {
+            for (let i = 1; i <= 3; i++) {
+                const stepEl = document.getElementById(`step${i}`);
+                stepEl.classList.remove('active', 'completed');
+                
+                if (i < step) {
+                    stepEl.classList.add('completed');
+                } else if (i === step) {
+                    stepEl.classList.add('active');
+                }
+            }
+            currentStep = step;
+        }
+
+        function setLoading(loading) {
+            submitBtn.disabled = loading;
+            spinner.style.display = loading ? 'block' : 'none';
+            buttonText.style.display = loading ? 'none' : 'block';
+            
+            if (loading) {
+                updateStep(2);
+            }
+        }
+
+        function showError(message) {
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            successDiv.style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+        }
+
+        function hideMessages() {
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+        }
+
+        // Handle popup being closed
+        window.addEventListener('beforeunload', () => {
+            if (window.opener && currentStep < 3) {
+                window.opener.postMessage({
+                    type: 'LEAGUELINK_AUTH_CANCELLED'
+                }, '*');
+            }
+        });
+    </script>
+</body>
+</html>

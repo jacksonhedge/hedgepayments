@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import styles from './page.module.css'
-import { getWaitlistCount } from '../utils/emailService'
+import { getWaitlistCount } from '../utils/clientEmailService'
 
 const AdminDashboard = () => {
   const [waitlistCount, setWaitlistCount] = useState(0);
