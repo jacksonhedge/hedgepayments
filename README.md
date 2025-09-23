@@ -71,4 +71,4 @@ vercel
 To update the production deployment:
 ```bash
 vercel --prod
-```
+```# Trigger GitHub Pages deployment
