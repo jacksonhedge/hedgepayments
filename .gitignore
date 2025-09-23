@@ -7,7 +7,7 @@ docs/node_modules/
 
 # Next.js
 /.next/
-/out/
+# /out/ - commented out to allow GitHub Pages deployment
 
 # Production
 /build

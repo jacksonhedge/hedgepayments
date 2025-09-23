@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- "SIDE" in light blue -->
+  <text x="120" y="200" font-family="Arial, sans-serif" font-size="180" font-weight="bold" fill="none" stroke="#30c5ff" stroke-width="5">SIDE</text>
+  
+  <!-- "BET" in orange -->
+  <text x="450" y="200" font-family="Arial, sans-serif" font-size="180" font-weight="bold" fill="none" stroke="#ff9900" stroke-width="5">BET</text>
+  
+  <!-- "by Hedge Payments" in green -->
+  <text x="150" y="260" font-family="Arial, sans-serif" font-size="60" font-weight="normal" fill="#4CAF50">by Hedge Payments</text>
+</svg> 
