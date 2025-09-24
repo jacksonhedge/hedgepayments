@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer';
 
 export const metadata: Metadata = {
   title: 'Round-Ups - Join the Waitlist',
@@ -80,9 +78,7 @@ export default function RootLayout({
         <meta name="twitter:description" content="Turn spare change into winnings! Join the waitlist to automatically round up your purchases and play on your favorite platforms." />
       </head>
       <body>
-        <Navbar />
         {children}
-        <Footer />
       </body>
     </html>
   )

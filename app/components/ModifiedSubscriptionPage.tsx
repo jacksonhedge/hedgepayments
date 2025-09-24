@@ -1,16 +1,16 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import styles from './SubscriptionPage.module.css'
 import WaitlistForm from './WaitlistForm'
 
-const ModifiedSubscriptionPage: React.FC = () => {
+const ModifiedSubscriptionPageContent: React.FC = () => {
   const [isSubscribed, setIsSubscribed] = useState(false)
   const [initialReferralCode, setInitialReferralCode] = useState<string>('')
-  
+
   const searchParams = useSearchParams()
-  
+
   useEffect(() => {
     // Check for referral code in URL params
     const refCode = searchParams?.get('ref') || ''
@@ -164,6 +164,14 @@ const ModifiedSubscriptionPage: React.FC = () => {
         </div>
       )}
     </div>
+  )
+}
+
+const ModifiedSubscriptionPage: React.FC = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ModifiedSubscriptionPageContent />
+    </Suspense>
   )
 }
 

@@ -19,17 +19,37 @@
 - Business expense organization
 
 ## 3. HedgePayments / SideBet
-**Type**: Payment Processing Landing Page  
-**Path**: `/Users/jacksonfitzgerald/Documents/hedgepayments-website`  
-**Framework**: Next.js with Tailwind CSS  
-**Database**: Supabase  
-**Email**: SendGrid  
-**Description**: Landing page for SideBet payment processing service  
+**Type**: Payment Processing Landing Page
+**Path**: `/Users/jacksonfitzgerald/Documents/hedgepayments-website`
+**Framework**: Next.js 14 with Tailwind CSS
+**Database**: Supabase
+**Email**: SendGrid
+**Hosting**: GitHub Pages (https://hedgepayments.com)
+**Description**: Modern payment infrastructure landing page
+
+**Key Features**:
+- Static site generation with Next.js
+- Responsive design with Tailwind CSS
+- Automated deployment via GitHub Actions
+- Custom domain with SSL
+
 **Project Structure**:
-- `/app` - Next.js app directory
+- `/app` - Next.js app directory (App Router)
 - `/public` - Static assets
-- `/styles` - CSS styles
-- `/supabase` - Database configuration
+- `/.github/workflows` - CI/CD automation
+- `/out` - Static export directory
+
+**Quick Commands**:
+```bash
+npm run dev -- --port 3001  # Development
+npm run build               # Build static site
+git push origin main        # Deploy (automatic)
+```
+
+**Important Files**:
+- `app/page.tsx` - Main landing page
+- `.github/workflows/deploy.yml` - Deployment config
+- `DEPLOYMENT_SETUP.md` - Complete setup documentation
 
 ## 4. College Casino Tour
 **Type**: Marketing & Outreach Platform  
