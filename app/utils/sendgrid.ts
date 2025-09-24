@@ -49,12 +49,12 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       })
     };
 
-    await sgMail.send(msg);
+    await sgMail.send(msg as any);
     console.log('Email sent successfully to:', options.to);
     return true;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error sending email:', error);
-    if (error.response) {
+    if (error?.response) {
       console.error(error.response.body);
     }
     return false;
@@ -81,12 +81,12 @@ export async function sendBulkEmail(recipients: string[], options: Omit<EmailOpt
       })
     }));
 
-    await sgMail.send(messages);
+    await sgMail.send(messages as any);
     console.log(`Bulk email sent successfully to ${recipients.length} recipients`);
     return true;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error sending bulk email:', error);
-    if (error.response) {
+    if (error?.response) {
       console.error(error.response.body);
     }
     return false;

@@ -23,7 +23,7 @@ export default function DemoNewPage() {
   const [entryMode, setEntryMode] = useState('fanduel-balance');
   const [multiplier, setMultiplier] = useState('1X');
   const [showImagePicker, setShowImagePicker] = useState(false);
-  const [editingScreenIndex, setEditingScreenIndex] = useState(null);
+  const [editingScreenIndex, setEditingScreenIndex] = useState<number | null>(null);
   const [transactions, setTransactions] = useState<any[]>([]);
   const [roundUpProgress, setRoundUpProgress] = useState(0);
   const [prizePicksLineup, setPrizePicksLineup] = useState('lineup-1');
@@ -258,16 +258,16 @@ export default function DemoNewPage() {
       setJackpotEntries(prev => ({
         ...prev,
         [selectedPartner]: {
-          ...(prev[selectedPartner] || {}),
-          '0.10': ((prev[selectedPartner] as any)?.['0.10'] || 0) + entries
+          ...(prev[selectedPartner as keyof typeof prev] || {}),
+          '0.10': ((prev[selectedPartner as keyof typeof prev] as any)?.['0.10'] || 0) + entries
         }
       }));
     }
   };
 
   const getJackpotRevenue = () => {
-    if (!jackpotEntries[selectedPartner]) return 0;
-    return Object.entries(jackpotEntries[selectedPartner]).reduce((total, [entryType, count]) => {
+    if (!jackpotEntries[selectedPartner as keyof typeof jackpotEntries]) return 0;
+    return Object.entries(jackpotEntries[selectedPartner as keyof typeof jackpotEntries]).reduce((total, [entryType, count]) => {
       return total + (parseFloat(entryType) * count);
     }, 0);
   };
@@ -427,7 +427,7 @@ export default function DemoNewPage() {
                     display: 'flex',
                     gap: '8px'
                   }}>
-                    {introScreens.map((_, idx) => (
+                    {introScreens.map((_: any, idx: number) => (
                       <div
                         key={idx}
                         style={{
@@ -479,11 +479,13 @@ export default function DemoNewPage() {
                             if (file) {
                               const reader = new FileReader();
                               reader.onload = (event) => {
-                                const newScreens = [...introScreens];
-                                newScreens[editingScreenIndex].image = event.target?.result as string;
-                                setIntroScreens(newScreens);
-                                setShowImagePicker(false);
-                                // Images are automatically saved via useEffect
+                                if (editingScreenIndex !== null) {
+                                  const newScreens = [...introScreens];
+                                  newScreens[editingScreenIndex].image = event.target?.result as string;
+                                  setIntroScreens(newScreens);
+                                  setShowImagePicker(false);
+                                  // Images are automatically saved via useEffect
+                                }
                               };
                               reader.readAsDataURL(file);
                             }
@@ -502,11 +504,13 @@ export default function DemoNewPage() {
                           <div
                             key={idx}
                             onClick={() => {
-                              const newScreens = [...introScreens];
-                              newScreens[editingScreenIndex].image = imgPath;
-                              setIntroScreens(newScreens);
-                              setShowImagePicker(false);
-                              // Images are automatically saved via useEffect
+                              if (editingScreenIndex !== null) {
+                                const newScreens = [...introScreens];
+                                newScreens[editingScreenIndex].image = imgPath;
+                                setIntroScreens(newScreens);
+                                setShowImagePicker(false);
+                                // Images are automatically saved via useEffect
+                              }
                             }}
                             style={{
                               height: '100px',
@@ -517,7 +521,7 @@ export default function DemoNewPage() {
                               backgroundColor: '#222',
                               borderRadius: '8px',
                               cursor: 'pointer',
-                              border: introScreens[editingScreenIndex].image === imgPath ? '2px solid white' : '2px solid transparent'
+                              border: (editingScreenIndex !== null && introScreens[editingScreenIndex].image === imgPath) ? '2px solid white' : '2px solid transparent'
                             }}
                           />
                         ))}
