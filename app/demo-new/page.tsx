@@ -258,8 +258,8 @@ export default function DemoNewPage() {
       setJackpotEntries(prev => ({
         ...prev,
         [selectedPartner]: {
-          ...prev[selectedPartner],
-          '0.10': (prev[selectedPartner]['0.10'] || 0) + entries
+          ...(prev[selectedPartner] || {}),
+          '0.10': ((prev[selectedPartner] as any)?.['0.10'] || 0) + entries
         }
       }));
     }
