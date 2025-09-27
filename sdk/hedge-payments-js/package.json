@@ -1,0 +1,50 @@
+{
+  "name": "@hedgepayments/sdk",
+  "version": "1.0.0",
+  "description": "Official JavaScript/TypeScript SDK for HedgePayments API",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "jest",
+    "lint": "eslint src"
+  },
+  "keywords": [
+    "payments",
+    "wallet",
+    "fintech",
+    "api",
+    "sdk",
+    "hedgepayments"
+  ],
+  "author": "HedgePayments",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hedgepayments/sdk-js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "eventemitter3": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

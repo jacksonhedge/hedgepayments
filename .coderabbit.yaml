@@ -1,0 +1,161 @@
+# CodeRabbit Configuration for HedgePayments
+# Payment Gateway with MCP Integration
+
+# Review Settings
+reviews:
+  # Enable auto reviews for all pull requests
+  auto_review:
+    enabled: true
+
+  # Review focus areas for payment gateway
+  path_filters:
+    # API and Payment Processing
+    - path: "**/*.{ts,tsx,js,jsx}"
+      instructions: |
+        - Check for secure payment data handling
+        - Verify PCI compliance patterns
+        - Look for proper error handling in payment flows
+        - Ensure sensitive data is never logged
+        - Check for proper API authentication
+        - Review transaction atomicity and rollback handling
+
+    # MCP Server Integration
+    - path: "**/mcp/**"
+      instructions: |
+        - Verify MCP protocol compliance
+        - Check proper tool registration and handling
+        - Review error boundaries for MCP communications
+        - Ensure proper schema validation
+
+    # Security Critical Files
+    - path: "**/{auth,payment,crypto,webhook}/**"
+      level: "critical"
+      instructions: |
+        - Perform thorough security review
+        - Check for SQL injection vulnerabilities
+        - Verify proper input validation
+        - Look for timing attack vulnerabilities
+        - Ensure proper rate limiting
+
+# Language and Framework Settings
+language_specific:
+  javascript:
+    enabled: true
+    eslint:
+      enabled: true
+    node_version: "18"
+
+  typescript:
+    enabled: true
+    tsconfig_path: "./tsconfig.json"
+    strict_mode: true
+
+# Security Checks
+security:
+  # Payment gateway specific security
+  check_secrets: true
+  check_dependencies: true
+
+  # PCI DSS compliance checks
+  patterns:
+    - name: "credit_card_numbers"
+      pattern: '\b(?:\d{4}[\s-]?){3}\d{4}\b'
+      severity: "critical"
+      message: "Potential credit card number found. Never store raw card numbers."
+
+    - name: "api_keys"
+      pattern: '(api[_-]?key|apikey|api_secret)[\s]*[:=][\s]*["\'][\w-]+["\']'
+      severity: "high"
+      message: "API key found in code. Use environment variables."
+
+# Performance Monitoring
+performance:
+  # Payment processing performance
+  bundle_size:
+    enabled: true
+    max_size: "500kb"
+
+  # Database query optimization
+  database:
+    check_n_plus_one: true
+    check_missing_indexes: true
+
+# Code Quality
+quality:
+  # High standards for payment gateway
+  complexity:
+    max_cyclomatic: 10
+    max_cognitive: 15
+
+  duplication:
+    enabled: true
+    min_lines: 20
+
+  test_coverage:
+    enabled: true
+    min_coverage: 80
+    payment_paths_min_coverage: 95
+
+# Documentation
+documentation:
+  required_for:
+    - "public_apis"
+    - "payment_flows"
+    - "mcp_tools"
+
+  check_outdated: true
+
+# Custom Commands
+commands:
+  # Pre-review checks
+  pre_review:
+    - "npm run typecheck"
+    - "npm run lint"
+    - "npm test"
+
+# MCP Specific Configuration
+mcp:
+  # MCP server validation
+  validate_schemas: true
+  check_tool_descriptions: true
+  verify_error_handling: true
+
+  # Required MCP components
+  required_files:
+    - "mcp-server.json"
+    - "src/mcp/index.ts"
+
+# Exclude Patterns
+exclude:
+  - "**/node_modules/**"
+  - "**/dist/**"
+  - "**/out/**"
+  - "**/.next/**"
+  - "**/coverage/**"
+  - "**/*.min.js"
+  - "**/public/assets/**"
+
+# Review Tone
+tone:
+  style: "constructive"
+  emoji: true
+
+# Additional Instructions
+instructions: |
+  This is a payment gateway project with MCP (Model Context Protocol) integration.
+
+  Key focus areas:
+  1. Payment security and PCI compliance
+  2. MCP protocol implementation correctness
+  3. API design and documentation
+  4. Error handling and logging (without exposing sensitive data)
+  5. Performance optimization for payment processing
+  6. Integration testing for payment flows
+
+  Special attention to:
+  - Never log sensitive payment information
+  - All payment operations must be idempotent
+  - MCP tools must have proper error boundaries
+  - Database transactions for payment operations
+  - Webhook signature verification
+  - Rate limiting on all payment endpoints
