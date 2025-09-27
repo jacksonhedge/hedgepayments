@@ -19,7 +19,7 @@ export default function Home() {
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
         <div className={`text-center transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           {/* Main Hedge Logo - Larger */}
-          <div className="mb-8 animate-rgb-glow">
+          <div className="mb-8 mt-16 animate-rgb-glow">
             <img
               src="/images/hedge-inc-logo.png"
               alt="Hedge Inc"
