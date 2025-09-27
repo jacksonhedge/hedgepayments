@@ -20,6 +20,12 @@ export default function SubscribersPage() {
     async function fetchSubscribers() {
       try {
         setLoading(true)
+
+        // Check if Supabase is configured
+        if (!supabaseAdmin) {
+          throw new Error('Supabase is not configured. Please check your environment variables.')
+        }
+
         const { data, error } = await supabaseAdmin
           .from('subscribers')
           .select('*')

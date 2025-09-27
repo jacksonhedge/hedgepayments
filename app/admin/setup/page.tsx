@@ -14,6 +14,12 @@ export default function SetupPage() {
     setMessage('')
 
     try {
+      // Check if Supabase is configured
+      if (!supabaseAdmin) {
+        setError('Supabase is not configured. Please check your environment variables.')
+        return
+      }
+
       // Check if the table exists
       const { data, error: checkError } = await supabaseAdmin
         .from('subscribers')
