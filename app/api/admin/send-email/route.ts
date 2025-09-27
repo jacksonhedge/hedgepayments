@@ -4,10 +4,17 @@ import { notifyWaitlistUsers, sendWaitlistSMS } from '../../../../lib/emailServi
 import { sendEmail } from '../../../../lib/sendgrid';
 import { EMAIL_TEMPLATES, SMS_TEMPLATES, getLaunchAnnouncementData } from '../../../utils/emailTemplates';
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_SERVICE_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Create Supabase client only when needed
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    return null;
+  }
+
+  return createClient(supabaseUrl, supabaseKey);
+}
 
 // Simple auth check - in production, use proper authentication
 const ADMIN_SECRET = process.env.ADMIN_SECRET || 'your-admin-secret';
@@ -21,7 +28,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { 
+    const {
       type, // 'email' or 'sms'
       target, // 'all', 'test', or specific email
       subject,
@@ -35,6 +42,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'Type and target are required' },
         { status: 400 }
+      );
+    }
+
+    // Get Supabase client
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 503 }
       );
     }
 
@@ -154,6 +170,19 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    // Get Supabase client
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      return NextResponse.json({
+        stats: {
+          total_subscribers: 0,
+          recent_signups: 0,
+          email_templates: Object.keys(EMAIL_TEMPLATES),
+          sms_templates: Object.keys(SMS_TEMPLATES)
+        }
+      });
+    }
+
     // Get waitlist statistics
     const { count: totalCount } = await supabase
       .from('waitlist')
@@ -162,7 +191,7 @@ export async function GET(request: NextRequest) {
     // Get recent signups (last 7 days)
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-    
+
     const { count: recentCount } = await supabase
       .from('waitlist')
       .select('*', { count: 'exact', head: true })
