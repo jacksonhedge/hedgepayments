@@ -3,11 +3,6 @@ import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 import { sendWaitlistConfirmation, addUserToMarketingList } from '../../../lib/emailService';
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_SERVICE_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
 // Function to generate a unique referral code
 function generateReferralCode(email: string): string {
   // Create a hash of the email + timestamp to ensure uniqueness
@@ -28,6 +23,22 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Check if Supabase is configured
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+
+    // Return success without database if Supabase is not configured (during build)
+    if (!supabaseUrl || !supabaseKey) {
+      console.log('Supabase not configured, returning mock response');
+      return NextResponse.json({
+        success: true,
+        referralCode: generateReferralCode(email)
+      });
+    }
+
+    // Initialize Supabase client only if credentials are available
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Generate a referral code for this user upfront
     const userReferralCode = generateReferralCode(email);

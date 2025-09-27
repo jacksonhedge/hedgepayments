@@ -1,13 +1,20 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_SERVICE_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
 export async function GET() {
   try {
+    // Check if Supabase is configured
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+
+    // Return default count if Supabase is not configured (during build)
+    if (!supabaseUrl || !supabaseKey) {
+      return NextResponse.json({ count: 0 });
+    }
+
+    // Initialize Supabase client only if credentials are available
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
     const { count, error } = await supabase
       .from('waitlist')
       .select('*', { count: 'exact', head: true });
