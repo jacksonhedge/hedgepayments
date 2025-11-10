@@ -1,12 +1,12 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
+import BookstoreNavbar from '../components/BookstoreNavbar'
 import Footer from '../components/Footer'
 import styles from './page.module.css'
 
 export default function Signup() {
   return (
-    <main>
-      <Navbar />
+    <main style={{ backgroundColor: '#FAF8F5', minHeight: '100vh' }}>
+      <BookstoreNavbar />
       <div className={styles.signupContainer}>
         <div className={styles.signupCard}>
           <h1 className={styles.signupTitle}>Create an Account</h1>

@@ -1,12 +1,12 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
+import BookstoreNavbar from '../components/BookstoreNavbar'
 import Footer from '../components/Footer'
 import styles from './page.module.css'
 
 export default function UserLogin() {
   return (
-    <main>
-      <Navbar />
+    <main style={{ backgroundColor: '#FAF8F5', minHeight: '100vh' }}>
+      <BookstoreNavbar />
       <div className={styles.loginContainer}>
         <div className={styles.loginCard}>
           <h1 className={styles.loginTitle}>User Login</h1>

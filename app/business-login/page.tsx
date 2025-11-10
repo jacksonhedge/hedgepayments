@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import BookstoreNavbar from '../components/BookstoreNavbar'
 
 export default function BusinessLogin() {
   const router = useRouter()
@@ -43,11 +44,11 @@ export default function BusinessLogin() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!validateForm()) return
 
     setIsLoading(true)
-    
+
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false)
@@ -57,7 +58,9 @@ export default function BusinessLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center px-4">
+    <>
+      <BookstoreNavbar />
+      <div className="min-h-screen bg-[#FAF8F5] flex items-center justify-center px-4 pt-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -151,6 +154,7 @@ export default function BusinessLogin() {
           </div>
         </div>
       </motion.div>
-    </div>
+      </div>
+    </>
   )
 }
