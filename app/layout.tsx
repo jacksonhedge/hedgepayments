@@ -2,20 +2,20 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Round-Ups - Join the Waitlist',
-  description: 'Turn spare change into winnings! Join the waitlist to automatically round up your purchases and play on your favorite platforms.',
-  metadataBase: new URL('https://www.roundups.io'),
+  title: 'Hedge Payments - Money in an AI World',
+  description: 'Launch payments fast, grow faster. Payment infrastructure for AI agents, crypto companies, and the autonomous economy.',
+  metadataBase: new URL('https://hedgepayments.com'),
   openGraph: {
-    title: 'Round-Ups - Join the Waitlist',
-    description: 'Turn spare change into winnings! Join the waitlist to automatically round up your purchases and play on your favorite platforms.',
-    url: 'https://www.roundups.io',
-    siteName: 'Round-Ups',
+    title: 'Hedge Payments - Money in an AI World',
+    description: 'Launch payments fast, grow faster. Payment infrastructure for AI agents, crypto companies, and the autonomous economy.',
+    url: 'https://hedgepayments.com',
+    siteName: 'Hedge Payments',
     images: [
       {
-        url: '/images/social/roundups-og.png',
+        url: '/images/hedge-inc-logo.png',
         width: 1200,
         height: 1200,
-        alt: 'Round-Ups - Turn Spare Change Into Winnings',
+        alt: 'Hedge Payments - Money in an AI World',
       },
     ],
     locale: 'en_US',
@@ -23,15 +23,15 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Round-Ups - Join the Waitlist',
-    description: 'Turn spare change into winnings! Join the waitlist to automatically round up your purchases and play on your favorite platforms.',
-    images: ['/images/social/roundups-og.png'],
-    creator: '@roundupsapp',
+    title: 'Hedge Payments - Money in an AI World',
+    description: 'Launch payments fast, grow faster. Payment infrastructure for AI agents, crypto companies, and the autonomous economy.',
+    images: ['/images/hedge-inc-logo.png'],
+    creator: '@hedgepayments',
   },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
-      { url: '/round-ups-logo.png', sizes: 'any' },
+      { url: '/images/hedge-inc-logo.png', sizes: 'any' },
     ],
     apple: {
       url: '/apple-touch-icon.png',
@@ -45,12 +45,12 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: 'https://www.roundups.io',
+    canonical: 'https://hedgepayments.com',
   },
-  keywords: ['Round-Ups', 'betting', 'gambling', 'round-ups', 'DraftKings', 'FanDuel', 'sportsbook', 'waitlist'],
-  authors: [{ name: 'Round-Ups Team' }],
-  creator: 'Round-Ups',
-  publisher: 'Round-Ups',
+  keywords: ['Hedge Payments', 'AI payments', 'crypto payments', 'payment infrastructure', 'AI agents', 'Web3', 'payment processing', 'Coinflow'],
+  authors: [{ name: 'Hedge Payments Team' }],
+  creator: 'Hedge Payments',
+  publisher: 'Hedge Payments',
 }
 
 export default function RootLayout({
@@ -61,21 +61,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="theme-color" content="#132A45" />
+        <meta name="theme-color" content="#FAF8F5" />
         <meta name="color-scheme" content="light" />
         <meta property="fb:app_id" content="your-fb-app-id" />
         <meta name="format-detection" content="telephone=no" />
-        <link rel="canonical" href="https://www.roundups.io" />
-        <link rel="icon" href="/round-ups-logo.png" />
+        <link rel="canonical" href="https://hedgepayments.com" />
+        <link rel="icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
-        <meta property="og:image" content="https://www.roundups.io/images/social/roundups-og.png" />
-        <meta name="twitter:image" content="https://www.roundups.io/images/social/roundups-og.png" />
-        <meta property="og:title" content="Round-Ups - Join the Waitlist" />
-        <meta property="og:description" content="Turn spare change into winnings! Join the waitlist to automatically round up your purchases and play on your favorite platforms." />
-        <meta name="twitter:title" content="Round-Ups - Join the Waitlist" />
-        <meta name="twitter:description" content="Turn spare change into winnings! Join the waitlist to automatically round up your purchases and play on your favorite platforms." />
+        <meta property="og:image" content="https://hedgepayments.com/images/hedge-inc-logo.png" />
+        <meta name="twitter:image" content="https://hedgepayments.com/images/hedge-inc-logo.png" />
+        <meta property="og:title" content="Hedge Payments - Money in an AI World" />
+        <meta property="og:description" content="Launch payments fast, grow faster. Payment infrastructure for AI agents, crypto companies, and the autonomous economy." />
+        <meta name="twitter:title" content="Hedge Payments - Money in an AI World" />
+        <meta name="twitter:description" content="Launch payments fast, grow faster. Payment infrastructure for AI agents, crypto companies, and the autonomous economy." />
       </head>
       <body>
         {children}
