@@ -1,0 +1,285 @@
+---
+title: 'CoinFlow Integration'
+description: 'Learn how to integrate CoinFlow as your primary payment processor'
+icon: 'coins'
+---
+
+# CoinFlow Integration Guide
+
+HedgePayments is built on top of CoinFlow, providing seamless cryptocurrency and fiat payment processing for your applications.
+
+## Overview
+
+CoinFlow is our primary payment processor that enables:
+- **Crypto Payments**: Accept 50+ cryptocurrencies
+- **Fiat On/Off Ramps**: Convert between crypto and fiat currencies
+- **Global Coverage**: Support for 180+ countries
+- **Instant Settlements**: Fast payment processing and payouts
+- **Compliance**: Built-in KYC/AML compliance
+
+## Getting Started
+
+### 1. Sign Up for CoinFlow
+
+1. Visit [CoinFlow Dashboard](https://coinflow.cash)
+2. Create a merchant account
+3. Complete KYC verification
+4. Get your API credentials
+
+### 2. Configure Environment Variables
+
+Add your CoinFlow credentials to your `.env` file:
+
+```bash
+# CoinFlow Configuration
+COINFLOW_MERCHANT_ID=your_merchant_id
+COINFLOW_API_KEY=your_api_key
+COINFLOW_WEBHOOK_SECRET=your_webhook_secret
+COINFLOW_ENV=sandbox  # or 'production'
+
+# Public keys for frontend
+NEXT_PUBLIC_COINFLOW_ENV=sandbox
+NEXT_PUBLIC_COINFLOW_MERCHANT_ID=your_merchant_id
+```
+
+### 3. Initialize CoinFlow Client
+
+```typescript
+import { CoinflowPurchase } from '@coinflowlabs/react';
+
+function PaymentComponent() {
+  return (
+    <CoinflowPurchase
+      merchantId={process.env.NEXT_PUBLIC_COINFLOW_MERCHANT_ID}
+      env={process.env.NEXT_PUBLIC_COINFLOW_ENV}
+      connection={connection}
+      amount={100.00}
+      blockchain="solana"
+      onSuccess={(data) => {
+        console.log('Payment successful:', data);
+      }}
+    />
+  );
+}
+```
+
+## Payment Flow
+
+### Creating a Payment
+
+```typescript
+// Backend API route
+import { createCoinflowPayment } from '@/lib/coinflow';
+
+export async function POST(req: Request) {
+  const { amount, currency, customerEmail } = await req.json();
+
+  const payment = await createCoinflowPayment({
+    amount,
+    currency,
+    customerEmail,
+    merchantId: process.env.COINFLOW_MERCHANT_ID,
+  });
+
+  return Response.json({
+    paymentId: payment.id,
+    paymentUrl: payment.url
+  });
+}
+```
+
+### Handling Webhooks
+
+CoinFlow sends webhooks for payment events. Configure your webhook endpoint:
+
+```typescript
+// app/api/webhooks/coinflow/route.ts
+import { verifyWebhookSignature } from '@/lib/coinflow';
+
+export async function POST(req: Request) {
+  const body = await req.text();
+  const signature = req.headers.get('x-coinflow-signature');
+
+  // Verify webhook signature
+  const isValid = verifyWebhookSignature(
+    body,
+    signature,
+    process.env.COINFLOW_WEBHOOK_SECRET
+  );
+
+  if (!isValid) {
+    return Response.json({ error: 'Invalid signature' }, { status: 401 });
+  }
+
+  const event = JSON.parse(body);
+
+  switch (event.type) {
+    case 'payment.completed':
+      // Handle successful payment
+      await handlePaymentCompleted(event.data);
+      break;
+
+    case 'payment.failed':
+      // Handle failed payment
+      await handlePaymentFailed(event.data);
+      break;
+
+    default:
+      console.log('Unhandled event type:', event.type);
+  }
+
+  return Response.json({ received: true });
+}
+```
+
+## Supported Cryptocurrencies
+
+CoinFlow supports the following blockchains and tokens:
+
+- **Solana**: SOL, USDC, USDT
+- **Ethereum**: ETH, USDC, USDT, DAI
+- **Polygon**: MATIC, USDC, USDT
+- **Near**: NEAR
+- **Base**: ETH, USDC
+
+## Testing
+
+### Sandbox Environment
+
+Use the sandbox environment for testing:
+
+```bash
+COINFLOW_ENV=sandbox
+NEXT_PUBLIC_COINFLOW_ENV=sandbox
+```
+
+### Test Credentials
+
+- **Test Email**: test@coinflow.cash
+- **Test Amount**: Any amount under $1000
+- **Test Cards**: Use standard test card numbers
+
+## Production Deployment
+
+### Before Going Live
+
+1. ✅ Complete CoinFlow merchant verification
+2. ✅ Configure production API keys
+3. ✅ Set up webhook endpoints
+4. ✅ Test payment flow end-to-end
+5. ✅ Implement error handling
+6. ✅ Set up monitoring and logging
+
+### Production Configuration
+
+```bash
+# Production environment
+COINFLOW_ENV=production
+COINFLOW_MERCHANT_ID=prod_merchant_id
+COINFLOW_API_KEY=prod_api_key
+COINFLOW_WEBHOOK_SECRET=prod_webhook_secret
+
+NEXT_PUBLIC_COINFLOW_ENV=production
+NEXT_PUBLIC_COINFLOW_MERCHANT_ID=prod_merchant_id
+```
+
+## Best Practices
+
+### Security
+
+1. **Never expose API keys** in client-side code
+2. **Validate webhook signatures** to prevent fraudulent requests
+3. **Use HTTPS** for all API communications
+4. **Store credentials** in environment variables
+
+### Error Handling
+
+```typescript
+try {
+  const payment = await createCoinflowPayment(data);
+  return { success: true, payment };
+} catch (error) {
+  if (error.code === 'insufficient_funds') {
+    return { success: false, error: 'Insufficient funds' };
+  }
+  if (error.code === 'invalid_currency') {
+    return { success: false, error: 'Unsupported currency' };
+  }
+  // Log and handle unexpected errors
+  console.error('CoinFlow error:', error);
+  return { success: false, error: 'Payment failed' };
+}
+```
+
+### Monitoring
+
+Track key metrics:
+- Payment success rate
+- Average transaction time
+- Failed payment reasons
+- Webhook delivery status
+
+## Advanced Features
+
+### Custom Styling
+
+Customize the CoinFlow payment widget:
+
+```typescript
+<CoinflowPurchase
+  merchantId={merchantId}
+  env={env}
+  style={{
+    primaryColor: '#2C2416',
+    backgroundColor: '#FAF8F5',
+    font: 'Georgia, serif'
+  }}
+/>
+```
+
+### Transaction Metadata
+
+Add custom metadata to track payments:
+
+```typescript
+const payment = await createCoinflowPayment({
+  amount: 100,
+  currency: 'USD',
+  metadata: {
+    userId: 'user_123',
+    orderId: 'order_456',
+    source: 'web_app'
+  }
+});
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Payment widget not loading**
+- Verify merchant ID is correct
+- Check environment (sandbox vs production)
+- Ensure API keys are set
+
+**Webhook not receiving events**
+- Verify webhook URL is publicly accessible
+- Check webhook signature validation
+- Review CoinFlow dashboard logs
+
+**Payment failing**
+- Check customer has sufficient funds
+- Verify currency is supported
+- Review transaction limits
+
+## Support
+
+- **CoinFlow Docs**: [docs.coinflow.cash](https://docs.coinflow.cash)
+- **HedgePayments Support**: support@hedgepayments.com
+- **Discord**: [discord.gg/hedgepayments](https://discord.gg/hedgepayments)
+
+## Additional Resources
+
+- [CoinFlow API Reference](https://docs.coinflow.cash/api)
+- [CoinFlow React SDK](https://www.npmjs.com/package/@coinflowlabs/react)
+- [HedgePayments API Reference](/api-reference)

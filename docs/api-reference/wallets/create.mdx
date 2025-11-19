@@ -1,0 +1,496 @@
+---
+title: 'Create Wallet'
+api: 'POST /v1/wallets'
+description: 'Create a new digital wallet for a user to store funds, manage balances, and process transactions'
+---
+
+## Overview
+
+Create a new digital wallet for storing and managing user funds. Each wallet is tied to a specific user and currency, supporting both fiat currencies (USD, EUR, GBP) and cryptocurrencies (BTC, ETH, SOL, USDC).
+
+**Use Cases:**
+- Onboarding new users with their first wallet
+- Creating multi-currency wallets for international users
+- Setting up merchant settlement wallets
+- Establishing escrow or custody wallets
+
+## Authentication
+
+<CodeGroup>
+```bash cURL
+curl -X POST https://api.hedgepayments.com/v1/wallets \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json"
+```
+
+```javascript JavaScript
+const response = await fetch('https://api.hedgepayments.com/v1/wallets', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  }
+});
+```
+
+```python Python
+import requests
+
+headers = {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+}
+response = requests.post('https://api.hedgepayments.com/v1/wallets', headers=headers)
+```
+</CodeGroup>
+
+## Request Body
+
+<ParamField body="userId" type="string" required>
+  The unique identifier of the user who will own this wallet. Must be a valid user ID from your system.
+
+  **Example:** `"user_1a2b3c4d5e"`
+</ParamField>
+
+<ParamField body="currency" type="string" required>
+  The currency code for this wallet. Supports ISO 4217 codes for fiat currencies and standard crypto ticker symbols.
+
+  **Supported Fiat:** USD, EUR, GBP, CAD, AUD, JPY, CHF, CNY, INR, BRL, MXN
+
+  **Supported Crypto:** BTC, ETH, SOL, USDC, USDT, MATIC, AVAX, NEAR
+
+  **Example:** `"USD"` or `"USDC"`
+</ParamField>
+
+<ParamField body="label" type="string">
+  A human-readable label for the wallet to help users identify it. Maximum 50 characters.
+
+  **Examples:**
+  - `"Primary Wallet"`
+  - `"Savings Account"`
+  - `"Business Operations"`
+</ParamField>
+
+<ParamField body="initialBalance" type="number">
+  Optional initial balance to credit to the wallet in the smallest currency unit (cents for USD, wei for ETH, etc.). Only available for sandbox environments or with special permissions.
+
+  **Example:** `10000` (represents $100.00 for USD)
+</ParamField>
+
+## Request Examples
+
+<CodeGroup>
+```json USD Wallet
+{
+  "userId": "user_1a2b3c4d5e",
+  "currency": "USD",
+  "label": "Primary Wallet"
+}
+```
+
+```json USDC Crypto Wallet
+{
+  "userId": "user_1a2b3c4d5e",
+  "currency": "USDC",
+  "label": "Crypto Holdings"
+}
+```
+
+```json EUR Wallet with Initial Balance
+{
+  "userId": "user_1a2b3c4d5e",
+  "currency": "EUR",
+  "label": "European Operations",
+  "initialBalance": 50000
+}
+```
+
+```json Solana Wallet
+{
+  "userId": "user_1a2b3c4d5e",
+  "currency": "SOL",
+  "label": "Solana Staking"
+}
+```
+</CodeGroup>
+
+## Response
+
+<ResponseField name="id" type="string">
+  Unique identifier for the wallet
+</ResponseField>
+
+<ResponseField name="userId" type="string">
+  The user who owns this wallet
+</ResponseField>
+
+<ResponseField name="currency" type="string">
+  The wallet's currency code
+</ResponseField>
+
+<ResponseField name="balance" type="object">
+  Current balance information
+
+  <Expandable title="balance">
+    <ResponseField name="available" type="number">
+      Funds available for immediate use
+    </ResponseField>
+    <ResponseField name="pending" type="number">
+      Funds in pending transactions
+    </ResponseField>
+    <ResponseField name="reserved" type="number">
+      Funds held for authorizations
+    </ResponseField>
+    <ResponseField name="total" type="number">
+      Total wallet balance (available + pending + reserved)
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Current wallet status: `pending_verification`, `active`, `suspended`, `frozen`, or `closed`
+</ResponseField>
+
+<ResponseField name="label" type="string">
+  Human-readable wallet label
+</ResponseField>
+
+<ResponseField name="limits" type="object">
+  Transaction limits for this wallet
+
+  <Expandable title="limits">
+    <ResponseField name="daily" type="number">
+      Maximum daily transaction volume
+    </ResponseField>
+    <ResponseField name="monthly" type="number">
+      Maximum monthly transaction volume
+    </ResponseField>
+    <ResponseField name="transaction" type="number">
+      Maximum single transaction amount
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  ISO 8601 timestamp of wallet creation
+</ResponseField>
+
+<ResponseField name="updatedAt" type="string">
+  ISO 8601 timestamp of last update
+</ResponseField>
+
+## Response Examples
+
+<CodeGroup>
+```json 201 Success
+{
+  "id": "wallet_9x8y7z6a5b",
+  "userId": "user_1a2b3c4d5e",
+  "currency": "USD",
+  "balance": {
+    "available": 0,
+    "pending": 0,
+    "reserved": 0,
+    "total": 0,
+    "currency": "USD"
+  },
+  "status": "active",
+  "label": "Primary Wallet",
+  "limits": {
+    "daily": 1000000,
+    "monthly": 5000000,
+    "transaction": 100000
+  },
+  "createdAt": "2025-11-18T22:30:00Z",
+  "updatedAt": "2025-11-18T22:30:00Z"
+}
+```
+
+```json 400 Bad Request
+{
+  "error": "validation_error",
+  "message": "Invalid currency code",
+  "code": "INVALID_CURRENCY",
+  "details": {
+    "field": "currency",
+    "value": "XYZ",
+    "supported": ["USD", "EUR", "GBP", "BTC", "ETH", "SOL", "USDC"]
+  }
+}
+```
+
+```json 401 Unauthorized
+{
+  "error": "unauthorized",
+  "message": "Invalid or expired API key",
+  "code": "INVALID_API_KEY"
+}
+```
+
+```json 409 Conflict
+{
+  "error": "duplicate_wallet",
+  "message": "User already has a wallet in this currency",
+  "code": "WALLET_EXISTS",
+  "details": {
+    "existingWalletId": "wallet_abc123",
+    "userId": "user_1a2b3c4d5e",
+    "currency": "USD"
+  }
+}
+```
+</CodeGroup>
+
+## Code Examples
+
+<CodeGroup>
+```javascript JavaScript/TypeScript
+import { HedgePayments } from '@hedgepayments/sdk';
+
+const hedge = new HedgePayments(process.env.HEDGE_API_KEY);
+
+async function createUserWallet() {
+  try {
+    const wallet = await hedge.wallets.create({
+      userId: 'user_1a2b3c4d5e',
+      currency: 'USD',
+      label: 'Primary Wallet'
+    });
+
+    console.log('Wallet created:', wallet.id);
+    console.log('Current balance:', wallet.balance.available);
+
+    return wallet;
+  } catch (error) {
+    if (error.code === 'WALLET_EXISTS') {
+      console.log('User already has a USD wallet');
+      // Retrieve existing wallet
+      const existing = await hedge.wallets.list({
+        userId: 'user_1a2b3c4d5e',
+        currency: 'USD'
+      });
+      return existing.wallets[0];
+    }
+    throw error;
+  }
+}
+```
+
+```python Python
+from hedgepayments import HedgePayments
+
+hedge = HedgePayments(api_key=os.environ['HEDGE_API_KEY'])
+
+def create_user_wallet():
+    try:
+        wallet = hedge.wallets.create(
+            user_id='user_1a2b3c4d5e',
+            currency='USD',
+            label='Primary Wallet'
+        )
+
+        print(f'Wallet created: {wallet.id}')
+        print(f'Current balance: {wallet.balance.available}')
+
+        return wallet
+    except HedgePayments.WalletExistsError as e:
+        print('User already has a USD wallet')
+        # Retrieve existing wallet
+        existing = hedge.wallets.list(
+            user_id='user_1a2b3c4d5e',
+            currency='USD'
+        )
+        return existing.wallets[0]
+```
+
+```bash cURL
+curl -X POST https://api.hedgepayments.com/v1/wallets \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "userId": "user_1a2b3c4d5e",
+    "currency": "USD",
+    "label": "Primary Wallet"
+  }'
+```
+
+```ruby Ruby
+require 'hedgepayments'
+
+hedge = HedgePayments::Client.new(api_key: ENV['HEDGE_API_KEY'])
+
+def create_user_wallet
+  begin
+    wallet = hedge.wallets.create(
+      user_id: 'user_1a2b3c4d5e',
+      currency: 'USD',
+      label: 'Primary Wallet'
+    )
+
+    puts "Wallet created: #{wallet.id}"
+    puts "Current balance: #{wallet.balance.available}"
+
+    wallet
+  rescue HedgePayments::WalletExistsError => e
+    puts 'User already has a USD wallet'
+    # Retrieve existing wallet
+    existing = hedge.wallets.list(
+      user_id: 'user_1a2b3c4d5e',
+      currency: 'USD'
+    )
+    existing.wallets.first
+  end
+end
+```
+
+```go Go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    hedgepayments "github.com/hedgepayments/go-sdk"
+)
+
+func createUserWallet() (*hedgepayments.Wallet, error) {
+    client := hedgepayments.NewClient(os.Getenv("HEDGE_API_KEY"))
+
+    wallet, err := client.Wallets.Create(context.Background(), &hedgepayments.CreateWalletRequest{
+        UserID:   "user_1a2b3c4d5e",
+        Currency: "USD",
+        Label:    "Primary Wallet",
+    })
+
+    if err != nil {
+        if hedgepayments.IsWalletExistsError(err) {
+            fmt.Println("User already has a USD wallet")
+            // Retrieve existing wallet
+            wallets, _ := client.Wallets.List(context.Background(), &hedgepayments.ListWalletsRequest{
+                UserID:   "user_1a2b3c4d5e",
+                Currency: "USD",
+            })
+            return &wallets.Wallets[0], nil
+        }
+        return nil, err
+    }
+
+    fmt.Printf("Wallet created: %s\n", wallet.ID)
+    fmt.Printf("Current balance: %.2f\n", wallet.Balance.Available)
+
+    return wallet, nil
+}
+```
+</CodeGroup>
+
+## Error Handling
+
+| Error Code | HTTP Status | Description | Resolution |
+|------------|-------------|-------------|------------|
+| `INVALID_CURRENCY` | 400 | Unsupported currency code | Use a supported currency from the list |
+| `INVALID_USER_ID` | 400 | User ID not found | Verify the user exists in your system |
+| `WALLET_EXISTS` | 409 | User already has wallet in this currency | Retrieve the existing wallet instead |
+| `INVALID_API_KEY` | 401 | Authentication failed | Check your API key is valid |
+| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests | Implement exponential backoff |
+| `INSUFFICIENT_PERMISSIONS` | 403 | API key lacks permissions | Use a key with wallet creation permissions |
+
+## Best Practices
+
+### 1. **One Wallet Per Currency Per User**
+
+Users should have only one wallet per currency. Always check for existing wallets before creating new ones:
+
+```javascript
+// Good: Check first
+const existing = await hedge.wallets.list({ userId, currency: 'USD' });
+const wallet = existing.wallets[0] || await hedge.wallets.create({ userId, currency: 'USD' });
+
+// Bad: Always create
+const wallet = await hedge.wallets.create({ userId, currency: 'USD' }); // May fail
+```
+
+### 2. **Use Descriptive Labels**
+
+Help users identify their wallets with clear labels:
+
+```javascript
+// Good
+{ label: 'Business Operations' }
+{ label: 'Personal Savings' }
+{ label: 'Crypto Holdings' }
+
+// Bad
+{ label: 'Wallet 1' }
+{ label: 'Account' }
+```
+
+### 3. **Handle Errors Gracefully**
+
+Always implement proper error handling:
+
+```javascript
+try {
+  const wallet = await createWallet(userId, 'USD');
+} catch (error) {
+  if (error.code === 'WALLET_EXISTS') {
+    // Use existing wallet
+  } else if (error.code === 'INVALID_USER_ID') {
+    // Create user first
+  } else {
+    // Log and notify
+    logger.error('Wallet creation failed', { error, userId });
+  }
+}
+```
+
+### 4. **Implement Idempotency**
+
+Use idempotency keys for safe retries:
+
+```javascript
+const wallet = await hedge.wallets.create({
+  userId: 'user_123',
+  currency: 'USD',
+  idempotencyKey: `wallet-creation-${userId}-${Date.now()}`
+});
+```
+
+## Webhooks
+
+When a wallet is created, the following webhook event is triggered:
+
+```json
+{
+  "event": "wallet.created",
+  "data": {
+    "id": "wallet_9x8y7z6a5b",
+    "userId": "user_1a2b3c4d5e",
+    "currency": "USD",
+    "status": "active",
+    "createdAt": "2025-11-18T22:30:00Z"
+  },
+  "timestamp": "2025-11-18T22:30:00Z"
+}
+```
+
+[Learn more about webhooks →](/webhooks)
+
+## Rate Limits
+
+- **100 requests per minute** per API key
+- **1000 wallet creations per day** per merchant
+
+## Related Endpoints
+
+- [List Wallets](/api-reference/wallets/list) - Retrieve all wallets for a user
+- [Get Wallet](/api-reference/wallets/get) - Get details of a specific wallet
+- [Update Wallet](/api-reference/wallets/update) - Modify wallet settings
+- [Get Balance](/api-reference/wallets/balance) - Check current wallet balance
+
+## Support
+
+Need help? Contact us:
+- **Email:** support@hedgepayments.com
+- **Discord:** [discord.gg/hedgepayments](https://discord.gg/hedgepayments)
+- **Docs:** [docs.hedgepayments.com](https://docs.hedgepayments.com)

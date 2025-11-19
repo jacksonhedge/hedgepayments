@@ -1,0 +1,546 @@
+---
+title: 'Process Payment'
+api: 'POST /v1/transactions'
+description: 'Process payments using cards, crypto, ACH, or wallet-to-wallet transfers with instant settlement'
+---
+
+## Overview
+
+Process a payment transaction using various payment methods including credit cards, bank transfers, cryptocurrency, or internal wallet transfers. This endpoint supports both one-time payments and authorizations.
+
+**Powered by CoinFlow:** This endpoint uses CoinFlow's payment infrastructure for processing card, ACH, and crypto payments.
+
+## Authentication
+
+```bash
+Authorization: Bearer YOUR_API_KEY
+```
+
+## Request Body
+
+<ParamField body="amount" type="number" required>
+  Transaction amount in the smallest currency unit (cents for fiat, wei/lamports for crypto)
+
+  **Examples:**
+  - USD: `10000` = $100.00
+  - EUR: `5000` = €50.00
+  - SOL: `1000000000` = 1 SOL
+  - USDC: `1000000` = 1 USDC (6 decimals)
+</ParamField>
+
+<ParamField body="currency" type="string" required>
+  Three-letter currency code (ISO 4217) or crypto ticker
+
+  **Supported:** USD, EUR, GBP, BTC, ETH, SOL, USDC, USDT
+</ParamField>
+
+<ParamField body="method" type="string" required>
+  Payment method to use
+
+  **Options:**
+  - `card` - Credit/debit card
+  - `ach` - ACH bank transfer (US only)
+  - `wire` - Wire transfer
+  - `wallet` - Wallet-to-wallet transfer
+  - `crypto` - Direct cryptocurrency payment
+  - `apple_pay` - Apple Pay
+  - `google_pay` - Google Pay
+</ParamField>
+
+<ParamField body="paymentMethodId" type="string">
+  ID of a saved payment method (for card, ACH, bank transfers)
+
+  **Required for:** card, ach, wallet methods when not using one-time tokens
+</ParamField>
+
+<ParamField body="sourceWalletId" type="string">
+  Wallet ID to debit funds from (required for wallet-to-wallet transfers)
+</ParamField>
+
+<ParamField body="destinationWalletId" type="string">
+  Wallet ID to credit funds to (required for wallet-to-wallet transfers)
+</ParamField>
+
+<ParamField body="description" type="string">
+  Human-readable description of the transaction
+
+  **Example:** `"Order #12345 - Premium Subscription"`
+</ParamField>
+
+<ParamField body="metadata" type="object">
+  Custom key-value pairs to attach to the transaction
+
+  **Example:**
+  ```json
+  {
+    "orderId": "order_12345",
+    "productId": "prod_premium_monthly",
+    "customerId": "cust_abc123"
+  }
+  ```
+</ParamField>
+
+<ParamField body="idempotencyKey" type="string">
+  Unique key to prevent duplicate transactions (recommended for all requests)
+
+  **Example:** `"payment-order_12345-2025-11-18"`
+</ParamField>
+
+## Request Examples
+
+<CodeGroup>
+```json Card Payment
+{
+  "amount": 10000,
+  "currency": "USD",
+  "method": "card",
+  "paymentMethodId": "pm_card_abc123",
+  "description": "Premium Subscription - Monthly",
+  "metadata": {
+    "orderId": "order_12345",
+    "plan": "premium_monthly"
+  },
+  "idempotencyKey": "payment-order_12345-2025-11-18"
+}
+```
+
+```json Wallet Transfer
+{
+  "amount": 5000,
+  "currency": "USD",
+  "method": "wallet",
+  "sourceWalletId": "wallet_alice_usd",
+  "destinationWalletId": "wallet_bob_usd",
+  "description": "P2P transfer to Bob",
+  "metadata": {
+    "transferType": "p2p",
+    "memo": "Dinner split"
+  }
+}
+```
+
+```json Crypto Payment
+{
+  "amount": 1000000,
+  "currency": "USDC",
+  "method": "crypto",
+  "destinationWalletId": "wallet_merchant_usdc",
+  "description": "NFT Purchase",
+  "metadata": {
+    "nftId": "nft_123",
+    "collection": "cool_apes"
+  }
+}
+```
+
+```json ACH Transfer
+{
+  "amount": 50000,
+  "currency": "USD",
+  "method": "ach",
+  "paymentMethodId": "pm_ach_xyz789",
+  "description": "Monthly rent payment",
+  "metadata": {
+    "invoiceId": "inv_202511",
+    "property": "123_main_st"
+  }
+}
+```
+</CodeGroup>
+
+## Response
+
+<ResponseField name="id" type="string">
+  Unique transaction identifier
+</ResponseField>
+
+<ResponseField name="type" type="string">
+  Transaction type: `deposit`, `withdrawal`, `transfer_in`, `transfer_out`, `payment`, `refund`, `fee`, `adjustment`
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Current status: `pending`, `processing`, `completed`, `failed`, `reversed`, `refunded`, `cancelled`
+</ResponseField>
+
+<ResponseField name="amount" type="number">
+  Transaction amount in smallest currency unit
+</ResponseField>
+
+<ResponseField name="currency" type="string">
+  Currency code
+</ResponseField>
+
+<ResponseField name="fee" type="number">
+  Processing fee charged
+</ResponseField>
+
+<ResponseField name="netAmount" type="number">
+  Net amount after fees (amount - fee)
+</ResponseField>
+
+<ResponseField name="sourceWalletId" type="string">
+  Wallet debited (if applicable)
+</ResponseField>
+
+<ResponseField name="destinationWalletId" type="string">
+  Wallet credited (if applicable)
+</ResponseField>
+
+<ResponseField name="paymentMethodId" type="string">
+  Payment method used
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  Transaction description
+</ResponseField>
+
+<ResponseField name="metadata" type="object">
+  Custom metadata attached
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  ISO 8601 creation timestamp
+</ResponseField>
+
+<ResponseField name="completedAt" type="string">
+  ISO 8601 completion timestamp (null if not completed)
+</ResponseField>
+
+## Response Examples
+
+<CodeGroup>
+```json 201 Success - Card Payment
+{
+  "id": "txn_9x8y7z6a5b4c",
+  "type": "payment",
+  "status": "completed",
+  "amount": 10000,
+  "currency": "USD",
+  "fee": 320,
+  "netAmount": 9680,
+  "paymentMethodId": "pm_card_abc123",
+  "description": "Premium Subscription - Monthly",
+  "metadata": {
+    "orderId": "order_12345",
+    "plan": "premium_monthly"
+  },
+  "createdAt": "2025-11-18T22:30:00Z",
+  "completedAt": "2025-11-18T22:30:02Z"
+}
+```
+
+```json 201 Pending - ACH Transfer
+{
+  "id": "txn_ach_pending_xyz",
+  "type": "payment",
+  "status": "processing",
+  "amount": 50000,
+  "currency": "USD",
+  "fee": 500,
+  "netAmount": 49500,
+  "paymentMethodId": "pm_ach_xyz789",
+  "description": "Monthly rent payment",
+  "metadata": {
+    "invoiceId": "inv_202511",
+    "property": "123_main_st"
+  },
+  "createdAt": "2025-11-18T22:30:00Z",
+  "completedAt": null,
+  "estimatedCompletion": "2025-11-21T22:30:00Z"
+}
+```
+
+```json 400 Bad Request
+{
+  "error": "validation_error",
+  "message": "Invalid payment method for currency",
+  "code": "INVALID_PAYMENT_METHOD",
+  "details": {
+    "method": "ach",
+    "currency": "EUR",
+    "supportedMethods": ["card", "sepa", "wire", "crypto"]
+  }
+}
+```
+
+```json 402 Insufficient Funds
+{
+  "error": "insufficient_funds",
+  "message": "Source wallet has insufficient balance",
+  "code": "INSUFFICIENT_FUNDS",
+  "details": {
+    "required": 10000,
+    "available": 5000,
+    "currency": "USD",
+    "walletId": "wallet_alice_usd"
+  }
+}
+```
+</CodeGroup>
+
+## Code Examples
+
+<CodeGroup>
+```javascript JavaScript/TypeScript
+import { HedgePayments } from '@hedgepayments/sdk';
+
+const hedge = new HedgePayments(process.env.HEDGE_API_KEY);
+
+async function processPayment() {
+  try {
+    const transaction = await hedge.transactions.create({
+      amount: 10000, // $100.00
+      currency: 'USD',
+      method: 'card',
+      paymentMethodId: 'pm_card_abc123',
+      description: 'Premium Subscription',
+      metadata: {
+        orderId: 'order_12345',
+        customerId: 'cust_abc'
+      },
+      idempotencyKey: `payment-${Date.now()}`
+    });
+
+    if (transaction.status === 'completed') {
+      console.log('Payment successful:', transaction.id);
+      // Fulfill order
+    } else {
+      console.log('Payment pending:', transaction.status);
+      // Wait for webhook
+    }
+
+    return transaction;
+  } catch (error) {
+    if (error.code === 'INSUFFICIENT_FUNDS') {
+      console.log('Payment declined - insufficient funds');
+    } else if (error.code === 'CARD_DECLINED') {
+      console.log('Card declined by issuer');
+    }
+    throw error;
+  }
+}
+```
+
+```python Python
+from hedgepayments import HedgePayments
+import time
+
+hedge = HedgePayments(api_key=os.environ['HEDGE_API_KEY'])
+
+def process_payment():
+    try:
+        transaction = hedge.transactions.create(
+            amount=10000,  # $100.00
+            currency='USD',
+            method='card',
+            payment_method_id='pm_card_abc123',
+            description='Premium Subscription',
+            metadata={
+                'orderId': 'order_12345',
+                'customerId': 'cust_abc'
+            },
+            idempotency_key=f'payment-{int(time.time())}'
+        )
+
+        if transaction.status == 'completed':
+            print(f'Payment successful: {transaction.id}')
+            # Fulfill order
+        else:
+            print(f'Payment pending: {transaction.status}')
+            # Wait for webhook
+
+        return transaction
+    except HedgePayments.InsufficientFundsError:
+        print('Payment declined - insufficient funds')
+    except HedgePayments.CardDeclinedError:
+        print('Card declined by issuer')
+```
+
+```bash cURL
+curl -X POST https://api.hedgepayments.com/v1/transactions \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: payment-order_12345-2025-11-18" \
+  -d '{
+    "amount": 10000,
+    "currency": "USD",
+    "method": "card",
+    "paymentMethodId": "pm_card_abc123",
+    "description": "Premium Subscription",
+    "metadata": {
+      "orderId": "order_12345"
+    }
+  }'
+```
+
+```go Go
+package main
+
+import (
+    "context"
+    "fmt"
+    "time"
+
+    hedgepayments "github.com/hedgepayments/go-sdk"
+)
+
+func processPayment() error {
+    client := hedgepayments.NewClient(os.Getenv("HEDGE_API_KEY"))
+
+    txn, err := client.Transactions.Create(context.Background(), &hedgepayments.CreateTransactionRequest{
+        Amount:          10000, // $100.00
+        Currency:        "USD",
+        Method:          "card",
+        PaymentMethodID: "pm_card_abc123",
+        Description:     "Premium Subscription",
+        Metadata: map[string]string{
+            "orderId":    "order_12345",
+            "customerId": "cust_abc",
+        },
+        IdempotencyKey: fmt.Sprintf("payment-%d", time.Now().Unix()),
+    })
+
+    if err != nil {
+        switch hedgepayments.ErrorCode(err) {
+        case hedgepayments.InsufficientFunds:
+            fmt.Println("Payment declined - insufficient funds")
+        case hedgepayments.CardDeclined:
+            fmt.Println("Card declined by issuer")
+        default:
+            return err
+        }
+    }
+
+    if txn.Status == "completed" {
+        fmt.Printf("Payment successful: %s\n", txn.ID)
+        // Fulfill order
+    } else {
+        fmt.Printf("Payment pending: %s\n", txn.Status)
+        // Wait for webhook
+    }
+
+    return nil
+}
+```
+</CodeGroup>
+
+## Payment Methods Comparison
+
+| Method | Processing Time | Settlement | Fees | Reversible | Geographic |
+|--------|----------------|------------|------|-----------|-----------|
+| **Card** | Instant | T+1 to T+3 | ~2.9% + $0.30 | Yes (chargebacks) | Global |
+| **ACH** | 1-3 days | T+3 to T+5 | ~1% | Yes (returns) | US only |
+| **Wire** | 1-3 days | Same day | $25 flat | No | Global |
+| **Wallet** | Instant | Instant | 0% | No | Global |
+| **Crypto** | 5-60 min | Instant | Network fees | No | Global |
+| **Apple Pay** | Instant | T+1 to T+3 | ~2.9% + $0.30 | Yes | Global |
+| **Google Pay** | Instant | T+1 to T+3 | ~2.9% + $0.30 | Yes | Global |
+
+## Error Codes
+
+| Code | HTTP | Description | Action |
+|------|------|-------------|--------|
+| `INSUFFICIENT_FUNDS` | 402 | Not enough balance | Add funds or use different payment method |
+| `CARD_DECLINED` | 402 | Card issuer declined | Contact card issuer or try different card |
+| `INVALID_PAYMENT_METHOD` | 400 | Payment method not valid for currency | Use supported method |
+| `PAYMENT_METHOD_NOT_FOUND` | 404 | Payment method ID doesn't exist | Verify payment method ID |
+| `AMOUNT_TOO_SMALL` | 400 | Below minimum amount | Increase amount (min $0.50) |
+| `AMOUNT_TOO_LARGE` | 400 | Exceeds limits | Split into multiple transactions |
+| `DUPLICATE_TRANSACTION` | 409 | Idempotency key already used | Use unique key or retrieve existing |
+| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests | Implement backoff |
+
+## Webhooks
+
+Transaction events trigger webhooks:
+
+<CodeGroup>
+```json transaction.completed
+{
+  "event": "transaction.completed",
+  "data": {
+    "id": "txn_abc123",
+    "amount": 10000,
+    "currency": "USD",
+    "status": "completed",
+    "completedAt": "2025-11-18T22:30:02Z"
+  }
+}
+```
+
+```json transaction.failed
+{
+  "event": "transaction.failed",
+  "data": {
+    "id": "txn_abc123",
+    "amount": 10000,
+    "currency": "USD",
+    "status": "failed",
+    "failureReason": "card_declined"
+  }
+}
+```
+</CodeGroup>
+
+## Best Practices
+
+### 1. **Always Use Idempotency Keys**
+
+```javascript
+// Generate unique key per attempt
+const idempotencyKey = `payment-${orderId}-${Date.now()}`;
+
+const transaction = await hedge.transactions.create({
+  amount: 10000,
+  currency: 'USD',
+  idempotencyKey // Prevents duplicate charges
+});
+```
+
+### 2. **Handle Async Payments**
+
+Some methods (ACH, wire) are asynchronous:
+
+```javascript
+const transaction = await hedge.transactions.create({ ... });
+
+if (transaction.status === 'processing') {
+  // Don't fulfill order yet
+  // Wait for webhook notification
+  console.log('Payment pending, estimated:', transaction.estimatedCompletion);
+} else if (transaction.status === 'completed') {
+  // Instant payment - fulfill immediately
+  fulfillOrder(orderId);
+}
+```
+
+### 3. **Implement Retry Logic**
+
+```javascript
+async function processPaymentWithRetry(data, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await hedge.transactions.create(data);
+    } catch (error) {
+      if (error.code === 'RATE_LIMIT_EXCEEDED' && i < maxRetries - 1) {
+        await sleep(Math.pow(2, i) * 1000); // Exponential backoff
+        continue;
+      }
+      throw error;
+    }
+  }
+}
+```
+
+## Related Endpoints
+
+- [List Transactions](/api-reference/transactions/list) - View transaction history
+- [Get Transaction](/api-reference/transactions/get) - Retrieve transaction details
+- [Refund Transaction](/api-reference/transactions/refund) - Process refunds
+- [Add Payment Method](/api-reference/payment-methods/create) - Save payment methods
+
+## Support
+
+Questions? Contact us:
+- **Email:** support@hedgepayments.com
+- **Discord:** [discord.gg/hedgepayments](https://discord.gg/hedgepayments)
+- **Status:** [status.hedgepayments.com](https://status.hedgepayments.com)

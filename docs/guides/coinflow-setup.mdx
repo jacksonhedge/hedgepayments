@@ -1,0 +1,333 @@
+---
+title: 'CoinFlow Setup'
+description: 'Quick start guide for setting up CoinFlow with HedgePayments'
+icon: 'rocket'
+---
+
+# CoinFlow Setup Guide
+
+Get started with CoinFlow integration in under 10 minutes.
+
+## Prerequisites
+
+- A HedgePayments account
+- Node.js 18+ installed
+- Basic understanding of React/Next.js
+
+## Step 1: Create CoinFlow Account
+
+1. Visit [coinflow.cash](https://coinflow.cash)
+2. Click "Get Started" or "Sign Up"
+3. Complete the registration form
+4. Verify your email address
+
+## Step 2: Get Your Credentials
+
+### Sandbox Credentials (for testing)
+
+1. Log into your CoinFlow dashboard
+2. Navigate to **Settings** → **API Keys**
+3. Copy your sandbox credentials:
+   - Merchant ID
+   - API Key
+   - Webhook Secret
+
+### Production Credentials (for live payments)
+
+1. Complete merchant verification (KYC)
+2. Navigate to **Settings** → **API Keys** → **Production**
+3. Generate and copy production credentials
+
+<Warning>
+Never commit API keys to version control. Always use environment variables.
+</Warning>
+
+## Step 3: Configure Environment Variables
+
+Create a `.env.local` file in your project root:
+
+```bash
+# CoinFlow Sandbox Configuration
+COINFLOW_MERCHANT_ID=your_sandbox_merchant_id
+COINFLOW_API_KEY=your_sandbox_api_key
+COINFLOW_WEBHOOK_SECRET=your_sandbox_webhook_secret
+COINFLOW_ENV=sandbox
+
+# Public keys for client-side
+NEXT_PUBLIC_COINFLOW_ENV=sandbox
+NEXT_PUBLIC_COINFLOW_MERCHANT_ID=your_sandbox_merchant_id
+```
+
+## Step 4: Install Dependencies
+
+Install the CoinFlow React SDK:
+
+```bash
+npm install @coinflowlabs/react
+```
+
+Or with yarn:
+
+```bash
+yarn add @coinflowlabs/react
+```
+
+## Step 5: Create Payment Component
+
+Create a new component `components/CoinflowPayment.tsx`:
+
+```typescript
+'use client';
+
+import { CoinflowPurchase } from '@coinflowlabs/react';
+import { Connection, clusterApiUrl } from '@solana/web3.js';
+
+export default function CoinflowPayment() {
+  const connection = new Connection(clusterApiUrl('devnet'));
+
+  return (
+    <div className="max-w-2xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-6">Complete Payment</h2>
+
+      <CoinflowPurchase
+        merchantId={process.env.NEXT_PUBLIC_COINFLOW_MERCHANT_ID!}
+        env={process.env.NEXT_PUBLIC_COINFLOW_ENV as 'sandbox' | 'production'}
+        connection={connection}
+        amount={100.00}
+        blockchain="solana"
+        onSuccess={(data) => {
+          console.log('Payment successful!', data);
+          // Handle successful payment
+          window.location.href = '/payment-success';
+        }}
+        onFailure={(error) => {
+          console.error('Payment failed:', error);
+          // Handle failed payment
+        }}
+      />
+    </div>
+  );
+}
+```
+
+## Step 6: Create API Endpoint
+
+Create an API route `app/api/payments/create/route.ts`:
+
+```typescript
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(req: NextRequest) {
+  try {
+    const { amount, currency, customerEmail } = await req.json();
+
+    // Validate input
+    if (!amount || !currency || !customerEmail) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
+    // Create payment record in your database
+    const payment = await createPaymentRecord({
+      amount,
+      currency,
+      customerEmail,
+      status: 'pending',
+      provider: 'coinflow'
+    });
+
+    return NextResponse.json({
+      success: true,
+      paymentId: payment.id
+    });
+
+  } catch (error) {
+    console.error('Payment creation error:', error);
+    return NextResponse.json(
+      { error: 'Failed to create payment' },
+      { status: 500 }
+    );
+  }
+}
+```
+
+## Step 7: Set Up Webhooks
+
+### Configure Webhook URL
+
+1. In your CoinFlow dashboard, go to **Settings** → **Webhooks**
+2. Add your webhook URL: `https://yourdomain.com/api/webhooks/coinflow`
+3. Select events to subscribe to:
+   - `payment.completed`
+   - `payment.failed`
+   - `payment.refunded`
+
+### Create Webhook Handler
+
+Create `app/api/webhooks/coinflow/route.ts`:
+
+```typescript
+import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
+
+function verifySignature(body: string, signature: string, secret: string) {
+  const hash = crypto
+    .createHmac('sha256', secret)
+    .update(body)
+    .digest('hex');
+  return hash === signature;
+}
+
+export async function POST(req: NextRequest) {
+  const body = await req.text();
+  const signature = req.headers.get('x-coinflow-signature');
+
+  // Verify webhook signature
+  const isValid = verifySignature(
+    body,
+    signature!,
+    process.env.COINFLOW_WEBHOOK_SECRET!
+  );
+
+  if (!isValid) {
+    return NextResponse.json(
+      { error: 'Invalid signature' },
+      { status: 401 }
+    );
+  }
+
+  const event = JSON.parse(body);
+
+  // Handle different event types
+  switch (event.type) {
+    case 'payment.completed':
+      await handlePaymentCompleted(event.data);
+      break;
+    case 'payment.failed':
+      await handlePaymentFailed(event.data);
+      break;
+    default:
+      console.log('Unhandled event:', event.type);
+  }
+
+  return NextResponse.json({ received: true });
+}
+
+async function handlePaymentCompleted(data: any) {
+  // Update payment status in database
+  console.log('Payment completed:', data);
+  // Send confirmation email
+  // Update user's wallet
+}
+
+async function handlePaymentFailed(data: any) {
+  // Log failed payment
+  console.log('Payment failed:', data);
+  // Notify user
+}
+```
+
+## Step 8: Test Your Integration
+
+### Using Sandbox
+
+1. Start your development server:
+```bash
+npm run dev
+```
+
+2. Navigate to your payment page
+3. Use test credentials:
+   - **Email**: test@coinflow.cash
+   - **Card**: Any standard test card number
+
+### Test Payment Flow
+
+1. Create a test payment
+2. Complete the CoinFlow widget
+3. Verify webhook is received
+4. Check payment status in database
+
+## Step 9: Go to Production
+
+### Before Launch Checklist
+
+- [ ] Complete CoinFlow merchant verification
+- [ ] Switch to production API keys
+- [ ] Update environment variables
+- [ ] Test production webhook endpoint
+- [ ] Set up error monitoring
+- [ ] Configure payment success/failure pages
+- [ ] Review transaction limits
+
+### Production Environment
+
+Update your production environment variables:
+
+```bash
+COINFLOW_ENV=production
+COINFLOW_MERCHANT_ID=prod_merchant_id
+COINFLOW_API_KEY=prod_api_key
+COINFLOW_WEBHOOK_SECRET=prod_webhook_secret
+
+NEXT_PUBLIC_COINFLOW_ENV=production
+NEXT_PUBLIC_COINFLOW_MERCHANT_ID=prod_merchant_id
+```
+
+## Common Issues
+
+### Payment Widget Not Loading
+
+**Issue**: Widget shows loading spinner indefinitely
+
+**Solution**:
+- Verify `NEXT_PUBLIC_COINFLOW_MERCHANT_ID` is set
+- Check browser console for errors
+- Ensure environment matches (sandbox/production)
+
+### Webhook Not Receiving Events
+
+**Issue**: Payments succeed but webhooks never arrive
+
+**Solution**:
+- Verify webhook URL is publicly accessible
+- Check webhook signature validation logic
+- Review CoinFlow dashboard webhook logs
+
+### CORS Errors
+
+**Issue**: Cross-origin errors in browser
+
+**Solution**:
+```typescript
+// next.config.js
+module.exports = {
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Access-Control-Allow-Methods', value: 'GET,POST,OPTIONS' },
+        ],
+      },
+    ];
+  },
+};
+```
+
+## Next Steps
+
+- ✅ [Read the full CoinFlow Integration Guide](/guides/providers/coinflow)
+- ✅ [Explore the API Reference](/api-reference)
+- ✅ [Learn about AI Integration](/guides/ai-integration)
+- ✅ [Set up monitoring and analytics](/guides/monitoring)
+
+## Need Help?
+
+- **Documentation**: [docs.coinflow.cash](https://docs.coinflow.cash)
+- **Email Support**: support@hedgepayments.com
+- **Discord Community**: [discord.gg/hedgepayments](https://discord.gg/hedgepayments)
+- **CoinFlow Support**: support@coinflow.cash

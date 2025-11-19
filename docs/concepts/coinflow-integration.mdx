@@ -1,0 +1,326 @@
+---
+title: 'CoinFlow Integration'
+description: 'Understanding how HedgePayments integrates with CoinFlow'
+icon: 'puzzle-piece'
+---
+
+# CoinFlow Integration
+
+HedgePayments is built on top of CoinFlow, the leading cryptocurrency payment infrastructure provider. This integration enables seamless fiat-to-crypto and crypto-to-fiat conversions, making it easy for your users to transact in their preferred currency.
+
+## What is CoinFlow?
+
+CoinFlow is a payment infrastructure platform that provides:
+
+- **On/Off Ramps**: Convert between fiat and cryptocurrency
+- **Multi-Chain Support**: Works with Solana, Ethereum, Polygon, and more
+- **Compliance Built-In**: KYC/AML compliance handled automatically
+- **Global Coverage**: Supports 180+ countries and 50+ cryptocurrencies
+- **Instant Settlements**: Fast payment processing and payouts
+
+## Architecture
+
+```
+┌─────────────────┐
+│   Your App      │
+│  (Frontend)     │
+└────────┬────────┘
+         │
+         │ HedgePayments API
+         ↓
+┌─────────────────┐
+│  HedgePayments  │
+│    Backend      │
+└────────┬────────┘
+         │
+         │ CoinFlow SDK
+         ↓
+┌─────────────────┐
+│    CoinFlow     │
+│   Platform      │
+└─────────────────┘
+```
+
+## Key Concepts
+
+### 1. Merchant ID
+
+Your unique identifier in the CoinFlow system. Required for all API calls and payment widget integration.
+
+```typescript
+const merchantId = process.env.COINFLOW_MERCHANT_ID;
+```
+
+### 2. Environment
+
+CoinFlow supports two environments:
+
+- **Sandbox**: For testing and development
+- **Production**: For live transactions
+
+```typescript
+const env = process.env.COINFLOW_ENV; // 'sandbox' or 'production'
+```
+
+### 3. Blockchain Selection
+
+Choose which blockchain to use for transactions:
+
+```typescript
+<CoinflowPurchase
+  blockchain="solana"  // Options: solana, ethereum, polygon, near
+  // ... other props
+/>
+```
+
+### 4. Payment Flow
+
+1. **Initiate Payment**: User clicks "Pay with CoinFlow"
+2. **Widget Opens**: CoinFlow modal/widget appears
+3. **User Selects Method**: Choose crypto or fiat payment
+4. **Process Payment**: CoinFlow handles the transaction
+5. **Webhook Notification**: Your server receives payment confirmation
+6. **Update Status**: Mark payment as complete in your database
+
+## Integration Benefits
+
+### For Developers
+
+- **Simple API**: Clean, well-documented REST API
+- **React Components**: Pre-built UI components
+- **Webhook Support**: Real-time event notifications
+- **TypeScript Support**: Full type definitions
+
+### For Users
+
+- **Multiple Payment Methods**: Credit cards, bank transfers, crypto wallets
+- **No Wallet Required**: Users can pay with fiat directly
+- **Secure**: PCI DSS compliant payment processing
+- **Fast**: Instant crypto transfers, 1-3 day fiat settlements
+
+### For Businesses
+
+- **Compliance**: KYC/AML handled by CoinFlow
+- **Global Reach**: Accept payments from 180+ countries
+- **Low Fees**: Competitive transaction fees
+- **Instant Settlements**: Get paid faster
+
+## Payment Methods Supported
+
+### Cryptocurrency
+
+- Bitcoin (BTC)
+- Ethereum (ETH)
+- Solana (SOL)
+- USDC (multiple chains)
+- USDT (multiple chains)
+- 45+ other cryptocurrencies
+
+### Fiat
+
+- Credit/Debit Cards (Visa, Mastercard, Amex)
+- Bank Transfers (ACH, SEPA, Wire)
+- Apple Pay
+- Google Pay
+
+## Transaction Types
+
+### 1. Purchases (On-Ramp)
+
+Convert fiat → crypto
+
+```typescript
+<CoinflowPurchase
+  amount={100}           // USD amount
+  currency="USD"
+  blockchain="solana"
+  // User receives crypto equivalent
+/>
+```
+
+### 2. Withdrawals (Off-Ramp)
+
+Convert crypto → fiat
+
+```typescript
+<CoinflowWithdrawal
+  amount={0.5}           // Crypto amount
+  token="SOL"
+  blockchain="solana"
+  // User receives fiat equivalent
+/>
+```
+
+## Security & Compliance
+
+### Data Security
+
+- All payment data is encrypted in transit (TLS 1.3)
+- PCI DSS Level 1 compliant
+- SOC 2 Type II certified
+- Data stored in secure, encrypted databases
+
+### Compliance
+
+CoinFlow handles:
+- KYC (Know Your Customer) verification
+- AML (Anti-Money Laundering) checks
+- Sanctions screening
+- Transaction monitoring
+
+### Privacy
+
+- User data is never shared with merchants
+- GDPR compliant
+- CCPA compliant
+- Right to erasure supported
+
+## Rate Limits
+
+CoinFlow API has the following rate limits:
+
+- **Production**: 100 requests/minute per merchant
+- **Sandbox**: 1000 requests/minute per merchant
+- **Webhooks**: No limit (verified by signature)
+
+## Fee Structure
+
+### Transaction Fees
+
+- **Credit Card**: 2.9% + $0.30 per transaction
+- **Bank Transfer**: 1% (min $1)
+- **Crypto**: Network fees only
+
+### Withdrawal Fees
+
+- **Bank Transfer**: $25 per withdrawal
+- **Crypto**: Network fees only
+
+<Note>
+Fees may vary by region and payment method. Check your CoinFlow dashboard for exact rates.
+</Note>
+
+## Regional Availability
+
+### Supported Countries
+
+CoinFlow is available in 180+ countries, including:
+
+- 🇺🇸 United States
+- 🇨🇦 Canada
+- 🇬🇧 United Kingdom
+- 🇪🇺 European Union
+- 🇦🇺 Australia
+- 🇯🇵 Japan
+- 🇰🇷 South Korea
+- 🇸🇬 Singapore
+
+### Restricted Countries
+
+Not available in:
+- Countries under OFAC sanctions
+- Countries with crypto bans
+- High-risk jurisdictions
+
+## Testing
+
+### Sandbox Mode
+
+Use sandbox mode for development:
+
+```bash
+COINFLOW_ENV=sandbox
+```
+
+### Test Data
+
+- **Test Email**: test@coinflow.cash
+- **Test Cards**: Use standard Stripe test cards
+- **Test Amount**: Any amount under $1000
+
+### Test Scenarios
+
+```typescript
+// Successful payment
+amount: 100.00
+
+// Insufficient funds
+amount: 99999.99
+
+// Invalid card
+card: '4000000000000002'
+```
+
+## Monitoring
+
+### CoinFlow Dashboard
+
+Monitor your transactions in the CoinFlow dashboard:
+- Real-time transaction list
+- Payment success rates
+- Volume and revenue metrics
+- Refund management
+
+### HedgePayments Analytics
+
+Track payments through HedgePayments:
+- Transaction history
+- User payment methods
+- Conversion rates
+- Revenue analytics
+
+## Best Practices
+
+1. **Always validate webhooks** using signature verification
+2. **Handle errors gracefully** with user-friendly messages
+3. **Test thoroughly** in sandbox before production
+4. **Monitor transaction rates** to avoid hitting limits
+5. **Keep API keys secure** using environment variables
+6. **Log all transactions** for audit and debugging
+
+## Common Patterns
+
+### Payment with Metadata
+
+```typescript
+<CoinflowPurchase
+  amount={100}
+  metadata={{
+    userId: 'user_123',
+    orderId: 'order_456',
+    productId: 'prod_789'
+  }}
+/>
+```
+
+### Custom Styling
+
+```typescript
+<CoinflowPurchase
+  amount={100}
+  style={{
+    primaryColor: '#2C2416',
+    backgroundColor: '#FAF8F5',
+    font: 'Georgia, serif'
+  }}
+/>
+```
+
+### Conditional Rendering
+
+```typescript
+{isPaymentReady && (
+  <CoinflowPurchase
+    amount={cartTotal}
+    onSuccess={handleSuccess}
+    onFailure={handleFailure}
+  />
+)}
+```
+
+## Next Steps
+
+- [Set up CoinFlow](/guides/coinflow-setup)
+- [View API Reference](/api-reference)
+- [Read Integration Guide](/guides/providers/coinflow)
+- [Join our Discord](https://discord.gg/hedgepayments)

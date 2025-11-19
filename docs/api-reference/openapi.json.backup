@@ -1,0 +1,782 @@
+openapi: 3.1.0
+info:
+  title: HedgePayments API
+  description: |
+    Next-generation payment gateway with AI-native MCP integration.
+
+    ## Features
+    - Universal wallet system
+    - Multi-currency support (fiat & crypto)
+    - All payment methods (cards, ACH, wallets, BNPL, crypto)
+    - Instant payouts and settlements
+    - AI agent transaction capabilities via MCP
+
+    ## Authentication
+    All API requests require a Bearer token in the Authorization header.
+  version: 1.0.0
+  contact:
+    name: HedgePayments Support
+    email: support@hedgepayments.com
+    url: https://hedgepayments.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.hedgepayments.com/v1
+    description: Production
+  - url: https://sandbox.hedgepayments.com/v1
+    description: Sandbox
+  - url: http://localhost:3000/api/v1
+    description: Local Development
+
+security:
+  - BearerAuth: []
+  - ApiKeyAuth: []
+
+tags:
+  - name: Wallets
+    description: Digital wallet management
+  - name: Transactions
+    description: Payment processing and history
+  - name: Payment Methods
+    description: Payment method management
+  - name: Payouts
+    description: Withdrawal and payout operations
+  - name: Webhooks
+    description: Event notifications
+  - name: Analytics
+    description: Reporting and analytics
+
+paths:
+  /wallets:
+    post:
+      tags: [Wallets]
+      summary: Create a new wallet
+      operationId: createWallet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWalletRequest'
+            examples:
+              usd_wallet:
+                summary: USD Wallet
+                value:
+                  userId: "user_123"
+                  currency: "USD"
+                  label: "Primary Wallet"
+      responses:
+        '201':
+          description: Wallet created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    get:
+      tags: [Wallets]
+      summary: List wallets
+      operationId: listWallets
+      parameters:
+        - name: userId
+          in: query
+          schema:
+            type: string
+        - name: currency
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/WalletStatus'
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+      responses:
+        '200':
+          description: List of wallets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  wallets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Wallet'
+                  total:
+                    type: integer
+                  hasMore:
+                    type: boolean
+
+  /wallets/{walletId}:
+    get:
+      tags: [Wallets]
+      summary: Get wallet details
+      operationId: getWallet
+      parameters:
+        - $ref: '#/components/parameters/WalletId'
+      responses:
+        '200':
+          description: Wallet details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [Wallets]
+      summary: Update wallet
+      operationId: updateWallet
+      parameters:
+        - $ref: '#/components/parameters/WalletId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                dailyLimit:
+                  type: number
+                monthlyLimit:
+                  type: number
+      responses:
+        '200':
+          description: Wallet updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+
+  /wallets/{walletId}/balance:
+    get:
+      tags: [Wallets]
+      summary: Get wallet balance
+      operationId: getBalance
+      parameters:
+        - $ref: '#/components/parameters/WalletId'
+      responses:
+        '200':
+          description: Wallet balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+
+  /transactions:
+    post:
+      tags: [Transactions]
+      summary: Process a payment
+      operationId: processPayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessPaymentRequest'
+            examples:
+              card_payment:
+                summary: Card Payment
+                value:
+                  amount: 5000
+                  currency: "USD"
+                  method: "card"
+                  paymentMethodId: "pm_123"
+                  description: "Order #12345"
+              wallet_transfer:
+                summary: Wallet Transfer
+                value:
+                  amount: 2500
+                  currency: "USD"
+                  method: "wallet"
+                  sourceWalletId: "wallet_abc"
+                  destinationWalletId: "wallet_xyz"
+                  description: "P2P transfer"
+      responses:
+        '201':
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          description: Insufficient funds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags: [Transactions]
+      summary: List transactions
+      operationId: listTransactions
+      parameters:
+        - name: walletId
+          in: query
+          schema:
+            type: string
+        - name: type
+          in: query
+          schema:
+            $ref: '#/components/schemas/TransactionType'
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/TransactionStatus'
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transaction'
+                  total:
+                    type: integer
+                  hasMore:
+                    type: boolean
+
+  /transactions/{transactionId}:
+    get:
+      tags: [Transactions]
+      summary: Get transaction details
+      operationId: getTransaction
+      parameters:
+        - $ref: '#/components/parameters/TransactionId'
+      responses:
+        '200':
+          description: Transaction details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+
+  /transactions/{transactionId}/refund:
+    post:
+      tags: [Transactions]
+      summary: Refund a transaction
+      operationId: refundTransaction
+      parameters:
+        - $ref: '#/components/parameters/TransactionId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  description: Amount to refund (optional, defaults to full)
+                reason:
+                  type: string
+                  enum: [duplicate, fraudulent, requested_by_customer, other]
+                metadata:
+                  type: object
+      responses:
+        '201':
+          description: Refund created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+
+  /payment-methods:
+    post:
+      tags: [Payment Methods]
+      summary: Add a payment method
+      operationId: addPaymentMethod
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddPaymentMethodRequest'
+      responses:
+        '201':
+          description: Payment method added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethod'
+
+    get:
+      tags: [Payment Methods]
+      summary: List payment methods
+      operationId: listPaymentMethods
+      parameters:
+        - name: userId
+          in: query
+          schema:
+            type: string
+        - name: type
+          in: query
+          schema:
+            $ref: '#/components/schemas/PaymentMethodType'
+      responses:
+        '200':
+          description: List of payment methods
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paymentMethods:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PaymentMethod'
+
+  /payouts:
+    post:
+      tags: [Payouts]
+      summary: Request a payout
+      operationId: requestPayout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PayoutRequest'
+      responses:
+        '201':
+          description: Payout requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payout'
+
+  /webhooks:
+    post:
+      tags: [Webhooks]
+      summary: Register a webhook endpoint
+      operationId: createWebhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [url, events]
+              properties:
+                url:
+                  type: string
+                  format: uri
+                events:
+                  type: array
+                  items:
+                    type: string
+                    enum: [transaction.completed, transaction.failed, refund.completed, payout.completed]
+                secret:
+                  type: string
+                  description: Optional secret for webhook signature validation
+      responses:
+        '201':
+          description: Webhook created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+
+  /analytics/summary:
+    get:
+      tags: [Analytics]
+      summary: Get analytics summary
+      operationId: getAnalyticsSummary
+      parameters:
+        - name: walletId
+          in: query
+          schema:
+            type: string
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [day, week, month, year]
+      responses:
+        '200':
+          description: Analytics summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsSummary'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  parameters:
+    WalletId:
+      name: walletId
+      in: path
+      required: true
+      schema:
+        type: string
+    TransactionId:
+      name: transactionId
+      in: path
+      required: true
+      schema:
+        type: string
+    LimitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 10
+        maximum: 100
+    OffsetParam:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Wallet:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        currency:
+          type: string
+        balance:
+          $ref: '#/components/schemas/Balance'
+        status:
+          $ref: '#/components/schemas/WalletStatus'
+        label:
+          type: string
+        limits:
+          type: object
+          properties:
+            daily:
+              type: number
+            monthly:
+              type: number
+            transaction:
+              type: number
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Balance:
+      type: object
+      properties:
+        available:
+          type: number
+        pending:
+          type: number
+        reserved:
+          type: number
+        total:
+          type: number
+        currency:
+          type: string
+
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/TransactionType'
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        amount:
+          type: number
+        currency:
+          type: string
+        fee:
+          type: number
+        netAmount:
+          type: number
+        sourceWalletId:
+          type: string
+        destinationWalletId:
+          type: string
+        paymentMethodId:
+          type: string
+        description:
+          type: string
+        metadata:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        type:
+          $ref: '#/components/schemas/PaymentMethodType'
+        isDefault:
+          type: boolean
+        details:
+          oneOf:
+            - $ref: '#/components/schemas/CardDetails'
+            - $ref: '#/components/schemas/BankDetails'
+            - $ref: '#/components/schemas/WalletDetails'
+        verified:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    CardDetails:
+      type: object
+      properties:
+        brand:
+          type: string
+        last4:
+          type: string
+        expMonth:
+          type: integer
+        expYear:
+          type: integer
+
+    BankDetails:
+      type: object
+      properties:
+        bankName:
+          type: string
+        last4:
+          type: string
+        accountType:
+          type: string
+
+    WalletDetails:
+      type: object
+      properties:
+        provider:
+          type: string
+        email:
+          type: string
+
+    Payout:
+      type: object
+      properties:
+        id:
+          type: string
+        walletId:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        method:
+          type: string
+        status:
+          type: string
+        estimatedArrival:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+        events:
+          type: array
+          items:
+            type: string
+        secret:
+          type: string
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    AnalyticsSummary:
+      type: object
+      properties:
+        totalVolume:
+          type: number
+        transactionCount:
+          type: integer
+        averageTransactionSize:
+          type: number
+        topPaymentMethods:
+          type: array
+          items:
+            type: object
+            properties:
+              method:
+                type: string
+              volume:
+                type: number
+              count:
+                type: integer
+        volumeByDay:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              volume:
+                type: number
+              count:
+                type: integer
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: object
+
+    WalletStatus:
+      type: string
+      enum: [pending_verification, active, suspended, frozen, closed]
+
+    TransactionType:
+      type: string
+      enum: [deposit, withdrawal, transfer_in, transfer_out, payment, refund, fee, adjustment]
+
+    TransactionStatus:
+      type: string
+      enum: [pending, processing, completed, failed, reversed, refunded, cancelled]
+
+    PaymentMethodType:
+      type: string
+      enum: [card, bank_account, wallet, crypto, paypal, venmo, cashapp, apple_pay, google_pay]
+
+    CreateWalletRequest:
+      type: object
+      required: [userId, currency]
+      properties:
+        userId:
+          type: string
+        currency:
+          type: string
+        label:
+          type: string
+        initialBalance:
+          type: number
+
+    ProcessPaymentRequest:
+      type: object
+      required: [amount, currency, method]
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+        method:
+          type: string
+        paymentMethodId:
+          type: string
+        sourceWalletId:
+          type: string
+        destinationWalletId:
+          type: string
+        description:
+          type: string
+        metadata:
+          type: object
+        idempotencyKey:
+          type: string
+
+    AddPaymentMethodRequest:
+      type: object
+      required: [userId, type]
+      properties:
+        userId:
+          type: string
+        type:
+          $ref: '#/components/schemas/PaymentMethodType'
+        token:
+          type: string
+        isDefault:
+          type: boolean
+
+    PayoutRequest:
+      type: object
+      required: [walletId, amount]
+      properties:
+        walletId:
+          type: string
+        amount:
+          type: number
+        payoutMethodId:
+          type: string
+        instant:
+          type: boolean
