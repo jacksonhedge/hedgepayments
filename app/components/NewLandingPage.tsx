@@ -34,9 +34,16 @@ export default function NewLandingPage() {
         </h1>
 
         {/* Subheadline */}
-        <p className="text-xl md:text-2xl text-[#6B5D4F] text-center mb-14 max-w-2xl tracking-wide leading-relaxed animate-fadeIn animation-delay-400" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+        <p className="text-xl md:text-2xl text-[#6B5D4F] text-center mb-6 max-w-2xl tracking-wide leading-relaxed animate-fadeIn animation-delay-400" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
           Launch payments fast, grow faster
         </p>
+
+        {/* AI Integration Badge */}
+        <div className="text-center mb-14 animate-fadeIn animation-delay-500">
+          <p className="text-sm text-[#8B7E6E] tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+            Works seamlessly with Claude, Claude Code, ChatGPT, Codex & AI agents
+          </p>
+        </div>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-5 animate-fadeIn animation-delay-600">
