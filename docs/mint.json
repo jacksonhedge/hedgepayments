@@ -31,10 +31,6 @@
       "url": "api-reference"
     },
     {
-      "name": "SDKs",
-      "url": "sdks"
-    },
-    {
       "name": "Guides",
       "url": "guides"
     }
@@ -68,76 +64,21 @@
     {
       "group": "Core Concepts",
       "pages": [
-        "concepts/wallets",
-        "concepts/transactions",
-        "concepts/payment-methods",
-        "concepts/webhooks",
         "concepts/coinflow-integration"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "API Reference",
       "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "JavaScript/TypeScript",
-      "pages": [
-        "sdks/javascript/installation",
-        "sdks/javascript/quickstart",
-        "sdks/javascript/authentication",
-        "sdks/javascript/wallets",
-        "sdks/javascript/transactions",
-        "sdks/javascript/payment-methods",
-        "sdks/javascript/webhooks",
-        "sdks/javascript/error-handling"
-      ]
-    },
-    {
-      "group": "React",
-      "pages": [
-        "sdks/react/installation",
-        "sdks/react/provider",
-        "sdks/react/hooks",
-        "sdks/react/components",
-        "sdks/react/theming",
-        "sdks/react/examples"
-      ]
-    },
-    {
-      "group": "Python",
-      "pages": [
-        "sdks/python/installation",
-        "sdks/python/quickstart",
-        "sdks/python/examples"
+        "api-reference/wallets/create",
+        "api-reference/transactions/create"
       ]
     },
     {
       "group": "Integration Guides",
       "pages": [
         "guides/coinflow-setup",
-        "guides/ai-integration",
-        "guides/handling-webhooks",
-        "guides/testing-sandbox",
-        "guides/going-to-production"
-      ]
-    },
-    {
-      "group": "Payment Providers",
-      "pages": [
-        "guides/providers/coinflow",
-        "guides/providers/stripe",
-        "guides/providers/plaid"
-      ]
-    },
-    {
-      "group": "Security",
-      "pages": [
-        "guides/security/best-practices",
-        "guides/security/pci-compliance",
-        "guides/security/data-encryption",
-        "guides/security/api-keys"
+        "guides/providers/coinflow"
       ]
     }
   ],
