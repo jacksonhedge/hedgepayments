@@ -1,0 +1,487 @@
+---
+title: 'Bankroll Integration'
+description: 'Integrate Bankroll digital wallet for seamless consumer financial transactions'
+icon: 'wallet'
+---
+
+# Bankroll Integration Guide
+
+Connect your application with Bankroll, a consumer fintech digital wallet platform that enables seamless financial management across web and mobile platforms.
+
+## Overview
+
+Bankroll integration provides:
+- **Digital Wallet**: Consumer-grade digital wallet functionality
+- **Multi-Platform**: Unified experience across web and iOS
+- **Financial Management**: Transaction tracking and balance management
+- **User Experience**: Modern, intuitive wallet interface
+- **Real-time Updates**: Instant balance and transaction notifications
+
+## Getting Started
+
+### 1. Bankroll Account Setup
+
+1. Visit [Bankroll Dashboard](https://app.bankroll.io)
+2. Create a merchant account
+3. Complete business verification
+4. Generate API credentials
+
+### 2. Configure Environment Variables
+
+Add your Bankroll credentials to your `.env` file:
+
+```bash
+# Bankroll Configuration
+BANKROLL_API_KEY=your_api_key
+BANKROLL_MERCHANT_ID=your_merchant_id
+BANKROLL_WEBHOOK_SECRET=your_webhook_secret
+BANKROLL_ENV=sandbox  # or 'production'
+
+# Public keys for frontend
+NEXT_PUBLIC_BANKROLL_ENV=sandbox
+NEXT_PUBLIC_BANKROLL_MERCHANT_ID=your_merchant_id
+```
+
+### 3. Install SDK
+
+```bash
+npm install @bankroll/sdk
+# or
+yarn add @bankroll/sdk
+```
+
+### 4. Initialize Bankroll Client
+
+```typescript
+import { BankrollClient } from '@bankroll/sdk';
+
+const bankroll = new BankrollClient({
+  apiKey: process.env.BANKROLL_API_KEY,
+  merchantId: process.env.BANKROLL_MERCHANT_ID,
+  environment: process.env.BANKROLL_ENV as 'sandbox' | 'production'
+});
+```
+
+## Integration Flow
+
+### Creating a Wallet
+
+```typescript
+// Create a new Bankroll wallet for a user
+async function createUserWallet(userId: string, email: string) {
+  try {
+    const wallet = await bankroll.wallets.create({
+      userId,
+      email,
+      currency: 'USD',
+      metadata: {
+        source: 'hedgepayments',
+        createdAt: new Date().toISOString()
+      }
+    });
+
+    console.log('Wallet created:', wallet.id);
+    return wallet;
+  } catch (error) {
+    console.error('Failed to create wallet:', error);
+    throw error;
+  }
+}
+```
+
+### Processing Payments
+
+```typescript
+// Process a payment through Bankroll wallet
+async function processWalletPayment(
+  walletId: string,
+  amount: number,
+  description: string
+) {
+  try {
+    const transaction = await bankroll.transactions.create({
+      walletId,
+      amount,
+      currency: 'USD',
+      type: 'debit',
+      description,
+      metadata: {
+        orderId: `order_${Date.now()}`,
+        processorTime: new Date().toISOString()
+      }
+    });
+
+    if (transaction.status === 'completed') {
+      console.log('Payment successful:', transaction.id);
+      return { success: true, transaction };
+    }
+
+    return { success: false, error: 'Payment pending' };
+  } catch (error) {
+    if (error.code === 'INSUFFICIENT_FUNDS') {
+      return { success: false, error: 'Insufficient wallet balance' };
+    }
+    throw error;
+  }
+}
+```
+
+### Wallet-to-Wallet Transfers
+
+```typescript
+// Transfer funds between Bankroll wallets
+async function transferFunds(
+  fromWalletId: string,
+  toWalletId: string,
+  amount: number
+) {
+  const transfer = await bankroll.transfers.create({
+    sourceWalletId: fromWalletId,
+    destinationWalletId: toWalletId,
+    amount,
+    currency: 'USD',
+    description: 'P2P Transfer'
+  });
+
+  return transfer;
+}
+```
+
+## Webhook Integration
+
+### Setting Up Webhooks
+
+Configure your webhook endpoint to receive Bankroll events:
+
+```typescript
+// app/api/webhooks/bankroll/route.ts
+import { verifyBankrollWebhook } from '@/lib/bankroll';
+
+export async function POST(req: Request) {
+  const body = await req.text();
+  const signature = req.headers.get('x-bankroll-signature');
+
+  // Verify webhook signature
+  const isValid = verifyBankrollWebhook(
+    body,
+    signature,
+    process.env.BANKROLL_WEBHOOK_SECRET
+  );
+
+  if (!isValid) {
+    return Response.json({ error: 'Invalid signature' }, { status: 401 });
+  }
+
+  const event = JSON.parse(body);
+
+  switch (event.type) {
+    case 'wallet.created':
+      await handleWalletCreated(event.data);
+      break;
+
+    case 'transaction.completed':
+      await handleTransactionCompleted(event.data);
+      break;
+
+    case 'transaction.failed':
+      await handleTransactionFailed(event.data);
+      break;
+
+    case 'balance.updated':
+      await handleBalanceUpdated(event.data);
+      break;
+
+    default:
+      console.log('Unhandled event:', event.type);
+  }
+
+  return Response.json({ received: true });
+}
+```
+
+### Webhook Events
+
+| Event | Description |
+|-------|-------------|
+| `wallet.created` | New wallet created |
+| `wallet.updated` | Wallet information updated |
+| `transaction.created` | New transaction initiated |
+| `transaction.completed` | Transaction successfully completed |
+| `transaction.failed` | Transaction failed |
+| `balance.updated` | Wallet balance changed |
+| `transfer.completed` | Wallet-to-wallet transfer completed |
+
+## Frontend Integration
+
+### React Component Example
+
+```typescript
+import { useBankroll } from '@bankroll/react';
+
+function WalletDashboard() {
+  const { wallet, balance, transactions, loading } = useBankroll();
+
+  if (loading) return <div>Loading wallet...</div>;
+
+  return (
+    <div className="wallet-dashboard">
+      <h2>Bankroll Wallet</h2>
+
+      <div className="balance-card">
+        <h3>Available Balance</h3>
+        <p className="balance">
+          ${(balance.available / 100).toFixed(2)}
+        </p>
+      </div>
+
+      <div className="transactions">
+        <h3>Recent Transactions</h3>
+        {transactions.map((txn) => (
+          <div key={txn.id} className="transaction">
+            <span>{txn.description}</span>
+            <span>${(txn.amount / 100).toFixed(2)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+## Supported Features
+
+### Payment Methods
+
+- ✅ ACH Bank Transfers
+- ✅ Debit Card Top-ups
+- ✅ Wallet-to-Wallet Transfers
+- ✅ Direct Deposit
+- ✅ Bill Pay
+
+### Currencies
+
+Currently supported: **USD**
+
+Coming soon: EUR, GBP, CAD
+
+## Testing
+
+### Sandbox Environment
+
+Use test credentials for development:
+
+```bash
+# Sandbox Configuration
+BANKROLL_ENV=sandbox
+BANKROLL_API_KEY=sk_test_your_key_here
+```
+
+### Test Scenarios
+
+**Test successful payment:**
+```typescript
+await bankroll.transactions.create({
+  walletId: 'wallet_test_123',
+  amount: 1000, // $10.00
+  currency: 'USD'
+});
+```
+
+**Test insufficient funds:**
+```typescript
+await bankroll.transactions.create({
+  walletId: 'wallet_test_123',
+  amount: 999999999, // Will fail
+  currency: 'USD'
+});
+```
+
+## Production Deployment
+
+### Pre-Launch Checklist
+
+1. ✅ Complete merchant verification
+2. ✅ Configure production API keys
+3. ✅ Set up webhook endpoints with SSL
+4. ✅ Test end-to-end payment flow
+5. ✅ Implement error handling and retries
+6. ✅ Set up monitoring and alerts
+7. ✅ Review security best practices
+
+### Production Configuration
+
+```bash
+# Production Environment
+BANKROLL_ENV=production
+BANKROLL_API_KEY=sk_live_your_production_key
+BANKROLL_MERCHANT_ID=merchant_live_id
+BANKROLL_WEBHOOK_SECRET=whsec_live_secret
+
+NEXT_PUBLIC_BANKROLL_ENV=production
+NEXT_PUBLIC_BANKROLL_MERCHANT_ID=merchant_live_id
+```
+
+## Best Practices
+
+### Security
+
+1. **API Key Protection**
+   - Never expose API keys in client-side code
+   - Use environment variables
+   - Rotate keys regularly
+
+2. **Webhook Validation**
+   - Always verify webhook signatures
+   - Use HTTPS endpoints only
+   - Implement replay attack prevention
+
+3. **Data Handling**
+   - Encrypt sensitive data at rest
+   - Use secure connections (HTTPS/TLS)
+   - Follow PCI compliance guidelines
+
+### Error Handling
+
+```typescript
+async function safeWalletTransaction(walletId: string, amount: number) {
+  try {
+    const result = await bankroll.transactions.create({
+      walletId,
+      amount,
+      currency: 'USD'
+    });
+    return { success: true, data: result };
+  } catch (error) {
+    // Handle specific error codes
+    switch (error.code) {
+      case 'INSUFFICIENT_FUNDS':
+        return { success: false, error: 'Insufficient balance' };
+      case 'WALLET_SUSPENDED':
+        return { success: false, error: 'Wallet is suspended' };
+      case 'INVALID_AMOUNT':
+        return { success: false, error: 'Invalid transaction amount' };
+      default:
+        console.error('Unexpected error:', error);
+        return { success: false, error: 'Transaction failed' };
+    }
+  }
+}
+```
+
+### Performance Optimization
+
+1. **Cache wallet balances** with short TTL
+2. **Batch transaction queries** when possible
+3. **Use webhooks** instead of polling
+4. **Implement pagination** for transaction lists
+
+## Monitoring
+
+### Key Metrics to Track
+
+- Wallet creation success rate
+- Transaction completion time
+- Failed transaction reasons
+- Webhook delivery success rate
+- API response times
+- Balance reconciliation accuracy
+
+### Logging Example
+
+```typescript
+import { logger } from '@/lib/logger';
+
+async function createWalletWithLogging(userId: string) {
+  logger.info('Creating Bankroll wallet', { userId });
+
+  try {
+    const wallet = await bankroll.wallets.create({ userId });
+    logger.info('Wallet created successfully', {
+      userId,
+      walletId: wallet.id
+    });
+    return wallet;
+  } catch (error) {
+    logger.error('Wallet creation failed', {
+      userId,
+      error: error.message,
+      code: error.code
+    });
+    throw error;
+  }
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Wallet not found**
+- Verify walletId is correct
+- Check wallet hasn't been deleted
+- Ensure using correct environment (sandbox vs production)
+
+**Transaction declined**
+- Check wallet balance is sufficient
+- Verify transaction amount is within limits
+- Review wallet status (active vs suspended)
+
+**Webhook not receiving events**
+- Confirm webhook URL is publicly accessible
+- Verify SSL certificate is valid
+- Check webhook signature validation
+- Review Bankroll dashboard webhook logs
+
+## Rate Limits
+
+- **API Requests**: 100 requests/minute
+- **Wallet Creation**: 50 wallets/hour
+- **Transactions**: 500 transactions/hour
+
+## Support & Resources
+
+- **Bankroll Documentation**: [docs.bankroll.io](https://docs.bankroll.io)
+- **HedgePayments Support**: support@hedgepayments.com
+- **API Status**: [status.bankroll.io](https://status.bankroll.io)
+
+## Migration from Other Wallets
+
+### Migrating User Balances
+
+```typescript
+async function migrateUserToBankroll(
+  userId: string,
+  legacyWalletBalance: number
+) {
+  // Create new Bankroll wallet
+  const wallet = await bankroll.wallets.create({
+    userId,
+    currency: 'USD'
+  });
+
+  // Credit migrated balance
+  if (legacyWalletBalance > 0) {
+    await bankroll.transactions.create({
+      walletId: wallet.id,
+      amount: legacyWalletBalance,
+      currency: 'USD',
+      type: 'credit',
+      description: 'Balance migration',
+      metadata: {
+        migration: true,
+        legacyBalance: legacyWalletBalance
+      }
+    });
+  }
+
+  return wallet;
+}
+```
+
+## Additional Resources
+
+- [Bankroll API Reference](https://docs.bankroll.io/api)
+- [Bankroll React SDK](https://www.npmjs.com/package/@bankroll/react)
+- [Bankroll iOS SDK](https://github.com/bankroll/ios-sdk)
+- [HedgePayments API Reference](/api-reference)
+- [Wallet Management Best Practices](/guides/wallet-best-practices)

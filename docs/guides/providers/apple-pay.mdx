@@ -1,0 +1,129 @@
+---
+title: 'Apple Pay Integration'
+description: 'Enable Apple Pay for seamless checkout on iOS, macOS, and web'
+icon: 'apple'
+---
+
+# Apple Pay Integration Guide
+
+Accept Apple Pay payments across iOS, macOS, and web platforms with a frictionless one-touch checkout experience.
+
+## Overview
+
+Apple Pay integration provides:
+- **One-Touch Checkout**: Streamlined payment experience
+- **Cross-Platform**: Works on iPhone, iPad, Mac, and web
+- **Secure**: Tokenized payments with biometric authentication
+- **High Conversion**: Reduce cart abandonment with quick checkout
+- **Global Reach**: Available in 70+ countries
+
+## Coming Soon
+
+This integration guide is currently being developed. Check back soon for complete documentation including:
+
+- Apple Pay merchant setup
+- Certificate configuration
+- Web and native app integration
+- Payment processing flow
+- Testing with sandbox environment
+- Production deployment checklist
+
+## Current Status
+
+🚧 **In Development** - Apple Pay integration is planned for Q1 2025
+
+### Planned Features
+
+- ✅ Web checkout (Apple Pay JS)
+- ✅ iOS native integration (PassKit)
+- ✅ Recurring payments
+- ✅ Subscription support
+- ✅ Refund processing
+- ✅ Transaction verification
+
+## Get Notified
+
+Want to be notified when Apple Pay integration is available?
+
+**Contact us:** support@hedgepayments.com with subject line "Apple Pay Integration Updates"
+
+## Preview: Integration Steps
+
+Once available, the integration process will include:
+
+### 1. Apple Developer Setup
+- Enroll in Apple Developer Program
+- Create Merchant ID
+- Generate payment processing certificate
+- Configure domain verification
+
+### 2. HedgePayments Configuration
+```typescript
+// Example configuration (coming soon)
+import { ApplePay } from '@hedgepayments/sdk';
+
+const applePay = new ApplePay({
+  merchantId: 'merchant.com.yourcompany',
+  merchantName: 'Your Company',
+  countryCode: 'US',
+  currencyCode: 'USD'
+});
+```
+
+### 3. Payment Button Integration
+```typescript
+// Web integration example (coming soon)
+<ApplePayButton
+  amount={99.99}
+  onSuccess={(payment) => {
+    console.log('Payment successful:', payment);
+  }}
+/>
+```
+
+## Technical Requirements
+
+Once available, Apple Pay integration will require:
+
+- HedgePayments API key
+- Apple Developer Account ($99/year)
+- SSL certificate for domain verification
+- Merchant ID and payment processing certificate
+- Compatible device/browser for testing
+
+## Supported Platforms
+
+| Platform | Support Status |
+|----------|----------------|
+| **iOS Safari** | ✅ Coming soon |
+| **macOS Safari** | ✅ Coming soon |
+| **Web (Chrome/Firefox)** | ✅ Coming soon |
+| **Android** | ❌ Not supported by Apple |
+
+## Alternative Payment Methods
+
+While Apple Pay integration is in development, consider these alternatives:
+
+- [**Bankroll Integration**](/guides/providers/bankroll) - Digital wallet solution
+- [**CoinFlow Integration**](/guides/providers/coinflow) - Crypto and fiat payments
+- [**Card Processing**](/guides/card-payments) - Direct credit/debit card payments
+
+## Support
+
+Questions about Apple Pay integration?
+
+- **Email:** support@hedgepayments.com
+- **Documentation:** [docs.hedgepayments.com](https://docs.hedgepayments.com)
+
+## Related Guides
+
+- [Payment Methods Overview](/guides/payment-methods)
+- [Mobile Payments](/guides/mobile-payments)
+- [PCI Compliance](/guides/compliance)
+- [API Authentication](/authentication)
+
+## Apple Pay Resources
+
+- [Apple Pay Developer Guide](https://developer.apple.com/apple-pay/)
+- [Apple Pay on the Web](https://developer.apple.com/documentation/apple_pay_on_the_web)
+- [Apple Pay Design Guidelines](https://developer.apple.com/design/human-interface-guidelines/apple-pay)
