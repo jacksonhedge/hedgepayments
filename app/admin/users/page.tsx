@@ -9,7 +9,7 @@ export default function UsersPage() {
   const [filterEnvironment, setFilterEnvironment] = useState('all')
 
   // Mock data - will be replaced with real Supabase data
-  const users = [
+  const users: any[] = [
     // Will be populated from database
   ]
 
