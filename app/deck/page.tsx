@@ -15,6 +15,10 @@ const slides = [
     type: 'problem',
   },
   {
+    id: 'usage-analysis',
+    type: 'usage-analysis',
+  },
+  {
     id: 'solution',
     type: 'solution',
   },
@@ -74,22 +78,23 @@ function EmailGate({ onAccess }: { onAccess: (email: string) => void }) {
 
     setIsSubmitting(true)
 
-    // Store email in localStorage and optionally send to your backend
+    // Store email in localStorage and send to backend
     try {
       // Save to localStorage
       localStorage.setItem('deck_access_email', email)
       localStorage.setItem('deck_access_time', new Date().toISOString())
 
-      // Optional: Send to your API/database
-      // await fetch('/api/deck-access', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email, accessedAt: new Date().toISOString() })
-      // })
+      // Send to API to trigger confirmation email
+      await fetch('/api/deck-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
 
       onAccess(email)
     } catch (err) {
-      setError('Something went wrong. Please try again.')
+      // Still grant access even if email fails
+      onAccess(email)
     } finally {
       setIsSubmitting(false)
     }
@@ -100,7 +105,7 @@ function EmailGate({ onAccess }: { onAccess: (email: string) => void }) {
       <div className="max-w-md w-full text-center">
         <div className="mb-8">
           <Image
-            src="/images/bankroll-logo.png"
+            src="/images/bankroll-icon-new.png"
             alt="Bankroll"
             width={120}
             height={120}
@@ -234,7 +239,7 @@ export default function DeckPage() {
           <div className="flex flex-col items-center justify-center h-full text-center px-8">
             <div className="mb-10">
               <Image
-                src="/images/bankroll-logo.png"
+                src="/images/bankroll-icon-new.png"
                 alt="Bankroll"
                 width={200}
                 height={200}
@@ -246,7 +251,7 @@ export default function DeckPage() {
             </h1>
             <div className="w-16 h-px bg-[#D4C5B0] mb-6"></div>
             <p className="text-2xl md:text-3xl text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              Fraternity Finances Made Easy
+              P2P Payments for Gen Z
             </p>
           </div>
         )
@@ -255,44 +260,159 @@ export default function DeckPage() {
         return (
           <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
             <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-              The Problem
+              The Opportunity
             </p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Collecting dues is broken
+              Gen Z wants flexible funding<br />for everyday purchases
             </h2>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl">
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl">😤</span>
+                  <span className="text-3xl">⚡</span>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Treasurers drowning in spreadsheets</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Chasing payments via Venmo, texts, and awkward conversations</p>
+                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Instant gratification generation</h3>
+                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>60% of Gen Z prefers BNPL over credit cards for everyday spending</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl">💸</span>
+                  <span className="text-3xl">📱</span>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Members can't afford lump sums</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$500-2,000 dues hit all at once — tough for college students</p>
+                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Mobile-native expectations</h3>
+                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Venmo, Cash App normalized — but no flexible payment options</p>
                   </div>
                 </div>
               </div>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl">📉</span>
+                  <span className="text-3xl">💳</span>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>30-40% pay late</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Chapters lose thousands and strain brotherhood</p>
+                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Credit-averse but cash-strapped</h3>
+                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>70% avoid traditional credit — need alternatives for larger purchases</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl">🏚️</span>
+                  <span className="text-3xl">🎯</span>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Legacy tools are outdated</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Built in 2005, clunky UX, no mobile, no flexibility</p>
+                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Group payments are broken</h3>
+                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Splitting costs for trips, events, dues — no BNPL solution exists</p>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        )
+
+      case 'usage-analysis':
+        return (
+          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
+            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+              Usage Analysis
+            </p>
+            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-10 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+              Where Gen Z spends — and where they need BNPL
+            </h2>
+            <div className="grid md:grid-cols-2 gap-12 max-w-5xl">
+              {/* P2P Payment Volume Chart */}
+              <div>
+                <h3 className="text-xl text-[#2C2416] mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                  Annual P2P Payment Volume per User
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Rent & Housing Splits</span>
+                      <span className="text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$4,800</span>
+                    </div>
+                    <div className="h-8 bg-[#E8E2D9] overflow-hidden">
+                      <div className="h-full bg-[#2C2416]" style={{ width: '100%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Group Trips & Events</span>
+                      <span className="text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$1,800</span>
+                    </div>
+                    <div className="h-8 bg-[#E8E2D9] overflow-hidden">
+                      <div className="h-full bg-[#6B5D4F]" style={{ width: '38%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Sports Pools & Betting</span>
+                      <span className="text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$600</span>
+                    </div>
+                    <div className="h-8 bg-[#E8E2D9] overflow-hidden">
+                      <div className="h-full bg-[#8B7E6E]" style={{ width: '13%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Dinners & Nights Out</span>
+                      <span className="text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$1,200</span>
+                    </div>
+                    <div className="h-8 bg-[#E8E2D9] overflow-hidden">
+                      <div className="h-full bg-[#D4C5B0]" style={{ width: '25%' }}></div>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-xs text-[#8B7E6E] mt-4" style={{ fontFamily: 'Georgia, serif' }}>
+                  Total: ~$8,400/year in P2P payments per college student
+                </p>
+              </div>
+
+              {/* BNPL Adoption by Type */}
+              <div>
+                <h3 className="text-xl text-[#2C2416] mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                  BNPL Demand by Payment Type
+                </h3>
+                <div className="space-y-4">
+                  <div className="p-4 bg-[#2C2416]">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>Rent & Housing</span>
+                      <span className="text-xl text-[#FAF8F5] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>70%</span>
+                    </div>
+                    <div className="h-3 bg-[#4A3D2F] rounded-full overflow-hidden">
+                      <div className="h-full bg-[#D4C5B0] rounded-full" style={{ width: '70%' }}></div>
+                    </div>
+                    <p className="text-xs text-[#D4C5B0] mt-1">Would use BNPL for rent splits</p>
+                  </div>
+                  <div className="p-4 bg-white/50 border border-[#D4C5B0]">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Group Trips</span>
+                      <span className="text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>55%</span>
+                    </div>
+                    <div className="h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
+                      <div className="h-full bg-[#2C2416] rounded-full" style={{ width: '55%' }}></div>
+                    </div>
+                    <p className="text-xs text-[#8B7E6E] mt-1">Spring break, concerts, road trips</p>
+                  </div>
+                  <div className="p-4 bg-white/50 border border-[#D4C5B0]">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Pools & Group Bets</span>
+                      <span className="text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>45%</span>
+                    </div>
+                    <div className="h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
+                      <div className="h-full bg-[#6B5D4F] rounded-full" style={{ width: '45%' }}></div>
+                    </div>
+                    <p className="text-xs text-[#8B7E6E] mt-1">March Madness, fantasy, prop bets</p>
+                  </div>
+                  <div className="p-4 bg-white/50 border border-[#D4C5B0]">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Small Splits</span>
+                      <span className="text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>15%</span>
+                    </div>
+                    <div className="h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
+                      <div className="h-full bg-[#8B7E6E] rounded-full" style={{ width: '15%' }}></div>
+                    </div>
+                    <p className="text-xs text-[#8B7E6E] mt-1">Under $50 — instant pay preferred</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-8 p-4 bg-[#2C2416] max-w-md">
+              <p className="text-[#D4C5B0] text-sm" style={{ fontFamily: 'Georgia, serif' }}>
+                <span className="text-[#FAF8F5] font-semibold">Key Insight:</span> High-value payments ($200+) have 45-70% BNPL demand — our sweet spot.
+              </p>
             </div>
           </div>
         )
@@ -304,26 +424,26 @@ export default function DeckPage() {
               The Solution
             </p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Modern payments + BNPL<br />for Greek life
+              Cover Me
             </h2>
             <p className="text-xl text-[#6B5D4F] mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              Bankroll gives chapters a beautiful dashboard to manage dues, while members get flexible payment plans that fit their budget.
+              Send Now, Pay Later — BNPL for P2P payments. Pay back friends on your terms.
             </p>
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl">
-              <div className="bg-white/50 border border-[#D4C5B0] p-6">
-                <div className="text-3xl mb-4">📱</div>
-                <h3 className="text-lg text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Mobile-first</h3>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Pay dues in 30 seconds from your phone</p>
+              <div className="bg-[#2C2416] p-6">
+                <div className="text-3xl mb-4">🤝</div>
+                <h3 className="text-lg text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Pay friends back — flexibly</h3>
+                <p className="text-[#D4C5B0] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Owe someone $200? Pay them now, pay us back over 4-6 weeks</p>
               </div>
               <div className="bg-white/50 border border-[#D4C5B0] p-6">
-                <div className="text-3xl mb-4">🏦</div>
-                <h3 className="text-lg text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Built-in BNPL</h3>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Split dues into 4-6 payments, chapter gets paid upfront</p>
+                <div className="text-3xl mb-4">🏀</div>
+                <h3 className="text-lg text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Sports pools & group bets</h3>
+                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>March Madness bracket? Fantasy league? Pay your buy-in over time</p>
               </div>
               <div className="bg-white/50 border border-[#D4C5B0] p-6">
-                <div className="text-3xl mb-4">📊</div>
-                <h3 className="text-lg text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Real-time dashboard</h3>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Treasurers see who paid instantly — no more guessing</p>
+                <div className="text-3xl mb-4">✈️</div>
+                <h3 className="text-lg text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Group trips & events</h3>
+                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Spring break, concerts, dinners — pay your share over time</p>
               </div>
             </div>
           </div>
@@ -336,26 +456,26 @@ export default function DeckPage() {
               The Product
             </p>
             <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Simple for members.<br />Powerful for treasurers.
+              Simple to send.<br />Flexible to pay back.
             </h2>
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Members</h3>
+                  <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Senders</h3>
                   <ul className="space-y-2 text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
-                    <li>• See all dues and deadlines in one place</li>
-                    <li>• Pay instantly or split into installments</li>
-                    <li>• Automatic reminders before due dates</li>
-                    <li>• Payment history and receipts</li>
+                    <li>• Get paid instantly — we cover them</li>
+                    <li>• No more chasing friends for money</li>
+                    <li>• Request from groups in one tap</li>
+                    <li>• Track who's paid and who owes</li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Treasurers</h3>
+                  <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Payers</h3>
                   <ul className="space-y-2 text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
-                    <li>• One dashboard for all chapter finances</li>
-                    <li>• Create custom dues, events, and fees</li>
-                    <li>• Export reports for nationals</li>
-                    <li>• Get paid upfront even with BNPL</li>
+                    <li>• Pay instantly or split into 4-6 weeks</li>
+                    <li>• No interest for on-time payments</li>
+                    <li>• Automatic reminders before due dates</li>
+                    <li>• Build payment history for future credit</li>
                   </ul>
                 </div>
               </div>
@@ -375,45 +495,45 @@ export default function DeckPage() {
               Market Opportunity
             </p>
             <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-10 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Bottoms-up: $750M in annual dues
+              $1.7T in P2P payments — zero BNPL
             </h2>
             <div className="grid md:grid-cols-2 gap-12 max-w-5xl">
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
-                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Active undergrad members</span>
-                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>750K</span>
+                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>US P2P payment volume (2024)</span>
+                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$1.7T</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
-                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Chapters nationwide</span>
-                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>12,000</span>
+                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Gen Z share of P2P users</span>
+                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>35%</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
-                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Social dues per semester</span>
-                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$500</span>
+                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Avg transactions needing BNPL ($200+)</span>
+                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>28%</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
-                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Annual dues per member</span>
-                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$1,000</span>
+                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>BNPL interest (Gen Z)</span>
+                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>60%</span>
                 </div>
                 <div className="flex items-center justify-between pt-2">
-                  <span className="text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Total Addressable Market</span>
-                  <span className="text-3xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$750M</span>
+                  <span className="text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Addressable BNPL opportunity</span>
+                  <span className="text-3xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$100B+</span>
                 </div>
               </div>
               <div className="space-y-4">
                 <div className="p-5 bg-[#2C2416] text-[#FAF8F5]">
-                  <p className="text-sm text-[#D4C5B0] mb-1">TAM · Total dues payments</p>
-                  <p className="text-3xl" style={{ fontFamily: 'Georgia, serif' }}>$750M</p>
+                  <p className="text-sm text-[#D4C5B0] mb-1">TAM · Gen Z P2P payments</p>
+                  <p className="text-3xl" style={{ fontFamily: 'Georgia, serif' }}>$600B</p>
                 </div>
                 <div className="p-5 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-sm text-[#8B7E6E] mb-1">SAM · Chapters we can reach</p>
-                  <p className="text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$225M</p>
-                  <p className="text-xs text-[#6B5D4F] mt-1">30% of market (large/mid-size chapters)</p>
+                  <p className="text-sm text-[#8B7E6E] mb-1">SAM · Payments $200+ needing BNPL</p>
+                  <p className="text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$100B</p>
+                  <p className="text-xs text-[#6B5D4F] mt-1">Rent, trips, events, dues, pools</p>
                 </div>
                 <div className="p-5 bg-white/50 border border-[#D4C5B0]">
                   <p className="text-sm text-[#8B7E6E] mb-1">SOM · Year 3 target</p>
-                  <p className="text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$50M</p>
-                  <p className="text-xs text-[#6B5D4F] mt-1">500 chapters × 100 members × $1K</p>
+                  <p className="text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$500M</p>
+                  <p className="text-xs text-[#6B5D4F] mt-1">Starting with social groups & pools</p>
                 </div>
               </div>
             </div>
@@ -429,22 +549,26 @@ export default function DeckPage() {
             <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Revenue from every transaction
             </h2>
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl">
-              <div className="bg-white/50 border border-[#D4C5B0] p-8">
-                <h3 className="text-2xl text-[#2C2416] mb-4" style={{ fontFamily: 'Georgia, serif' }}>Payment Processing</h3>
-                <p className="text-4xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>2.9% + $0.30</p>
-                <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Per transaction — competitive with Stripe/Square</p>
+            <div className="grid md:grid-cols-3 gap-6 max-w-5xl">
+              <div className="bg-white/50 border border-[#D4C5B0] p-6">
+                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Instant P2P</h3>
+                <p className="text-3xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Free</p>
+                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Builds habit & network effects</p>
               </div>
-              <div className="bg-[#2C2416] p-8">
-                <h3 className="text-2xl text-[#FAF8F5] mb-4" style={{ fontFamily: 'Georgia, serif' }}>BNPL Financing</h3>
-                <p className="text-4xl text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>5-8%</p>
-                <p className="text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Fee on financed dues — members pay over time, chapter gets paid now</p>
+              <div className="bg-[#2C2416] p-6">
+                <h3 className="text-xl text-[#FAF8F5] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Cover (BNPL)</h3>
+                <p className="text-3xl text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>5-8%</p>
+                <p className="text-[#D4C5B0] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Fee on financed payments</p>
+              </div>
+              <div className="bg-white/50 border border-[#D4C5B0] p-6">
+                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Interchange</h3>
+                <p className="text-3xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>1.5-2%</p>
+                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Payment gateway fees on card transactions</p>
               </div>
             </div>
-            <div className="mt-8 max-w-4xl">
+            <div className="mt-8 max-w-5xl">
               <p className="text-lg text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                High BNPL adoption expected — 40%+ of members struggle with lump sum payments.
-                Our proprietary BNPL gives us better margins and full control over the experience.
+                Venmo/Cash App strategy: free P2P builds network, monetize through BNPL + interchange.
               </p>
             </div>
           </div>
@@ -457,45 +581,50 @@ export default function DeckPage() {
               Go-to-Market
             </p>
             <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              FraternityBase is our unfair advantage
+              Fraternities are our beachhead
             </h2>
             <p className="text-xl text-[#6B5D4F] mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              We built Crunchbase for fraternities — now we're monetizing it with payments
+              Dense social networks, recurring payments, high BNPL demand — the perfect wedge
             </p>
             <div className="grid md:grid-cols-3 gap-6 max-w-5xl mb-10">
               <div className="p-6 bg-[#2C2416] text-[#FAF8F5]">
-                <p className="text-xs tracking-widest uppercase mb-4 text-[#D4C5B0]">Phase 1</p>
-                <h3 className="text-xl mb-3" style={{ fontFamily: 'Georgia, serif' }}>FraternityBase</h3>
-                <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Database of every chapter, treasurer contact, dues structure, and payment provider</p>
-                <p className="text-lg mt-4 text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Built ✓</p>
+                <p className="text-xs tracking-widest uppercase mb-4 text-[#D4C5B0]">Use Case 1</p>
+                <h3 className="text-xl mb-3" style={{ fontFamily: 'Georgia, serif' }}>Social Dues</h3>
+                <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$500/semester dues collected by treasurers — 40% pay late. BNPL solves this.</p>
+                <p className="text-lg mt-4 text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$750M/yr market</p>
               </div>
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Phase 2</p>
-                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Direct Outreach</h3>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Target chapters with high dues + outdated payment tools. Warm intros through Greek network</p>
-                <p className="text-lg text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>Now</p>
+                <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Use Case 2</p>
+                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>March Madness Pools</h3>
+                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$50-500 buy-ins, everyone wants in but cash-strapped. Perfect for "Cover" BNPL.</p>
+                <p className="text-lg text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>Viral growth</p>
               </div>
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Phase 3</p>
-                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>National Partnerships</h3>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Partner with fraternity nationals for top-down rollout across all chapters</p>
-                <p className="text-lg text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>2026</p>
+                <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Use Case 3</p>
+                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Formals & Trips</h3>
+                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Spring break, date parties, ski trips — group payments with high BNPL demand.</p>
+                <p className="text-lg text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>Recurring events</p>
               </div>
             </div>
-            <div className="flex items-center gap-8 max-w-3xl">
+            <div className="flex items-center gap-8 max-w-4xl">
               <div className="text-center">
-                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>12K+</p>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Chapters mapped</p>
+                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>750K</p>
+                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Active frat/sorority members</p>
               </div>
               <div className="h-12 w-px bg-[#D4C5B0]"></div>
               <div className="text-center">
-                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>5K+</p>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Treasurer contacts</p>
+                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>12K</p>
+                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Chapters nationwide</p>
               </div>
               <div className="h-12 w-px bg-[#D4C5B0]"></div>
               <div className="text-center">
-                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$0</p>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>CAC with owned data</p>
+                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>60+</p>
+                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Members per chapter</p>
+              </div>
+              <div className="h-12 w-px bg-[#D4C5B0]"></div>
+              <div className="text-center">
+                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Built-in</p>
+                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Network effects</p>
               </div>
             </div>
           </div>
@@ -507,30 +636,45 @@ export default function DeckPage() {
             <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Traction
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Early momentum
+            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+              We built the distribution engine
             </h2>
+            <p className="text-xl text-[#6B5D4F] mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+              FraternityBase — Crunchbase for fraternities. Database of every chapter, treasurer, and payment tool.
+            </p>
             <div className="grid md:grid-cols-2 gap-12 max-w-4xl">
-              <div>
-                <p className="text-7xl md:text-8xl text-[#2C2416] mb-4" style={{ fontFamily: 'Georgia, serif' }}>50</p>
-                <p className="text-xl text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Chapters on waitlist</p>
-                <div className="w-16 h-px bg-[#D4C5B0] my-6"></div>
-                <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
-                  Strong inbound interest from fraternities frustrated with current solutions
-                </p>
+              <div className="space-y-6">
+                <div className="p-6 bg-[#2C2416]">
+                  <p className="text-5xl text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>12K+</p>
+                  <p className="text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Chapters mapped</p>
+                </div>
+                <div className="p-6 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-5xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>5K+</p>
+                  <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Treasurer contacts</p>
+                </div>
+                <div className="p-6 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-5xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>$0</p>
+                  <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>CAC with owned data</p>
+                </div>
               </div>
               <div className="space-y-6">
                 <div className="p-6 bg-white/50 border border-[#D4C5B0]">
                   <p className="text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                    "Our treasurer spends 10+ hours a month chasing payments. We need this."
+                    "I'd definitely use this for March Madness. $200 buy-in is a lot at once."
                   </p>
-                  <p className="text-sm text-[#8B7E6E]">— Chapter President, SEC school</p>
+                  <p className="text-sm text-[#8B7E6E]">— College student, 22</p>
                 </div>
                 <div className="p-6 bg-white/50 border border-[#D4C5B0]">
                   <p className="text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                    "Payment plans would be a game changer. Half our guys can't pay $800 at once."
+                    "Payment plans for dues would be huge. Half our guys are always late."
                   </p>
-                  <p className="text-sm text-[#8B7E6E]">— Treasurer, Big Ten chapter</p>
+                  <p className="text-sm text-[#8B7E6E]">— Fraternity treasurer</p>
+                </div>
+                <div className="p-6 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+                    "Spring break was $400 I didn't have. Would've loved to pay over time."
+                  </p>
+                  <p className="text-sm text-[#8B7E6E]">— Recent grad, 23</p>
                 </div>
               </div>
             </div>
@@ -544,29 +688,29 @@ export default function DeckPage() {
               The Vision
             </p>
             <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Greek life is just the start
+              BNPL for all P2P payments
             </h2>
             <p className="text-xl text-[#6B5D4F] mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              We're building BNPL infrastructure for all peer-to-peer payments
+              Fraternities are the wedge — Gen Z payments is the destination
             </p>
             <div className="grid md:grid-cols-3 gap-6 max-w-5xl">
               <div className="p-6 bg-[#2C2416] text-[#FAF8F5]">
                 <p className="text-xs tracking-widest uppercase mb-4 text-[#D4C5B0]">Now</p>
-                <h3 className="text-xl mb-3" style={{ fontFamily: 'Georgia, serif' }}>Greek Life</h3>
-                <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Fraternities & sororities — dues, events, housing</p>
+                <h3 className="text-xl mb-3" style={{ fontFamily: 'Georgia, serif' }}>Social Groups</h3>
+                <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Fraternities, sororities, sports pools, group trips</p>
                 <p className="text-2xl mt-4" style={{ fontFamily: 'Georgia, serif' }}>$3B+</p>
               </div>
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Next</p>
-                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Student Organizations</h3>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Clubs, club sports, student government, honor societies</p>
-                <p className="text-2xl text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>$10B+</p>
+                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Roommates & Friends</h3>
+                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Rent splits, utilities, shared subscriptions, dinners</p>
+                <p className="text-2xl text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>$50B+</p>
               </div>
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Future</p>
-                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>All P2P Payments</h3>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Rent splits, group trips, shared expenses — BNPL for any group payment</p>
-                <p className="text-2xl text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>$500B+</p>
+                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>All Gen Z P2P</h3>
+                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Any payment where someone needs time to pay — we cover them</p>
+                <p className="text-2xl text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>$600B+</p>
               </div>
             </div>
             <p className="text-[#6B5D4F] mt-8 max-w-2xl" style={{ fontFamily: 'Georgia, serif' }}>
@@ -589,15 +733,15 @@ export default function DeckPage() {
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0" style={{ fontFamily: 'Georgia, serif' }}>1</div>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>BNPL is normalized</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Gen Z expects flexible payment options everywhere — except their dues</p>
+                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>BNPL is Gen Z's default</h3>
+                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>60%+ prefer BNPL over credit cards — but it doesn't exist for P2P</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0" style={{ fontFamily: 'Georgia, serif' }}>2</div>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Incumbents are stagnant</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>OmegaFi, GreekBill built 15+ years ago — no innovation, poor mobile UX</p>
+                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Venmo/Cash App hit a ceiling</h3>
+                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Ubiquitous for transfers — but no financing, no flexibility for big payments</p>
                   </div>
                 </div>
               </div>
@@ -605,15 +749,15 @@ export default function DeckPage() {
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0" style={{ fontFamily: 'Georgia, serif' }}>3</div>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Chapter autonomy increasing</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>More chapters choosing their own tools vs. national mandates</p>
+                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Social payments are exploding</h3>
+                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Group trips, pools, shared costs — all rising with social media culture</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0" style={{ fontFamily: 'Georgia, serif' }}>4</div>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Rising costs</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Dues up 30%+ over 5 years — affordability is a real problem</p>
+                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Credit card rejection</h3>
+                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>70% of Gen Z avoids traditional credit — but still needs flexibility</p>
                   </div>
                 </div>
               </div>
@@ -646,13 +790,13 @@ export default function DeckPage() {
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 rounded-full bg-[#2C2416]"></div>
                       <p className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
-                        <span className="font-semibold">FraternityBase</span> — Crunchbase for fraternities
+                        <span className="font-semibold">FraternityBase</span> — Database of 12K+ chapters
                       </p>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 rounded-full bg-[#2C2416]"></div>
                       <p className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
-                        Former fraternity member — experienced the dues problem firsthand
+                        Deep Greek network + fintech background
                       </p>
                     </div>
                   </div>
@@ -660,7 +804,7 @@ export default function DeckPage() {
               </div>
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                  "I watched our chapter lose thousands every semester to late payments. Guys wanted to pay — they just couldn't afford it all at once. I'm building the solution I wish we had."
+                  "Every time friends split a trip or I owed someone for a pool, I thought: why can't I just pay this back over time? BNPL works for shopping — why not for paying back friends?"
                 </p>
               </div>
             </div>
@@ -674,10 +818,10 @@ export default function DeckPage() {
               The Ask
             </p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Raising $2-3M Seed
+              Raising $5M Seed
             </h2>
             <p className="text-xl text-[#6B5D4F] mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              To scale from 50 chapters to 500, process $100M+ in payments, and build the BNPL infrastructure
+              To launch Cover, acquire 100K users, and prove BNPL works for P2P payments
             </p>
             <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
@@ -690,13 +834,13 @@ export default function DeckPage() {
               </div>
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-2xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>25%</p>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Sales & Growth</p>
+                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Growth & GTM</p>
               </div>
             </div>
             <div className="w-16 h-px bg-[#D4C5B0] mx-auto mb-8"></div>
             <div className="space-y-4">
               <p className="text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
-                jackson@bankroll.com
+                jackson@hedgepayments.com
               </p>
               <Link
                 href="/contact"
