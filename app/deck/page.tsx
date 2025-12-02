@@ -265,37 +265,26 @@ export default function DeckPage() {
             <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Gen Z wants flexible funding<br className="hidden sm:block" /><span className="sm:hidden"> </span>for everyday purchases
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 max-w-4xl">
-              <div className="space-y-4 sm:space-y-6">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <span className="text-2xl sm:text-3xl">⚡</span>
-                  <div>
-                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Instant gratification generation</h3>
-                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>60% of Gen Z prefers BNPL over credit cards for everyday spending</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <span className="text-2xl sm:text-3xl">📱</span>
-                  <div>
-                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Mobile-native expectations</h3>
-                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Venmo, Cash App normalized — but no flexible payment options</p>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 max-w-5xl">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <span className="text-2xl sm:text-3xl">⚡</span>
+                <div>
+                  <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Instant gratification generation</h3>
+                  <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Users hate waiting to get paid</p>
                 </div>
               </div>
-              <div className="space-y-4 sm:space-y-6">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <span className="text-2xl sm:text-3xl">💳</span>
-                  <div>
-                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Credit-averse but cash-strapped</h3>
-                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>70% avoid traditional credit — need alternatives for larger purchases</p>
-                  </div>
+              <div className="flex items-start gap-3 sm:gap-4">
+                <span className="text-2xl sm:text-3xl">💳</span>
+                <div>
+                  <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Credit-averse but cash-strapped</h3>
+                  <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>70% avoid traditional credit — need alternatives for larger purchases</p>
                 </div>
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <span className="text-2xl sm:text-3xl">🎯</span>
-                  <div>
-                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Group payments are broken</h3>
-                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Splitting costs for trips, events, dues — no BNPL solution exists</p>
-                  </div>
+              </div>
+              <div className="flex items-start gap-3 sm:gap-4">
+                <span className="text-2xl sm:text-3xl">🎯</span>
+                <div>
+                  <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Group payments are taking over</h3>
+                  <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Splitting costs for trips, events, dues — no BNPL solution exists</p>
                 </div>
               </div>
             </div>
@@ -419,7 +408,7 @@ export default function DeckPage() {
 
       case 'solution':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-24 pb-16 sm:py-16 md:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Solution
             </p>
