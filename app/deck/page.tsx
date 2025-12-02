@@ -423,9 +423,10 @@ export default function DeckPage() {
             <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Solution
             </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Cover Me
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+              CoverPay™
             </h2>
+            <p className="text-lg text-[#8B7E6E] mb-8" style={{ fontFamily: 'Georgia, serif' }}>by Hedge Payments</p>
             <p className="text-xl text-[#6B5D4F] mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               Send Now, Pay Later — BNPL for P2P payments. Pay back friends on your terms.
             </p>
@@ -557,7 +558,7 @@ export default function DeckPage() {
                 <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Builds habit & network effects</p>
               </div>
               <div className="bg-[#2C2416] p-6">
-                <h3 className="text-xl text-[#FAF8F5] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Cover (BNPL)</h3>
+                <h3 className="text-xl text-[#FAF8F5] mb-3" style={{ fontFamily: 'Georgia, serif' }}>CoverPay™ (BNPL)</h3>
                 <p className="text-3xl text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>5-8%</p>
                 <p className="text-[#D4C5B0] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Fee on financed payments</p>
               </div>
@@ -597,7 +598,7 @@ export default function DeckPage() {
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Use Case 2</p>
                 <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>March Madness Pools</h3>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$50-500 buy-ins, everyone wants in but cash-strapped. Perfect for "Cover" BNPL.</p>
+                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$50-500 buy-ins, everyone wants in but cash-strapped. Perfect for CoverPay™.</p>
                 <p className="text-lg text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>Viral growth</p>
               </div>
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
@@ -822,7 +823,7 @@ export default function DeckPage() {
               Raising $5.25M Seed
             </h2>
             <p className="text-xl text-[#6B5D4F] mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              To launch Cover, reach $5.25M MRR, and prove BNPL works for P2P payments
+              To launch CoverPay™, reach $5.25M MRR, and prove BNPL works for P2P payments
             </p>
             <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
