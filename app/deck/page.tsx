@@ -818,10 +818,10 @@ export default function DeckPage() {
               The Ask
             </p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Raising $5M Seed
+              Raising $5.25M Seed
             </h2>
             <p className="text-xl text-[#6B5D4F] mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              To launch Cover, acquire 100K users, and prove BNPL works for P2P payments
+              To launch Cover, reach $5.25M MRR, and prove BNPL works for P2P payments
             </p>
             <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
