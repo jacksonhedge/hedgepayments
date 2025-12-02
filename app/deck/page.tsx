@@ -15,12 +15,12 @@ const slides = [
     type: 'problem',
   },
   {
-    id: 'usage-analysis',
-    type: 'usage-analysis',
-  },
-  {
     id: 'solution',
     type: 'solution',
+  },
+  {
+    id: 'usage-analysis',
+    type: 'usage-analysis',
   },
   {
     id: 'product',
@@ -642,7 +642,7 @@ export default function DeckPage() {
               We built the distribution engine
             </h2>
             <p className="text-xl text-[#6B5D4F] mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              FraternityBase — Crunchbase for fraternities. Database of every chapter, treasurer, and payment tool.
+              Hedge Payments owns FraternityBase — the Crunchbase for fraternities and sororities in the U.S.
             </p>
             <div className="grid md:grid-cols-2 gap-12 max-w-4xl">
               <div className="space-y-6">
@@ -670,7 +670,7 @@ export default function DeckPage() {
                   <p className="text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
                     "Payment plans for dues would be huge. Half our guys are always late."
                   </p>
-                  <p className="text-sm text-[#8B7E6E]">— Fraternity treasurer</p>
+                  <p className="text-sm text-[#8B7E6E]">— Matt, Penn State ZBT Treasurer</p>
                 </div>
                 <div className="p-6 bg-white/50 border border-[#D4C5B0]">
                   <p className="text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
