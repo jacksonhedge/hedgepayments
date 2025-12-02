@@ -19,16 +19,16 @@ const slides = [
     type: 'solution',
   },
   {
-    id: 'usage-analysis',
-    type: 'usage-analysis',
-  },
-  {
     id: 'product',
     type: 'product',
   },
   {
     id: 'market',
     type: 'market',
+  },
+  {
+    id: 'usage-analysis',
+    type: 'usage-analysis',
   },
   {
     id: 'business-model',
