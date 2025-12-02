@@ -494,9 +494,12 @@ export default function DeckPage() {
             <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Market Opportunity
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-10 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              $1.7T in P2P payments — zero BNPL
+            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+              P2P dominates consumer payments
             </h2>
+            <p className="text-xl text-[#6B5D4F] mb-10 max-w-3xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+              Rent, travel, bills, and shared expenses — $1.7T flows P2P with zero BNPL option
+            </p>
             <div className="grid md:grid-cols-2 gap-12 max-w-5xl">
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
@@ -504,8 +507,8 @@ export default function DeckPage() {
                   <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$1.7T</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
-                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Gen Z share of P2P users</span>
-                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>35%</span>
+                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Share of consumer payments via P2P</span>
+                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>40%</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
                   <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Avg transactions needing BNPL ($200+)</span>
@@ -522,18 +525,16 @@ export default function DeckPage() {
               </div>
               <div className="space-y-4">
                 <div className="p-5 bg-[#2C2416] text-[#FAF8F5]">
-                  <p className="text-sm text-[#D4C5B0] mb-1">TAM · Gen Z P2P payments</p>
-                  <p className="text-3xl" style={{ fontFamily: 'Georgia, serif' }}>$600B</p>
+                  <p className="text-sm text-[#D4C5B0] mb-1">Where P2P is used</p>
+                  <p className="text-lg" style={{ fontFamily: 'Georgia, serif' }}>Rent splits, group travel, shared bills, dues & pools</p>
+                </div>
+                <div className="p-5 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-sm text-[#8B7E6E] mb-1">TAM · Gen Z P2P payments</p>
+                  <p className="text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$600B</p>
                 </div>
                 <div className="p-5 bg-white/50 border border-[#D4C5B0]">
                   <p className="text-sm text-[#8B7E6E] mb-1">SAM · Payments $200+ needing BNPL</p>
                   <p className="text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$100B</p>
-                  <p className="text-xs text-[#6B5D4F] mt-1">Rent, trips, events, dues, pools</p>
-                </div>
-                <div className="p-5 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-sm text-[#8B7E6E] mb-1">SOM · Year 3 target</p>
-                  <p className="text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$500M</p>
-                  <p className="text-xs text-[#6B5D4F] mt-1">Starting with social groups & pools</p>
                 </div>
               </div>
             </div>
