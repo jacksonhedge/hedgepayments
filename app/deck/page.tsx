@@ -258,7 +258,7 @@ export default function DeckPage() {
 
       case 'problem':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Opportunity
             </p>
@@ -293,7 +293,7 @@ export default function DeckPage() {
 
       case 'usage-analysis':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Usage Analysis
             </p>
@@ -408,7 +408,7 @@ export default function DeckPage() {
 
       case 'solution':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-24 pb-16 sm:py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Solution
             </p>
@@ -441,7 +441,7 @@ export default function DeckPage() {
 
       case 'product':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Product
             </p>
@@ -480,7 +480,7 @@ export default function DeckPage() {
 
       case 'market':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Market Opportunity
             </p>
@@ -533,7 +533,7 @@ export default function DeckPage() {
 
       case 'business-model':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Business Model
             </p>
@@ -567,7 +567,7 @@ export default function DeckPage() {
 
       case 'go-to-market':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Go-to-Market
             </p>
@@ -623,7 +623,7 @@ export default function DeckPage() {
 
       case 'traction':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Traction
             </p>
@@ -674,7 +674,7 @@ export default function DeckPage() {
 
       case 'vision':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Vision
             </p>
@@ -712,7 +712,7 @@ export default function DeckPage() {
 
       case 'why-now':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Why Now
             </p>
@@ -758,7 +758,7 @@ export default function DeckPage() {
 
       case 'team':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Team
             </p>
@@ -804,7 +804,7 @@ export default function DeckPage() {
 
       case 'ask':
         return (
-          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto text-center">
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto text-center">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Ask
             </p>
