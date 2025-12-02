@@ -293,113 +293,113 @@ export default function DeckPage() {
 
       case 'usage-analysis':
         return (
-          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
-            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-16 pb-20 sm:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-2 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Usage Analysis
             </p>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-10 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-xl sm:text-4xl md:text-5xl text-[#2C2416] mb-4 sm:mb-10 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Where Gen Z spends — and where they need BNPL
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 max-w-5xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-12 max-w-5xl">
               {/* P2P Payment Volume Chart */}
               <div>
-                <h3 className="text-xl text-[#2C2416] mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-3 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
                   Annual P2P Payment Volume per User
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-2 sm:space-y-4">
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Rent & Housing Splits</span>
-                      <span className="text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$4,800</span>
+                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Rent & Housing Splits</span>
+                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$4,800</span>
                     </div>
-                    <div className="h-8 bg-[#E8E2D9] overflow-hidden">
+                    <div className="h-5 sm:h-8 bg-[#E8E2D9] overflow-hidden">
                       <div className="h-full bg-[#2C2416]" style={{ width: '100%' }}></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Group Trips & Events</span>
-                      <span className="text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$1,800</span>
+                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Group Trips & Events</span>
+                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$1,800</span>
                     </div>
-                    <div className="h-8 bg-[#E8E2D9] overflow-hidden">
+                    <div className="h-5 sm:h-8 bg-[#E8E2D9] overflow-hidden">
                       <div className="h-full bg-[#6B5D4F]" style={{ width: '38%' }}></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Sports Pools & Betting</span>
-                      <span className="text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$600</span>
+                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Sports Pools & Betting</span>
+                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$600</span>
                     </div>
-                    <div className="h-8 bg-[#E8E2D9] overflow-hidden">
+                    <div className="h-5 sm:h-8 bg-[#E8E2D9] overflow-hidden">
                       <div className="h-full bg-[#8B7E6E]" style={{ width: '13%' }}></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Dinners & Nights Out</span>
-                      <span className="text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$1,200</span>
+                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Dinners & Nights Out</span>
+                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$1,200</span>
                     </div>
-                    <div className="h-8 bg-[#E8E2D9] overflow-hidden">
+                    <div className="h-5 sm:h-8 bg-[#E8E2D9] overflow-hidden">
                       <div className="h-full bg-[#D4C5B0]" style={{ width: '25%' }}></div>
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-[#8B7E6E] mt-4" style={{ fontFamily: 'Georgia, serif' }}>
+                <p className="text-xs text-[#8B7E6E] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>
                   Total: ~$8,400/year in P2P payments per college student
                 </p>
               </div>
 
               {/* BNPL Adoption by Type */}
               <div>
-                <h3 className="text-xl text-[#2C2416] mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-3 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
                   BNPL Demand by Payment Type
                 </h3>
-                <div className="space-y-4">
-                  <div className="p-4 bg-[#2C2416]">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>Rent & Housing</span>
-                      <span className="text-xl text-[#FAF8F5] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>70%</span>
+                <div className="space-y-2 sm:space-y-4">
+                  <div className="p-2 sm:p-4 bg-[#2C2416]">
+                    <div className="flex justify-between items-center mb-1 sm:mb-2">
+                      <span className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>Rent & Housing</span>
+                      <span className="text-base sm:text-xl text-[#FAF8F5] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>70%</span>
                     </div>
-                    <div className="h-3 bg-[#4A3D2F] rounded-full overflow-hidden">
+                    <div className="h-2 sm:h-3 bg-[#4A3D2F] rounded-full overflow-hidden">
                       <div className="h-full bg-[#D4C5B0] rounded-full" style={{ width: '70%' }}></div>
                     </div>
-                    <p className="text-xs text-[#D4C5B0] mt-1">Would use BNPL for rent splits</p>
+                    <p className="text-xs text-[#D4C5B0] mt-1 hidden sm:block">Would use BNPL for rent splits</p>
                   </div>
-                  <div className="p-4 bg-white/50 border border-[#D4C5B0]">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Group Trips</span>
-                      <span className="text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>55%</span>
+                  <div className="p-2 sm:p-4 bg-white/50 border border-[#D4C5B0]">
+                    <div className="flex justify-between items-center mb-1 sm:mb-2">
+                      <span className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Group Trips</span>
+                      <span className="text-base sm:text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>55%</span>
                     </div>
-                    <div className="h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
+                    <div className="h-2 sm:h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
                       <div className="h-full bg-[#2C2416] rounded-full" style={{ width: '55%' }}></div>
                     </div>
-                    <p className="text-xs text-[#8B7E6E] mt-1">Spring break, concerts, road trips</p>
+                    <p className="text-xs text-[#8B7E6E] mt-1 hidden sm:block">Spring break, concerts, road trips</p>
                   </div>
-                  <div className="p-4 bg-white/50 border border-[#D4C5B0]">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Pools & Group Bets</span>
-                      <span className="text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>45%</span>
+                  <div className="p-2 sm:p-4 bg-white/50 border border-[#D4C5B0]">
+                    <div className="flex justify-between items-center mb-1 sm:mb-2">
+                      <span className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Pools & Group Bets</span>
+                      <span className="text-base sm:text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>45%</span>
                     </div>
-                    <div className="h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
+                    <div className="h-2 sm:h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
                       <div className="h-full bg-[#6B5D4F] rounded-full" style={{ width: '45%' }}></div>
                     </div>
-                    <p className="text-xs text-[#8B7E6E] mt-1">March Madness, fantasy, prop bets</p>
+                    <p className="text-xs text-[#8B7E6E] mt-1 hidden sm:block">March Madness, fantasy, prop bets</p>
                   </div>
-                  <div className="p-4 bg-white/50 border border-[#D4C5B0]">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Small Splits</span>
-                      <span className="text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>15%</span>
+                  <div className="p-2 sm:p-4 bg-white/50 border border-[#D4C5B0]">
+                    <div className="flex justify-between items-center mb-1 sm:mb-2">
+                      <span className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Small Splits</span>
+                      <span className="text-base sm:text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>15%</span>
                     </div>
-                    <div className="h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
+                    <div className="h-2 sm:h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
                       <div className="h-full bg-[#8B7E6E] rounded-full" style={{ width: '15%' }}></div>
                     </div>
-                    <p className="text-xs text-[#8B7E6E] mt-1">Under $50 — instant pay preferred</p>
+                    <p className="text-xs text-[#8B7E6E] mt-1 hidden sm:block">Under $50 — instant pay preferred</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="mt-8 p-4 bg-[#2C2416] max-w-md">
-              <p className="text-[#D4C5B0] text-sm" style={{ fontFamily: 'Georgia, serif' }}>
+            <div className="mt-4 sm:mt-8 p-3 sm:p-4 bg-[#2C2416] max-w-md">
+              <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>
                 <span className="text-[#FAF8F5] font-semibold">Key Insight:</span> High-value payments ($200+) have 45-70% BNPL demand — our sweet spot.
               </p>
             </div>
