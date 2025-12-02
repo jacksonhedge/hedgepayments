@@ -258,43 +258,43 @@ export default function DeckPage() {
 
       case 'problem':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Opportunity
             </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Gen Z wants flexible funding<br />for everyday purchases
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+              Gen Z wants flexible funding<br className="hidden sm:block" /><span className="sm:hidden"> </span>for everyday purchases
             </h2>
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl">
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <span className="text-3xl">⚡</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 max-w-4xl">
+              <div className="space-y-4 sm:space-y-6">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <span className="text-2xl sm:text-3xl">⚡</span>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Instant gratification generation</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>60% of Gen Z prefers BNPL over credit cards for everyday spending</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Instant gratification generation</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>60% of Gen Z prefers BNPL over credit cards for everyday spending</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <span className="text-3xl">📱</span>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <span className="text-2xl sm:text-3xl">📱</span>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Mobile-native expectations</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Venmo, Cash App normalized — but no flexible payment options</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Mobile-native expectations</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Venmo, Cash App normalized — but no flexible payment options</p>
                   </div>
                 </div>
               </div>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <span className="text-3xl">💳</span>
+              <div className="space-y-4 sm:space-y-6">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <span className="text-2xl sm:text-3xl">💳</span>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Credit-averse but cash-strapped</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>70% avoid traditional credit — need alternatives for larger purchases</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Credit-averse but cash-strapped</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>70% avoid traditional credit — need alternatives for larger purchases</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <span className="text-3xl">🎯</span>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <span className="text-2xl sm:text-3xl">🎯</span>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Group payments are broken</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Splitting costs for trips, events, dues — no BNPL solution exists</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Group payments are broken</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Splitting costs for trips, events, dues — no BNPL solution exists</p>
                   </div>
                 </div>
               </div>
@@ -304,14 +304,14 @@ export default function DeckPage() {
 
       case 'usage-analysis':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Usage Analysis
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-10 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-10 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Where Gen Z spends — and where they need BNPL
             </h2>
-            <div className="grid md:grid-cols-2 gap-12 max-w-5xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 max-w-5xl">
               {/* P2P Payment Volume Chart */}
               <div>
                 <h3 className="text-xl text-[#2C2416] mb-6" style={{ fontFamily: 'Georgia, serif' }}>
@@ -419,32 +419,32 @@ export default function DeckPage() {
 
       case 'solution':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Solution
             </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-2 sm:mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               CoverPay™
             </h2>
-            <p className="text-lg text-[#8B7E6E] mb-8" style={{ fontFamily: 'Georgia, serif' }}>by Hedge Payments</p>
-            <p className="text-xl text-[#6B5D4F] mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+            <p className="text-sm sm:text-lg text-[#8B7E6E] mb-4 sm:mb-8" style={{ fontFamily: 'Georgia, serif' }}>by Hedge Payments</p>
+            <p className="text-base sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               Send Now, Pay Later — BNPL for P2P payments. Pay back friends on your terms.
             </p>
-            <div className="grid md:grid-cols-3 gap-6 max-w-4xl">
-              <div className="bg-[#2C2416] p-6">
-                <div className="text-3xl mb-4">🤝</div>
-                <h3 className="text-lg text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Pay friends back — flexibly</h3>
-                <p className="text-[#D4C5B0] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Owe someone $200? Pay them now, pay us back over 4-6 weeks</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl">
+              <div className="bg-[#2C2416] p-4 sm:p-6">
+                <div className="text-2xl sm:text-3xl mb-2 sm:mb-4">🤝</div>
+                <h3 className="text-base sm:text-lg text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Pay friends back — flexibly</h3>
+                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Owe someone $200? Pay them now, pay us back over 4-6 weeks</p>
               </div>
-              <div className="bg-white/50 border border-[#D4C5B0] p-6">
-                <div className="text-3xl mb-4">🏀</div>
-                <h3 className="text-lg text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Sports pools & group bets</h3>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>March Madness bracket? Fantasy league? Pay your buy-in over time</p>
+              <div className="bg-white/50 border border-[#D4C5B0] p-4 sm:p-6">
+                <div className="text-2xl sm:text-3xl mb-2 sm:mb-4">🏀</div>
+                <h3 className="text-base sm:text-lg text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Sports pools & group bets</h3>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>March Madness bracket? Fantasy league? Pay your buy-in over time</p>
               </div>
-              <div className="bg-white/50 border border-[#D4C5B0] p-6">
-                <div className="text-3xl mb-4">✈️</div>
-                <h3 className="text-lg text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Group trips & events</h3>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Spring break, concerts, dinners — pay your share over time</p>
+              <div className="bg-white/50 border border-[#D4C5B0] p-4 sm:p-6 sm:col-span-2 md:col-span-1">
+                <div className="text-2xl sm:text-3xl mb-2 sm:mb-4">✈️</div>
+                <h3 className="text-base sm:text-lg text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Group trips & events</h3>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Spring break, concerts, dinners — pay your share over time</p>
               </div>
             </div>
           </div>
@@ -452,18 +452,18 @@ export default function DeckPage() {
 
       case 'product':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Product
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Simple to send.<br />Flexible to pay back.
             </h2>
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 items-center">
+              <div className="space-y-6 sm:space-y-8">
                 <div>
-                  <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Senders</h3>
-                  <ul className="space-y-2 text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
+                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Senders</h3>
+                  <ul className="space-y-1 sm:space-y-2 text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
                     <li>• Get paid instantly — we cover them</li>
                     <li>• No more chasing friends for money</li>
                     <li>• Request from groups in one tap</li>
@@ -471,8 +471,8 @@ export default function DeckPage() {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Payers</h3>
-                  <ul className="space-y-2 text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
+                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Payers</h3>
+                  <ul className="space-y-1 sm:space-y-2 text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
                     <li>• Pay instantly or split into 4-6 weeks</li>
                     <li>• No interest for on-time payments</li>
                     <li>• Automatic reminders before due dates</li>
@@ -480,8 +480,8 @@ export default function DeckPage() {
                   </ul>
                 </div>
               </div>
-              <div className="bg-[#2C2416] rounded-2xl p-8 flex items-center justify-center min-h-[400px]">
-                <p className="text-[#D4C5B0] text-center" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+              <div className="bg-[#2C2416] rounded-2xl p-6 sm:p-8 flex items-center justify-center min-h-[200px] sm:min-h-[400px]">
+                <p className="text-[#D4C5B0] text-center text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
                   [Product screenshots / demo]
                 </p>
               </div>
@@ -491,51 +491,51 @@ export default function DeckPage() {
 
       case 'market':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Market Opportunity
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-2 sm:mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               P2P dominates consumer payments
             </h2>
-            <p className="text-xl text-[#6B5D4F] mb-10 max-w-3xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+            <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-10 max-w-3xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               Rent, travel, bills, and shared expenses — $1.7T flows P2P with zero BNPL option
             </p>
-            <div className="grid md:grid-cols-2 gap-12 max-w-5xl">
-              <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
-                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>US P2P payment volume (2024)</span>
-                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$1.7T</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 max-w-5xl">
+              <div className="space-y-3 sm:space-y-6">
+                <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
+                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>US P2P payment volume (2024)</span>
+                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$1.7T</span>
                 </div>
-                <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
-                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Share of consumer payments via P2P</span>
-                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>40%</span>
+                <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
+                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Share of consumer payments via P2P</span>
+                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>40%</span>
                 </div>
-                <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
-                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Avg transactions needing BNPL ($200+)</span>
-                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>28%</span>
+                <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
+                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Avg transactions needing BNPL ($200+)</span>
+                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>28%</span>
                 </div>
-                <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-4">
-                  <span className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>BNPL interest (Gen Z)</span>
-                  <span className="text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>60%</span>
+                <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
+                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>BNPL interest (Gen Z)</span>
+                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>60%</span>
                 </div>
-                <div className="flex items-center justify-between pt-2">
-                  <span className="text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Addressable BNPL opportunity</span>
-                  <span className="text-3xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$100B+</span>
+                <div className="flex items-center justify-between pt-1 sm:pt-2">
+                  <span className="text-sm sm:text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Addressable BNPL opportunity</span>
+                  <span className="text-xl sm:text-3xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$100B+</span>
                 </div>
               </div>
-              <div className="space-y-4">
-                <div className="p-5 bg-[#2C2416] text-[#FAF8F5]">
-                  <p className="text-sm text-[#D4C5B0] mb-1">Where P2P is used</p>
-                  <p className="text-lg" style={{ fontFamily: 'Georgia, serif' }}>Rent splits, group travel, shared bills, dues & pools</p>
+              <div className="space-y-3 sm:space-y-4">
+                <div className="p-3 sm:p-5 bg-[#2C2416] text-[#FAF8F5]">
+                  <p className="text-xs sm:text-sm text-[#D4C5B0] mb-1">Where P2P is used</p>
+                  <p className="text-sm sm:text-lg" style={{ fontFamily: 'Georgia, serif' }}>Rent splits, group travel, shared bills, dues & pools</p>
                 </div>
-                <div className="p-5 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-sm text-[#8B7E6E] mb-1">TAM · Gen Z P2P payments</p>
-                  <p className="text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$600B</p>
+                <div className="p-3 sm:p-5 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-1">TAM · Gen Z P2P payments</p>
+                  <p className="text-2xl sm:text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$600B</p>
                 </div>
-                <div className="p-5 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-sm text-[#8B7E6E] mb-1">SAM · Payments $200+ needing BNPL</p>
-                  <p className="text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$100B</p>
+                <div className="p-3 sm:p-5 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-1">SAM · Payments $200+ needing BNPL</p>
+                  <p className="text-2xl sm:text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$100B</p>
                 </div>
               </div>
             </div>
@@ -544,32 +544,32 @@ export default function DeckPage() {
 
       case 'business-model':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Business Model
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Revenue from every transaction
             </h2>
-            <div className="grid md:grid-cols-3 gap-6 max-w-5xl">
-              <div className="bg-white/50 border border-[#D4C5B0] p-6">
-                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Instant P2P</h3>
-                <p className="text-3xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Free</p>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Builds habit & network effects</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl">
+              <div className="bg-white/50 border border-[#D4C5B0] p-4 sm:p-6">
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Instant P2P</h3>
+                <p className="text-2xl sm:text-3xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Free</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Builds habit & network effects</p>
               </div>
-              <div className="bg-[#2C2416] p-6">
-                <h3 className="text-xl text-[#FAF8F5] mb-3" style={{ fontFamily: 'Georgia, serif' }}>CoverPay™ (BNPL)</h3>
-                <p className="text-3xl text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>5-8%</p>
-                <p className="text-[#D4C5B0] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Fee on financed payments</p>
+              <div className="bg-[#2C2416] p-4 sm:p-6">
+                <h3 className="text-base sm:text-xl text-[#FAF8F5] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>CoverPay™ (BNPL)</h3>
+                <p className="text-2xl sm:text-3xl text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>5-8%</p>
+                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Fee on financed payments</p>
               </div>
-              <div className="bg-white/50 border border-[#D4C5B0] p-6">
-                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Interchange</h3>
-                <p className="text-3xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>1.5-2%</p>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Payment gateway fees on card transactions</p>
+              <div className="bg-white/50 border border-[#D4C5B0] p-4 sm:p-6 sm:col-span-2 md:col-span-1">
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Interchange</h3>
+                <p className="text-2xl sm:text-3xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>1.5-2%</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Payment gateway fees on card transactions</p>
               </div>
             </div>
-            <div className="mt-8 max-w-5xl">
-              <p className="text-lg text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+            <div className="mt-4 sm:mt-8 max-w-5xl">
+              <p className="text-sm sm:text-lg text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
                 Venmo/Cash App strategy: free P2P builds network, monetize through CoverPay™ + interchange.
               </p>
             </div>
@@ -578,55 +578,55 @@ export default function DeckPage() {
 
       case 'go-to-market':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Go-to-Market
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Fraternities are our beachhead
             </h2>
-            <p className="text-xl text-[#6B5D4F] mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+            <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               Dense social networks, recurring payments, high CoverPay™ demand — the perfect wedge
             </p>
-            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mb-10">
-              <div className="p-6 bg-[#2C2416] text-[#FAF8F5]">
-                <p className="text-xs tracking-widest uppercase mb-4 text-[#D4C5B0]">Use Case 1</p>
-                <h3 className="text-xl mb-3" style={{ fontFamily: 'Georgia, serif' }}>Social Dues</h3>
-                <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$500/semester dues collected by treasurers — 40% pay late. CoverPay™ solves this.</p>
-                <p className="text-lg mt-4 text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$750M/yr market</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mb-6 sm:mb-10">
+              <div className="p-4 sm:p-6 bg-[#2C2416] text-[#FAF8F5]">
+                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#D4C5B0]">Use Case 1</p>
+                <h3 className="text-base sm:text-xl mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Social Dues</h3>
+                <p className="text-xs sm:text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$500/semester dues collected by treasurers — 40% pay late. CoverPay™ solves this.</p>
+                <p className="text-sm sm:text-lg mt-2 sm:mt-4 text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$750M/yr market</p>
               </div>
-              <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Use Case 2</p>
-                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>March Madness Pools</h3>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$50-500 buy-ins, everyone wants in but cash-strapped. Perfect for CoverPay™.</p>
-                <p className="text-lg text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>Viral growth</p>
+              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Use Case 2</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>March Madness Pools</h3>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$50-500 buy-ins, everyone wants in but cash-strapped. Perfect for CoverPay™.</p>
+                <p className="text-sm sm:text-lg text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>Viral growth</p>
               </div>
-              <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Use Case 3</p>
-                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Formals & Trips</h3>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Spring break, date parties, ski trips — group payments perfect for CoverPay™.</p>
-                <p className="text-lg text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>Recurring events</p>
+              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0] sm:col-span-2 md:col-span-1">
+                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Use Case 3</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Formals & Trips</h3>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Spring break, date parties, ski trips — group payments perfect for CoverPay™.</p>
+                <p className="text-sm sm:text-lg text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>Recurring events</p>
               </div>
             </div>
-            <div className="flex items-center gap-8 max-w-4xl">
+            <div className="grid grid-cols-2 sm:flex sm:items-center gap-4 sm:gap-8 max-w-4xl">
               <div className="text-center">
-                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>750K</p>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Active frat/sorority members</p>
+                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>750K</p>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Active members</p>
               </div>
-              <div className="h-12 w-px bg-[#D4C5B0]"></div>
+              <div className="hidden sm:block h-12 w-px bg-[#D4C5B0]"></div>
               <div className="text-center">
-                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>12K</p>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Chapters nationwide</p>
+                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>12K</p>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Chapters</p>
               </div>
-              <div className="h-12 w-px bg-[#D4C5B0]"></div>
+              <div className="hidden sm:block h-12 w-px bg-[#D4C5B0]"></div>
               <div className="text-center">
-                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>60+</p>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Members per chapter</p>
+                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>60+</p>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Per chapter</p>
               </div>
-              <div className="h-12 w-px bg-[#D4C5B0]"></div>
+              <div className="hidden sm:block h-12 w-px bg-[#D4C5B0]"></div>
               <div className="text-center">
-                <p className="text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Built-in</p>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Network effects</p>
+                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Built-in</p>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Virality</p>
               </div>
             </div>
           </div>
@@ -634,49 +634,49 @@ export default function DeckPage() {
 
       case 'traction':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Traction
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               We built the distribution engine
             </h2>
-            <p className="text-xl text-[#6B5D4F] mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+            <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               Hedge Payments owns FraternityBase — the Crunchbase for fraternities and sororities in the U.S.
             </p>
-            <div className="grid md:grid-cols-2 gap-12 max-w-4xl">
-              <div className="space-y-6">
-                <div className="p-6 bg-[#2C2416]">
-                  <p className="text-5xl text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>12K+</p>
-                  <p className="text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Chapters mapped</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 max-w-4xl">
+              <div className="grid grid-cols-3 md:grid-cols-1 gap-3 sm:gap-6">
+                <div className="p-3 sm:p-6 bg-[#2C2416]">
+                  <p className="text-2xl sm:text-5xl text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>12K+</p>
+                  <p className="text-xs sm:text-base text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Chapters</p>
                 </div>
-                <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-5xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>5K+</p>
-                  <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Treasurer contacts</p>
+                <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-2xl sm:text-5xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>5K+</p>
+                  <p className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Treasurers</p>
                 </div>
-                <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-5xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>$0</p>
-                  <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>CAC with owned data</p>
+                <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-2xl sm:text-5xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>$0</p>
+                  <p className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>CAC</p>
                 </div>
               </div>
-              <div className="space-y-6">
-                <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+              <div className="space-y-3 sm:space-y-6">
+                <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-sm sm:text-base text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
                     "I'd definitely use this for March Madness. $200 buy-in is a lot at once."
                   </p>
-                  <p className="text-sm text-[#8B7E6E]">— College student, 22</p>
+                  <p className="text-xs sm:text-sm text-[#8B7E6E]">— College student, 22</p>
                 </div>
-                <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+                <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-sm sm:text-base text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
                     "Payment plans for dues would be huge. Half our guys are always late."
                   </p>
-                  <p className="text-sm text-[#8B7E6E]">— Matt, Penn State ZBT Treasurer</p>
+                  <p className="text-xs sm:text-sm text-[#8B7E6E]">— Matt, Penn State ZBT Treasurer</p>
                 </div>
-                <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+                <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-sm sm:text-base text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
                     "Spring break was $400 I didn't have. Would've loved to pay over time."
                   </p>
-                  <p className="text-sm text-[#8B7E6E]">— Recent grad, 23</p>
+                  <p className="text-xs sm:text-sm text-[#8B7E6E]">— Recent grad, 23</p>
                 </div>
               </div>
             </div>
@@ -685,37 +685,37 @@ export default function DeckPage() {
 
       case 'vision':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Vision
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               CoverPay™ for all P2P payments
             </h2>
-            <p className="text-xl text-[#6B5D4F] mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+            <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               Fraternities are the wedge — Gen Z payments is the destination
             </p>
-            <div className="grid md:grid-cols-3 gap-6 max-w-5xl">
-              <div className="p-6 bg-[#2C2416] text-[#FAF8F5]">
-                <p className="text-xs tracking-widest uppercase mb-4 text-[#D4C5B0]">Now</p>
-                <h3 className="text-xl mb-3" style={{ fontFamily: 'Georgia, serif' }}>Social Groups</h3>
-                <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Fraternities, sororities, sports pools, group trips</p>
-                <p className="text-2xl mt-4" style={{ fontFamily: 'Georgia, serif' }}>$3B+</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl">
+              <div className="p-4 sm:p-6 bg-[#2C2416] text-[#FAF8F5]">
+                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#D4C5B0]">Now</p>
+                <h3 className="text-base sm:text-xl mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Social Groups</h3>
+                <p className="text-xs sm:text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Fraternities, sororities, sports pools, group trips</p>
+                <p className="text-xl sm:text-2xl mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$3B+</p>
               </div>
-              <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Next</p>
-                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Roommates & Friends</h3>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Rent splits, utilities, shared subscriptions, dinners</p>
-                <p className="text-2xl text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>$50B+</p>
+              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Next</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Roommates & Friends</h3>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Rent splits, utilities, shared subscriptions, dinners</p>
+                <p className="text-xl sm:text-2xl text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$50B+</p>
               </div>
-              <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Future</p>
-                <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>All Gen Z P2P</h3>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Any payment where someone needs time to pay — we cover them</p>
-                <p className="text-2xl text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>$600B+</p>
+              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0] sm:col-span-2 md:col-span-1">
+                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Future</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>All Gen Z P2P</h3>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Any payment where someone needs time to pay — we cover them</p>
+                <p className="text-xl sm:text-2xl text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$600B+</p>
               </div>
             </div>
-            <p className="text-[#6B5D4F] mt-8 max-w-2xl" style={{ fontFamily: 'Georgia, serif' }}>
+            <p className="text-sm sm:text-base text-[#6B5D4F] mt-4 sm:mt-8 max-w-2xl" style={{ fontFamily: 'Georgia, serif' }}>
               Venmo and Cash App move money. We make it affordable.
             </p>
           </div>
@@ -723,43 +723,43 @@ export default function DeckPage() {
 
       case 'why-now':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Why Now
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               The perfect storm
             </h2>
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl">
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0" style={{ fontFamily: 'Georgia, serif' }}>1</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 max-w-4xl">
+              <div className="space-y-4 sm:space-y-6">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0 text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif' }}>1</div>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>BNPL is Gen Z's default</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>60%+ prefer BNPL over credit cards — but it doesn't exist for P2P</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>BNPL is Gen Z's default</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>60%+ prefer BNPL over credit cards — but it doesn't exist for P2P</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0" style={{ fontFamily: 'Georgia, serif' }}>2</div>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0 text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif' }}>2</div>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Venmo/Cash App hit a ceiling</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Ubiquitous for transfers — but no financing, no flexibility for big payments</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Venmo/Cash App hit a ceiling</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Ubiquitous for transfers — but no financing, no flexibility for big payments</p>
                   </div>
                 </div>
               </div>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0" style={{ fontFamily: 'Georgia, serif' }}>3</div>
+              <div className="space-y-4 sm:space-y-6">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0 text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif' }}>3</div>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Social payments are exploding</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Group trips, pools, shared costs — all rising with social media culture</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Social payments are exploding</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Group trips, pools, shared costs — all rising with social media culture</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0" style={{ fontFamily: 'Georgia, serif' }}>4</div>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0 text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif' }}>4</div>
                   <div>
-                    <h3 className="text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Credit card rejection</h3>
-                    <p className="text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>70% of Gen Z avoids traditional credit — but still needs flexibility</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Credit card rejection</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>70% of Gen Z avoids traditional credit — but still needs flexibility</p>
                   </div>
                 </div>
               </div>
@@ -769,43 +769,43 @@ export default function DeckPage() {
 
       case 'team':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Team
             </p>
-            <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Built by someone who lived it
             </h2>
             <div className="max-w-3xl">
-              <div className="flex items-start gap-8 mb-10">
-                <div className="w-28 h-28 rounded-full bg-[#D4C5B0] flex-shrink-0"></div>
-                <div>
-                  <h3 className="text-3xl text-[#2C2416] mb-1" style={{ fontFamily: 'Georgia, serif' }}>Jackson Fitzgerald</h3>
-                  <p className="text-lg text-[#6B5D4F] mb-6" style={{ fontFamily: 'Georgia, serif' }}>Founder & CEO</p>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#2C2416]"></div>
-                      <p className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-8 mb-6 sm:mb-10">
+                <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full bg-[#D4C5B0] flex-shrink-0"></div>
+                <div className="text-center sm:text-left">
+                  <h3 className="text-xl sm:text-3xl text-[#2C2416] mb-1" style={{ fontFamily: 'Georgia, serif' }}>Jackson Fitzgerald</h3>
+                  <p className="text-sm sm:text-lg text-[#6B5D4F] mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>Founder & CEO</p>
+                  <div className="space-y-2 sm:space-y-4">
+                    <div className="flex items-center gap-2 sm:gap-3 justify-center sm:justify-start">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#2C2416]"></div>
+                      <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
                         <span className="font-semibold">Hedge Payments</span> — AI-native payment infrastructure
                       </p>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#2C2416]"></div>
-                      <p className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
+                    <div className="flex items-center gap-2 sm:gap-3 justify-center sm:justify-start">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#2C2416]"></div>
+                      <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
                         <span className="font-semibold">FraternityBase</span> — Database of 12K+ chapters
                       </p>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#2C2416]"></div>
-                      <p className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
+                    <div className="flex items-center gap-2 sm:gap-3 justify-center sm:justify-start">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#2C2416]"></div>
+                      <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
                         Deep Greek network + fintech background
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-[#2C2416]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
                   "Every time friends split a trip or I owed someone for a pool, I thought: why can't I just pay this back over time? BNPL works for shopping — why not for paying back friends?"
                 </p>
               </div>
@@ -815,38 +815,38 @@ export default function DeckPage() {
 
       case 'ask':
         return (
-          <div className="flex flex-col justify-center h-full px-8 md:px-16 lg:px-24 text-center">
-            <p className="text-sm text-[#8B7E6E] tracking-widest uppercase mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+          <div className="flex flex-col justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 py-16 md:py-8 overflow-y-auto text-center">
+            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               The Ask
             </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Raising $5.25M Seed
             </h2>
-            <p className="text-xl text-[#6B5D4F] mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+            <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               To launch CoverPay™, reach $5.25M MRR, and prove BNPL works for P2P payments
             </p>
-            <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
-              <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-2xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>40%</p>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Engineering & Product</p>
+            <div className="grid grid-cols-3 gap-2 sm:gap-6 max-w-3xl mx-auto mb-6 sm:mb-12">
+              <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>40%</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Engineering & Product</p>
               </div>
-              <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-2xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>35%</p>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>BNPL Capital & Licensing</p>
+              <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>35%</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>BNPL Capital & Licensing</p>
               </div>
-              <div className="p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-2xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>25%</p>
-                <p className="text-[#6B5D4F] text-sm" style={{ fontFamily: 'Georgia, serif' }}>Growth & GTM</p>
+              <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>25%</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Growth & GTM</p>
               </div>
             </div>
-            <div className="w-16 h-px bg-[#D4C5B0] mx-auto mb-8"></div>
-            <div className="space-y-4">
-              <p className="text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
+            <div className="w-12 sm:w-16 h-px bg-[#D4C5B0] mx-auto mb-4 sm:mb-8"></div>
+            <div className="space-y-3 sm:space-y-4">
+              <p className="text-base sm:text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
                 jackson@hedgepayments.com
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center px-10 py-4 text-base tracking-wide text-[#FAF8F5] bg-[#2C2416] border border-[#2C2416] hover:bg-[#3D3024] transition-all"
+                className="inline-flex items-center justify-center px-6 sm:px-10 py-3 sm:py-4 text-sm sm:text-base tracking-wide text-[#FAF8F5] bg-[#2C2416] border border-[#2C2416] hover:bg-[#3D3024] transition-all"
                 style={{ fontFamily: 'Georgia, serif' }}
               >
                 Let's Talk
@@ -896,16 +896,16 @@ export default function DeckPage() {
       </AnimatePresence>
 
       {/* Navigation */}
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-4 z-10">
+      <div className="fixed bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-2 sm:gap-4 z-10">
         <button
           onClick={prevSlide}
           disabled={currentSlide === 0}
-          className="w-10 h-10 rounded-full border border-[#D4C5B0] flex items-center justify-center text-[#2C2416] hover:bg-[#2C2416] hover:text-[#FAF8F5] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          className="w-10 h-10 sm:w-10 sm:h-10 rounded-full border border-[#D4C5B0] flex items-center justify-center text-[#2C2416] hover:bg-[#2C2416] hover:text-[#FAF8F5] transition-all disabled:opacity-30 disabled:cursor-not-allowed active:bg-[#2C2416] active:text-[#FAF8F5]"
         >
           ←
         </button>
 
-        <div className="flex gap-2">
+        <div className="hidden sm:flex gap-2">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -917,17 +917,22 @@ export default function DeckPage() {
           ))}
         </div>
 
+        {/* Mobile slide counter (replaces dots) */}
+        <div className="sm:hidden text-sm text-[#8B7E6E] min-w-[60px] text-center" style={{ fontFamily: 'Georgia, serif' }}>
+          {currentSlide + 1} / {slides.length}
+        </div>
+
         <button
           onClick={nextSlide}
           disabled={currentSlide === slides.length - 1}
-          className="w-10 h-10 rounded-full border border-[#D4C5B0] flex items-center justify-center text-[#2C2416] hover:bg-[#2C2416] hover:text-[#FAF8F5] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          className="w-10 h-10 sm:w-10 sm:h-10 rounded-full border border-[#D4C5B0] flex items-center justify-center text-[#2C2416] hover:bg-[#2C2416] hover:text-[#FAF8F5] transition-all disabled:opacity-30 disabled:cursor-not-allowed active:bg-[#2C2416] active:text-[#FAF8F5]"
         >
           →
         </button>
       </div>
 
-      {/* Slide Counter */}
-      <div className="fixed top-8 right-8 text-sm text-[#8B7E6E] z-10" style={{ fontFamily: 'Georgia, serif' }}>
+      {/* Slide Counter (desktop only) */}
+      <div className="fixed top-4 sm:top-8 right-4 sm:right-8 text-xs sm:text-sm text-[#8B7E6E] z-10 hidden sm:block" style={{ fontFamily: 'Georgia, serif' }}>
         {currentSlide + 1} / {slides.length}
       </div>
 
@@ -939,7 +944,7 @@ export default function DeckPage() {
       {/* Back to home */}
       <Link
         href="/"
-        className="fixed top-8 left-8 text-sm text-[#8B7E6E] hover:text-[#2C2416] transition-colors z-10"
+        className="fixed top-4 sm:top-8 left-4 sm:left-8 text-xs sm:text-sm text-[#8B7E6E] hover:text-[#2C2416] transition-colors z-10"
         style={{ fontFamily: 'Georgia, serif' }}
       >
         ← Back
