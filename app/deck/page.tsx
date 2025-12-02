@@ -570,7 +570,7 @@ export default function DeckPage() {
             </div>
             <div className="mt-8 max-w-5xl">
               <p className="text-lg text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                Venmo/Cash App strategy: free P2P builds network, monetize through BNPL + interchange.
+                Venmo/Cash App strategy: free P2P builds network, monetize through CoverPay™ + interchange.
               </p>
             </div>
           </div>
@@ -586,13 +586,13 @@ export default function DeckPage() {
               Fraternities are our beachhead
             </h2>
             <p className="text-xl text-[#6B5D4F] mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              Dense social networks, recurring payments, high BNPL demand — the perfect wedge
+              Dense social networks, recurring payments, high CoverPay™ demand — the perfect wedge
             </p>
             <div className="grid md:grid-cols-3 gap-6 max-w-5xl mb-10">
               <div className="p-6 bg-[#2C2416] text-[#FAF8F5]">
                 <p className="text-xs tracking-widest uppercase mb-4 text-[#D4C5B0]">Use Case 1</p>
                 <h3 className="text-xl mb-3" style={{ fontFamily: 'Georgia, serif' }}>Social Dues</h3>
-                <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$500/semester dues collected by treasurers — 40% pay late. BNPL solves this.</p>
+                <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$500/semester dues collected by treasurers — 40% pay late. CoverPay™ solves this.</p>
                 <p className="text-lg mt-4 text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$750M/yr market</p>
               </div>
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
@@ -604,7 +604,7 @@ export default function DeckPage() {
               <div className="p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xs tracking-widest uppercase mb-4 text-[#8B7E6E]">Use Case 3</p>
                 <h3 className="text-xl text-[#2C2416] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Formals & Trips</h3>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Spring break, date parties, ski trips — group payments with high BNPL demand.</p>
+                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Spring break, date parties, ski trips — group payments perfect for CoverPay™.</p>
                 <p className="text-lg text-[#2C2416] mt-4" style={{ fontFamily: 'Georgia, serif' }}>Recurring events</p>
               </div>
             </div>
@@ -690,7 +690,7 @@ export default function DeckPage() {
               The Vision
             </p>
             <h2 className="text-4xl md:text-5xl text-[#2C2416] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              BNPL for all P2P payments
+              CoverPay™ for all P2P payments
             </h2>
             <p className="text-xl text-[#6B5D4F] mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               Fraternities are the wedge — Gen Z payments is the destination
