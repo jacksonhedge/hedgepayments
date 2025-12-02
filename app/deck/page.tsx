@@ -669,6 +669,15 @@ export default function DeckPage() {
                 </div>
               </div>
             </div>
+            <a
+              href="https://fraternitybase.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 sm:mt-6 text-xs sm:text-sm text-[#8B7E6E] hover:text-[#2C2416] transition-colors underline"
+              style={{ fontFamily: 'Georgia, serif' }}
+            >
+              Visit FraternityBase.com →
+            </a>
           </div>
         )
 
