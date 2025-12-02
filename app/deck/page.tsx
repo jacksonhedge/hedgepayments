@@ -251,7 +251,7 @@ export default function DeckPage() {
             </h1>
             <div className="w-16 h-px bg-[#D4C5B0] mb-6"></div>
             <p className="text-2xl md:text-3xl text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              P2P Payments for Gen Z
+              Peer-to-Peer payments built for Gen Z
             </p>
           </div>
         )
