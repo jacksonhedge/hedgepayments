@@ -693,7 +693,7 @@ export default function DeckPage() {
             <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               Fraternities are the wedge — Gen Z payments is the destination
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl">
               <div className="p-4 sm:p-6 bg-[#2C2416] text-[#FAF8F5]">
                 <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#D4C5B0]">Now</p>
                 <h3 className="text-base sm:text-xl mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Social Groups</h3>
@@ -706,7 +706,13 @@ export default function DeckPage() {
                 <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Rent splits, utilities, shared subscriptions, dinners</p>
                 <p className="text-xl sm:text-2xl text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$50B+</p>
               </div>
-              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0] sm:col-span-2 md:col-span-1">
+              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
+                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Expand</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Betting & Gaming</h3>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Sports betting, prediction markets, gaming payments</p>
+                <p className="text-xl sm:text-2xl text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$200B+</p>
+              </div>
+              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Future</p>
                 <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>All Gen Z P2P</h3>
                 <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Any payment where someone needs time to pay — we cover them</p>
