@@ -451,21 +451,21 @@ export default function DeckPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 items-center">
               <div className="space-y-6 sm:space-y-8">
                 <div>
-                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Senders</h3>
+                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Receivers</h3>
                   <ul className="space-y-1 sm:space-y-2 text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
                     <li>• Get paid instantly — we cover them</li>
-                    <li>• No more chasing friends for money</li>
-                    <li>• Request from groups in one tap</li>
-                    <li>• Track who's paid and who owes</li>
+                    <li>• No more fronting rent or bills</li>
+                    <li>• Collect from groups with one tap</li>
+                    <li>• Put funds in escrow together instantly</li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Payers</h3>
+                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Senders</h3>
                   <ul className="space-y-1 sm:space-y-2 text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
-                    <li>• Pay instantly or split into 4-6 weeks</li>
-                    <li>• No interest for on-time payments</li>
-                    <li>• Automatic reminders before due dates</li>
-                    <li>• Build payment history for future credit</li>
+                    <li>• Pay your friends instantly</li>
+                    <li>• Don't lose your budget right away</li>
+                    <li>• Spread payments out over time</li>
+                    <li>• Skip credit cards, keep the benefits</li>
                   </ul>
                 </div>
               </div>
