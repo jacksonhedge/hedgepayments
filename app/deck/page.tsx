@@ -451,15 +451,6 @@ export default function DeckPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 items-center">
               <div className="space-y-6 sm:space-y-8">
                 <div>
-                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Receivers</h3>
-                  <ul className="space-y-1 sm:space-y-2 text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
-                    <li>• Get paid instantly — we cover them</li>
-                    <li>• No more fronting rent or bills</li>
-                    <li>• Collect from groups with one tap</li>
-                    <li>• Put funds in escrow together instantly</li>
-                  </ul>
-                </div>
-                <div>
                   <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Senders</h3>
                   <ul className="space-y-1 sm:space-y-2 text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
                     <li>• Pay your friends instantly</li>
@@ -468,11 +459,55 @@ export default function DeckPage() {
                     <li>• Skip credit cards, keep the benefits</li>
                   </ul>
                 </div>
+                <div>
+                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Receivers</h3>
+                  <ul className="space-y-1 sm:space-y-2 text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
+                    <li>• Get paid instantly — we cover them</li>
+                    <li>• No more fronting rent or bills</li>
+                    <li>• Collect from groups with one tap</li>
+                    <li>• Put funds in escrow together instantly</li>
+                  </ul>
+                </div>
               </div>
               <div className="bg-[#2C2416] rounded-2xl p-6 sm:p-8 flex items-center justify-center min-h-[200px] sm:min-h-[400px]">
-                <p className="text-[#D4C5B0] text-center text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                  [Product screenshots / demo]
-                </p>
+                <div className="flex flex-col items-center">
+                  {/* Payment Flow Visual */}
+                  <div className="flex items-center gap-4 sm:gap-8 mb-6">
+                    {/* Sender */}
+                    <div className="flex flex-col items-center">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#FAF8F5] flex items-center justify-center mb-2">
+                        <span className="text-2xl sm:text-3xl">👤</span>
+                      </div>
+                      <span className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Sender</span>
+                    </div>
+                    {/* Arrow with dollar sign */}
+                    <div className="flex flex-col items-center">
+                      <div className="text-[#D4C5B0] text-xl sm:text-2xl mb-1">💸</div>
+                      <div className="w-12 sm:w-20 h-0.5 bg-[#D4C5B0] relative">
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-t-4 border-b-4 border-l-8 border-transparent border-l-[#D4C5B0]"></div>
+                      </div>
+                    </div>
+                    {/* Receiver */}
+                    <div className="flex flex-col items-center">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#FAF8F5] flex items-center justify-center mb-2">
+                        <span className="text-2xl sm:text-3xl">👤</span>
+                      </div>
+                      <span className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Receiver</span>
+                    </div>
+                  </div>
+                  {/* Benefits */}
+                  <div className="text-center space-y-2">
+                    <div className="flex items-center gap-2 text-[#FAF8F5] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>
+                      <span className="text-green-400">✓</span> Receiver gets paid now
+                    </div>
+                    <div className="flex items-center gap-2 text-[#FAF8F5] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>
+                      <span className="text-green-400">✓</span> Sender pays over 4-6 weeks
+                    </div>
+                    <div className="flex items-center gap-2 text-[#FAF8F5] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>
+                      <span className="text-green-400">✓</span> We cover the gap
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
