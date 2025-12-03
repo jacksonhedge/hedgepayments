@@ -829,23 +829,41 @@ export default function DeckPage() {
                 <div className="text-center sm:text-left">
                   <h3 className="text-xl sm:text-3xl text-[#2C2416] mb-1" style={{ fontFamily: 'Georgia, serif' }}>Jackson Fitzgerald</h3>
                   <p className="text-sm sm:text-lg text-[#6B5D4F] mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>Founder & CEO</p>
-                  <div className="space-y-2 sm:space-y-4">
-                    <div className="flex items-center gap-2 sm:gap-3 justify-center sm:justify-start">
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#2C2416]"></div>
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                      <Image
+                        src="/images/hedgepay-new-logo.png"
+                        alt="Hedge Payments"
+                        width={24}
+                        height={24}
+                        className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                      />
                       <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
                         <span className="font-semibold">Hedge Payments</span> — AI-native payment infrastructure
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 sm:gap-3 justify-center sm:justify-start">
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#2C2416]"></div>
+                    <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                      <Image
+                        src="/images/fraternity-base-logo.png"
+                        alt="FraternityBase"
+                        width={24}
+                        height={24}
+                        className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                      />
                       <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
                         <span className="font-semibold">FraternityBase</span> — Database of 12K+ chapters
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 sm:gap-3 justify-center sm:justify-start">
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#2C2416]"></div>
+                    <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                      <Image
+                        src="/images/bankroll-icon-new.png"
+                        alt="Bankroll"
+                        width={24}
+                        height={24}
+                        className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                      />
                       <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
-                        Deep Greek network + fintech background
+                        <span className="font-semibold">Bankroll</span> — BNPL for P2P payments
                       </p>
                     </div>
                   </div>
