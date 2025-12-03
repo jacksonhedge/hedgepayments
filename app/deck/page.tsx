@@ -413,7 +413,7 @@ export default function DeckPage() {
               The Solution
             </p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-2 sm:mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Bankroll + CoverPay™
+              CoverPay™
             </h2>
             <p className="text-sm sm:text-lg text-[#8B7E6E] mb-4 sm:mb-8" style={{ fontFamily: 'Georgia, serif' }}>by Hedge Payments</p>
             <p className="text-base sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
