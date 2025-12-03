@@ -817,7 +817,15 @@ export default function DeckPage() {
             </h2>
             <div className="max-w-3xl">
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-8 mb-6 sm:mb-10">
-                <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full bg-[#D4C5B0] flex-shrink-0"></div>
+                <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full overflow-hidden flex-shrink-0">
+                  <Image
+                    src="/images/Jackson_Hedgshot.jpg"
+                    alt="Jackson Fitzgerald"
+                    width={112}
+                    height={112}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <div className="text-center sm:text-left">
                   <h3 className="text-xl sm:text-3xl text-[#2C2416] mb-1" style={{ fontFamily: 'Georgia, serif' }}>Jackson Fitzgerald</h3>
                   <p className="text-sm sm:text-lg text-[#6B5D4F] mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>Founder & CEO</p>
