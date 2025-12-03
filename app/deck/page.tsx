@@ -4,6 +4,12 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { createClient } from '@supabase/supabase-js'
+
+// Initialize Supabase client for direct browser access
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://cferwghhtstkxdiqhfqj.supabase.co'
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNmZXJ3Z2hodHN0a3hkaXFoZnFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUzNDQ3NTUsImV4cCI6MjA2MDkyMDc1NX0.gG4SShzGpb-l_3BWDhhPZ7Vjk5ib0G_2ifWmqNajBm4'
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 const slides = [
   {
@@ -78,22 +84,28 @@ function EmailGate({ onAccess }: { onAccess: (email: string) => void }) {
 
     setIsSubmitting(true)
 
-    // Store email in localStorage and send to backend
+    // Store email in localStorage and save to Supabase directly
     try {
       // Save to localStorage
       localStorage.setItem('deck_access_email', email)
       localStorage.setItem('deck_access_time', new Date().toISOString())
 
-      // Send to API to trigger confirmation email
-      await fetch('/api/deck-access', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      })
+      // Insert directly into Supabase
+      const { error: insertError } = await supabase
+        .from('deck_viewers')
+        .insert([{ email, viewed_at: new Date().toISOString() }])
+
+      // If duplicate email (error code 23505), update the timestamp instead
+      if (insertError?.code === '23505') {
+        await supabase
+          .from('deck_viewers')
+          .update({ viewed_at: new Date().toISOString() })
+          .eq('email', email)
+      }
 
       onAccess(email)
     } catch (err) {
-      // Still grant access even if email fails
+      // Still grant access even if database fails
       onAccess(email)
     } finally {
       setIsSubmitting(false)
