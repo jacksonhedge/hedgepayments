@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sgMail from '@sendgrid/mail';
+import { addDeckViewer } from '@/app/utils/supabase';
 
 // Initialize SendGrid
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
@@ -13,6 +14,14 @@ export async function POST(request: NextRequest) {
 
     if (!email) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+    }
+
+    // Save to Supabase
+    const dbResult = await addDeckViewer(email);
+    if (dbResult.success) {
+      console.log('Deck viewer saved to Supabase:', email, dbResult.isRepeatViewer ? '(repeat viewer)' : '(new viewer)');
+    } else {
+      console.log('Could not save to Supabase (continuing anyway):', dbResult.error);
     }
 
     // Send confirmation email to the investor
