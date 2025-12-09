@@ -64,10 +64,6 @@ const slides = [
     id: 'ask',
     type: 'ask',
   },
-  {
-    id: 'appendix',
-    type: 'appendix',
-  },
 ]
 
 function EmailGate({ onAccess }: { onAccess: (email: string) => void }) {
@@ -904,7 +900,7 @@ export default function DeckPage() {
               Raising $5.25M Seed
             </h2>
             <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              To launch CoverPay™, reach $5.25M MRR, and prove BNPL works for P2P payments
+              To launch CoverPay™ and scale BNPL for P2P to $100 Million in volume
             </p>
             <div className="grid grid-cols-3 gap-2 sm:gap-6 max-w-3xl mx-auto mb-6 sm:mb-12">
               <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
@@ -932,81 +928,6 @@ export default function DeckPage() {
               >
                 Let's Talk
               </Link>
-            </div>
-          </div>
-        )
-
-      case 'appendix':
-        return (
-          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
-            <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-              Appendix
-            </p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-2 sm:mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Technical Architecture
-            </h2>
-            <p className="text-sm sm:text-lg text-[#8B7E6E] mb-6 sm:mb-10" style={{ fontFamily: 'Georgia, serif' }}>Built on Coinflow for stablecoin settlement</p>
-
-            {/* Payment Flow Diagram */}
-            <div className="max-w-4xl mx-auto mb-6 sm:mb-10">
-              <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 sm:gap-4 items-center">
-                {/* Sender */}
-                <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0] text-center">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-full bg-[#2C2416] flex items-center justify-center">
-                    <span className="text-xl sm:text-2xl">👤</span>
-                  </div>
-                  <p className="text-sm sm:text-base font-medium text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Sender</p>
-                  <p className="text-xs text-[#8B7E6E] mt-1" style={{ fontFamily: 'Georgia, serif' }}>Bank/Card</p>
-                </div>
-
-                {/* Arrow */}
-                <div className="hidden sm:flex justify-center text-[#D4C5B0] text-2xl">→</div>
-                <div className="sm:hidden flex justify-center text-[#D4C5B0] text-2xl">↓</div>
-
-                {/* Coinflow */}
-                <div className="p-4 sm:p-6 bg-[#2C2416] border border-[#2C2416] text-center">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-full bg-[#FAF8F5] flex items-center justify-center">
-                    <span className="text-xl sm:text-2xl">⚡</span>
-                  </div>
-                  <p className="text-sm sm:text-base font-medium text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>Coinflow</p>
-                  <p className="text-xs text-[#D4C5B0] mt-1" style={{ fontFamily: 'Georgia, serif' }}>USDC Settlement</p>
-                </div>
-
-                {/* Arrow */}
-                <div className="hidden sm:flex justify-center text-[#D4C5B0] text-2xl">→</div>
-                <div className="sm:hidden flex justify-center text-[#D4C5B0] text-2xl">↓</div>
-
-                {/* Receiver */}
-                <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0] text-center">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-full bg-[#2C2416] flex items-center justify-center">
-                    <span className="text-xl sm:text-2xl">👥</span>
-                  </div>
-                  <p className="text-sm sm:text-base font-medium text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Receiver</p>
-                  <p className="text-xs text-[#8B7E6E] mt-1" style={{ fontFamily: 'Georgia, serif' }}>Instant USDC</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Key Benefits */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Stablecoin Rails</p>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
-                  USDC settlement eliminates ACH delays. Receivers get funds instantly, not in 3-5 business days.
-                </p>
-              </div>
-              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Coinflow Integration</p>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
-                  Built on Coinflow's compliant infrastructure. Bank-to-USDC conversion and KYC/AML handled seamlessly.
-                </p>
-              </div>
-              <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Flexible Disbursement</p>
-                <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
-                  Receivers can hold USDC, convert to USD, or withdraw to bank — their choice.
-                </p>
-              </div>
             </div>
           </div>
         )
