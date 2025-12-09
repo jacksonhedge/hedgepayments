@@ -3,11 +3,11 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Hedge Payments - Money in an AI World',
-  description: 'Launch payments fast, grow faster. Payment infrastructure for AI agents, crypto companies, and the autonomous economy.',
+  description: 'Modern Payment Solutions',
   metadataBase: new URL('https://hedgepayments.com'),
   openGraph: {
     title: 'Hedge Payments - Money in an AI World',
-    description: 'Launch payments fast, grow faster. Payment infrastructure for AI agents, crypto companies, and the autonomous economy.',
+    description: 'Modern Payment Solutions',
     url: 'https://hedgepayments.com',
     siteName: 'Hedge Payments',
     images: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Hedge Payments - Money in an AI World',
-    description: 'Launch payments fast, grow faster. Payment infrastructure for AI agents, crypto companies, and the autonomous economy.',
+    description: 'Modern Payment Solutions',
     images: ['/images/hedge-inc-logo.png'],
     creator: '@hedgepayments',
   },
@@ -73,9 +73,9 @@ export default function RootLayout({
         <meta property="og:image" content="https://hedgepayments.com/images/hedge-inc-logo.png" />
         <meta name="twitter:image" content="https://hedgepayments.com/images/hedge-inc-logo.png" />
         <meta property="og:title" content="Hedge Payments - Money in an AI World" />
-        <meta property="og:description" content="Launch payments fast, grow faster. Payment infrastructure for AI agents, crypto companies, and the autonomous economy." />
+        <meta property="og:description" content="Modern Payment Solutions" />
         <meta name="twitter:title" content="Hedge Payments - Money in an AI World" />
-        <meta name="twitter:description" content="Launch payments fast, grow faster. Payment infrastructure for AI agents, crypto companies, and the autonomous economy." />
+        <meta name="twitter:description" content="Modern Payment Solutions" />
       </head>
       <body>
         {children}
