@@ -866,18 +866,6 @@ export default function DeckPage() {
                         <span className="font-semibold">FraternityBase</span> — Database of 12K+ chapters
                       </p>
                     </div>
-                    <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
-                      <Image
-                        src="/images/bankroll-icon-new.png"
-                        alt="Bankroll"
-                        width={24}
-                        height={24}
-                        className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
-                      />
-                      <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
-                        <span className="font-semibold">Bankroll</span> — BNPL for P2P payments
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
