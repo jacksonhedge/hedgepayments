@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/coverpay",
+      "destination": "/coverpay.html"
+    }
+  ]
+}
