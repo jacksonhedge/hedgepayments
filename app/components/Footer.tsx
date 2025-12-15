@@ -26,6 +26,16 @@ const Footer: React.FC = () => {
         </div>
 
         <div className={styles.footerSection}>
+          <h4 className={styles.footerHeading}>Our Brands</h4>
+          <ul className={styles.footerLinks}>
+            <li><a href="https://bankroll.live" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Bankroll</a></li>
+            <li><a href="https://coinflow.cash" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Coinflow</a></li>
+            <li><span className={styles.footerLink} style={{ cursor: 'default', opacity: 0.7 }}>SideBet</span></li>
+            <li><a href="https://fraternitybase.com" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Fraternitybase</a></li>
+          </ul>
+        </div>
+
+        <div className={styles.footerSection}>
           <h4 className={styles.footerHeading}>Legal</h4>
           <ul className={styles.footerLinks}>
             <li><a href="#" className={styles.footerLink}>Privacy Policy</a></li>

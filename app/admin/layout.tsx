@@ -12,6 +12,9 @@ export default function AdminLayout({
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
+  // Check if we're on the super-admin page (fullscreen mode)
+  const isSuperAdmin = pathname?.includes('/super-admin')
+
   const navigation = [
     {
       name: 'Dashboard',
@@ -45,6 +48,11 @@ export default function AdminLayout({
       return pathname === '/admin'
     }
     return pathname?.startsWith(href)
+  }
+
+  // If on super-admin page, render without layout
+  if (isSuperAdmin) {
+    return <>{children}</>;
   }
 
   return (
