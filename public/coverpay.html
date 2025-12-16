@@ -760,7 +760,7 @@
     <section class="hero">
         <div class="hero-content">
             <!-- CoverPay Logo -->
-            <img src="logos/CoverPayLogoV1.png" alt="CoverPay" class="coverpay-logo">
+            <img src="/logos/CoverPayLogoV1.png" alt="CoverPay" class="coverpay-logo">
 
             <div class="hero-tagline">BNPL Orchestration Layer</div>
 
@@ -791,22 +791,22 @@
                 <div class="providers-label">Integrated Partners</div>
                 <div class="provider-logos">
                     <div class="provider-logo-card">
-                        <img src="logos/KlarnaLogo.jpeg" alt="Klarna">
+                        <img src="/logos/KlarnaLogo.jpeg" alt="Klarna">
                     </div>
                     <div class="provider-logo-card">
-                        <img src="logos/affirmLogo.avif" alt="Affirm">
+                        <img src="/logos/affirmLogo.avif" alt="Affirm">
                     </div>
                     <div class="provider-logo-card">
-                        <img src="logos/afterPayLogo.jpg" alt="Afterpay">
+                        <img src="/logos/afterPayLogo.jpg" alt="Afterpay">
                     </div>
                     <div class="provider-logo-card">
-                        <img src="logos/sezzleLogo.png" alt="Sezzle">
+                        <img src="/logos/sezzleLogo.png" alt="Sezzle">
                     </div>
                     <div class="provider-logo-card">
-                        <img src="logos/zipLogo.png" alt="Zip">
+                        <img src="/logos/zipLogo.png" alt="Zip">
                     </div>
                     <div class="provider-logo-card">
-                        <img src="logos/PayPalLogo.jpg" alt="PayPal">
+                        <img src="/logos/PayPalLogo.jpg" alt="PayPal">
                     </div>
                 </div>
             </div>
@@ -871,7 +871,7 @@
     <div class="modal-overlay" id="checkoutModal">
         <div class="modal">
             <div class="modal-header">
-                <img src="logos/CoverPayLogoV1.png" alt="CoverPay" class="modal-logo">
+                <img src="/logos/CoverPayLogoV1.png" alt="CoverPay" class="modal-logo">
                 <h2>Processing Payment</h2>
                 <div class="amount" id="modalAmount">$299.99</div>
             </div>
@@ -882,32 +882,32 @@
 
                     <div class="provider-grid">
                         <div class="provider-card pending" id="card-klarna">
-                            <img src="logos/KlarnaLogo.jpeg" alt="Klarna">
+                            <img src="/logos/KlarnaLogo.jpeg" alt="Klarna">
                             <div class="provider-name">Klarna</div>
                             <div class="status-badge">Pending</div>
                         </div>
                         <div class="provider-card pending" id="card-affirm">
-                            <img src="logos/affirmLogo.avif" alt="Affirm">
+                            <img src="/logos/affirmLogo.avif" alt="Affirm">
                             <div class="provider-name">Affirm</div>
                             <div class="status-badge">Pending</div>
                         </div>
                         <div class="provider-card pending" id="card-afterpay">
-                            <img src="logos/afterPayLogo.jpg" alt="Afterpay">
+                            <img src="/logos/afterPayLogo.jpg" alt="Afterpay">
                             <div class="provider-name">Afterpay</div>
                             <div class="status-badge">Pending</div>
                         </div>
                         <div class="provider-card pending" id="card-sezzle">
-                            <img src="logos/sezzleLogo.png" alt="Sezzle">
+                            <img src="/logos/sezzleLogo.png" alt="Sezzle">
                             <div class="provider-name">Sezzle</div>
                             <div class="status-badge">Pending</div>
                         </div>
                         <div class="provider-card pending" id="card-zip">
-                            <img src="logos/zipLogo.png" alt="Zip">
+                            <img src="/logos/zipLogo.png" alt="Zip">
                             <div class="provider-name">Zip</div>
                             <div class="status-badge">Pending</div>
                         </div>
                         <div class="provider-card pending" id="card-paypal">
-                            <img src="logos/PayPalLogo.jpg" alt="PayPal">
+                            <img src="/logos/PayPalLogo.jpg" alt="PayPal">
                             <div class="provider-name">PayPal</div>
                             <div class="status-badge">Pending</div>
                         </div>
@@ -966,12 +966,12 @@
 
     <script>
         const providers = [
-            { id: 'klarna', name: 'Klarna', logo: 'logos/KlarnaLogo.jpeg', approvalRate: 0.70 },
-            { id: 'affirm', name: 'Affirm', logo: 'logos/affirmLogo.avif', approvalRate: 0.65 },
-            { id: 'afterpay', name: 'Afterpay', logo: 'logos/afterPayLogo.jpg', approvalRate: 0.60 },
-            { id: 'sezzle', name: 'Sezzle', logo: 'logos/sezzleLogo.png', approvalRate: 0.55 },
-            { id: 'zip', name: 'Zip', logo: 'logos/zipLogo.png', approvalRate: 0.50 },
-            { id: 'paypal', name: 'PayPal', logo: 'logos/PayPalLogo.jpg', approvalRate: 0.75 }
+            { id: 'klarna', name: 'Klarna', logo: '/logos/KlarnaLogo.jpeg', approvalRate: 0.70 },
+            { id: 'affirm', name: 'Affirm', logo: '/logos/affirmLogo.avif', approvalRate: 0.65 },
+            { id: 'afterpay', name: 'Afterpay', logo: '/logos/afterPayLogo.jpg', approvalRate: 0.60 },
+            { id: 'sezzle', name: 'Sezzle', logo: '/logos/sezzleLogo.png', approvalRate: 0.55 },
+            { id: 'zip', name: 'Zip', logo: '/logos/zipLogo.png', approvalRate: 0.50 },
+            { id: 'paypal', name: 'PayPal', logo: '/logos/PayPalLogo.jpg', approvalRate: 0.75 }
         ];
 
         const demoFormModal = document.getElementById('demoFormModal');
