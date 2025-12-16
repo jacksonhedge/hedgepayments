@@ -551,13 +551,13 @@ export default function DeckPage() {
               BNPL is massive — but fragmented
             </h2>
             <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-10 max-w-3xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              $150B in BNPL volume with 40% decline rates — orchestration captures the gap
+              $600B in global BNPL volume with 40% decline rates — orchestration captures the gap
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 max-w-5xl">
               <div className="space-y-3 sm:space-y-6">
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
                   <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Global BNPL volume (2024)</span>
-                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$150B</span>
+                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$600B</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
                   <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Average single-provider decline rate</span>
@@ -565,7 +565,7 @@ export default function DeckPage() {
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
                   <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Lost revenue from BNPL declines</span>
-                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$60B</span>
+                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$240B</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
                   <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Approval rate with orchestration</span>
@@ -573,7 +573,7 @@ export default function DeckPage() {
                 </div>
                 <div className="flex items-center justify-between pt-1 sm:pt-2">
                   <span className="text-sm sm:text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Recapturable revenue</span>
-                  <span className="text-xl sm:text-3xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$25B+</span>
+                  <span className="text-xl sm:text-3xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$100B+</span>
                 </div>
               </div>
               <div className="space-y-3 sm:space-y-4">
@@ -582,12 +582,12 @@ export default function DeckPage() {
                   <p className="text-sm sm:text-lg" style={{ fontFamily: 'Georgia, serif' }}>No one aggregates BNPL providers intelligently — we do</p>
                 </div>
                 <div className="p-3 sm:p-5 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-1">TAM · E-commerce BNPL volume</p>
-                  <p className="text-2xl sm:text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$150B</p>
+                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-1">TAM · Global BNPL volume</p>
+                  <p className="text-2xl sm:text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$600B</p>
                 </div>
                 <div className="p-3 sm:p-5 bg-white/50 border border-[#D4C5B0]">
                   <p className="text-xs sm:text-sm text-[#8B7E6E] mb-1">SAM · Declined BNPL that CoverPay rescues</p>
-                  <p className="text-2xl sm:text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$25B</p>
+                  <p className="text-2xl sm:text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$100B</p>
                 </div>
               </div>
             </div>
