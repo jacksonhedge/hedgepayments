@@ -117,8 +117,8 @@ function EmailGate({ onAccess }: { onAccess: (email: string) => void }) {
       <div className="max-w-md w-full text-center">
         <div className="mb-8">
           <Image
-            src="/images/bankroll-icon-new.png"
-            alt="Bankroll"
+            src="/logos/CoverPayLogo.png"
+            alt="CoverPay"
             width={120}
             height={120}
             className="w-24 h-24 mx-auto"
@@ -126,7 +126,7 @@ function EmailGate({ onAccess }: { onAccess: (email: string) => void }) {
         </div>
 
         <h1 className="text-4xl md:text-5xl text-[#2C2416] mb-4 tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>
-          Bankroll
+          CoverPay
         </h1>
 
         <p className="text-xl text-[#6B5D4F] mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
@@ -169,7 +169,7 @@ function EmailGate({ onAccess }: { onAccess: (email: string) => void }) {
         </form>
 
         <p className="text-xs text-[#8B7E6E] mt-6" style={{ fontFamily: 'Georgia, serif' }}>
-          We'll only use your email to follow up about Bankroll
+          We'll only use your email to follow up about CoverPay
         </p>
       </div>
     </div>
@@ -251,19 +251,22 @@ export default function DeckPage() {
           <div className="flex flex-col items-center justify-center h-full text-center px-8">
             <div className="mb-10">
               <Image
-                src="/images/bankroll-icon-new.png"
-                alt="Bankroll"
+                src="/logos/CoverPayLogo.png"
+                alt="CoverPay"
                 width={200}
                 height={200}
                 className="w-40 h-40 md:w-52 md:h-52"
               />
             </div>
             <h1 className="text-5xl md:text-7xl lg:text-8xl text-[#2C2416] mb-6 tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Bankroll
+              CoverPay
             </h1>
             <div className="w-16 h-px bg-[#D4C5B0] mb-6"></div>
             <p className="text-2xl md:text-3xl text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              Peer-to-Peer payments built for Gen Z
+              AI-Orchestrated Buy-Now Pay-Later
+            </p>
+            <p className="text-lg md:text-xl text-[#8B7E6E] mt-4" style={{ fontFamily: 'Georgia, serif' }}>
+              6 providers. One API. Maximum approvals.
             </p>
           </div>
         )
@@ -272,33 +275,38 @@ export default function DeckPage() {
         return (
           <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-              The Opportunity
+              The Problem
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Gen Z wants flexible funding<br className="hidden sm:block" /><span className="sm:hidden"> </span>for everyday purchases
+              BNPL providers reject 40%<br className="hidden sm:block" /><span className="sm:hidden"> </span>of checkout requests
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 max-w-5xl">
               <div className="flex items-start gap-3 sm:gap-4">
-                <span className="text-2xl sm:text-3xl">⚡</span>
+                <span className="text-2xl sm:text-3xl">❌</span>
                 <div>
-                  <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Instant gratification generation</h3>
-                  <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Users hate waiting to get paid</p>
+                  <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Single-provider gamble</h3>
+                  <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Merchants pick one BNPL — if it declines, the sale is lost</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 sm:gap-4">
-                <span className="text-2xl sm:text-3xl">💳</span>
+                <span className="text-2xl sm:text-3xl">💸</span>
                 <div>
-                  <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Credit-averse but cash-strapped</h3>
-                  <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>70% avoid traditional credit — need alternatives for larger purchases</p>
+                  <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Partial approvals wasted</h3>
+                  <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>User wants $600, Klarna approves $300 — sale abandoned</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 sm:gap-4">
-                <span className="text-2xl sm:text-3xl">🎯</span>
+                <span className="text-2xl sm:text-3xl">🔀</span>
                 <div>
-                  <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Group payments are taking over</h3>
-                  <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Splitting costs for trips, events, dues — no BNPL solution exists</p>
+                  <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>No intelligent routing</h3>
+                  <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Each provider has different approval criteria — no one combines them</p>
                 </div>
               </div>
+            </div>
+            <div className="mt-6 sm:mt-10 p-4 sm:p-6 bg-[#2C2416] max-w-2xl">
+              <p className="text-[#D4C5B0] text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif' }}>
+                <span className="text-[#FAF8F5] font-semibold">The $60B problem:</span> Lost checkout revenue from BNPL declines and abandoned carts
+              </p>
             </div>
           </div>
         )
@@ -425,27 +433,39 @@ export default function DeckPage() {
               The Solution
             </p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-2 sm:mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Bankroll and CoverPay™
+              CoverPay: BNPL Orchestration
             </h2>
             <p className="text-sm sm:text-lg text-[#8B7E6E] mb-4 sm:mb-8" style={{ fontFamily: 'Georgia, serif' }}>by Hedge Payments</p>
             <p className="text-base sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              Send Now, Pay Later — BNPL for P2P payments. Pay back friends on your terms.
+              One API that routes through 6 BNPL providers to maximize approval rates
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl">
               <div className="bg-[#2C2416] p-4 sm:p-6">
-                <div className="text-2xl sm:text-3xl mb-2 sm:mb-4">🤝</div>
-                <h3 className="text-base sm:text-lg text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Pay friends back — flexibly</h3>
-                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Owe someone $200? Pay them now, pay us back over 4-6 weeks</p>
+                <div className="text-2xl sm:text-3xl mb-2 sm:mb-4">🔄</div>
+                <h3 className="text-base sm:text-lg text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Waterfall routing</h3>
+                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Declined by Klarna? Auto-routes to Affirm, then Afterpay, until approved</p>
               </div>
-              <div className="bg-white/50 border border-[#D4C5B0] p-4 sm:p-6">
-                <div className="text-2xl sm:text-3xl mb-2 sm:mb-4">🏀</div>
-                <h3 className="text-base sm:text-lg text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Sports pools & group bets</h3>
-                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>March Madness bracket? Fantasy league? Pay your buy-in over time</p>
+              <div className="bg-[#2C2416] p-4 sm:p-6">
+                <div className="text-2xl sm:text-3xl mb-2 sm:mb-4">✂️</div>
+                <h3 className="text-base sm:text-lg text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Split payments</h3>
+                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>$600 purchase? $300 on Klarna + $300 on Affirm — abstracted to one payment</p>
               </div>
               <div className="bg-white/50 border border-[#D4C5B0] p-4 sm:p-6 sm:col-span-2 md:col-span-1">
-                <div className="text-2xl sm:text-3xl mb-2 sm:mb-4">✈️</div>
-                <h3 className="text-base sm:text-lg text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Group trips & events</h3>
-                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Spring break, concerts, dinners — pay your share over time</p>
+                <div className="text-2xl sm:text-3xl mb-2 sm:mb-4">🤖</div>
+                <h3 className="text-base sm:text-lg text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>AI-optimized</h3>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Machine learning predicts the best provider order per user</p>
+              </div>
+            </div>
+            {/* Provider logos */}
+            <div className="mt-6 sm:mt-10 flex flex-wrap items-center gap-4 sm:gap-6">
+              <span className="text-xs sm:text-sm text-[#8B7E6E]" style={{ fontFamily: 'Georgia, serif' }}>Integrated:</span>
+              <div className="flex items-center gap-3 sm:gap-4">
+                <Image src="/logos/KlarnaLogo.jpeg" alt="Klarna" width={60} height={24} className="h-5 sm:h-6 w-auto opacity-70" />
+                <Image src="/logos/affirmLogo.avif" alt="Affirm" width={60} height={24} className="h-5 sm:h-6 w-auto opacity-70" />
+                <Image src="/logos/afterPayLogo.jpg" alt="Afterpay" width={60} height={24} className="h-5 sm:h-6 w-auto opacity-70" />
+                <Image src="/logos/sezzleLogo.png" alt="Sezzle" width={60} height={24} className="h-5 sm:h-6 w-auto opacity-70" />
+                <Image src="/logos/zipLogo.png" alt="Zip" width={60} height={24} className="h-5 sm:h-6 w-auto opacity-70" />
+                <Image src="/logos/PayPalLogo.jpg" alt="PayPal" width={60} height={24} className="h-5 sm:h-6 w-auto opacity-70" />
               </div>
             </div>
           </div>
@@ -455,68 +475,60 @@ export default function DeckPage() {
         return (
           <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto">
             <p className="text-xs sm:text-sm text-[#8B7E6E] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-              The Product
+              How It Works
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Simple to send.<br />Flexible to pay back.
+              The Split Payment Example
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 items-center">
-              <div className="space-y-6 sm:space-y-8">
-                <div>
-                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Senders</h3>
-                  <ul className="space-y-1 sm:space-y-2 text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
-                    <li>• Pay your friends instantly</li>
-                    <li>• Don't lose your budget right away</li>
-                    <li>• Spread payments out over time</li>
-                    <li>• Skip credit cards, keep the benefits</li>
-                  </ul>
+              <div className="space-y-4 sm:space-y-6">
+                <div className="p-4 sm:p-5 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-xs text-[#8B7E6E] mb-2">STEP 1</p>
+                  <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>User wants to checkout for <span className="font-semibold">$600</span></p>
                 </div>
-                <div>
-                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>For Receivers</h3>
-                  <ul className="space-y-1 sm:space-y-2 text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>
-                    <li>• Get paid instantly — we cover them</li>
-                    <li>• No more fronting rent or bills</li>
-                    <li>• Collect from groups with one tap</li>
-                    <li>• Put funds in escrow together instantly</li>
-                  </ul>
+                <div className="p-4 sm:p-5 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-xs text-[#8B7E6E] mb-2">STEP 2</p>
+                  <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>CoverPay checks Klarna → approved for <span className="font-semibold">$300</span></p>
+                </div>
+                <div className="p-4 sm:p-5 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-xs text-[#8B7E6E] mb-2">STEP 3</p>
+                  <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>CoverPay checks Affirm → approved for <span className="font-semibold">$300</span></p>
+                </div>
+                <div className="p-4 sm:p-5 bg-[#2C2416]">
+                  <p className="text-xs text-[#D4C5B0] mb-2">RESULT</p>
+                  <p className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>User pays <span className="font-semibold">$600</span> via BNPL — abstracted as one payment</p>
                 </div>
               </div>
               <div className="bg-[#2C2416] rounded-2xl p-6 sm:p-8 flex items-center justify-center min-h-[200px] sm:min-h-[400px]">
-                <div className="flex flex-col items-center">
-                  {/* Payment Flow Visual */}
+                <div className="flex flex-col items-center w-full">
+                  {/* Split Payment Visual */}
+                  <div className="text-4xl sm:text-5xl text-[#FAF8F5] mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>$600</div>
+                  <div className="text-[#D4C5B0] text-sm mb-4">splits into</div>
                   <div className="flex items-center gap-4 sm:gap-8 mb-6">
-                    {/* Sender */}
                     <div className="flex flex-col items-center">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#FAF8F5] flex items-center justify-center mb-2">
-                        <span className="text-2xl sm:text-3xl">👤</span>
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-[#FAF8F5] flex items-center justify-center mb-2 p-2">
+                        <Image src="/logos/KlarnaLogo.jpeg" alt="Klarna" width={60} height={40} className="w-full h-auto" />
                       </div>
-                      <span className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Sender</span>
+                      <span className="text-[#FAF8F5] text-lg sm:text-xl font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$300</span>
                     </div>
-                    {/* Arrow with dollar sign */}
+                    <div className="text-[#D4C5B0] text-2xl">+</div>
                     <div className="flex flex-col items-center">
-                      <div className="text-[#D4C5B0] text-xl sm:text-2xl mb-1">💸</div>
-                      <div className="w-12 sm:w-20 h-0.5 bg-[#D4C5B0] relative">
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-t-4 border-b-4 border-l-8 border-transparent border-l-[#D4C5B0]"></div>
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-[#FAF8F5] flex items-center justify-center mb-2 p-2">
+                        <Image src="/logos/affirmLogo.avif" alt="Affirm" width={60} height={40} className="w-full h-auto" />
                       </div>
-                    </div>
-                    {/* Receiver */}
-                    <div className="flex flex-col items-center">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#FAF8F5] flex items-center justify-center mb-2">
-                        <span className="text-2xl sm:text-3xl">👤</span>
-                      </div>
-                      <span className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Receiver</span>
+                      <span className="text-[#FAF8F5] text-lg sm:text-xl font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$300</span>
                     </div>
                   </div>
                   {/* Benefits */}
                   <div className="text-center space-y-2">
                     <div className="flex items-center gap-2 text-[#FAF8F5] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>
-                      <span className="text-green-400">✓</span> Receiver gets paid now
+                      <span className="text-green-400">✓</span> User sees one unified payment
                     </div>
                     <div className="flex items-center gap-2 text-[#FAF8F5] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>
-                      <span className="text-green-400">✓</span> Sender pays over 4-6 weeks
+                      <span className="text-green-400">✓</span> Merchant gets full amount
                     </div>
                     <div className="flex items-center gap-2 text-[#FAF8F5] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>
-                      <span className="text-green-400">✓</span> We cover the gap
+                      <span className="text-green-400">✓</span> CoverPay handles the complexity
                     </div>
                   </div>
                 </div>
@@ -532,46 +544,46 @@ export default function DeckPage() {
               Market Opportunity
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-2 sm:mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              P2P dominates consumer payments
+              BNPL is massive — but fragmented
             </h2>
             <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-10 max-w-3xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              Rent, travel, bills, and shared expenses — $1.7T flows P2P with zero BNPL option
+              $150B in BNPL volume with 40% decline rates — orchestration captures the gap
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 max-w-5xl">
               <div className="space-y-3 sm:space-y-6">
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
-                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>US P2P payment volume (2024)</span>
-                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$1.7T</span>
+                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Global BNPL volume (2024)</span>
+                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$150B</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
-                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Share of consumer payments via P2P</span>
+                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Average single-provider decline rate</span>
                   <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>40%</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
-                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Avg transactions needing BNPL ($200+)</span>
-                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>28%</span>
+                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Lost revenue from BNPL declines</span>
+                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$60B</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#D4C5B0] pb-2 sm:pb-4">
-                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>BNPL interest (Gen Z)</span>
-                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>60%</span>
+                  <span className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Approval rate with orchestration</span>
+                  <span className="text-lg sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>85%+</span>
                 </div>
                 <div className="flex items-center justify-between pt-1 sm:pt-2">
-                  <span className="text-sm sm:text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Addressable BNPL opportunity</span>
-                  <span className="text-xl sm:text-3xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$100B+</span>
+                  <span className="text-sm sm:text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Recapturable revenue</span>
+                  <span className="text-xl sm:text-3xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$25B+</span>
                 </div>
               </div>
               <div className="space-y-3 sm:space-y-4">
                 <div className="p-3 sm:p-5 bg-[#2C2416] text-[#FAF8F5]">
-                  <p className="text-xs sm:text-sm text-[#D4C5B0] mb-1">Where P2P is used</p>
-                  <p className="text-sm sm:text-lg" style={{ fontFamily: 'Georgia, serif' }}>Rent splits, group travel, shared bills, dues & pools</p>
+                  <p className="text-xs sm:text-sm text-[#D4C5B0] mb-1">The Gap</p>
+                  <p className="text-sm sm:text-lg" style={{ fontFamily: 'Georgia, serif' }}>No one aggregates BNPL providers intelligently — we do</p>
                 </div>
                 <div className="p-3 sm:p-5 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-1">TAM · Gen Z P2P payments</p>
-                  <p className="text-2xl sm:text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$600B</p>
+                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-1">TAM · E-commerce BNPL volume</p>
+                  <p className="text-2xl sm:text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$150B</p>
                 </div>
                 <div className="p-3 sm:p-5 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-1">SAM · Payments $200+ needing BNPL</p>
-                  <p className="text-2xl sm:text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$100B</p>
+                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-1">SAM · Declined BNPL that CoverPay rescues</p>
+                  <p className="text-2xl sm:text-3xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>$25B</p>
                 </div>
               </div>
             </div>
@@ -585,28 +597,28 @@ export default function DeckPage() {
               Business Model
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Revenue from every transaction
+              Orchestration margin on every approval
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl">
-              <div className="bg-white/50 border border-[#D4C5B0] p-4 sm:p-6">
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Instant P2P</h3>
-                <p className="text-2xl sm:text-3xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Free</p>
-                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Builds habit & network effects</p>
+              <div className="bg-[#2C2416] p-4 sm:p-6">
+                <h3 className="text-base sm:text-xl text-[#FAF8F5] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Orchestration Fee</h3>
+                <p className="text-2xl sm:text-3xl text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>1-2%</p>
+                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>On every successful BNPL transaction routed through CoverPay</p>
               </div>
               <div className="bg-[#2C2416] p-4 sm:p-6">
-                <h3 className="text-base sm:text-xl text-[#FAF8F5] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>CoverPay™ (BNPL)</h3>
-                <p className="text-2xl sm:text-3xl text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>5-8%</p>
-                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Fee on financed payments</p>
+                <h3 className="text-base sm:text-xl text-[#FAF8F5] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Split Payment Premium</h3>
+                <p className="text-2xl sm:text-3xl text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>2-3%</p>
+                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Additional fee when we split across multiple providers</p>
               </div>
               <div className="bg-white/50 border border-[#D4C5B0] p-4 sm:p-6 sm:col-span-2 md:col-span-1">
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Interchange</h3>
-                <p className="text-2xl sm:text-3xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>1.5-2%</p>
-                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Payment gateway fees on card transactions</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>SaaS API Access</h3>
+                <p className="text-2xl sm:text-3xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>$2K+/mo</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Enterprise merchants pay for API access + premium routing</p>
               </div>
             </div>
-            <div className="mt-4 sm:mt-8 max-w-5xl">
-              <p className="text-sm sm:text-lg text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                Venmo/Cash App strategy: free P2P builds network, monetize through CoverPay™ + interchange.
+            <div className="mt-4 sm:mt-8 p-4 sm:p-5 bg-white/50 border border-[#D4C5B0] max-w-3xl">
+              <p className="text-sm sm:text-lg text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
+                <span className="font-semibold">Example:</span> $600 split payment → $300 Klarna + $300 Affirm → CoverPay earns ~$15-18 (2.5-3%)
               </p>
             </div>
           </div>
@@ -619,50 +631,50 @@ export default function DeckPage() {
               Go-to-Market
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Fraternities are our beachhead
+              E-commerce merchants are our beachhead
             </h2>
             <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              Dense social networks, recurring payments, high CoverPay™ demand — the perfect wedge
+              Merchants losing sales to BNPL declines are eager for a solution — one API integration
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mb-6 sm:mb-10">
               <div className="p-4 sm:p-6 bg-[#2C2416] text-[#FAF8F5]">
-                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#D4C5B0]">Use Case 1</p>
-                <h3 className="text-base sm:text-xl mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Social Dues</h3>
-                <p className="text-xs sm:text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$500/semester dues collected by treasurers — 40% pay late. CoverPay™ solves this.</p>
-                <p className="text-sm sm:text-lg mt-2 sm:mt-4 text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$750M/yr market</p>
+                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#D4C5B0]">Phase 1</p>
+                <h3 className="text-base sm:text-xl mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Mid-Market DTC</h3>
+                <p className="text-xs sm:text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>$10-50M GMV brands losing 20%+ to BNPL declines. Quick wins, high intent.</p>
+                <p className="text-sm sm:text-lg mt-2 sm:mt-4 text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>10K+ merchants</p>
               </div>
               <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Use Case 2</p>
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>March Madness Pools</h3>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$50-500 buy-ins, everyone wants in but cash-strapped. Perfect for CoverPay™.</p>
-                <p className="text-sm sm:text-lg text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>Viral growth</p>
+                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Phase 2</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>High-AOV Verticals</h3>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Furniture, electronics, travel — $500+ AOV where BNPL matters most.</p>
+                <p className="text-sm sm:text-lg text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$50B+ market</p>
               </div>
               <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0] sm:col-span-2 md:col-span-1">
-                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Use Case 3</p>
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Formals & Trips</h3>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Spring break, date parties, ski trips — group payments perfect for CoverPay™.</p>
-                <p className="text-sm sm:text-lg text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>Recurring events</p>
+                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Phase 3</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Platform Integrations</h3>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Shopify, WooCommerce, BigCommerce plugins for instant adoption.</p>
+                <p className="text-sm sm:text-lg text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>1M+ stores</p>
               </div>
             </div>
             <div className="grid grid-cols-2 sm:flex sm:items-center gap-4 sm:gap-8 max-w-4xl">
               <div className="text-center">
-                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>750K</p>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Active members</p>
+                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>6</p>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>BNPL providers</p>
               </div>
               <div className="hidden sm:block h-12 w-px bg-[#D4C5B0]"></div>
               <div className="text-center">
-                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>12K</p>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Chapters</p>
+                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>1</p>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>API integration</p>
               </div>
               <div className="hidden sm:block h-12 w-px bg-[#D4C5B0]"></div>
               <div className="text-center">
-                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>60+</p>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Per chapter</p>
+                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>85%+</p>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Approval rate</p>
               </div>
               <div className="hidden sm:block h-12 w-px bg-[#D4C5B0]"></div>
               <div className="text-center">
-                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Built-in</p>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Virality</p>
+                <p className="text-2xl sm:text-4xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>+25%</p>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>More conversions</p>
               </div>
             </div>
           </div>
@@ -675,55 +687,60 @@ export default function DeckPage() {
               Traction
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              We built the distribution engine
+              Built and ready to deploy
             </h2>
             <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              Hedge Payments owns FraternityBase — the Crunchbase for fraternities and sororities in the U.S.
+              CoverPay API is live with 6 providers integrated — ready for merchant onboarding
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 max-w-4xl">
               <div className="grid grid-cols-3 md:grid-cols-1 gap-3 sm:gap-6">
                 <div className="p-3 sm:p-6 bg-[#2C2416]">
-                  <p className="text-2xl sm:text-5xl text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>12K+</p>
-                  <p className="text-xs sm:text-base text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Chapters</p>
+                  <p className="text-2xl sm:text-5xl text-[#FAF8F5] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>6</p>
+                  <p className="text-xs sm:text-base text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>BNPL Providers</p>
                 </div>
                 <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-2xl sm:text-5xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>5K+</p>
-                  <p className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Treasurers</p>
+                  <p className="text-2xl sm:text-5xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>2</p>
+                  <p className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Routing strategies</p>
                 </div>
                 <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-2xl sm:text-5xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>$0</p>
-                  <p className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>CAC</p>
+                  <p className="text-2xl sm:text-5xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Live</p>
+                  <p className="text-xs sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>REST API</p>
                 </div>
               </div>
               <div className="space-y-3 sm:space-y-6">
-                <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-sm sm:text-base text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                    "I'd definitely use this for March Madness. $200 buy-in is a lot at once."
+                <div className="p-3 sm:p-6 bg-[#2C2416]">
+                  <p className="text-xs sm:text-sm text-[#D4C5B0] mb-2">Waterfall Strategy</p>
+                  <p className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>
+                    Routes through providers sequentially until approval — maximizes success rate
                   </p>
-                  <p className="text-xs sm:text-sm text-[#8B7E6E]">— College student, 22</p>
+                </div>
+                <div className="p-3 sm:p-6 bg-[#2C2416]">
+                  <p className="text-xs sm:text-sm text-[#D4C5B0] mb-2">Split Strategy</p>
+                  <p className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>
+                    Divides payment across 2 providers when partial approvals occur — unlocks larger purchases
+                  </p>
                 </div>
                 <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-sm sm:text-base text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                    "Payment plans for dues would be huge. Half our guys are always late."
-                  </p>
-                  <p className="text-xs sm:text-sm text-[#8B7E6E]">— Matt, Penn State ZBT Treasurer</p>
-                </div>
-                <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-sm sm:text-base text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                    "Spring break was $400 I didn't have. Would've loved to pay over time."
-                  </p>
-                  <p className="text-xs sm:text-sm text-[#8B7E6E]">— Recent grad, 23</p>
+                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-2">Integrated Providers</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">Klarna</span>
+                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">Affirm</span>
+                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">Afterpay</span>
+                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">Sezzle</span>
+                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">Zip</span>
+                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">PayPal</span>
+                  </div>
                 </div>
               </div>
             </div>
             <a
-              href="https://fraternitybase.com"
+              href="https://hedgepayments.com/coverpay"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 sm:mt-6 text-xs sm:text-sm text-[#8B7E6E] hover:text-[#2C2416] transition-colors underline"
               style={{ fontFamily: 'Georgia, serif' }}
             >
-              Visit FraternityBase.com →
+              See CoverPay Demo →
             </a>
           </div>
         )
@@ -735,39 +752,39 @@ export default function DeckPage() {
               The Vision
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              CoverPay™ for all P2P payments
+              The Stripe for BNPL
             </h2>
             <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              Fraternities are the wedge — Gen Z payments is the destination
+              One API to rule all BNPL providers — merchants integrate once, we optimize forever
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl">
               <div className="p-4 sm:p-6 bg-[#2C2416] text-[#FAF8F5]">
                 <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#D4C5B0]">Now</p>
-                <h3 className="text-base sm:text-xl mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Social Groups</h3>
-                <p className="text-xs sm:text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>Fraternities, sororities, sports pools, group trips</p>
-                <p className="text-xl sm:text-2xl mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$3B+</p>
+                <h3 className="text-base sm:text-xl mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>E-Commerce</h3>
+                <p className="text-xs sm:text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>DTC brands, high-AOV merchants losing sales to BNPL declines</p>
+                <p className="text-xl sm:text-2xl mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$25B</p>
               </div>
               <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Next</p>
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Roommates & Friends</h3>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Rent splits, utilities, shared subscriptions, dinners</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Travel & Services</h3>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Flights, hotels, healthcare — high-ticket services need flexibility</p>
                 <p className="text-xl sm:text-2xl text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$50B+</p>
               </div>
               <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Expand</p>
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Betting & Gaming</h3>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Sports betting, prediction markets, gaming payments</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>B2B Payments</h3>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Net-30/60/90 terms orchestrated across lending providers</p>
                 <p className="text-xl sm:text-2xl text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$200B+</p>
               </div>
               <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#8B7E6E]">Future</p>
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>All Gen Z P2P</h3>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Any payment where someone needs time to pay — we cover them</p>
-                <p className="text-xl sm:text-2xl text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$600B+</p>
+                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Global BNPL</h3>
+                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Unified checkout across all markets, all providers, all currencies</p>
+                <p className="text-xl sm:text-2xl text-[#2C2416] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$500B+</p>
               </div>
             </div>
             <p className="text-sm sm:text-base text-[#6B5D4F] mt-4 sm:mt-8 max-w-2xl" style={{ fontFamily: 'Georgia, serif' }}>
-              Venmo and Cash App move money. We make it affordable.
+              Klarna, Affirm, Afterpay compete. We orchestrate.
             </p>
           </div>
         )
@@ -779,22 +796,22 @@ export default function DeckPage() {
               Why Now
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              The perfect storm
+              The BNPL market is ripe for orchestration
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 max-w-4xl">
               <div className="space-y-4 sm:space-y-6">
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0 text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif' }}>1</div>
                   <div>
-                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>BNPL is Gen Z's default</h3>
-                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>60%+ prefer BNPL over credit cards — but it doesn't exist for P2P</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>BNPL is fragmented</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>6+ major providers, each with different approval criteria — no one aggregates</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0 text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif' }}>2</div>
                   <div>
-                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Venmo/Cash App hit a ceiling</h3>
-                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Ubiquitous for transfers — but no financing, no flexibility for big payments</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Merchants are frustrated</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Losing 40% of BNPL checkouts to declines — desperate for a solution</p>
                   </div>
                 </div>
               </div>
@@ -802,15 +819,15 @@ export default function DeckPage() {
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0 text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif' }}>3</div>
                   <div>
-                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Social payments are exploding</h3>
-                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Group trips, pools, shared costs — all rising with social media culture</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>AI enables smart routing</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>ML can now predict which provider approves which customer — real-time optimization</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#2C2416] text-[#FAF8F5] flex items-center justify-center flex-shrink-0 text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif' }}>4</div>
                   <div>
-                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Credit card rejection</h3>
-                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>70% of Gen Z avoids traditional credit — but still needs flexibility</p>
+                    <h3 className="text-base sm:text-xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>Providers want distribution</h3>
+                    <p className="text-sm sm:text-base text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Klarna, Affirm, etc. are eager for volume — they'll work with aggregators</p>
                   </div>
                 </div>
               </div>
@@ -825,7 +842,7 @@ export default function DeckPage() {
               Team
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Built by someone who lived it
+              Technical founder, payments obsessed
             </h2>
             <div className="max-w-3xl">
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-8 mb-6 sm:mb-10">
@@ -844,6 +861,18 @@ export default function DeckPage() {
                   <div className="space-y-3 sm:space-y-4">
                     <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
                       <Image
+                        src="/logos/CoverPayLogo.png"
+                        alt="CoverPay"
+                        width={24}
+                        height={24}
+                        className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                      />
+                      <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
+                        <span className="font-semibold">CoverPay</span> — Built the API with 6 providers integrated
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                      <Image
                         src="/images/hedgepay-new-logo.png"
                         alt="Hedge Payments"
                         width={24}
@@ -854,24 +883,12 @@ export default function DeckPage() {
                         <span className="font-semibold">Hedge Payments</span> — AI-native payment infrastructure
                       </p>
                     </div>
-                    <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
-                      <Image
-                        src="/images/fraternity-base-logo.png"
-                        alt="FraternityBase"
-                        width={24}
-                        height={24}
-                        className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
-                      />
-                      <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
-                        <span className="font-semibold">FraternityBase</span> — Database of 12K+ chapters
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
               <div className="p-4 sm:p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                  "Every time friends split a trip or I owed someone for a pool, I thought: why can't I just pay this back over time? BNPL works for shopping — why not for paying back friends?"
+                  "I kept seeing merchants lose sales because one BNPL provider declined. The obvious solution: try them all. CoverPay orchestrates 6 providers through one API — maximizing approvals, minimizing abandoned carts."
                 </p>
               </div>
             </div>
@@ -885,23 +902,23 @@ export default function DeckPage() {
               The Ask
             </p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Raising $5.25M Seed
+              Raising $3M Seed
             </h2>
             <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              To launch CoverPay™ and scale BNPL for P2P to $100 Million in volume
+              To scale CoverPay to 100+ merchants and $50M+ in BNPL volume
             </p>
             <div className="grid grid-cols-3 gap-2 sm:gap-6 max-w-3xl mx-auto mb-6 sm:mb-12">
               <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>40%</p>
-                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Engineering & Product</p>
+                <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>50%</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Engineering & AI/ML</p>
               </div>
               <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>35%</p>
-                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>BNPL Capital & Licensing</p>
+                <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>30%</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Sales & Merchant Growth</p>
               </div>
               <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>25%</p>
-                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Growth & GTM</p>
+                <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>20%</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Provider Integrations</p>
               </div>
             </div>
             <div className="w-12 sm:w-16 h-px bg-[#D4C5B0] mx-auto mb-4 sm:mb-8"></div>
