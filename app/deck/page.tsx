@@ -265,9 +265,6 @@ export default function DeckPage() {
             <p className="text-2xl md:text-3xl text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               The Payment Orchestration Layer for BNPL
             </p>
-            <p className="text-lg md:text-xl text-[#8B7E6E] mt-4" style={{ fontFamily: 'Georgia, serif' }}>
-              6 providers. One API. Rescue 40% of abandoned checkouts.
-            </p>
             <p className="text-xs text-[#B8A99A] mt-8" style={{ fontFamily: 'Georgia, serif' }}>
               Last updated: December 16, 2025 at 4:32 PM EST
             </p>
