@@ -930,16 +930,16 @@ export default function DeckPage() {
               Raising $4.2M Seed
             </h2>
             <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              To scale CoverPay to 100+ merchants and $50M+ in BNPL volume
+              To scale CoverPay to 200+ merchants and $100M+ in BNPL volume
             </p>
             <div className="grid grid-cols-3 gap-2 sm:gap-6 max-w-3xl mx-auto mb-6 sm:mb-12">
               <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>50%</p>
-                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Engineering & AI/ML</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Engineering (3-4 hires)</p>
               </div>
               <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>30%</p>
-                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Sales & Merchant Growth</p>
+                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Sales Lead + Growth</p>
               </div>
               <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
                 <p className="text-xl sm:text-2xl text-[#2C2416] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>20%</p>
