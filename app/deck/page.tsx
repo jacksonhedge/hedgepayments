@@ -871,7 +871,7 @@ export default function DeckPage() {
                 <div className="text-center sm:text-left">
                   <h3 className="text-xl sm:text-3xl text-[#2C2416] mb-1" style={{ fontFamily: 'Georgia, serif' }}>Jackson Fitzgerald</h3>
                   <p className="text-sm sm:text-lg text-[#6B5D4F] mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>Founder & CEO</p>
-                  <div className="space-y-3 sm:space-y-4">
+                  <div className="space-y-2 sm:space-y-3">
                     <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
                       <Image
                         src="/logos/CoverPayLogo.png"
@@ -881,7 +881,19 @@ export default function DeckPage() {
                         className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
                       />
                       <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
-                        <span className="font-semibold">CoverPay</span> — Built the API with 6 providers integrated
+                        <span className="font-semibold">CoverPay</span> — BNPL orchestration API, 6 providers
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-[#2C2416] flex items-center justify-center text-[#FAF8F5] text-xs font-bold">B</div>
+                      <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
+                        <span className="font-semibold">Bankroll</span> — Consumer P2P payment platform
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-[#6B5D4F] flex items-center justify-center text-[#FAF8F5] text-xs font-bold">F</div>
+                      <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
+                        <span className="font-semibold">FraternityBase</span> — Greek organization management platform
                       </p>
                     </div>
                     <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
