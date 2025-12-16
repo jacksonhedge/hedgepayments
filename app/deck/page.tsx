@@ -927,7 +927,7 @@ export default function DeckPage() {
               The Ask
             </p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Raising $4.2M Seed
+              Raising $4.12M Seed
             </h2>
             <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               To scale CoverPay to 200+ merchants and $100M+ in BNPL volume
