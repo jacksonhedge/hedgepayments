@@ -318,109 +318,109 @@ export default function DeckPage() {
               Usage Analysis
             </p>
             <h2 className="text-xl sm:text-4xl md:text-5xl text-[#2C2416] mb-4 sm:mb-10 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Where Gen Z spends — and where they need BNPL
+              Gen Z BNPL behavior: $50+ purchases
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-12 max-w-5xl">
-              {/* P2P Payment Volume Chart */}
+              {/* Gen Z BNPL Stats */}
               <div>
                 <h3 className="text-base sm:text-xl text-[#2C2416] mb-3 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                  Annual P2P Payment Volume per User
+                  Gen Z BNPL Usage by Purchase Size
                 </h3>
                 <div className="space-y-2 sm:space-y-4">
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Rent & Housing Splits</span>
-                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$4,800</span>
+                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$50 - $100</span>
+                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>45% use BNPL</span>
                     </div>
                     <div className="h-5 sm:h-8 bg-[#E8E2D9] overflow-hidden">
-                      <div className="h-full bg-[#2C2416]" style={{ width: '100%' }}></div>
+                      <div className="h-full bg-[#8B7E6E]" style={{ width: '45%' }}></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Group Trips & Events</span>
-                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$1,800</span>
+                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$100 - $250</span>
+                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>62% use BNPL</span>
                     </div>
                     <div className="h-5 sm:h-8 bg-[#E8E2D9] overflow-hidden">
-                      <div className="h-full bg-[#6B5D4F]" style={{ width: '38%' }}></div>
+                      <div className="h-full bg-[#6B5D4F]" style={{ width: '62%' }}></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Sports Pools & Betting</span>
-                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$600</span>
+                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$250 - $500</span>
+                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>78% use BNPL</span>
                     </div>
                     <div className="h-5 sm:h-8 bg-[#E8E2D9] overflow-hidden">
-                      <div className="h-full bg-[#8B7E6E]" style={{ width: '13%' }}></div>
+                      <div className="h-full bg-[#2C2416]" style={{ width: '78%' }}></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Dinners & Nights Out</span>
-                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>$1,200</span>
+                      <span className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>$500+</span>
+                      <span className="text-xs sm:text-sm text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>85% use BNPL</span>
                     </div>
                     <div className="h-5 sm:h-8 bg-[#E8E2D9] overflow-hidden">
-                      <div className="h-full bg-[#D4C5B0]" style={{ width: '25%' }}></div>
+                      <div className="h-full bg-[#2C2416]" style={{ width: '85%' }}></div>
                     </div>
                   </div>
                 </div>
                 <p className="text-xs text-[#8B7E6E] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>
-                  Total: ~$8,400/year in P2P payments per college student
+                  Gen Z prefers BNPL over credit cards for purchases $50+
                 </p>
               </div>
 
-              {/* BNPL Adoption by Type */}
+              {/* Top Categories */}
               <div>
                 <h3 className="text-base sm:text-xl text-[#2C2416] mb-3 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                  BNPL Demand by Payment Type
+                  Top Gen Z Categories for BNPL ($50+)
                 </h3>
                 <div className="space-y-2 sm:space-y-4">
                   <div className="p-2 sm:p-4 bg-[#2C2416]">
                     <div className="flex justify-between items-center mb-1 sm:mb-2">
-                      <span className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>Rent & Housing</span>
-                      <span className="text-base sm:text-xl text-[#FAF8F5] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>70%</span>
+                      <span className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>Fashion & Apparel</span>
+                      <span className="text-base sm:text-xl text-[#FAF8F5] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>72%</span>
                     </div>
                     <div className="h-2 sm:h-3 bg-[#4A3D2F] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#D4C5B0] rounded-full" style={{ width: '70%' }}></div>
+                      <div className="h-full bg-[#D4C5B0] rounded-full" style={{ width: '72%' }}></div>
                     </div>
-                    <p className="text-xs text-[#D4C5B0] mt-1 hidden sm:block">Would use BNPL for rent splits</p>
+                    <p className="text-xs text-[#D4C5B0] mt-1 hidden sm:block">Sneakers, streetwear, designer items</p>
                   </div>
                   <div className="p-2 sm:p-4 bg-white/50 border border-[#D4C5B0]">
                     <div className="flex justify-between items-center mb-1 sm:mb-2">
-                      <span className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Group Trips</span>
-                      <span className="text-base sm:text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>55%</span>
+                      <span className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Electronics & Gaming</span>
+                      <span className="text-base sm:text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>68%</span>
                     </div>
                     <div className="h-2 sm:h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#2C2416] rounded-full" style={{ width: '55%' }}></div>
+                      <div className="h-full bg-[#2C2416] rounded-full" style={{ width: '68%' }}></div>
                     </div>
-                    <p className="text-xs text-[#8B7E6E] mt-1 hidden sm:block">Spring break, concerts, road trips</p>
+                    <p className="text-xs text-[#8B7E6E] mt-1 hidden sm:block">Phones, consoles, accessories</p>
                   </div>
                   <div className="p-2 sm:p-4 bg-white/50 border border-[#D4C5B0]">
                     <div className="flex justify-between items-center mb-1 sm:mb-2">
-                      <span className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Pools & Group Bets</span>
-                      <span className="text-base sm:text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>45%</span>
+                      <span className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Travel & Experiences</span>
+                      <span className="text-base sm:text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>65%</span>
                     </div>
                     <div className="h-2 sm:h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#6B5D4F] rounded-full" style={{ width: '45%' }}></div>
+                      <div className="h-full bg-[#6B5D4F] rounded-full" style={{ width: '65%' }}></div>
                     </div>
-                    <p className="text-xs text-[#8B7E6E] mt-1 hidden sm:block">March Madness, fantasy, prop bets</p>
+                    <p className="text-xs text-[#8B7E6E] mt-1 hidden sm:block">Flights, hotels, concerts, festivals</p>
                   </div>
                   <div className="p-2 sm:p-4 bg-white/50 border border-[#D4C5B0]">
                     <div className="flex justify-between items-center mb-1 sm:mb-2">
-                      <span className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Small Splits</span>
-                      <span className="text-base sm:text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>15%</span>
+                      <span className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Beauty & Wellness</span>
+                      <span className="text-base sm:text-xl text-[#2C2416] font-semibold" style={{ fontFamily: 'Georgia, serif' }}>58%</span>
                     </div>
                     <div className="h-2 sm:h-3 bg-[#E8E2D9] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#8B7E6E] rounded-full" style={{ width: '15%' }}></div>
+                      <div className="h-full bg-[#8B7E6E] rounded-full" style={{ width: '58%' }}></div>
                     </div>
-                    <p className="text-xs text-[#8B7E6E] mt-1 hidden sm:block">Under $50 — instant pay preferred</p>
+                    <p className="text-xs text-[#8B7E6E] mt-1 hidden sm:block">Skincare, fitness, self-care</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="mt-4 sm:mt-8 p-3 sm:p-4 bg-[#2C2416] max-w-md">
+            <div className="mt-4 sm:mt-8 p-3 sm:p-4 bg-[#2C2416] max-w-lg">
               <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>
-                <span className="text-[#FAF8F5] font-semibold">Key Insight:</span> High-value payments ($200+) have 45-70% BNPL demand — our sweet spot.
+                <span className="text-[#FAF8F5] font-semibold">Key Insight:</span> 60% of Gen Z abandons cart when BNPL is declined — CoverPay rescues these sales.
               </p>
             </div>
           </div>
