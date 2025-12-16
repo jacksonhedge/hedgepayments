@@ -734,14 +734,14 @@ export default function DeckPage() {
                   </p>
                 </div>
                 <div className="p-3 sm:p-6 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-2">Integrated Providers</p>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">Klarna</span>
-                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">Affirm</span>
-                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">Afterpay</span>
-                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">Sezzle</span>
-                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">Zip</span>
-                    <span className="text-xs px-2 py-1 bg-[#2C2416] text-[#FAF8F5]">PayPal</span>
+                  <p className="text-xs sm:text-sm text-[#8B7E6E] mb-3">Integrated Providers</p>
+                  <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+                    <Image src="/logos/KlarnaLogo.jpeg" alt="Klarna" width={60} height={24} className="h-6 sm:h-8 w-auto" />
+                    <Image src="/logos/affirmLogo.avif" alt="Affirm" width={60} height={24} className="h-6 sm:h-8 w-auto" />
+                    <Image src="/logos/afterPayLogo.jpg" alt="Afterpay" width={60} height={24} className="h-6 sm:h-8 w-auto" />
+                    <Image src="/logos/sezzleLogo.png" alt="Sezzle" width={60} height={24} className="h-6 sm:h-8 w-auto" />
+                    <Image src="/logos/zipLogo.png" alt="Zip" width={60} height={24} className="h-6 sm:h-8 w-auto" />
+                    <Image src="/logos/PayPalLogo.jpg" alt="PayPal" width={60} height={24} className="h-6 sm:h-8 w-auto" />
                   </div>
                 </div>
               </div>
