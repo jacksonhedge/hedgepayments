@@ -481,22 +481,26 @@ export default function DeckPage() {
               The Split Payment Example
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 items-center">
-              <div className="space-y-4 sm:space-y-6">
-                <div className="p-4 sm:p-5 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-xs text-[#8B7E6E] mb-2">STEP 1</p>
+              <div className="space-y-3 sm:space-y-4">
+                <div className="p-3 sm:p-4 bg-[#2C2416]">
+                  <p className="text-xs text-[#D4C5B0] mb-1">PRE-CHECK</p>
+                  <p className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>CoverPay queries each provider's API to get user's <span className="font-semibold">funding ceiling</span> before checkout</p>
+                </div>
+                <div className="p-3 sm:p-4 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-xs text-[#8B7E6E] mb-1">STEP 1</p>
                   <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>User wants to checkout for <span className="font-semibold">$600</span></p>
                 </div>
-                <div className="p-4 sm:p-5 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-xs text-[#8B7E6E] mb-2">STEP 2</p>
-                  <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>CoverPay checks Klarna → approved for <span className="font-semibold">$300</span></p>
+                <div className="p-3 sm:p-4 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-xs text-[#8B7E6E] mb-1">STEP 2</p>
+                  <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>CoverPay already knows: Klarna ceiling = <span className="font-semibold">$300</span></p>
                 </div>
-                <div className="p-4 sm:p-5 bg-white/50 border border-[#D4C5B0]">
-                  <p className="text-xs text-[#8B7E6E] mb-2">STEP 3</p>
-                  <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>CoverPay checks Affirm → approved for <span className="font-semibold">$300</span></p>
+                <div className="p-3 sm:p-4 bg-white/50 border border-[#D4C5B0]">
+                  <p className="text-xs text-[#8B7E6E] mb-1">STEP 3</p>
+                  <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>CoverPay already knows: Affirm ceiling = <span className="font-semibold">$300</span></p>
                 </div>
-                <div className="p-4 sm:p-5 bg-[#2C2416]">
-                  <p className="text-xs text-[#D4C5B0] mb-2">RESULT</p>
-                  <p className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>User pays <span className="font-semibold">$600</span> via BNPL — abstracted as one payment</p>
+                <div className="p-3 sm:p-4 bg-[#2C2416]">
+                  <p className="text-xs text-[#D4C5B0] mb-1">RESULT</p>
+                  <p className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>Instant split: <span className="font-semibold">$300 + $300 = $600</span> — one unified checkout</p>
                 </div>
               </div>
               <div className="bg-[#2C2416] rounded-2xl p-6 sm:p-8 flex items-center justify-center min-h-[200px] sm:min-h-[400px]">
