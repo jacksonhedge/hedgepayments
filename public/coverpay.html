@@ -100,10 +100,10 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px 40px;
             position: relative;
         }
 
@@ -114,36 +114,36 @@
 
         /* CoverPay Logo */
         .coverpay-logo {
-            width: 180px;
+            width: 120px;
             height: auto;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.15));
         }
 
         .hero-tagline {
-            font-size: 1.1em;
+            font-size: 0.9em;
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-weight: 500;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
         .hero h1 {
-            font-size: clamp(2.2em, 6vw, 3.5em);
+            font-size: clamp(1.8em, 5vw, 2.8em);
             font-weight: 800;
             color: var(--white);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             line-height: 1.2;
             text-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
 
         .hero-subtitle {
-            font-size: 1.1em;
+            font-size: 1em;
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-weight: 400;
-            max-width: 650px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -152,8 +152,8 @@
         .hero-stats {
             display: flex;
             justify-content: center;
-            gap: 50px;
-            margin-bottom: 30px;
+            gap: 40px;
+            margin-bottom: 20px;
         }
 
         .stat {
@@ -161,7 +161,7 @@
         }
 
         .stat-value {
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: 800;
             color: var(--white);
             line-height: 1;
@@ -169,13 +169,13 @@
 
         .stat-label {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9em;
-            margin-top: 5px;
+            font-size: 0.85em;
+            margin-top: 4px;
         }
 
         /* Integrated Providers Section */
         .providers-row {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .providers-label {
@@ -265,22 +265,7 @@
 
         /* Footer Text */
         .hero-footer {
-            position: absolute;
-            bottom: 30px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.85em;
-        }
-
-        .hero-footer a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-        }
-
-        .hero-footer a:hover {
-            color: var(--white);
+            display: none;
         }
 
         /* Modal Styles */
