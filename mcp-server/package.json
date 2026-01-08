@@ -1,0 +1,28 @@
+{
+  "name": "hedge-payments-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for HedgePayments - AI-native payment processing",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "keywords": ["mcp", "payments", "wallet", "fintech"],
+  "author": "HedgePayments",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "stripe": "^14.0.0",
+    "plaid": "^22.0.0",
+    "dwolla-v2": "^3.4.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  }
+}

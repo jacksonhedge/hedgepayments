@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "hedge-payments": {
+      "command": "node",
+      "args": ["./mcp-server/dist/index.js"],
+      "env": {
+        "SUPABASE_URL": "${SUPABASE_URL}",
+        "SUPABASE_SERVICE_KEY": "${SUPABASE_SERVICE_KEY}",
+        "STRIPE_SECRET_KEY": "${STRIPE_SECRET_KEY}",
+        "DWOLLA_KEY": "${DWOLLA_KEY}",
+        "DWOLLA_SECRET": "${DWOLLA_SECRET}",
+        "PLAID_CLIENT_ID": "${PLAID_CLIENT_ID}",
+        "PLAID_SECRET": "${PLAID_SECRET}"
+      }
+    }
+  }
+}
