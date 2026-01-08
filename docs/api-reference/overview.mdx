@@ -1,0 +1,198 @@
+---
+title: 'API Overview'
+description: 'HedgePayments API Reference — SideBet, CoverPay, and Bankroll'
+---
+
+# API Reference
+
+The HedgePayments API is organized around REST. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes and authentication.
+
+## Base URL
+
+All API requests should be made to:
+
+```
+https://api.hedgepayments.com/v1
+```
+
+For sandbox/testing:
+
+```
+https://api-sandbox.hedgepayments.com/v1
+```
+
+## Authentication
+
+All API requests require authentication via Bearer token:
+
+```bash
+curl https://api.hedgepayments.com/v1/users \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+See the [Authentication Guide](/authentication) for details on obtaining and managing API keys.
+
+## Products
+
+The HedgePayments API is organized by product:
+
+<CardGroup cols={3}>
+  <Card title="SideBet API" icon="coins" href="/api-reference/sidebet/enable-roundups">
+    Round-ups as a service
+  </Card>
+  <Card title="CoverPay API" icon="shield-check" href="/api-reference/coverpay/prequalify">
+    BNPL payment processing
+  </Card>
+  <Card title="Bankroll API" icon="wallet" href="/api-reference/bankroll/check-eligibility">
+    Payment method & wallet
+  </Card>
+</CardGroup>
+
+## SideBet Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `POST /sidebet/users/{id}/roundups/enable` | Enable round-ups for a user |
+| `GET /sidebet/users/{id}/roundups/settings` | Get round-up settings |
+| `PUT /sidebet/users/{id}/roundups/settings` | Update round-up settings |
+| `GET /sidebet/users/{id}/roundups/pending` | Get pending round-ups |
+| `POST /sidebet/users/{id}/roundups/transfer` | Trigger manual transfer |
+
+## CoverPay Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `POST /coverpay/prequalify` | Pre-qualify user for BNPL |
+| `POST /coverpay/payments` | Create a CoverPay payment |
+| `GET /coverpay/payments/{id}` | Get payment details |
+| `GET /coverpay/payments` | List all payments |
+| `POST /coverpay/payments/{id}/cancel` | Cancel a payment |
+
+## Bankroll Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `POST /bankroll/payments/check-eligibility` | Check if user can pay |
+| `POST /bankroll/payments` | Process a payment |
+| `GET /bankroll/users/{id}/balance` | Get user balance |
+| `POST /bankroll/users/{id}/cards` | Create virtual card |
+| `POST /bankroll/p2p/send` | Send P2P payment |
+
+## Common Endpoints
+
+These endpoints work across all products:
+
+| Endpoint | Description |
+|----------|-------------|
+| `POST /users` | Create a user |
+| `GET /users/{id}` | Get user details |
+| `POST /wallets` | Create a wallet |
+| `GET /wallets/{id}` | Get wallet details |
+| `POST /webhooks` | Register webhook |
+
+## Response Format
+
+All responses are JSON with a consistent structure:
+
+**Success Response:**
+```json
+{
+  "success": true,
+  "data": {
+    // Response data here
+  },
+  "meta": {
+    "requestId": "req_abc123",
+    "timestamp": "2024-01-15T10:30:00Z"
+  }
+}
+```
+
+**Error Response:**
+```json
+{
+  "success": false,
+  "error": {
+    "code": "INSUFFICIENT_BALANCE",
+    "message": "User does not have sufficient balance",
+    "details": {
+      "required": 50.00,
+      "available": 25.00
+    }
+  },
+  "meta": {
+    "requestId": "req_abc123",
+    "timestamp": "2024-01-15T10:30:00Z"
+  }
+}
+```
+
+## HTTP Status Codes
+
+| Code | Description |
+|------|-------------|
+| `200` | Success |
+| `201` | Created |
+| `400` | Bad Request — Invalid parameters |
+| `401` | Unauthorized — Invalid API key |
+| `403` | Forbidden — Insufficient permissions |
+| `404` | Not Found — Resource doesn't exist |
+| `409` | Conflict — Duplicate request |
+| `422` | Unprocessable — Business logic error |
+| `429` | Rate Limited — Too many requests |
+| `500` | Server Error — Something went wrong |
+
+## Rate Limits
+
+| Tier | Requests/minute | Requests/day |
+|------|-----------------|--------------|
+| Sandbox | 100 | 10,000 |
+| Production | 1,000 | 100,000 |
+| Enterprise | Custom | Custom |
+
+## Idempotency
+
+For `POST` requests, you can include an `Idempotency-Key` header to safely retry requests:
+
+```bash
+curl -X POST https://api.hedgepayments.com/v1/bankroll/payments \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Idempotency-Key: unique-request-id-123" \
+  -d '{"amount": 50.00, "userId": "user-123"}'
+```
+
+## Webhooks
+
+HedgePayments sends webhooks for important events. See the [Webhooks Guide](/guides/webhooks) for setup instructions.
+
+**Common Events:**
+- `sidebet.roundup.processed`
+- `sidebet.transfer.completed`
+- `coverpay.payment.created`
+- `coverpay.payment.completed`
+- `coverpay.payment.failed`
+- `bankroll.payment.completed`
+- `bankroll.p2p.sent`
+- `bankroll.card.created`
+
+## SDKs
+
+<CodeGroup>
+
+```bash JavaScript
+npm install @hedgepayments/sdk
+```
+
+```bash Python
+pip install hedgepayments
+```
+
+```bash Ruby
+gem install hedgepayments
+```
+
+```bash Go
+go get github.com/hedgepayments/hedgepayments-go
+```
+
+</CodeGroup>

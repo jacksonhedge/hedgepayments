@@ -1,0 +1,188 @@
+---
+title: 'CoverPay'
+description: 'The Best BNPL — Buy now, pay later done right'
+icon: 'shield-check'
+---
+
+# CoverPay — The Best BNPL
+
+CoverPay is buy now, pay later reimagined. No hidden fees. No predatory interest. No credit score damage. Just flexible payments that work for everyone.
+
+<img
+  src="/images/coverpay-hero.svg"
+  alt="CoverPay BNPL"
+/>
+
+## Why CoverPay is Different
+
+Traditional BNPL providers make money when users fail. Late fees, hidden interest, and credit damage are features, not bugs. **CoverPay is different.**
+
+<CardGroup cols={2}>
+  <Card title="Transparent Pricing" icon="eye">
+    No hidden fees, ever. Users know exactly what they'll pay before they commit.
+  </Card>
+  <Card title="Soft Credit Checks" icon="shield-check">
+    Pre-qualification uses soft pulls only. No impact to credit scores.
+  </Card>
+  <Card title="Flexible Plans" icon="calendar">
+    Pay in 4, monthly installments, or custom schedules—whatever works for the user.
+  </Card>
+  <Card title="Responsible Lending" icon="heart">
+    Built-in affordability checks prevent users from overextending.
+  </Card>
+</CardGroup>
+
+## Payment Plans
+
+<Tabs>
+  <Tab title="Pay in 4">
+    Split any purchase into 4 equal payments over 6 weeks. 25% today, then 25% every 2 weeks.
+
+    **Best for:** Everyday purchases $50-$500
+
+    ```
+    $200 purchase → 4 payments of $50
+    Day 0:  $50
+    Day 14: $50
+    Day 28: $50
+    Day 42: $50
+    ```
+  </Tab>
+  <Tab title="Monthly">
+    Spread payments over 3, 6, or 12 months with clear, fixed payments.
+
+    **Best for:** Larger purchases $200-$2,000
+
+    ```
+    $600 purchase → 6 payments of $100
+    Monthly payments, same day each month
+    ```
+  </Tab>
+  <Tab title="Custom">
+    Create custom payment schedules for unique situations.
+
+    **Best for:** B2B, invoicing, special arrangements
+
+    ```
+    Fully customizable:
+    - Payment amounts
+    - Payment dates
+    - Number of installments
+    ```
+  </Tab>
+</Tabs>
+
+## How It Works
+
+<Steps>
+  <Step title="User Selects CoverPay">
+    At checkout, user chooses CoverPay as their payment method.
+  </Step>
+  <Step title="Instant Pre-qualification">
+    Soft credit check determines eligibility in milliseconds. No credit impact.
+  </Step>
+  <Step title="Choose a Plan">
+    User selects Pay in 4, Monthly, or custom payment schedule.
+  </Step>
+  <Step title="Complete Purchase">
+    First payment collected, merchant paid in full immediately.
+  </Step>
+  <Step title="Automatic Payments">
+    Remaining payments collected automatically on schedule.
+  </Step>
+</Steps>
+
+## For Merchants
+
+<AccordionGroup>
+  <Accordion title="Increase Conversion" icon="chart-line">
+    Merchants see 20-30% higher conversion rates when offering CoverPay. Customers buy more when they can spread payments.
+  </Accordion>
+  <Accordion title="Get Paid Immediately" icon="bolt">
+    You get paid in full upfront. CoverPay assumes the payment risk, not you.
+  </Accordion>
+  <Accordion title="Lower Fees Than Cards" icon="percent">
+    CoverPay fees are competitive with credit card processing, often lower for high-ticket items.
+  </Accordion>
+  <Accordion title="Easy Integration" icon="plug">
+    Add CoverPay to your checkout in under an hour with our SDKs and pre-built components.
+  </Accordion>
+</AccordionGroup>
+
+## Quick Example
+
+```javascript
+import { CoverPay } from '@hedgepayments/coverpay';
+
+const coverpay = new CoverPay({
+  apiKey: process.env.COVERPAY_API_KEY,
+  merchantId: process.env.MERCHANT_ID
+});
+
+// Pre-qualify user (soft check, no credit impact)
+const qualification = await coverpay.prequalify({
+  userId: 'user-123',
+  amount: 250.00,
+  email: 'customer@example.com'
+});
+
+if (qualification.approved) {
+  // Show available plans
+  console.log('Available plans:', qualification.plans);
+  // [{ type: 'pay-in-4', payments: 4, perPayment: 62.50 },
+  //  { type: 'monthly-3', payments: 3, perPayment: 83.33 }]
+
+  // Create the payment
+  const payment = await coverpay.createPayment({
+    userId: 'user-123',
+    amount: 250.00,
+    plan: 'pay-in-4',
+    orderId: 'order-456'
+  });
+
+  console.log('First payment collected:', payment.firstPayment);
+  console.log('Next payment due:', payment.nextPaymentDate);
+}
+```
+
+## Use Cases
+
+| Industry | How CoverPay Helps |
+|----------|-------------------|
+| **E-commerce** | Increase AOV and conversion on your online store |
+| **Marketplaces** | Offer flexible payments to buyers |
+| **P2P Apps** | Let users pay friends back over time |
+| **Subscriptions** | Spread annual subscription costs monthly |
+| **Services** | Finance services, repairs, and professional work |
+| **Gaming** | Fund gaming wallets with manageable payments |
+
+## Compliance & Security
+
+<Info>
+  CoverPay is fully compliant with consumer lending regulations in all 50 US states.
+</Info>
+
+- **State Licensing:** Licensed in all operating states
+- **FCRA Compliant:** Fair Credit Reporting Act compliant soft pulls
+- **Regulation E:** Electronic fund transfer protections
+- **PCI DSS Level 1:** Bank-grade payment security
+- **SOC 2 Type II:** Audited security controls
+
+## Get Started
+
+<CardGroup cols={2}>
+  <Card
+    title="Quickstart Guide"
+    icon="bolt"
+    href="/products/coverpay/quickstart"
+  >
+    Add CoverPay to your checkout
+  </Card>
+  <Card
+    title="Pre-qualification API"
+    icon="user-check"
+    href="/api-reference/coverpay/prequalify"
+  >
+    Check user eligibility
+  </Card>
+</CardGroup>

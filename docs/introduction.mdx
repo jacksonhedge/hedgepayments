@@ -1,85 +1,251 @@
 ---
-title: 'Welcome to Hedge Pay Round-ups'
-description: 'Transform spare change into investment opportunities with our white-label financial services platform'
+title: 'Welcome to HedgePayments'
+description: 'Modern payment infrastructure powering three revolutionary payment products'
 ---
 
 <img
   className="block dark:hidden"
   src="/images/hero-light.svg"
-  alt="Hedge Pay Round-ups Hero Light"
+  alt="HedgePayments Hero Light"
 />
 <img
   className="hidden dark:block"
   src="/images/hero-dark.svg"
-  alt="Hedge Pay Round-ups Hero Dark"
+  alt="HedgePayments Hero Dark"
 />
 
-## What is Hedge Pay Round-ups?
+## The Future of Payments
 
-Hedge Pay Round-ups is a white-label platform that enables businesses to integrate spare change round-up functionality into their applications. We handle the complex financial infrastructure so you can focus on your core product.
+HedgePayments is the infrastructure layer powering the next generation of payment solutions. We've built three distinct products that solve real problems in the payment space.
 
-<CardGroup cols={2}>
+<CardGroup cols={3}>
   <Card
-    title="Quick Integration"
-    icon="bolt"
-    href="/quickstart"
+    title="SideBet"
+    icon="coins"
+    href="/products/sidebet"
   >
-    Get up and running in minutes with our SDKs
+    **Round-ups as a Service**
+
+    Transform spare change into meaningful contributions with automated round-up technology.
   </Card>
   <Card
-    title="API Reference"
-    icon="code"
-    href="/api-reference/introduction"
+    title="CoverPay"
+    icon="shield-check"
+    href="/products/coverpay"
   >
-    Explore our comprehensive REST API
+    **The Best BNPL**
+
+    Buy now, pay later reimagined. Flexible payments without the predatory practices.
   </Card>
   <Card
-    title="Interactive Playground"
-    icon="play"
-    href="/api-reference/introduction"
+    title="Bankroll"
+    icon="wallet"
+    href="/products/bankroll"
   >
-    Test API endpoints directly in your browser
-  </Card>
-  <Card
-    title="Security First"
-    icon="shield"
-    href="/guides/security/best-practices"
-  >
-    Bank-grade security and compliance
+    **As a Payment Method**
+
+    A complete digital wallet that works everywhere as a native payment option.
   </Card>
 </CardGroup>
 
-## Key Features
+---
 
-<AccordionGroup>
-  <Accordion title="Multiple Payment Providers" icon="credit-card">
-    Seamlessly switch between OAuth providers (Meld, Plaid, Finicity) and ACH providers (Dwolla, Stripe, Modern Treasury) without changing your code.
-  </Accordion>
-  <Accordion title="White-Label Ready" icon="palette">
-    Fully customizable UI components that match your brand. Use our pre-built React components or build your own with our SDK.
-  </Accordion>
-  <Accordion title="Real-Time Updates" icon="bolt">
-    WebSocket support for instant notifications on transfers, round-ups, and account changes.
-  </Accordion>
-  <Accordion title="Enterprise Security" icon="lock">
-    PCI compliant infrastructure with end-to-end encryption, audit logging, and comprehensive security measures.
-  </Accordion>
-</AccordionGroup>
+## Our Products
 
-## How It Works
+### SideBet — Round-ups as a Service
+
+<Info>
+  **Perfect for**: Fintech apps, investment platforms, savings apps, charitable giving platforms
+</Info>
+
+SideBet is a white-label round-up platform that enables businesses to integrate spare change functionality into their applications. Every transaction becomes an opportunity for users to save, invest, or donate.
+
+**Key Features:**
+- Automatic round-up calculation on every transaction
+- Configurable multipliers (1x, 2x, 3x, 5x)
+- Batch ACH transfers at customizable thresholds
+- White-label React components
+- Real-time webhooks
+
+<CodeGroup>
+
+```javascript JavaScript
+import { SideBet } from '@hedgepayments/sidebet';
+
+const sidebet = new SideBet({ apiKey: 'your-key' });
+
+// Enable round-ups for a user
+await sidebet.roundups.enable(userId, {
+  multiplier: 2,
+  threshold: 5.00,  // Transfer when $5 accumulated
+  destination: 'savings'
+});
+```
+
+```python Python
+from hedgepayments import SideBet
+
+sidebet = SideBet(api_key='your-key')
+
+# Enable round-ups for a user
+sidebet.roundups.enable(
+    user_id=user_id,
+    multiplier=2,
+    threshold=5.00,
+    destination='savings'
+)
+```
+
+</CodeGroup>
+
+---
+
+### CoverPay — The Best BNPL
+
+<Info>
+  **Perfect for**: E-commerce, marketplaces, P2P payment apps, subscription services
+</Info>
+
+CoverPay is buy now, pay later done right. No hidden fees, no predatory interest rates, no credit score damage. Just flexible payments that work for everyone.
+
+**What Makes CoverPay Different:**
+- **Transparent pricing** — No hidden fees, ever
+- **Soft credit checks** — Pre-qualification without impacting credit score
+- **Flexible repayment** — Pay in 4, monthly plans, or custom schedules
+- **Instant decisions** — Real-time approval in milliseconds
+- **Responsible lending** — Built-in affordability checks
+
+<CodeGroup>
+
+```javascript JavaScript
+import { CoverPay } from '@hedgepayments/coverpay';
+
+const coverpay = new CoverPay({ apiKey: 'your-key' });
+
+// Check if user qualifies
+const qualification = await coverpay.prequalify({
+  userId: 'user-123',
+  amount: 150.00
+});
+
+if (qualification.approved) {
+  // Create a CoverPay payment
+  const payment = await coverpay.createPayment({
+    userId: 'user-123',
+    amount: 150.00,
+    plan: 'pay-in-4',  // or 'monthly', 'custom'
+    merchantId: 'merchant-456'
+  });
+}
+```
+
+```python Python
+from hedgepayments import CoverPay
+
+coverpay = CoverPay(api_key='your-key')
+
+# Check if user qualifies
+qualification = coverpay.prequalify(
+    user_id='user-123',
+    amount=150.00
+)
+
+if qualification.approved:
+    # Create a CoverPay payment
+    payment = coverpay.create_payment(
+        user_id='user-123',
+        amount=150.00,
+        plan='pay-in-4',
+        merchant_id='merchant-456'
+    )
+```
+
+</CodeGroup>
+
+---
+
+### Bankroll — As a Payment Method
+
+<Info>
+  **Perfect for**: Apps wanting to offer Bankroll as a checkout option alongside cards and wallets
+</Info>
+
+Bankroll isn't just a wallet—it's a payment method. Integrate Bankroll as a first-class payment option in your checkout flow, giving users a seamless way to pay with their Bankroll balance.
+
+**Why Offer Bankroll:**
+- **Instant settlement** — No waiting for card networks
+- **Lower fees** — Significantly cheaper than card processing
+- **Built-in users** — Tap into the Bankroll user base
+- **Virtual cards** — Powered by Stripe Issuing
+- **P2P ready** — Send and receive between users
+
+<CodeGroup>
+
+```javascript JavaScript
+import { Bankroll } from '@hedgepayments/bankroll';
+
+const bankroll = new Bankroll({
+  apiKey: 'your-key',
+  merchantId: 'your-merchant-id'
+});
+
+// Check if user has Bankroll and sufficient balance
+const eligibility = await bankroll.checkPaymentEligibility({
+  userId: 'user-123',
+  amount: 25.00
+});
+
+if (eligibility.canPay) {
+  // Process payment with Bankroll
+  const payment = await bankroll.processPayment({
+    userId: 'user-123',
+    amount: 25.00,
+    description: 'Order #12345'
+  });
+}
+```
+
+```python Python
+from hedgepayments import Bankroll
+
+bankroll = Bankroll(
+    api_key='your-key',
+    merchant_id='your-merchant-id'
+)
+
+# Check eligibility
+eligibility = bankroll.check_payment_eligibility(
+    user_id='user-123',
+    amount=25.00
+)
+
+if eligibility.can_pay:
+    # Process payment
+    payment = bankroll.process_payment(
+        user_id='user-123',
+        amount=25.00,
+        description='Order #12345'
+    )
+```
+
+</CodeGroup>
+
+---
+
+## Getting Started
 
 <Steps>
-  <Step title="Connect Bank Account">
-    Users securely link their bank accounts through our OAuth providers
+  <Step title="Choose Your Product">
+    Decide which HedgePayments product fits your use case—or use multiple together
   </Step>
-  <Step title="Monitor Transactions">
-    We track transactions and calculate round-up amounts based on user preferences
+  <Step title="Get API Keys">
+    Sign up at [dashboard.hedgepayments.com](https://dashboard.hedgepayments.com) and get your credentials
   </Step>
-  <Step title="Process Round-ups">
-    Spare change is automatically transferred via ACH to the designated account
+  <Step title="Integrate">
+    Follow our quickstart guides to integrate in minutes
   </Step>
-  <Step title="Track & Report">
-    Real-time webhooks and comprehensive reporting for all activities
+  <Step title="Go Live">
+    Test in sandbox, then switch to production when ready
   </Step>
 </Steps>
 
@@ -87,97 +253,66 @@ Hedge Pay Round-ups is a white-label platform that enables businesses to integra
 
 ```mermaid
 graph TD
-    A[Your Application] -->|SDK| B[Hedge Pay API]
-    B --> C[OAuth Providers]
-    B --> D[ACH Providers]
-    C --> E[Meld/Plaid/Finicity]
-    D --> F[Dwolla/Stripe/Modern Treasury]
-    B --> G[PostgreSQL]
-    B --> H[Redis Cache]
-    B --> I[Webhook Events]
+    A[Your Application] -->|API| B[HedgePayments Platform]
+    B --> C[SideBet Engine]
+    B --> D[CoverPay BNPL]
+    B --> E[Bankroll Wallet]
+    C --> F[ACH Providers]
+    D --> G[Underwriting]
+    E --> H[Stripe Issuing]
+    B --> I[Webhooks]
     I --> A
 ```
 
-## Available SDKs
+## Why HedgePayments?
 
-<CodeGroup>
+<AccordionGroup>
+  <Accordion title="One Integration, Three Products" icon="plug">
+    Integrate once with HedgePayments and unlock access to SideBet, CoverPay, and Bankroll. Mix and match based on your needs.
+  </Accordion>
+  <Accordion title="Built for Developers" icon="code">
+    Clean APIs, comprehensive SDKs, detailed documentation, and a sandbox environment for testing. We speak your language.
+  </Accordion>
+  <Accordion title="Enterprise Security" icon="shield">
+    PCI DSS Level 1 compliant, SOC 2 Type II certified, end-to-end encryption, and bank-grade security infrastructure.
+  </Accordion>
+  <Accordion title="Real-Time Everything" icon="bolt">
+    WebSocket support for instant notifications. Know immediately when payments succeed, fail, or need attention.
+  </Accordion>
+</AccordionGroup>
 
-```javascript JavaScript
-npm install @hedge/sdk-core
-```
+## Quick Links
 
-```react React
-npm install @hedge/sdk-react
-```
-
-```python Python
-pip install hedge-roundups
-```
-
-```ruby Ruby
-gem install hedge-roundups
-```
-
-</CodeGroup>
-
-## Quick Example
-
-<CodeGroup>
-
-```javascript JavaScript
-import { HedgeSDK } from '@hedge/sdk-core';
-
-const sdk = new HedgeSDK({
-  apiKey: 'your-api-key',
-  partnerId: 'your-partner-id'
-});
-
-// Create a user
-const user = await sdk.users.create({
-  email: 'user@example.com',
-  firstName: 'John',
-  lastName: 'Doe'
-});
-
-// Enable round-ups
-await sdk.roundups.enable(user.id);
-```
-
-```react React
-import { HedgeProvider, RoundupSettings } from '@hedge/sdk-react';
-
-function App() {
-  return (
-    <HedgeProvider apiKey="your-api-key">
-      <RoundupSettings 
-        userId={userId}
-        theme="custom"
-      />
-    </HedgeProvider>
-  );
-}
-```
-
-```python Python
-from hedge_roundups import HedgeClient
-
-client = HedgeClient(
-    api_key='your-api-key',
-    partner_id='your-partner-id'
-)
-
-# Create a user
-user = client.users.create(
-    email='user@example.com',
-    first_name='John',
-    last_name='Doe'
-)
-
-# Enable round-ups
-client.roundups.enable(user.id)
-```
-
-</CodeGroup>
+<CardGroup cols={2}>
+  <Card
+    title="SideBet Quickstart"
+    icon="bolt"
+    href="/products/sidebet/quickstart"
+  >
+    Start with round-ups in 5 minutes
+  </Card>
+  <Card
+    title="CoverPay Integration"
+    icon="credit-card"
+    href="/products/coverpay/quickstart"
+  >
+    Add BNPL to your checkout
+  </Card>
+  <Card
+    title="Bankroll Setup"
+    icon="wallet"
+    href="/products/bankroll/quickstart"
+  >
+    Accept Bankroll payments
+  </Card>
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference"
+  >
+    Explore all endpoints
+  </Card>
+</CardGroup>
 
 ## Support
 
@@ -185,25 +320,15 @@ client.roundups.enable(user.id)
   <Card
     title="Discord Community"
     icon="discord"
-    href="https://discord.gg/hedgepay"
+    href="https://discord.gg/hedgepayments"
   >
-    Join our developer community for support
+    Join our developer community
   </Card>
   <Card
     title="Email Support"
     icon="envelope"
-    href="mailto:support@hedgepay.com"
+    href="mailto:support@hedgepayments.com"
   >
-    Get help from our support team
+    Get help from our team
   </Card>
 </CardGroup>
-
-## Ready to Get Started?
-
-<Card
-  title="Start Building"
-  icon="rocket"
-  href="/quickstart"
->
-  Follow our quickstart guide to integrate round-ups in minutes
-</Card>
