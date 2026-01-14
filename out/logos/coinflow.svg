@@ -1,11 +1,12 @@
-<svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="coinflow-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6366F1"/>
-      <stop offset="100%" style="stop-color:#8B5CF6"/>
+    <linearGradient id="cfGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00D4AA"/>
+      <stop offset="100%" style="stop-color:#00B4D8"/>
     </linearGradient>
   </defs>
-  <circle cx="20" cy="20" r="12" fill="url(#coinflow-grad)"/>
-  <path d="M16 20c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4" stroke="#fff" stroke-width="2" fill="none"/>
-  <text x="38" y="26" font-family="Arial, sans-serif" font-weight="bold" font-size="16" fill="#1F2937">Coinflow</text>
+  <circle cx="20" cy="20" r="18" fill="url(#cfGrad)"/>
+  <circle cx="20" cy="20" r="12" fill="none" stroke="#fff" stroke-width="2.5"/>
+  <path d="M20 10c5.5 0 10 4.5 10 10" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="20" cy="20" r="4" fill="#fff"/>
 </svg>

@@ -573,7 +573,7 @@ export default function DeckPage() {
                   <div className="flex items-center gap-3">
                     <Image src="/logos/CoverPayLogo.png" alt="CoverPay" width={28} height={28} className="w-7 h-7" />
                     <div className="flex-1">
-                      <p className="text-[10px] text-[#D4A853] tracking-widest uppercase mb-0.5" style={{ fontFamily: 'Georgia, serif' }}>The Innovation Layer</p>
+                      <p className="text-[10px] text-[#D4A853] tracking-widest uppercase mb-0.5" style={{ fontFamily: 'Georgia, serif' }}>New Payment Method</p>
                       <p className="text-xs sm:text-sm text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>
                         <span className="text-[#D4A853] font-semibold">CoverPay</span> — BNPL orchestration baked into both products.
                       </p>
