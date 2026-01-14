@@ -969,15 +969,17 @@ export default function DeckPage() {
               </div>
               <div className="bg-gradient-to-br from-[#2775CA] to-[#1E5A9E] p-5 sm:p-6 shadow-lg relative">
                 <span className="absolute top-2 right-2 text-[10px] text-white/60 bg-white/10 px-2 py-0.5 rounded">Phase 2*</span>
-                <h3 className="text-base sm:text-lg text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Stablecoin BNPL</h3>
-                <p className="text-2xl sm:text-3xl text-[#FAF8F5] mb-1" style={{ fontFamily: 'Georgia, serif' }}>100%</p>
-                <p className="text-white/70 text-xs" style={{ fontFamily: 'Georgia, serif' }}>of interest — no middleman cut</p>
+                <h3 className="text-base sm:text-lg text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Stablecoin Rails</h3>
+                <p className="text-xl sm:text-2xl text-[#FAF8F5] mb-1" style={{ fontFamily: 'Georgia, serif' }}>5-7%</p>
+                <p className="text-white/70 text-xs mb-2" style={{ fontFamily: 'Georgia, serif' }}>on BNPL transactions</p>
+                <p className="text-xl sm:text-2xl text-[#FAF8F5] mb-1" style={{ fontFamily: 'Georgia, serif' }}>2.5%</p>
+                <p className="text-white/70 text-xs" style={{ fontFamily: 'Georgia, serif' }}>on merchant payments</p>
               </div>
             </div>
             <div className="mt-4 sm:mt-6 p-4 bg-white/50 border border-[#D4C5B0] max-w-5xl">
-              <p className="text-xs text-[#6B5D4F] mb-2">*Phase 2 (6-12 months): Stablecoin-Native BNPL</p>
+              <p className="text-xs text-[#6B5D4F] mb-2">*Phase 2 (6-12 months): Stablecoin Settlement</p>
               <p className="text-sm text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
-                Users borrow USDC from <span className="text-[#D4A853] font-semibold">our liquidity pool</span> → Smart contract auto-charges repayments → No Affirm/Klarna taking 4-6% → <span className="text-[#D4A853] font-semibold">We keep 100% of fees</span>
+                Users borrow USDC from <span className="text-[#D4A853] font-semibold">our liquidity pool</span> → Smart contract auto-charges repayments → No Affirm/Klarna middleman → <span className="text-[#D4A853] font-semibold">10x lower costs, we keep the margin</span>
               </p>
             </div>
           </div>
