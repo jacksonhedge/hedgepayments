@@ -1,8 +1,69 @@
 'use client'
 
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import BookstoreNavbar from './BookstoreNavbar'
+
+// 3D Logo component that follows cursor
+function Logo3D() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [rotation, setRotation] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return
+
+      const rect = containerRef.current.getBoundingClientRect()
+      const centerX = rect.left + rect.width / 2
+      const centerY = rect.top + rect.height / 2
+
+      const deltaX = e.clientX - centerX
+      const deltaY = e.clientY - centerY
+
+      // Calculate rotation with sensitivity but clamped to max angle
+      const sensitivity = 2.5
+      const maxAngle = 25
+      let rotateY = (deltaX / window.innerWidth) * 45 * sensitivity
+      let rotateX = -(deltaY / window.innerHeight) * 45 * sensitivity
+
+      // Clamp rotation
+      rotateX = Math.max(-maxAngle, Math.min(maxAngle, rotateX))
+      rotateY = Math.max(-maxAngle, Math.min(maxAngle, rotateY))
+
+      setRotation({ x: rotateX, y: rotateY })
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  return (
+    <div
+      ref={containerRef}
+      className="mb-16 animate-fadeIn"
+      style={{ perspective: '1000px' }}
+    >
+      <div
+        style={{
+          transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+          transition: 'transform 0.1s ease-out',
+          transformStyle: 'preserve-3d',
+        }}
+      >
+        <Image
+          src="/images/hedge-inc-logo.png"
+          alt="Hedge Payments"
+          width={200}
+          height={200}
+          className="w-44 h-44 md:w-52 md:h-52 opacity-90"
+          style={{ filter: 'drop-shadow(0 20px 40px rgba(44, 36, 22, 0.25))' }}
+          priority
+        />
+      </div>
+    </div>
+  )
+}
 
 export default function NewLandingPage() {
 
@@ -13,17 +74,8 @@ export default function NewLandingPage() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-20 pb-32">
-        {/* Hedgehog Logo */}
-        <div className="mb-16 animate-fadeIn">
-          <Image
-            src="/images/hedge-inc-logo.png"
-            alt="Hedge Payments"
-            width={200}
-            height={200}
-            className="w-44 h-44 md:w-52 md:h-52 opacity-90"
-            priority
-          />
-        </div>
+        {/* Hedgehog Logo - 3D Interactive */}
+        <Logo3D />
 
         {/* Decorative line */}
         <div className="w-16 h-px bg-[#D4C5B0] mb-10 animate-fadeIn animation-delay-100"></div>
