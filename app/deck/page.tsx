@@ -405,8 +405,29 @@ function EmailGate({ onAccess }: { onAccess: (email: string) => void }) {
 export default function DeckPage() {
   const [hasAccess, setHasAccess] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [imagesLoaded, setImagesLoaded] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [direction, setDirection] = useState(0)
+
+  // Critical images to preload before showing the deck
+  const criticalImages = [
+    '/images/HedgeLogo3D.png',
+    '/images/bankroll-dashboard.png',
+    '/images/bankroll-pay-screen.png',
+    '/images/coverpay-modal.png',
+    '/logos/stripe-new.png',
+    '/logos/coinflow-new.jpg',
+    '/logos/usdc-new.png',
+    '/logos/rain-new.jpeg',
+    '/logos/edge-boost.png',
+    '/logos/metamask.webp',
+    '/logos/coinbase-new.webp',
+    '/logos/amazon.png',
+    '/logos/etsy.png',
+    '/logos/draftkings.png',
+    '/logos/coinbase.png',
+    '/logos/apple.png',
+  ]
 
   // Check if user already has access
   useEffect(() => {
@@ -416,6 +437,38 @@ export default function DeckPage() {
     }
     setIsLoading(false)
   }, [])
+
+  // Preload critical images
+  useEffect(() => {
+    if (!hasAccess) return // Don't preload until user has access
+
+    let loadedCount = 0
+    const totalImages = criticalImages.length
+
+    const preloadImage = (src: string) => {
+      return new Promise<void>((resolve) => {
+        const img = new window.Image()
+        img.onload = () => {
+          loadedCount++
+          if (loadedCount >= totalImages) {
+            setImagesLoaded(true)
+          }
+          resolve()
+        }
+        img.onerror = () => {
+          loadedCount++
+          if (loadedCount >= totalImages) {
+            setImagesLoaded(true)
+          }
+          resolve()
+        }
+        img.src = src
+      })
+    }
+
+    // Preload all images in parallel
+    Promise.all(criticalImages.map(preloadImage))
+  }, [hasAccess])
 
   const nextSlide = useCallback(() => {
     if (currentSlide < slides.length - 1) {
@@ -1319,7 +1372,11 @@ export default function DeckPage() {
                 <p className="text-xs text-[#D4C5B0]">Global Expansion</p>
               </div>
             </div>
-            <div className="flex flex-wrap justify-center gap-6 sm:gap-10 mt-8 sm:mt-10 text-[#D4C5B0]">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mt-8 sm:mt-10 text-[#D4C5B0]">
+              <div className="text-center">
+                <p className="text-xs uppercase tracking-wider mb-1">Zelle 2024</p>
+                <p className="text-lg sm:text-xl text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>$1.1T</p>
+              </div>
               <div className="text-center">
                 <p className="text-xs uppercase tracking-wider mb-1">Venmo 2024</p>
                 <p className="text-lg sm:text-xl text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>$400B</p>
@@ -1590,6 +1647,16 @@ export default function DeckPage() {
   // Show email gate if no access
   if (!hasAccess) {
     return <EmailGate onAccess={() => setHasAccess(true)} />
+  }
+
+  // Show loading screen while images preload
+  if (!imagesLoaded) {
+    return (
+      <div className="min-h-screen bg-[#FAF8F5] flex flex-col items-center justify-center">
+        <div className="w-12 h-12 border-3 border-[#D4C5B0] border-t-[#2C2416] rounded-full animate-spin mb-4"></div>
+        <p className="text-sm text-[#8B7E6E]" style={{ fontFamily: 'Georgia, serif' }}>Loading presentation...</p>
+      </div>
+    )
   }
 
   return (
