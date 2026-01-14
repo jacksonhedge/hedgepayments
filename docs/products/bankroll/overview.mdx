@@ -1,0 +1,205 @@
+---
+title: 'Bankroll'
+description: 'As a Payment Method — Accept Bankroll anywhere'
+icon: 'wallet'
+---
+
+# Bankroll — As a Payment Method
+
+Bankroll isn't just a wallet—it's a payment method. Integrate Bankroll as a first-class checkout option and tap into a growing network of users who prefer paying with their Bankroll balance.
+
+<img
+  src="/images/bankroll-hero.svg"
+  alt="Bankroll Payment Method"
+/>
+
+## Why Accept Bankroll?
+
+<CardGroup cols={2}>
+  <Card title="Instant Settlement" icon="bolt">
+    No waiting for card networks. Funds settle immediately to your account.
+  </Card>
+  <Card title="Lower Fees" icon="percent">
+    Significantly cheaper than credit card processing. Keep more of every sale.
+  </Card>
+  <Card title="Built-in Users" icon="users">
+    Tap into the Bankroll user base. Users with balance are ready to spend.
+  </Card>
+  <Card title="Zero Chargebacks" icon="shield">
+    Balance-based payments mean no chargebacks, ever.
+  </Card>
+</CardGroup>
+
+## How It Works
+
+<Steps>
+  <Step title="User Selects Bankroll">
+    At checkout, user chooses "Pay with Bankroll" alongside card and other options.
+  </Step>
+  <Step title="Authenticate">
+    User authenticates via Bankroll app or biometrics. One-tap approval.
+  </Step>
+  <Step title="Balance Check">
+    We verify sufficient balance in real-time. If short, user can top up instantly.
+  </Step>
+  <Step title="Instant Transfer">
+    Funds move from user's Bankroll to your merchant account immediately.
+  </Step>
+</Steps>
+
+## Payment Options
+
+Bankroll supports multiple funding sources for maximum flexibility:
+
+<Tabs>
+  <Tab title="Bankroll Balance">
+    Users pay directly from their Bankroll cash balance. Instant, no fees for users.
+
+    **Best for:** Quick purchases, P2P payments, gaming
+  </Tab>
+  <Tab title="Virtual Card">
+    Bankroll issues virtual Visa cards powered by Stripe Issuing. Works anywhere Visa is accepted.
+
+    **Best for:** Online shopping, subscriptions, anywhere cards are needed
+  </Tab>
+  <Tab title="Linked Bank">
+    Users can fund Bankroll balance from linked bank accounts via ACH.
+
+    **Best for:** Larger purchases, account top-ups
+  </Tab>
+  <Tab title="CoverPay">
+    When balance is insufficient, users can use CoverPay BNPL to complete the purchase.
+
+    **Best for:** Larger purchases users want to split
+  </Tab>
+</Tabs>
+
+## Integration Example
+
+```javascript
+import { Bankroll } from '@hedgepayments/bankroll';
+
+const bankroll = new Bankroll({
+  apiKey: process.env.BANKROLL_API_KEY,
+  merchantId: process.env.MERCHANT_ID
+});
+
+// Check if user can pay with Bankroll
+const eligibility = await bankroll.checkPaymentEligibility({
+  userId: 'user-123',
+  amount: 49.99
+});
+
+console.log('Can pay:', eligibility.canPay);
+console.log('Balance:', eligibility.balance);
+console.log('Shortfall:', eligibility.shortfall);
+
+if (eligibility.canPay) {
+  // Process the payment
+  const payment = await bankroll.processPayment({
+    userId: 'user-123',
+    amount: 49.99,
+    orderId: 'order-789',
+    description: 'Premium Subscription'
+  });
+
+  console.log('Payment ID:', payment.id);
+  console.log('Status:', payment.status); // 'completed'
+  console.log('New Balance:', payment.balanceAfter);
+
+} else if (eligibility.canUseCoverPay) {
+  // Offer CoverPay for the shortfall
+  console.log('Offer CoverPay for:', eligibility.shortfall);
+}
+```
+
+## Virtual Cards
+
+Every Bankroll user can get a virtual Visa debit card, powered by Stripe Issuing:
+
+<CardGroup cols={3}>
+  <Card title="Instant Issuance" icon="bolt">
+    Cards issued in seconds, ready to use immediately
+  </Card>
+  <Card title="Spending Controls" icon="lock">
+    Users can lock/unlock, set limits, and control their card
+  </Card>
+  <Card title="Real-time Alerts" icon="bell">
+    Push notifications for every transaction
+  </Card>
+</CardGroup>
+
+```javascript
+// Create a virtual card for a user
+const card = await bankroll.createVirtualCard({
+  userId: 'user-123',
+  nickname: 'Shopping Card',
+  spendingLimit: {
+    amount: 500,
+    interval: 'monthly'
+  }
+});
+
+console.log('Card Number:', card.number);
+console.log('Expiry:', card.expMonth + '/' + card.expYear);
+console.log('CVV:', card.cvc);
+```
+
+## P2P Payments
+
+Bankroll users can send money to each other instantly:
+
+```javascript
+// Send money to another Bankroll user
+const transfer = await bankroll.sendP2P({
+  fromUserId: 'user-123',
+  toUserId: 'user-456',
+  amount: 25.00,
+  note: 'Lunch yesterday'
+});
+
+console.log('Transfer ID:', transfer.id);
+console.log('Status:', transfer.status); // 'completed'
+```
+
+## Merchant Benefits
+
+| Benefit | Details |
+|---------|---------|
+| **Lower Fees** | 1.5% vs 2.9% + $0.30 for cards |
+| **Instant Settlement** | Funds available immediately |
+| **No Chargebacks** | Balance-based = no disputes |
+| **User Loyalty** | Bankroll users are repeat customers |
+| **Cross-sell SideBet** | Users can enable round-ups on purchases |
+| **Offer CoverPay** | Upsell with BNPL when balance is low |
+
+## Pricing
+
+<Info>
+  Bankroll payment processing is significantly cheaper than card networks.
+</Info>
+
+| Payment Type | Fee |
+|--------------|-----|
+| Bankroll Balance | 1.5% |
+| Virtual Card (Bankroll-issued) | 1.5% |
+| CoverPay (BNPL) | 3.5% + $0.30 |
+
+## Get Started
+
+<CardGroup cols={2}>
+  <Card
+    title="Checkout Integration"
+    icon="shopping-cart"
+    href="/products/bankroll/checkout-integration"
+  >
+    Add Bankroll to your checkout
+  </Card>
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference/bankroll/check-eligibility"
+  >
+    Explore Bankroll endpoints
+  </Card>
+</CardGroup>

@@ -1,0 +1,128 @@
+---
+title: 'SideBet'
+description: 'Round-ups as a Service — Transform spare change into meaningful contributions'
+icon: 'coins'
+---
+
+# SideBet — Round-ups as a Service
+
+SideBet is the industry-leading white-label round-up platform. Every transaction becomes an opportunity for your users to save, invest, or donate—automatically.
+
+<img
+  src="/images/sidebet-hero.svg"
+  alt="SideBet Round-ups"
+/>
+
+## Why SideBet?
+
+<CardGroup cols={2}>
+  <Card title="Automatic Savings" icon="piggy-bank">
+    Round-ups happen automatically on every transaction. Users save without thinking about it.
+  </Card>
+  <Card title="Customizable Rules" icon="sliders">
+    Multipliers (1x-5x), thresholds, caps, and destination accounts—all configurable per user.
+  </Card>
+  <Card title="White-Label Ready" icon="palette">
+    Pre-built React components with full theming support, or build your own with our SDK.
+  </Card>
+  <Card title="Bank-Grade Security" icon="shield">
+    PCI compliant, SOC 2 certified, with end-to-end encryption on all transactions.
+  </Card>
+</CardGroup>
+
+## How It Works
+
+<Steps>
+  <Step title="Connect Bank Account">
+    Users link their spending accounts via Plaid, Finicity, or your existing connection.
+  </Step>
+  <Step title="Monitor Transactions">
+    SideBet watches for new transactions and calculates round-ups in real-time.
+  </Step>
+  <Step title="Accumulate Round-ups">
+    Spare change accumulates until it hits the user's configured threshold (default $5).
+  </Step>
+  <Step title="Automatic Transfer">
+    Once threshold is met, funds transfer automatically via ACH to the destination.
+  </Step>
+</Steps>
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Investment Apps" icon="chart-line">
+    Help users invest their spare change into stocks, ETFs, or crypto. Every coffee purchase becomes a micro-investment.
+  </Accordion>
+  <Accordion title="Savings Apps" icon="vault">
+    Boost savings rates by automatically rounding up to a high-yield savings account or emergency fund.
+  </Accordion>
+  <Accordion title="Charitable Giving" icon="heart">
+    Enable automatic micro-donations to causes users care about. Turn everyday spending into impact.
+  </Accordion>
+  <Accordion title="Gaming & Fantasy Sports" icon="gamepad">
+    Fund gaming wallets automatically. Users always have balance ready for their next bet or fantasy entry.
+  </Accordion>
+</AccordionGroup>
+
+## Quick Example
+
+```javascript
+import { SideBet } from '@hedgepayments/sidebet';
+
+const sidebet = new SideBet({
+  apiKey: process.env.SIDEBET_API_KEY
+});
+
+// Enable round-ups for a user
+const settings = await sidebet.roundups.enable('user-123', {
+  multiplier: 2,           // 2x round-ups
+  threshold: 5.00,         // Transfer at $5
+  maxPerTransaction: 2.00, // Cap at $2 per transaction
+  destinationAccountId: 'savings-account-id'
+});
+
+console.log(`Round-ups enabled! User will save ~$${settings.estimatedMonthly}/month`);
+```
+
+## Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Real-time Calculation** | Round-ups calculated instantly as transactions post |
+| **Configurable Multipliers** | 1x, 2x, 3x, or 5x round-up amounts |
+| **Threshold Batching** | Batch transfers at $5, $10, $25, or custom amounts |
+| **Per-Transaction Caps** | Limit max round-up per transaction |
+| **Merchant Exclusions** | Exclude specific merchants or categories |
+| **Pause/Resume** | Users can pause round-ups anytime |
+
+## Pricing
+
+<Info>
+  SideBet pricing is based on monthly active users (MAU) with round-ups enabled. Contact sales for custom enterprise pricing.
+</Info>
+
+| Tier | MAU | Price |
+|------|-----|-------|
+| Starter | Up to 1,000 | $0.10/user/month |
+| Growth | 1,001 - 10,000 | $0.08/user/month |
+| Scale | 10,001 - 100,000 | $0.05/user/month |
+| Enterprise | 100,000+ | Custom |
+
+## Get Started
+
+<CardGroup cols={2}>
+  <Card
+    title="Quickstart Guide"
+    icon="bolt"
+    href="/products/sidebet/quickstart"
+  >
+    Integrate SideBet in 10 minutes
+  </Card>
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference/sidebet/enable-roundups"
+  >
+    Explore SideBet endpoints
+  </Card>
+</CardGroup>

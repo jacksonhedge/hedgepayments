@@ -4,10 +4,12 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import BookstoreNavbar from '../components/BookstoreNavbar'
 
 export default function BusinessLogin() {
   const router = useRouter()
+  const supabase = createClientComponentClient()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -15,6 +17,7 @@ export default function BusinessLogin() {
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isLoading, setIsLoading] = useState(false)
+  const [loginError, setLoginError] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target
@@ -29,6 +32,7 @@ export default function BusinessLogin() {
         [name]: ''
       })
     }
+    setLoginError(null)
   }
 
   const validateForm = () => {
@@ -48,13 +52,25 @@ export default function BusinessLogin() {
     if (!validateForm()) return
 
     setIsLoading(true)
+    setLoginError(null)
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password
+      })
+
+      if (error) {
+        setLoginError(error.message)
+        setIsLoading(false)
+        return
+      }
+
+      router.push('/dashboard')
+    } catch (error: any) {
+      setLoginError(error.message || 'An error occurred')
       setIsLoading(false)
-      alert('Login successful! Redirecting to dashboard...')
-      router.push('/business-dashboard')
-    }, 2000)
+    }
   }
 
   return (
@@ -76,6 +92,12 @@ export default function BusinessLogin() {
               Log in to your Hedge Payments dashboard
             </p>
           </div>
+
+          {loginError && (
+            <div className="mb-4 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm">
+              {loginError}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -141,7 +163,7 @@ export default function BusinessLogin() {
           <div className="mt-8 pt-6 border-t border-gray-700">
             <p className="text-center text-gray-300">
               Don't have an account yet?{' '}
-              <Link href="/business-signup" className="text-purple-400 hover:text-purple-300 font-medium">
+              <Link href="/get-started" className="text-purple-400 hover:text-purple-300 font-medium">
                 Sign up for free
               </Link>
             </p>

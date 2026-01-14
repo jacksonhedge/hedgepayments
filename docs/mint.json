@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "HedgePayments API",
+  "name": "HedgePayments",
   "logo": {
     "dark": "/logo/dark.png",
     "light": "/logo/light.png"
@@ -27,6 +27,10 @@
   },
   "tabs": [
     {
+      "name": "Products",
+      "url": "products"
+    },
+    {
       "name": "API Reference",
       "url": "api-reference"
     },
@@ -37,9 +41,19 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://docs.hedgepayments.com"
+      "name": "SideBet",
+      "icon": "coins",
+      "url": "products/sidebet"
+    },
+    {
+      "name": "CoverPay",
+      "icon": "shield-check",
+      "url": "products/coverpay"
+    },
+    {
+      "name": "Bankroll",
+      "icon": "wallet",
+      "url": "products/bankroll"
     }
   ],
   "navigation": [
@@ -52,13 +66,72 @@
       ]
     },
     {
-      "group": "Core Concepts",
+      "group": "SideBet",
       "pages": [
-        "concepts/coinflow-integration"
+        "products/sidebet/overview",
+        "products/sidebet/quickstart",
+        "products/sidebet/concepts",
+        "products/sidebet/webhooks"
+      ]
+    },
+    {
+      "group": "CoverPay",
+      "pages": [
+        "products/coverpay/overview",
+        "products/coverpay/quickstart",
+        "products/coverpay/prequalification",
+        "products/coverpay/payment-plans",
+        "products/coverpay/webhooks"
+      ]
+    },
+    {
+      "group": "Bankroll",
+      "pages": [
+        "products/bankroll/overview",
+        "products/bankroll/quickstart",
+        "products/bankroll/checkout-integration",
+        "products/bankroll/virtual-cards",
+        "products/bankroll/p2p-payments"
       ]
     },
     {
       "group": "API Reference",
+      "pages": [
+        "api-reference/overview"
+      ]
+    },
+    {
+      "group": "SideBet API",
+      "pages": [
+        "api-reference/sidebet/enable-roundups",
+        "api-reference/sidebet/get-settings",
+        "api-reference/sidebet/update-settings",
+        "api-reference/sidebet/get-pending",
+        "api-reference/sidebet/trigger-transfer"
+      ]
+    },
+    {
+      "group": "CoverPay API",
+      "pages": [
+        "api-reference/coverpay/prequalify",
+        "api-reference/coverpay/create-payment",
+        "api-reference/coverpay/get-payment",
+        "api-reference/coverpay/list-payments",
+        "api-reference/coverpay/cancel-payment"
+      ]
+    },
+    {
+      "group": "Bankroll API",
+      "pages": [
+        "api-reference/bankroll/check-eligibility",
+        "api-reference/bankroll/process-payment",
+        "api-reference/bankroll/get-balance",
+        "api-reference/bankroll/create-virtual-card",
+        "api-reference/bankroll/send-p2p"
+      ]
+    },
+    {
+      "group": "Wallets & Users",
       "pages": [
         "api-reference/wallets/create",
         "api-reference/transactions/create"
@@ -68,10 +141,7 @@
       "group": "Integration Guides",
       "pages": [
         "guides/coinflow-setup",
-        "guides/providers/coinflow",
-        "guides/providers/bankroll",
-        "guides/providers/venmo",
-        "guides/providers/apple-pay"
+        "guides/providers/coinflow"
       ]
     }
   ],
@@ -101,8 +171,8 @@
     "prompt": "Search documentation..."
   },
   "metadata": {
-    "og:title": "HedgePayments API Documentation",
-    "og:description": "Payment infrastructure for AI agents, crypto companies, and the autonomous economy. Built on top of CoinFlow.",
+    "og:title": "HedgePayments - SideBet, CoverPay, Bankroll",
+    "og:description": "Modern payment infrastructure powering SideBet (round-ups), CoverPay (BNPL), and Bankroll (payment method).",
     "og:image": "https://docs.hedgepayments.com/images/og-image.png",
     "twitter:card": "summary_large_image"
   },
