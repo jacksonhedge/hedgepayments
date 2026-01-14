@@ -877,7 +877,7 @@ export default function DeckPage() {
               <span className="text-[10px] px-2 py-1 bg-[#F5B041]/20 text-[#F5B041] rounded-full border border-[#F5B041]/40">On-Chain · USDC</span>
             </div>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#FAF8F5] mb-4 sm:mb-6 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              One app, <span className="text-[#F5B041]">infinite rails</span>
+              One App, <span className="text-[#F5B041]">Optimal On-Chain Solutions</span>
             </h2>
             <p className="text-base sm:text-lg text-[#B8C5D6] mb-6 sm:mb-8 max-w-xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               Bankroll orchestrates the best payment path automatically
