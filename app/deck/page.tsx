@@ -1390,9 +1390,17 @@ export default function DeckPage() {
                     <span className="text-2xl sm:text-3xl text-[#D4A853]" style={{ fontFamily: 'Georgia, serif' }}>18-22</span>
                     <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>age range — peak BNPL adoption demographic</p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl sm:text-3xl text-[#D4A853]" style={{ fontFamily: 'Georgia, serif' }}>$1K+</span>
-                    <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>average dues per semester — real payment volume</p>
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl sm:text-3xl text-[#D4A853]" style={{ fontFamily: 'Georgia, serif' }}>20%</span>
+                      <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>of budget goes to P2P payments</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2 ml-1">
+                      <span className="text-xs text-[#D4C5B0] bg-[#FAF8F5]/10 px-2 py-1 rounded">Rent</span>
+                      <span className="text-xs text-[#D4C5B0] bg-[#FAF8F5]/10 px-2 py-1 rounded">Fantasy Leagues</span>
+                      <span className="text-xs text-[#D4C5B0] bg-[#FAF8F5]/10 px-2 py-1 rounded">Weekend Spend</span>
+                      <span className="text-xs text-[#D4C5B0] bg-[#FAF8F5]/10 px-2 py-1 rounded">Group Trips</span>
+                    </div>
                   </div>
                 </div>
                 <a
@@ -1407,7 +1415,7 @@ export default function DeckPage() {
               </div>
               <div className="space-y-4 sm:space-y-6">
                 <div className="p-4 sm:p-6 bg-white shadow-lg border border-[#D4C5B0]">
-                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Captive Audience</h3>
+                  <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Ideal User Audience</h3>
                   <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Every chapter member needs to pay dues. FraternityBase manages that workflow — Bankroll powers the payments.</p>
                 </div>
                 <div className="p-4 sm:p-6 bg-white shadow-lg border border-[#D4C5B0]">
@@ -1417,12 +1425,6 @@ export default function DeckPage() {
                 <div className="p-4 sm:p-6 bg-white shadow-lg border border-[#D4C5B0]">
                   <h3 className="text-lg sm:text-xl text-[#2C2416] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Lifetime Value</h3>
                   <p className="text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Users acquired in college stay post-graduation. Early adoption = long-term retention.</p>
-                </div>
-                <div className="p-4 sm:p-6 bg-gradient-to-r from-[#2C2416] to-[#3D3225] shadow-lg">
-                  <p className="text-sm text-[#D4A853] mb-2">The Flywheel</p>
-                  <p className="text-base sm:text-lg text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>
-                    FraternityBase → Bankroll users → CoverPay merchants → more users
-                  </p>
                 </div>
               </div>
             </div>
