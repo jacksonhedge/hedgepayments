@@ -1291,44 +1291,36 @@ export default function DeckPage() {
 
       case 'vision':
         return (
-          <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto bg-gradient-to-bl from-[#FAF8F5] via-[#F0EBE0] to-[#E8E0D0]">
+          <div className="flex flex-col justify-center items-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto bg-gradient-to-br from-[#2C2416] via-[#3D3225] to-[#1A1610] text-center">
             <p className="text-xs sm:text-sm text-[#D4A853] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-              The Vision
+              The North Star
             </p>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              The Stripe for BNPL
+            <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#D4A853] mb-4 sm:mb-6 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+              $1 Trillion
             </h2>
-            <p className="text-sm sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-              One API to rule all BNPL providers — merchants integrate once, we optimize forever
+            <p className="text-xl sm:text-2xl md:text-3xl text-[#FAF8F5] mb-8 sm:mb-12" style={{ fontFamily: 'Georgia, serif' }}>
+              in processed payments per year
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl">
-              <div className="p-4 sm:p-6 bg-gradient-to-br from-[#2C2416] to-[#3D3225] text-[#FAF8F5] shadow-xl">
-                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#D4A853]">Now</p>
-                <h3 className="text-base sm:text-xl mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>E-Commerce</h3>
-                <p className="text-xs sm:text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>DTC brands, high-AOV merchants losing sales to BNPL declines</p>
-                <p className="text-xl sm:text-2xl text-[#D4A853] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$25B</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-4xl w-full">
+              <div className="p-4 bg-white/5 border border-[#D4A853]/30 rounded">
+                <p className="text-lg sm:text-2xl text-[#D4A853]" style={{ fontFamily: 'Georgia, serif' }}>$25B</p>
+                <p className="text-xs text-[#D4C5B0]">E-Commerce</p>
               </div>
-              <div className="p-4 sm:p-6 bg-white shadow-lg border border-[#D4C5B0]">
-                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#D4A853]">Next</p>
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Travel & Services</h3>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Flights, hotels, healthcare — high-ticket services need flexibility</p>
-                <p className="text-xl sm:text-2xl text-[#D4A853] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$50B+</p>
+              <div className="p-4 bg-white/5 border border-[#D4A853]/30 rounded">
+                <p className="text-lg sm:text-2xl text-[#D4A853]" style={{ fontFamily: 'Georgia, serif' }}>$100B</p>
+                <p className="text-xs text-[#D4C5B0]">Travel & Services</p>
               </div>
-              <div className="p-4 sm:p-6 bg-white shadow-lg border border-[#D4C5B0]">
-                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#D4A853]">Expand</p>
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>B2B Payments</h3>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Net-30/60/90 terms orchestrated across lending providers</p>
-                <p className="text-xl sm:text-2xl text-[#D4A853] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$200B+</p>
+              <div className="p-4 bg-white/5 border border-[#D4A853]/30 rounded">
+                <p className="text-lg sm:text-2xl text-[#D4A853]" style={{ fontFamily: 'Georgia, serif' }}>$300B</p>
+                <p className="text-xs text-[#D4C5B0]">B2B Payments</p>
               </div>
-              <div className="p-4 sm:p-6 bg-white shadow-lg border border-[#D4C5B0]">
-                <p className="text-xs tracking-widest uppercase mb-2 sm:mb-4 text-[#D4A853]">Future</p>
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Global BNPL</h3>
-                <p className="text-xs sm:text-sm text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Unified checkout across all markets, all providers, all currencies</p>
-                <p className="text-xl sm:text-2xl text-[#D4A853] mt-2 sm:mt-4" style={{ fontFamily: 'Georgia, serif' }}>$500B+</p>
+              <div className="p-4 bg-white/5 border border-[#D4A853]/30 rounded">
+                <p className="text-lg sm:text-2xl text-[#D4A853]" style={{ fontFamily: 'Georgia, serif' }}>$575B</p>
+                <p className="text-xs text-[#D4C5B0]">Global Expansion</p>
               </div>
             </div>
-            <p className="text-sm sm:text-base text-[#6B5D4F] mt-4 sm:mt-8 max-w-2xl" style={{ fontFamily: 'Georgia, serif' }}>
-              Klarna, Affirm, Afterpay compete. <span className="text-[#D4A853] font-semibold">We orchestrate.</span>
+            <p className="text-sm sm:text-lg text-[#D4C5B0] mt-8 sm:mt-12 max-w-xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+              Every BNPL checkout. Every P2P payment. Every stablecoin transaction. <span className="text-[#D4A853]">One infrastructure.</span>
             </p>
           </div>
         )
