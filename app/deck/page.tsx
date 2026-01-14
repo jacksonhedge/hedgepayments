@@ -588,72 +588,68 @@ export default function DeckPage() {
       case 'solution':
         return (
           <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto bg-gradient-to-tr from-[#FAF8F5] via-[#F5F0E8] to-[#EDE5D8]">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center max-w-6xl">
-              {/* Left side - Content */}
-              <div className="lg:col-span-2">
-                <p className="text-xs sm:text-sm text-[#D4A853] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                  The Solution
-                </p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#2C2416] mb-2 sm:mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-                  Hedge Payments: <span className="text-[#D4A853]">Easy Money</span>
-                </h2>
-                <p className="text-base sm:text-lg text-[#6B5D4F] mb-6 sm:mb-8 max-w-xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                  The goal: You forget you're even paying
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-6">
-                  <div className="p-4 sm:p-6 bg-gradient-to-br from-[#2C2416] to-[#3D3225] shadow-xl">
-                    <div className="flex items-center justify-between mb-2">
-                      <p className="text-[10px] sm:text-xs text-[#D4A853] tracking-widest uppercase" style={{ fontFamily: 'Georgia, serif' }}>For Businesses</p>
-                      <span className="text-[8px] sm:text-[10px] px-2 py-0.5 bg-[#D4A853]/20 text-[#D4A853] rounded-full border border-[#D4A853]/40">On-Chain</span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Image src="/images/HedgeLogo3D.png" alt="Hedge Pay" width={32} height={32} className="w-8 h-8" />
-                      <h3 className="text-lg sm:text-xl text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>Hedge Pay PSP</h3>
-                    </div>
-                    <p className="text-xs sm:text-sm text-[#D4C5B0] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Stablecoin-settled payments. Instant settlement, intelligent routing.</p>
-                    <div className="pt-2 border-t border-[#4A3D2F] flex items-center justify-between">
-                      <p className="text-[10px] text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>USDC · Multi-chain</p>
-                      <div className="flex items-center gap-1">
-                        <Image src="/logos/CoverPayLogo.png" alt="CoverPay" width={12} height={12} className="w-3 h-3" />
-                        <span className="text-[8px] text-[#D4A853]">CoverPay inside</span>
-                      </div>
-                    </div>
+            <div className="max-w-5xl mx-auto w-full">
+              <p className="text-xs sm:text-sm text-[#D4A853] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                The Solution
+              </p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#2C2416] mb-2 sm:mb-4 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+                Hedge Payments: <span className="text-[#D4A853]">Easy Money</span>
+              </h2>
+              <p className="text-base sm:text-lg text-[#6B5D4F] mb-8 sm:mb-10 max-w-xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+                The goal: You forget you're even paying
+              </p>
+
+              {/* Two Main Products */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 mb-6">
+                {/* CoverPay */}
+                <div className="p-5 sm:p-6 bg-gradient-to-br from-[#2C2416] to-[#3D3225] shadow-xl">
+                  <p className="text-[10px] sm:text-xs text-[#D4A853] tracking-widest uppercase mb-3" style={{ fontFamily: 'Georgia, serif' }}>For Businesses</p>
+                  <div className="flex items-center gap-3 mb-3">
+                    <Image src="/logos/CoverPayLogo.png" alt="CoverPay" width={40} height={40} className="w-10 h-10" />
+                    <h3 className="text-xl sm:text-2xl text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>CoverPay</h3>
                   </div>
-                  <div className="p-4 sm:p-6 bg-white shadow-xl border border-[#D4C5B0]">
-                    <div className="flex items-center justify-between mb-2">
-                      <p className="text-[10px] sm:text-xs text-[#D4A853] tracking-widest uppercase" style={{ fontFamily: 'Georgia, serif' }}>For Users</p>
-                      <span className="text-[8px] sm:text-[10px] px-2 py-0.5 bg-[#2C2416]/10 text-[#2C2416] rounded-full border border-[#2C2416]/30">On-Chain</span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Image src="/images/bankroll-icon-new.png" alt="Bankroll" width={32} height={32} className="w-8 h-8 rounded-lg" />
-                      <h3 className="text-lg sm:text-xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Bankroll</h3>
-                    </div>
-                    <p className="text-xs sm:text-sm text-[#6B5D4F] mb-3" style={{ fontFamily: 'Georgia, serif' }}>Seamless, invisible, stress-free. Spending without the anxiety.</p>
-                    <div className="pt-2 border-t border-[#D4C5B0] flex items-center justify-between">
-                      <p className="text-[10px] text-[#6B5D4F]" style={{ fontFamily: 'Georgia, serif' }}>Stablecoin wallet · P2P</p>
-                      <div className="flex items-center gap-1">
-                        <Image src="/logos/CoverPayLogo.png" alt="CoverPay" width={12} height={12} className="w-3 h-3" />
-                        <span className="text-[8px] text-[#D4A853]">CoverPay inside</span>
-                      </div>
-                    </div>
+                  <p className="text-sm sm:text-base text-[#D4C5B0] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                    BNPL orchestration that makes checkout invisible. One integration, every BNPL provider.
+                  </p>
+                  <div className="pt-3 border-t border-[#4A3D2F]">
+                    <p className="text-xs text-[#D4A853]" style={{ fontFamily: 'Georgia, serif' }}>We find the BNPL that says yes.</p>
                   </div>
                 </div>
-                {/* CoverPay Innovation Layer */}
-                <div className="p-3 sm:p-4 bg-gradient-to-r from-[#2C2416] to-[#3D3225] shadow-lg">
-                  <div className="flex items-center gap-3">
-                    <Image src="/logos/CoverPayLogo.png" alt="CoverPay" width={28} height={28} className="w-7 h-7" />
-                    <div className="flex-1">
-                      <p className="text-[10px] text-[#D4A853] tracking-widest uppercase mb-0.5" style={{ fontFamily: 'Georgia, serif' }}>New Payment Method</p>
-                      <p className="text-xs sm:text-sm text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>
-                        <span className="text-[#D4A853] font-semibold">CoverPay</span> — BNPL orchestration baked into both products.
-                      </p>
-                    </div>
+
+                {/* Bankroll */}
+                <div className="p-5 sm:p-6 bg-white shadow-xl border border-[#D4C5B0]">
+                  <p className="text-[10px] sm:text-xs text-[#D4A853] tracking-widest uppercase mb-3" style={{ fontFamily: 'Georgia, serif' }}>For Consumers</p>
+                  <div className="flex items-center gap-3 mb-3">
+                    <Image src="/images/bankroll-icon-new.png" alt="Bankroll" width={40} height={40} className="w-10 h-10 rounded-lg" />
+                    <h3 className="text-xl sm:text-2xl text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>Bankroll</h3>
+                  </div>
+                  <p className="text-sm sm:text-base text-[#6B5D4F] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                    Stablecoin wallet for stress-free spending. P2P payments, round-ups, and CoverPay built in.
+                  </p>
+                  <div className="pt-3 border-t border-[#D4C5B0]">
+                    <p className="text-xs text-[#D4A853]" style={{ fontFamily: 'Georgia, serif' }}>Spending without the anxiety.</p>
                   </div>
                 </div>
               </div>
-              {/* Right side - App Carousel */}
-              <div className="hidden lg:flex justify-end pr-4">
-                <AppCarousel />
+
+              {/* Underlying Technology Layer */}
+              <div className="p-4 sm:p-5 bg-gradient-to-r from-[#1a1a2e] via-[#16213e] to-[#1a1a2e] shadow-lg border border-[#D4A853]/30">
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0">
+                    <Image src="/images/HedgeLogo3D.png" alt="Hedge Payments" width={48} height={48} className="w-12 h-12" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-[10px] sm:text-xs text-[#D4A853] tracking-widest uppercase mb-1" style={{ fontFamily: 'Georgia, serif' }}>Underlying Technology</p>
+                    <h4 className="text-lg sm:text-xl text-[#FAF8F5] mb-1" style={{ fontFamily: 'Georgia, serif' }}>Hedge Payments Stablecoin PSP</h4>
+                    <p className="text-xs sm:text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>
+                      USDC-settled infrastructure powering both products. Instant settlement, intelligent routing, multi-chain.
+                    </p>
+                  </div>
+                  <div className="hidden sm:flex items-center gap-2">
+                    <Image src="/logos/usdc-new.png" alt="USDC" width={24} height={24} className="w-6 h-6" />
+                    <span className="text-[10px] text-[#D4C5B0]">USDC</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
