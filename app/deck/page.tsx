@@ -665,16 +665,16 @@ export default function DeckPage() {
                   {/* Rotating container for payment rails */}
                   <div className="absolute inset-0 animate-spin-slow">
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin">
-                      <Image src="/logos/stripe.svg" alt="Stripe" width={28} height={28} className="w-full h-full object-contain" />
+                      <Image src="/logos/stripe-new.png" alt="Stripe" width={28} height={28} className="w-full h-full object-contain" />
                     </div>
                     <div className="absolute top-[15%] right-[3%] w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center p-1 animate-counter-spin">
-                      <Image src="/logos/coinflow.svg" alt="Coinflow" width={32} height={32} className="w-full h-full object-contain" />
+                      <Image src="/logos/coinflow-new.jpg" alt="Coinflow" width={32} height={32} className="w-full h-full object-contain" />
                     </div>
                     <div className="absolute bottom-[15%] right-[3%] w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center overflow-hidden animate-counter-spin">
-                      <Image src="/logos/usdc.svg" alt="USDC" width={40} height={40} className="w-full h-full" />
+                      <Image src="/logos/usdc-new.png" alt="USDC" width={40} height={40} className="w-full h-full object-contain" />
                     </div>
                     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin">
-                      <Image src="/logos/rain.svg" alt="Rain" width={28} height={28} className="w-full h-full object-contain" />
+                      <Image src="/logos/rain-new.jpeg" alt="Rain" width={28} height={28} className="w-full h-full object-contain" />
                     </div>
                     <div className="absolute bottom-[15%] left-[3%] w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin">
                       <Image src="/logos/venmo.svg" alt="Venmo" width={28} height={28} className="w-full h-full object-contain" />
@@ -804,19 +804,19 @@ export default function DeckPage() {
                     </div>
                     {/* Stripe - top right */}
                     <div className="absolute top-[12%] right-[2%] w-11 h-11 sm:w-12 sm:h-12 bg-[#FAF8F5] rounded-full shadow-lg flex items-center justify-center p-2 animate-counter-spin">
-                      <Image src="/logos/stripe.svg" alt="Stripe" width={32} height={32} className="w-full h-full object-contain" />
+                      <Image src="/logos/stripe-new.png" alt="Stripe" width={32} height={32} className="w-full h-full object-contain" />
                     </div>
                     {/* Coinflow - bottom right */}
                     <div className="absolute bottom-[12%] right-[2%] w-11 h-11 sm:w-12 sm:h-12 bg-[#FAF8F5] rounded-full shadow-lg flex items-center justify-center p-1.5 animate-counter-spin">
-                      <Image src="/logos/coinflow.svg" alt="Coinflow" width={36} height={36} className="w-full h-full object-contain" />
+                      <Image src="/logos/coinflow-new.jpg" alt="Coinflow" width={36} height={36} className="w-full h-full object-contain" />
                     </div>
                     {/* USDC - bottom */}
                     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-11 h-11 sm:w-12 sm:h-12 bg-[#FAF8F5] rounded-full shadow-lg flex items-center justify-center overflow-hidden animate-counter-spin">
-                      <Image src="/logos/usdc.svg" alt="USDC" width={48} height={48} className="w-full h-full" />
+                      <Image src="/logos/usdc-new.png" alt="USDC" width={48} height={48} className="w-full h-full object-contain" />
                     </div>
                     {/* Rain - bottom left */}
                     <div className="absolute bottom-[12%] left-[2%] w-11 h-11 sm:w-12 sm:h-12 bg-[#FAF8F5] rounded-full shadow-lg flex items-center justify-center p-1.5 animate-counter-spin">
-                      <Image src="/logos/rain.svg" alt="Rain" width={36} height={36} className="w-full h-full object-contain" />
+                      <Image src="/logos/rain-new.jpeg" alt="Rain" width={36} height={36} className="w-full h-full object-contain" />
                     </div>
                     {/* CoverPay - top left */}
                     <div className="absolute top-[12%] left-[2%] w-11 h-11 sm:w-12 sm:h-12 bg-[#2C2416] rounded-full shadow-lg flex items-center justify-center p-1.5 animate-counter-spin">
@@ -828,7 +828,7 @@ export default function DeckPage() {
                   <div className="absolute inset-0 animate-spin-slower">
                     {/* Edge Boost - top */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-[#FAF8F5] rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin-slow">
-                      <Image src="/logos/edge-boost.svg" alt="EDGE" width={32} height={32} className="w-full h-full object-contain" />
+                      <Image src="/logos/edge-boost.png" alt="EDGE" width={32} height={32} className="w-full h-full object-contain" />
                     </div>
                     {/* Venmo - bottom right */}
                     <div className="absolute bottom-[20%] right-[5%] w-10 h-10 sm:w-11 sm:h-11 bg-[#FAF8F5] rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin-slow">
