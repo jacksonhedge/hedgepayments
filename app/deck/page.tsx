@@ -1319,7 +1319,21 @@ export default function DeckPage() {
                 <p className="text-xs text-[#D4C5B0]">Global Expansion</p>
               </div>
             </div>
-            <p className="text-sm sm:text-lg text-[#D4C5B0] mt-8 sm:mt-12 max-w-xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-10 mt-8 sm:mt-10 text-[#D4C5B0]">
+              <div className="text-center">
+                <p className="text-xs uppercase tracking-wider mb-1">Venmo 2024</p>
+                <p className="text-lg sm:text-xl text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>$400B</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xs uppercase tracking-wider mb-1">BNPL 2024</p>
+                <p className="text-lg sm:text-xl text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>$100B</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xs uppercase tracking-wider mb-1">Stripe 2024</p>
+                <p className="text-lg sm:text-xl text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>~$1.5T</p>
+              </div>
+            </div>
+            <p className="text-sm sm:text-base text-[#D4C5B0] mt-6 sm:mt-8 max-w-xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               Every BNPL checkout. Every P2P payment. Every stablecoin transaction. <span className="text-[#D4A853]">One infrastructure.</span>
             </p>
           </div>
