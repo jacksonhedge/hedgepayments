@@ -1436,7 +1436,7 @@ export default function DeckPage() {
               Team
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#FAF8F5] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Technical founder, payments obsessed
+              Builder. Operator. <span className="text-[#D4A853]">Owner.</span>
             </h2>
             <div className="max-w-3xl">
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-8 mb-6 sm:mb-10">
@@ -1451,7 +1451,7 @@ export default function DeckPage() {
                 </div>
                 <div className="text-center sm:text-left">
                   <h3 className="text-xl sm:text-3xl text-[#FAF8F5] mb-1" style={{ fontFamily: 'Georgia, serif' }}>Jackson Fitzgerald</h3>
-                  <p className="text-sm sm:text-lg text-[#D4A853] mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>Founder & CEO</p>
+                  <p className="text-sm sm:text-lg text-[#D4A853] mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>CEO & CTO</p>
                   <div className="space-y-2 sm:space-y-3">
                     <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
                       <Image
@@ -1491,11 +1491,6 @@ export default function DeckPage() {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="p-4 sm:p-6 bg-[#D4A853]/10 border border-[#D4A853]/30 shadow-lg">
-                <p className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                  "I kept seeing merchants lose sales because one BNPL provider declined. The obvious solution: try them all. CoverPay orchestrates 6 providers through one API — maximizing approvals, minimizing abandoned carts."
-                </p>
               </div>
             </div>
           </div>
