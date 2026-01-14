@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
         email: FROM_EMAIL,
         name: 'Jackson Fitzgerald'
       },
-      subject: 'Thanks for viewing the Bankroll deck',
+      subject: 'Thanks for viewing the Hedge Payments deck',
       html: `
         <!DOCTYPE html>
         <html>
@@ -49,26 +49,30 @@ export async function POST(request: NextRequest) {
             .highlight h3 { margin: 0 0 8px 0; font-weight: normal; color: #D4C5B0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
             .highlight p { margin: 0; color: #FAF8F5; font-size: 18px; }
             .cta { display: inline-block; padding: 14px 28px; background-color: #2C2416; color: #FAF8F5; text-decoration: none; margin-top: 16px; }
+            .cta-secondary { display: inline-block; padding: 14px 28px; background-color: #FAF8F5; color: #2C2416; text-decoration: none; margin-top: 16px; border: 1px solid #2C2416; }
             .footer { margin-top: 40px; padding-top: 24px; border-top: 1px solid #D4C5B0; color: #8B7E6E; font-size: 14px; }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <h1>Bankroll</h1>
-              <p style="color: #6B5D4F; font-style: italic; margin: 0;">Fraternity Finances Made Easy</p>
+              <h1>Hedge Payments</h1>
+              <p style="color: #6B5D4F; font-style: italic; margin: 0;">Easy Money</p>
             </div>
 
             <div class="divider"></div>
 
             <div class="content">
-              <p>Thanks for taking a look at the Bankroll investor deck.</p>
+              <p>Thanks for taking a look at the Hedge Payments investor deck.</p>
 
-              <p>We're building BNPL infrastructure for Greek life organizations — solving the $750M dues collection problem that treasurers and members face every semester.</p>
+              <p>We're building payment infrastructure that makes money management simple — from BNPL orchestration to peer-to-peer payments.</p>
 
               <div class="highlight">
-                <h3>The Opportunity</h3>
-                <p>750K active members paying $1,000/year in dues, with 30-40% paying late. We make dues affordable with payment plans while chapters get paid upfront.</p>
+                <h3>Try Bankroll</h3>
+                <p>Our consumer app Bankroll is live! Sign up to experience seamless payments firsthand.</p>
+                <p style="margin-top: 16px;">
+                  <a href="https://bankroll.live" style="color: #FAF8F5; text-decoration: underline; font-size: 16px;">Sign up at bankroll.live →</a>
+                </p>
               </div>
 
               <p>I'd love to chat if you're interested in learning more about our seed round.</p>
@@ -80,23 +84,26 @@ export async function POST(request: NextRequest) {
 
             <div class="footer">
               <p><strong>Jackson Fitzgerald</strong><br>
-              Founder & CEO, Bankroll<br>
+              Founder & CEO, Hedge Payments<br>
               jackson@hedgepayments.com</p>
             </div>
           </div>
         </body>
         </html>
       `,
-      text: `Thanks for viewing the Bankroll deck!
+      text: `Thanks for viewing the Hedge Payments deck!
 
-We're building BNPL infrastructure for Greek life organizations — solving the $750M dues collection problem that treasurers and members face every semester.
+We're building payment infrastructure that makes money management simple — from BNPL orchestration to peer-to-peer payments.
 
-750K active members paying $1,000/year in dues, with 30-40% paying late. We make dues affordable with payment plans while chapters get paid upfront.
+TRY BANKROLL
+Our consumer app Bankroll is live! Sign up to experience seamless payments firsthand.
+Sign up at: https://bankroll.live
 
 I'd love to chat if you're interested in learning more about our seed round.
+Schedule a call: https://calendly.com/jacksonfitzgerald
 
 Jackson Fitzgerald
-Founder & CEO, Bankroll
+Founder & CEO, Hedge Payments
 jackson@hedgepayments.com
       `
     };
@@ -106,7 +113,7 @@ jackson@hedgepayments.com
       to: 'jackson@hedgepayments.com',
       from: {
         email: FROM_EMAIL,
-        name: 'Bankroll Deck'
+        name: 'Hedge Payments Deck'
       },
       subject: `🎯 New deck viewer: ${email}`,
       html: `
