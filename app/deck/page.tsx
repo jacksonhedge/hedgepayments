@@ -1038,7 +1038,7 @@ export default function DeckPage() {
                 <div className="mt-4 pt-4 border-t border-[#D4C5B0]/20">
                   <p className="text-xs text-[#D4A853] mb-2">THE MOAT</p>
                   <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>
-                    <span className="text-[#D4A853]">Distribution advantage.</span> FraternityBase gives us 750K+ captive users. Network effects spread adoption organically. We own the relationship.
+                    <span className="text-[#D4A853]">Distribution advantage.</span> FraternityBase gives us 750K+ target users. Network effects spread adoption organically. We own the relationship.
                   </p>
                 </div>
               </div>
