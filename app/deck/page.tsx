@@ -927,36 +927,31 @@ export default function DeckPage() {
               Business Model
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Cheaper than lost sales, cheaper than BNPL fees
+              Simple, scalable revenue
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl">
-              <div className="bg-gradient-to-br from-[#2C2416] to-[#3D3225] p-4 sm:p-6 shadow-lg">
-                <h3 className="text-base sm:text-xl text-[#FAF8F5] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Orchestration Fee</h3>
-                <p className="text-2xl sm:text-3xl text-[#D4A853] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>1-2%</p>
-                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>vs 5-8% direct BNPL fees — we save merchants money</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-3xl">
+              <div className="bg-gradient-to-br from-[#2C2416] to-[#3D3225] p-6 sm:p-8 shadow-lg">
+                <h3 className="text-base sm:text-xl text-[#FAF8F5] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Hedge PSP</h3>
+                <p className="text-3xl sm:text-4xl text-[#D4A853] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>1%</p>
+                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>of all processed payment volume</p>
               </div>
-              <div className="bg-gradient-to-br from-[#2C2416] to-[#3D3225] p-4 sm:p-6 shadow-lg">
-                <h3 className="text-base sm:text-xl text-[#FAF8F5] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Split Payment Premium</h3>
-                <p className="text-2xl sm:text-3xl text-[#D4A853] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>2-3%</p>
-                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Rescues sales that would have been 100% lost</p>
-              </div>
-              <div className="bg-white border border-[#D4C5B0] p-4 sm:p-6 sm:col-span-2 md:col-span-1 shadow-lg">
-                <h3 className="text-base sm:text-xl text-[#2C2416] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>SaaS API Access</h3>
-                <p className="text-2xl sm:text-3xl text-[#D4A853] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>$2K+/mo</p>
-                <p className="text-[#6B5D4F] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>Enterprise merchants get premium routing + analytics</p>
+              <div className="bg-gradient-to-br from-[#2C2416] to-[#3D3225] p-6 sm:p-8 shadow-lg">
+                <h3 className="text-base sm:text-xl text-[#FAF8F5] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>CoverPay</h3>
+                <p className="text-3xl sm:text-4xl text-[#D4A853] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>2.5%</p>
+                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>of BNPL orchestration volume</p>
               </div>
             </div>
-            <div className="mt-4 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl">
+            <div className="mt-4 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
               <div className="p-4 sm:p-5 bg-white border border-[#D4C5B0] shadow-md">
-                <p className="text-xs text-[#D4A853] mb-2">Merchant ROI</p>
+                <p className="text-xs text-[#D4A853] mb-2">Example: Hedge PSP</p>
                 <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
-                  BNPL increases AOV by <span className="font-semibold text-[#D4A853]">41-85%</span> and conversion by <span className="font-semibold text-[#D4A853]">30%</span>. CoverPay captures another 40% that would abandon.
+                  $10,000 payment volume → <span className="font-semibold text-[#D4A853]">$100 revenue</span>
                 </p>
               </div>
               <div className="p-4 sm:p-5 bg-gradient-to-r from-[#2C2416] to-[#3D3225] shadow-md">
-                <p className="text-xs text-[#D4A853] mb-2">Example Unit Economics</p>
+                <p className="text-xs text-[#D4A853] mb-2">Example: CoverPay</p>
                 <p className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>
-                  $600 split payment → $300 Klarna + $300 Affirm → <span className="font-semibold text-[#D4A853]">CoverPay earns ~$18</span> (3%)
+                  $10,000 BNPL volume → <span className="font-semibold text-[#D4A853]">$250 revenue</span>
                 </p>
               </div>
             </div>
@@ -1016,7 +1011,7 @@ export default function DeckPage() {
                 <div className="mt-4 pt-4 border-t border-[#D4C5B0]/20">
                   <p className="text-xs text-[#D4A853] mb-2">THE MOAT</p>
                   <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>
-                    Every BNPL wants exclusive merchant deals. We're the neutral layer that makes them cooperate — <span className="text-[#D4A853]">higher approval rates than any single provider.</span>
+                    <span className="text-[#D4A853]">Distribution advantage.</span> FraternityBase gives us 750K+ captive users. Network effects spread adoption organically. We own the relationship.
                   </p>
                 </div>
               </div>
@@ -1074,7 +1069,7 @@ export default function DeckPage() {
                 <div className="mt-4 pt-4 border-t border-[#D4C5B0]/20">
                   <p className="text-xs text-[#D4A853] mb-2">THE MOAT</p>
                   <p className="text-sm text-[#D4C5B0]" style={{ fontFamily: 'Georgia, serif' }}>
-                    <span className="text-[#D4A853]">First P2P app with built-in BNPL.</span> Send $50 to a friend, pay it back in 4 installments. Nobody else does this.
+                    <span className="text-[#D4A853]">Distribution advantage.</span> Affiliate partnerships turn user acquisition into profit. Each user brings their network. We grow while getting paid.
                   </p>
                 </div>
               </div>
@@ -1369,10 +1364,10 @@ export default function DeckPage() {
         return (
           <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto bg-gradient-to-tr from-[#FAF8F5] via-[#F5F0E8] to-[#EDE5D8]">
             <p className="text-xs sm:text-sm text-[#D4A853] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-              Distribution
+              Distribution Advantage
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Built-in user acquisition
+              Scale, ownership, and profitable user acquisition
             </h2>
             <p className="text-base sm:text-xl text-[#6B5D4F] mb-6 sm:mb-10 max-w-2xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               FraternityBase gives us direct access to our ideal users
