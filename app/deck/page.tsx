@@ -664,23 +664,37 @@ export default function DeckPage() {
                   </div>
                   {/* Rotating container for payment rails */}
                   <div className="absolute inset-0 animate-spin-slow">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin">
+                    {/* Top */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 sm:w-9 sm:h-9 bg-white rounded-full shadow-md flex items-center justify-center p-1 animate-counter-spin">
                       <Image src="/logos/stripe-new.png" alt="Stripe" width={28} height={28} className="w-full h-full object-contain" />
                     </div>
-                    <div className="absolute top-[15%] right-[3%] w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center p-1 animate-counter-spin">
-                      <Image src="/logos/coinflow-new.jpg" alt="Coinflow" width={32} height={32} className="w-full h-full object-contain" />
+                    {/* Top-right */}
+                    <div className="absolute top-[8%] right-[8%] w-8 h-8 sm:w-9 sm:h-9 bg-white rounded-full shadow-md flex items-center justify-center p-1 animate-counter-spin">
+                      <Image src="/logos/coinflow-new.jpg" alt="Coinflow" width={28} height={28} className="w-full h-full object-contain" />
                     </div>
-                    <div className="absolute bottom-[15%] right-[3%] w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center overflow-hidden animate-counter-spin">
-                      <Image src="/logos/usdc-new.png" alt="USDC" width={40} height={40} className="w-full h-full object-contain" />
+                    {/* Right */}
+                    <div className="absolute top-1/2 right-0 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 bg-white rounded-full shadow-md flex items-center justify-center p-1 animate-counter-spin">
+                      <Image src="/logos/usdc-new.png" alt="USDC" width={28} height={28} className="w-full h-full object-contain" />
                     </div>
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin">
+                    {/* Bottom-right */}
+                    <div className="absolute bottom-[8%] right-[8%] w-8 h-8 sm:w-9 sm:h-9 bg-white rounded-full shadow-md flex items-center justify-center p-1 animate-counter-spin">
+                      <Image src="/logos/metamask.webp" alt="MetaMask" width={28} height={28} className="w-full h-full object-contain" />
+                    </div>
+                    {/* Bottom */}
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 sm:w-9 sm:h-9 bg-white rounded-full shadow-md flex items-center justify-center p-1 animate-counter-spin">
                       <Image src="/logos/rain-new.jpeg" alt="Rain" width={28} height={28} className="w-full h-full object-contain" />
                     </div>
-                    <div className="absolute bottom-[15%] left-[3%] w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin">
-                      <Image src="/logos/venmo.svg" alt="Venmo" width={28} height={28} className="w-full h-full object-contain" />
+                    {/* Bottom-left */}
+                    <div className="absolute bottom-[8%] left-[8%] w-8 h-8 sm:w-9 sm:h-9 bg-white rounded-full shadow-md flex items-center justify-center p-1 animate-counter-spin">
+                      <Image src="/logos/coinbase-new.webp" alt="Coinbase" width={28} height={28} className="w-full h-full object-contain" />
                     </div>
-                    <div className="absolute top-[15%] left-[3%] w-9 h-9 sm:w-10 sm:h-10 bg-[#2C2416] rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin">
+                    {/* Left */}
+                    <div className="absolute top-1/2 left-0 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 bg-[#2C2416] rounded-full shadow-md flex items-center justify-center p-1 animate-counter-spin">
                       <Image src="/logos/CoverPayLogo.png" alt="CoverPay" width={28} height={28} className="w-full h-full object-contain" />
+                    </div>
+                    {/* Top-left */}
+                    <div className="absolute top-[8%] left-[8%] w-8 h-8 sm:w-9 sm:h-9 bg-white rounded-full shadow-md flex items-center justify-center p-1 animate-counter-spin">
+                      <Image src="/logos/edge-boost.png" alt="EdgeBoost" width={28} height={28} className="w-full h-full object-contain" />
                     </div>
                   </div>
                 </div>
