@@ -145,6 +145,18 @@ const slides = [
     id: 'appendix-3',
     type: 'appendix-3',
   },
+  {
+    id: 'appendix-sidebet-flow',
+    type: 'appendix-sidebet-flow',
+  },
+  {
+    id: 'appendix-coverpay-flow',
+    type: 'appendix-coverpay-flow',
+  },
+  {
+    id: 'appendix-bankroll-flow',
+    type: 'appendix-bankroll-flow',
+  },
 ]
 
 // Smaller 3D Logo for email gate
@@ -1880,6 +1892,321 @@ export default function DeckPage() {
                   <p className="text-blue-400 font-semibold mb-2">ML FEEDBACK LOOP</p>
                   <p className="text-[9px]">Track: User profile → Routing decision → Provider responses → Final outcome</p>
                   <p className="text-[9px] mt-1">Optimize: If Profile X denied by PayPal but approved by Zip → Route similar users to Zip first</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'appendix-sidebet-flow':
+        return (
+          <div className="flex flex-col h-full px-4 sm:px-6 md:px-8 pt-16 pb-8 overflow-y-auto bg-gradient-to-br from-[#1a472a] via-[#2d5a3d] to-[#1a472a]">
+            <p className="text-xs text-[#4ade80] tracking-widest uppercase mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              Payment Flow: SideBet
+            </p>
+            <h2 className="text-xl sm:text-2xl text-[#FAF8F5] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+              P2P Sports Betting Settlement
+            </h2>
+
+            <div className="flex-1 bg-black/30 border border-[#4ade80]/30 rounded-lg p-4 overflow-y-auto">
+              <div className="text-[10px] sm:text-xs text-[#D4C5B0] space-y-4">
+                {/* Flow Diagram */}
+                <div className="flex flex-col items-center gap-2">
+                  {/* Users */}
+                  <div className="flex items-center gap-8 sm:gap-16">
+                    <div className="text-center">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#4ade80]/20 border-2 border-[#4ade80] rounded-full flex items-center justify-center mb-2">
+                        <span className="text-lg sm:text-xl">👤</span>
+                      </div>
+                      <p className="text-[#4ade80] font-semibold">User A</p>
+                      <p className="text-[9px] text-[#D4C5B0]">Stakes $50</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#4ade80]/20 border-2 border-[#4ade80] rounded-full flex items-center justify-center mb-2">
+                        <span className="text-lg sm:text-xl">👤</span>
+                      </div>
+                      <p className="text-[#4ade80] font-semibold">User B</p>
+                      <p className="text-[9px] text-[#D4C5B0]">Stakes $50</p>
+                    </div>
+                  </div>
+
+                  <div className="text-[#4ade80]">↓ ↓</div>
+
+                  {/* Escrow */}
+                  <div className="w-full max-w-md p-4 bg-[#4ade80]/10 border border-[#4ade80]/50 rounded-lg text-center">
+                    <p className="text-[#4ade80] font-semibold mb-1">SideBet Escrow (USDC)</p>
+                    <p className="text-2xl text-[#FAF8F5]">$100</p>
+                    <p className="text-[9px] text-[#D4C5B0] mt-1">Locked until game outcome</p>
+                  </div>
+
+                  <div className="text-[#4ade80]">↓</div>
+
+                  {/* Oracle */}
+                  <div className="w-full max-w-md p-3 bg-blue-500/10 border border-blue-500/50 rounded-lg text-center">
+                    <p className="text-blue-400 font-semibold">Sports Data Oracle</p>
+                    <p className="text-[9px] text-[#D4C5B0]">ESPN API / Official Results</p>
+                  </div>
+
+                  <div className="text-[#4ade80]">↓</div>
+
+                  {/* Settlement */}
+                  <div className="w-full max-w-md p-4 bg-[#D4A853]/10 border border-[#D4A853]/50 rounded-lg">
+                    <p className="text-[#D4A853] font-semibold text-center mb-3">Automatic Settlement</p>
+                    <div className="flex justify-between items-center">
+                      <div className="text-center">
+                        <p className="text-green-400 font-semibold">Winner</p>
+                        <p className="text-lg text-[#FAF8F5]">$95</p>
+                        <p className="text-[9px] text-[#D4C5B0]">Instant USDC</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-[#D4A853] font-semibold">SideBet Fee</p>
+                        <p className="text-lg text-[#FAF8F5]">$5</p>
+                        <p className="text-[9px] text-[#D4C5B0]">5% rake</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Key Points */}
+                <div className="grid grid-cols-2 gap-2 mt-4">
+                  <div className="p-2 bg-[#FAF8F5]/5 rounded">
+                    <p className="text-[#4ade80] font-semibold text-[10px]">No Counterparty Risk</p>
+                    <p className="text-[9px]">Funds held in smart contract escrow</p>
+                  </div>
+                  <div className="p-2 bg-[#FAF8F5]/5 rounded">
+                    <p className="text-[#4ade80] font-semibold text-[10px]">Instant Payout</p>
+                    <p className="text-[9px]">USDC sent within seconds of result</p>
+                  </div>
+                  <div className="p-2 bg-[#FAF8F5]/5 rounded">
+                    <p className="text-[#4ade80] font-semibold text-[10px]">Transparent Odds</p>
+                    <p className="text-[9px]">P2P means no house edge manipulation</p>
+                  </div>
+                  <div className="p-2 bg-[#FAF8F5]/5 rounded">
+                    <p className="text-[#4ade80] font-semibold text-[10px]">Social Betting</p>
+                    <p className="text-[9px]">Bet against friends, not the house</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'appendix-coverpay-flow':
+        return (
+          <div className="flex flex-col h-full px-4 sm:px-6 md:px-8 pt-16 pb-8 overflow-y-auto bg-gradient-to-br from-[#2C2416] via-[#3D3225] to-[#2C2416]">
+            <div className="flex items-center gap-3 mb-2">
+              <p className="text-xs text-[#D4A853] tracking-widest uppercase" style={{ fontFamily: 'Georgia, serif' }}>
+                Payment Flow: CoverPay
+              </p>
+              <span className="text-[10px] px-2 py-0.5 bg-[#D4A853] text-[#2C2416] font-semibold rounded">Phase 1</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl text-[#FAF8F5] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+              BNPL Orchestration Architecture
+            </h2>
+
+            <div className="flex-1 bg-black/30 border border-[#D4A853]/30 rounded-lg p-4 overflow-y-auto">
+              <div className="text-[10px] sm:text-xs text-[#D4C5B0] space-y-3">
+                {/* Layer 1: User Input */}
+                <div className="p-3 bg-[#FAF8F5]/5 border border-[#D4C5B0]/30 rounded">
+                  <p className="text-[#D4A853] font-semibold mb-2">LAYER 1: CHECKOUT REQUEST</p>
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="text-center">
+                      <div className="w-10 h-10 bg-[#D4A853]/20 rounded-full flex items-center justify-center mb-1">
+                        <span>🛒</span>
+                      </div>
+                      <p className="text-[9px]">User</p>
+                    </div>
+                    <span className="text-[#D4A853]">→</span>
+                    <div className="px-3 py-2 bg-[#2C2416] rounded">
+                      <p className="text-[#FAF8F5]">$600 Purchase</p>
+                    </div>
+                    <span className="text-[#D4A853]">→</span>
+                    <div className="text-center">
+                      <div className="w-10 h-10 bg-[#D4A853]/20 rounded-full flex items-center justify-center mb-1">
+                        <span>🏪</span>
+                      </div>
+                      <p className="text-[9px]">Merchant</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Layer 2: Logic Engine */}
+                <div className="p-3 bg-[#D4A853]/10 border border-[#D4A853]/50 rounded">
+                  <p className="text-[#D4A853] font-semibold mb-2">LAYER 2: COVERPAY LOGIC ENGINE</p>
+                  <div className="grid grid-cols-3 gap-2 mb-3">
+                    <div className="p-2 bg-[#2C2416] rounded text-center">
+                      <p className="text-[#D4A853] text-[10px] font-semibold">Credit Analysis</p>
+                      <p className="text-[8px]">Score, history, limits</p>
+                    </div>
+                    <div className="p-2 bg-[#2C2416] rounded text-center">
+                      <p className="text-[#D4A853] text-[10px] font-semibold">Provider Matching</p>
+                      <p className="text-[8px]">Best fit algorithm</p>
+                    </div>
+                    <div className="p-2 bg-[#2C2416] rounded text-center">
+                      <p className="text-[#D4A853] text-[10px] font-semibold">Split Calculator</p>
+                      <p className="text-[8px]">Multi-provider routing</p>
+                    </div>
+                  </div>
+                  <div className="text-center text-[#D4A853]">↓ Optimal Route Calculated ↓</div>
+                </div>
+
+                {/* Layer 3: BNPL Infrastructure */}
+                <div className="p-3 bg-[#FAF8F5]/5 border border-[#D4C5B0]/30 rounded">
+                  <p className="text-[#D4A853] font-semibold mb-2">LAYER 3: BNPL INFRASTRUCTURE PLUGINS</p>
+                  <div className="flex flex-wrap justify-center gap-2 mb-3">
+                    <div className="px-2 py-1 bg-[#0066FF]/20 border border-[#0066FF]/50 rounded text-[9px]">Affirm API</div>
+                    <div className="px-2 py-1 bg-[#FFB3C7]/20 border border-[#FFB3C7]/50 rounded text-[9px]">Klarna API</div>
+                    <div className="px-2 py-1 bg-[#B2FCE4]/20 border border-[#B2FCE4]/50 rounded text-[9px]">Afterpay API</div>
+                    <div className="px-2 py-1 bg-[#6772E5]/20 border border-[#6772E5]/50 rounded text-[9px]">Zip API</div>
+                    <div className="px-2 py-1 bg-[#8B5CF6]/20 border border-[#8B5CF6]/50 rounded text-[9px]">Sezzle API</div>
+                    <div className="px-2 py-1 bg-[#003087]/20 border border-[#003087]/50 rounded text-[9px]">PayPal API</div>
+                    <div className="px-2 py-1 bg-[#00D4AA]/20 border border-[#00D4AA]/50 rounded text-[9px]">Splitit API</div>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="px-3 py-1 bg-[#D4A853]/20 rounded text-[10px]">Klarna: $300</div>
+                    <span className="text-[#D4A853]">+</span>
+                    <div className="px-3 py-1 bg-[#D4A853]/20 rounded text-[10px]">Affirm: $300</div>
+                    <span className="text-[#D4A853]">=</span>
+                    <div className="px-3 py-1 bg-[#D4A853] text-[#2C2416] rounded text-[10px] font-semibold">$600 ✓</div>
+                  </div>
+                </div>
+
+                {/* Layer 4: Settlement */}
+                <div className="p-3 bg-green-500/10 border border-green-500/50 rounded">
+                  <p className="text-green-400 font-semibold mb-2">LAYER 4: SETTLEMENT</p>
+                  <div className="flex items-center justify-between">
+                    <div className="text-center">
+                      <p className="text-[10px] text-[#D4C5B0]">BNPL Providers</p>
+                      <p className="text-sm text-[#FAF8F5]">$600</p>
+                      <p className="text-[9px] text-[#D4C5B0]">T+1 / T+2</p>
+                    </div>
+                    <span className="text-green-400">→</span>
+                    <div className="text-center px-3 py-2 bg-[#2C2416] rounded">
+                      <p className="text-[10px] text-[#D4A853]">CoverPay</p>
+                      <p className="text-[9px] text-[#D4C5B0]">Aggregates funds</p>
+                    </div>
+                    <span className="text-green-400">→</span>
+                    <div className="text-center">
+                      <p className="text-[10px] text-[#D4C5B0]">Merchant</p>
+                      <p className="text-sm text-[#FAF8F5]">$585</p>
+                      <p className="text-[9px] text-green-400">2.5% fee</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Revenue */}
+                <div className="p-2 bg-[#D4A853]/20 border border-[#D4A853]/40 rounded text-center">
+                  <p className="text-[10px] text-[#D4A853]">CoverPay Revenue: <span className="font-semibold">$15</span> (2.5% of $600)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'appendix-bankroll-flow':
+        return (
+          <div className="flex flex-col h-full px-4 sm:px-6 md:px-8 pt-16 pb-8 overflow-y-auto bg-gradient-to-br from-[#0A1628] via-[#1E3A5F] to-[#0A1628]">
+            <div className="flex items-center gap-3 mb-2">
+              <p className="text-xs text-[#F5B041] tracking-widest uppercase" style={{ fontFamily: 'Georgia, serif' }}>
+                Payment Flow: Bankroll
+              </p>
+              <span className="text-[10px] px-2 py-1 bg-[#F5B041]/20 text-[#F5B041] rounded-full border border-[#F5B041]/40">On-Chain · USDC</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl text-[#FAF8F5] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+              Stablecoin Payment Gateway
+            </h2>
+
+            <div className="flex-1 bg-black/30 border border-[#F5B041]/30 rounded-lg p-4 overflow-y-auto">
+              <div className="text-[10px] sm:text-xs text-[#D4C5B0] space-y-3">
+                {/* Deposit Flow */}
+                <div className="p-3 bg-[#FAF8F5]/5 border border-[#B8C5D6]/30 rounded">
+                  <p className="text-[#F5B041] font-semibold mb-2">DEPOSIT RAILS (Fiat → USDC)</p>
+                  <div className="flex flex-wrap justify-center gap-2 mb-2">
+                    <div className="px-2 py-1 bg-[#1E3A5F] border border-[#F5B041]/30 rounded text-[9px]">Bank (ACH)</div>
+                    <div className="px-2 py-1 bg-[#1E3A5F] border border-[#F5B041]/30 rounded text-[9px]">Debit Card</div>
+                    <div className="px-2 py-1 bg-[#1E3A5F] border border-[#F5B041]/30 rounded text-[9px]">Apple Pay</div>
+                    <div className="px-2 py-1 bg-[#1E3A5F] border border-[#F5B041]/30 rounded text-[9px]">Venmo</div>
+                    <div className="px-2 py-1 bg-[#1E3A5F] border border-[#F5B041]/30 rounded text-[9px]">PayPal</div>
+                  </div>
+                  <div className="text-center text-[#F5B041]">↓ Auto-convert to USDC ↓</div>
+                </div>
+
+                {/* Bankroll Wallet */}
+                <div className="p-4 bg-[#F5B041]/10 border-2 border-[#F5B041]/50 rounded-lg">
+                  <div className="flex items-center justify-center gap-4 mb-3">
+                    <div className="w-12 h-12 bg-[#1E3A5F] rounded-xl flex items-center justify-center">
+                      <span className="text-2xl">💰</span>
+                    </div>
+                    <div>
+                      <p className="text-[#F5B041] font-semibold text-lg">Bankroll Wallet</p>
+                      <p className="text-[#B8C5D6] text-[10px]">Non-custodial USDC wallet</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="p-2 bg-[#0A1628] rounded text-center">
+                      <p className="text-[#F5B041] text-[10px] font-semibold">Balance</p>
+                      <p className="text-[#FAF8F5]">$2,450</p>
+                    </div>
+                    <div className="p-2 bg-[#0A1628] rounded text-center">
+                      <p className="text-[#F5B041] text-[10px] font-semibold">Round-ups</p>
+                      <p className="text-[#FAF8F5]">$127</p>
+                    </div>
+                    <div className="p-2 bg-[#0A1628] rounded text-center">
+                      <p className="text-[#F5B041] text-[10px] font-semibold">CoverPay</p>
+                      <p className="text-green-400">Active</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Payment Gateway */}
+                <div className="p-3 bg-[#2775CA]/10 border border-[#2775CA]/50 rounded">
+                  <p className="text-[#2775CA] font-semibold mb-2">HEDGE PSP: ON-CHAIN GATEWAY</p>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="text-center">
+                      <p className="text-[10px] text-[#B8C5D6]">From Wallet</p>
+                      <p className="text-[#FAF8F5]">$100 USDC</p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <span className="text-[#2775CA] text-lg">⚡</span>
+                      <p className="text-[9px] text-[#2775CA]">Instant</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-[10px] text-[#B8C5D6]">To Recipient</p>
+                      <p className="text-[#FAF8F5]">$100 USDC</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-center gap-4 text-[9px]">
+                    <span className="text-green-400">✓ No intermediaries</span>
+                    <span className="text-green-400">✓ &lt;$0.01 fee</span>
+                    <span className="text-green-400">✓ 24/7 settlement</span>
+                  </div>
+                </div>
+
+                {/* Use Cases */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="p-2 bg-[#FAF8F5]/5 rounded">
+                    <p className="text-[#F5B041] font-semibold text-[10px]">P2P Transfers</p>
+                    <p className="text-[9px]">Send to friends instantly via USDC</p>
+                  </div>
+                  <div className="p-2 bg-[#FAF8F5]/5 rounded">
+                    <p className="text-[#F5B041] font-semibold text-[10px]">Merchant Payments</p>
+                    <p className="text-[9px]">Pay at checkout with 1% fee</p>
+                  </div>
+                  <div className="p-2 bg-[#FAF8F5]/5 rounded">
+                    <p className="text-[#F5B041] font-semibold text-[10px]">CoverPay BNPL</p>
+                    <p className="text-[9px]">Split payments built-in</p>
+                  </div>
+                  <div className="p-2 bg-[#FAF8F5]/5 rounded">
+                    <p className="text-[#F5B041] font-semibold text-[10px]">Round-ups</p>
+                    <p className="text-[9px]">Auto-save spare change to USDC</p>
+                  </div>
+                </div>
+
+                {/* Revenue */}
+                <div className="p-2 bg-[#F5B041]/20 border border-[#F5B041]/40 rounded">
+                  <p className="text-[10px] text-center">
+                    <span className="text-[#F5B041] font-semibold">Hedge PSP Revenue:</span> 1% of processed payments
+                  </p>
                 </div>
               </div>
             </div>
