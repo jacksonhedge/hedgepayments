@@ -133,6 +133,18 @@ const slides = [
     id: 'ask',
     type: 'ask',
   },
+  {
+    id: 'appendix-1',
+    type: 'appendix-1',
+  },
+  {
+    id: 'appendix-2',
+    type: 'appendix-2',
+  },
+  {
+    id: 'appendix-3',
+    type: 'appendix-3',
+  },
 ]
 
 // Smaller 3D Logo for email gate
@@ -842,6 +854,12 @@ export default function DeckPage() {
                   </div>
                 </div>
               </div>
+            </div>
+            {/* Footer reference to Appendix */}
+            <div className="mt-6 pt-4 border-t border-[#D4A853]/20">
+              <p className="text-xs text-[#D4C5B0]/70" style={{ fontFamily: 'Georgia, serif' }}>
+                <span className="text-[#D4A853]">See Appendix:</span> BNPL Provider Decision Factors · Routing Intelligence · Decision Flow
+              </p>
             </div>
           </div>
         )
@@ -1622,6 +1640,245 @@ export default function DeckPage() {
               >
                 Let's Talk
               </Link>
+            </div>
+          </div>
+        )
+
+      case 'appendix-1':
+        return (
+          <div className="flex flex-col h-full px-4 sm:px-6 md:px-8 pt-16 pb-8 overflow-y-auto bg-[#FAF8F5]">
+            <p className="text-xs text-[#D4A853] tracking-widest uppercase mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              Appendix 1
+            </p>
+            <h2 className="text-xl sm:text-2xl text-[#2C2416] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+              BNPL Provider Decision Factors
+            </h2>
+
+            {/* Credit & Limits Table */}
+            <div className="mb-6 overflow-x-auto">
+              <p className="text-xs text-[#6B5D4F] mb-2 font-semibold">Credit Requirements & Limits</p>
+              <table className="w-full text-[10px] sm:text-xs border-collapse">
+                <thead>
+                  <tr className="bg-[#2C2416] text-[#FAF8F5]">
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Provider</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Credit Check</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Min Score</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">First-Time Limit</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Max Limit</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Decision Speed</th>
+                  </tr>
+                </thead>
+                <tbody className="text-[#2C2416]">
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Affirm</td><td className="p-1.5 border border-[#D4C5B0]">Soft/Hard</td><td className="p-1.5 border border-[#D4C5B0]">550</td><td className="p-1.5 border border-[#D4C5B0]">$50-$500</td><td className="p-1.5 border border-[#D4C5B0]">$17,500</td><td className="p-1.5 border border-[#D4C5B0]">5-10s</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Klarna</td><td className="p-1.5 border border-[#D4C5B0]">Soft/Hard</td><td className="p-1.5 border border-[#D4C5B0]">None</td><td className="p-1.5 border border-[#D4C5B0]">$50-$300</td><td className="p-1.5 border border-[#D4C5B0]">$1,000</td><td className="p-1.5 border border-[#D4C5B0]">&lt;5s</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Afterpay</td><td className="p-1.5 border border-[#D4C5B0]">Hard</td><td className="p-1.5 border border-[#D4C5B0]">None</td><td className="p-1.5 border border-[#D4C5B0]">$50-$200</td><td className="p-1.5 border border-[#D4C5B0]">$2,000</td><td className="p-1.5 border border-[#D4C5B0]">&lt;10s</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Zip</td><td className="p-1.5 border border-[#D4C5B0]">Soft</td><td className="p-1.5 border border-[#D4C5B0]">None</td><td className="p-1.5 border border-[#D4C5B0]">$350-$500</td><td className="p-1.5 border border-[#D4C5B0]">$5,000</td><td className="p-1.5 border border-[#D4C5B0]">10-15s</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Sezzle</td><td className="p-1.5 border border-[#D4C5B0]">Soft</td><td className="p-1.5 border border-[#D4C5B0]">None</td><td className="p-1.5 border border-[#D4C5B0]">$50-$200</td><td className="p-1.5 border border-[#D4C5B0]">$2,500</td><td className="p-1.5 border border-[#D4C5B0]">10-20s</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">PayPal</td><td className="p-1.5 border border-[#D4C5B0]">Soft</td><td className="p-1.5 border border-[#D4C5B0]">580+</td><td className="p-1.5 border border-[#D4C5B0]">$30-$600</td><td className="p-1.5 border border-[#D4C5B0]">$1,500</td><td className="p-1.5 border border-[#D4C5B0]">&lt;5s</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Splitit</td><td className="p-1.5 border border-[#D4C5B0]">None</td><td className="p-1.5 border border-[#D4C5B0]">N/A</td><td className="p-1.5 border border-[#D4C5B0]">Card limit</td><td className="p-1.5 border border-[#D4C5B0]">Card limit</td><td className="p-1.5 border border-[#D4C5B0]">Instant</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Approval Factors */}
+            <div className="mb-6 overflow-x-auto">
+              <p className="text-xs text-[#6B5D4F] mb-2 font-semibold">Approval Factor Weighting</p>
+              <table className="w-full text-[10px] sm:text-xs border-collapse">
+                <thead>
+                  <tr className="bg-[#2C2416] text-[#FAF8F5]">
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Provider</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Credit Score</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Payment History</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Open Loans</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Amount</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Bank Balance</th>
+                  </tr>
+                </thead>
+                <tbody className="text-[#2C2416]">
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Affirm</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-red-600">40%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-red-600">30%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">15%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">10%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-green-600">5%</span></td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Klarna</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">25%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">20%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-red-600">25%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-red-600">30%</span></td><td className="p-1.5 border border-[#D4C5B0]">—</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Afterpay</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-green-600">15%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-red-600">35%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-red-600">30%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">20%</span></td><td className="p-1.5 border border-[#D4C5B0]">—</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Zip</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-green-600">20%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">25%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">15%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">15%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">15%</span></td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Sezzle</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-green-600">15%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">20%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-red-600">25%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">20%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-red-600">20%</span></td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">PayPal</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">25%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">25%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">20%</span></td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-green-600">10%</span></td><td className="p-1.5 border border-[#D4C5B0]">—</td></tr>
+                </tbody>
+              </table>
+              <p className="text-[9px] text-[#8B7E6E] mt-1"><span className="text-red-600">●</span> Critical &nbsp;<span className="text-yellow-600">●</span> Medium &nbsp;<span className="text-green-600">●</span> Low &nbsp;— Not Considered</p>
+            </div>
+
+            {/* Instant Denial Triggers */}
+            <div className="overflow-x-auto">
+              <p className="text-xs text-[#6B5D4F] mb-2 font-semibold">Instant Denial Triggers</p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px]">
+                <div className="p-2 bg-red-50 border border-red-200 rounded">
+                  <p className="font-semibold text-red-800">Outstanding Balance</p>
+                  <p className="text-red-600">All providers instant deny</p>
+                </div>
+                <div className="p-2 bg-red-50 border border-red-200 rounded">
+                  <p className="font-semibold text-red-800">Recent Late Payment</p>
+                  <p className="text-red-600">Most providers deny</p>
+                </div>
+                <div className="p-2 bg-yellow-50 border border-yellow-200 rounded">
+                  <p className="font-semibold text-yellow-800">3+ Open Loans</p>
+                  <p className="text-yellow-600">Reduces limits/odds</p>
+                </div>
+                <div className="p-2 bg-green-50 border border-green-200 rounded">
+                  <p className="font-semibold text-green-800">Low Credit Score</p>
+                  <p className="text-green-600">Only Affirm strict (&lt;550)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'appendix-2':
+        return (
+          <div className="flex flex-col h-full px-4 sm:px-6 md:px-8 pt-16 pb-8 overflow-y-auto bg-[#FAF8F5]">
+            <p className="text-xs text-[#D4A853] tracking-widest uppercase mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              Appendix 2
+            </p>
+            <h2 className="text-xl sm:text-2xl text-[#2C2416] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+              CoverPay Routing Intelligence
+            </h2>
+
+            {/* Routing Table */}
+            <div className="mb-6 overflow-x-auto">
+              <p className="text-xs text-[#6B5D4F] mb-2 font-semibold">User Profile → Provider Routing</p>
+              <table className="w-full text-[10px] sm:text-xs border-collapse">
+                <thead>
+                  <tr className="bg-[#2C2416] text-[#FAF8F5]">
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">User Profile</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">1st Choice</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">2nd Choice</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">3rd Choice</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Reasoning</th>
+                  </tr>
+                </thead>
+                <tbody className="text-[#2C2416]">
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Score 700+</td><td className="p-1.5 border border-[#D4C5B0] text-[#D4A853]">Affirm</td><td className="p-1.5 border border-[#D4C5B0]">Klarna</td><td className="p-1.5 border border-[#D4C5B0]">PayPal</td><td className="p-1.5 border border-[#D4C5B0]">Best rates, highest limits</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Score 640-699</td><td className="p-1.5 border border-[#D4C5B0] text-[#D4A853]">Klarna</td><td className="p-1.5 border border-[#D4C5B0]">Affirm</td><td className="p-1.5 border border-[#D4C5B0]">Afterpay</td><td className="p-1.5 border border-[#D4C5B0]">Balance approval + limits</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Score 580-639</td><td className="p-1.5 border border-[#D4C5B0] text-[#D4A853]">Klarna</td><td className="p-1.5 border border-[#D4C5B0]">Zip</td><td className="p-1.5 border border-[#D4C5B0]">Sezzle</td><td className="p-1.5 border border-[#D4C5B0]">Lenient mid-range</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Score &lt;580</td><td className="p-1.5 border border-[#D4C5B0] text-[#D4A853]">Zip</td><td className="p-1.5 border border-[#D4C5B0]">Sezzle</td><td className="p-1.5 border border-[#D4C5B0]">Perpay</td><td className="p-1.5 border border-[#D4C5B0]">Most lenient approval</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">No Credit History</td><td className="p-1.5 border border-[#D4C5B0] text-[#D4A853]">Afterpay</td><td className="p-1.5 border border-[#D4C5B0]">Zip</td><td className="p-1.5 border border-[#D4C5B0]">Sezzle</td><td className="p-1.5 border border-[#D4C5B0]">Don't penalize no history</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Existing BNPL Balance</td><td className="p-1.5 border border-[#D4C5B0] text-[#D4A853]">(Skip)</td><td className="p-1.5 border border-[#D4C5B0]">Zip</td><td className="p-1.5 border border-[#D4C5B0]">Sezzle</td><td className="p-1.5 border border-[#D4C5B0]">Avoid provider w/ balance</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Amount &lt;$100</td><td className="p-1.5 border border-[#D4C5B0] text-[#D4A853]">Klarna</td><td className="p-1.5 border border-[#D4C5B0]">Afterpay</td><td className="p-1.5 border border-[#D4C5B0]">PayPal</td><td className="p-1.5 border border-[#D4C5B0]">Easy small approval</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Amount &gt;$500</td><td className="p-1.5 border border-[#D4C5B0] text-[#D4A853]">Affirm</td><td className="p-1.5 border border-[#D4C5B0]">Splitit</td><td className="p-1.5 border border-[#D4C5B0]">Zip</td><td className="p-1.5 border border-[#D4C5B0]">Higher limits available</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Has PayPal Account</td><td className="p-1.5 border border-[#D4C5B0] text-[#D4A853]">PayPal</td><td className="p-1.5 border border-[#D4C5B0]">Klarna</td><td className="p-1.5 border border-[#D4C5B0]">Affirm</td><td className="p-1.5 border border-[#D4C5B0]">Leverage existing data</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Needs Credit Building</td><td className="p-1.5 border border-[#D4C5B0] text-[#D4A853]">Affirm</td><td className="p-1.5 border border-[#D4C5B0]">Sezzle Up</td><td className="p-1.5 border border-[#D4C5B0]">Perpay</td><td className="p-1.5 border border-[#D4C5B0]">Reports to bureaus</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Integration Info */}
+            <div className="overflow-x-auto">
+              <p className="text-xs text-[#6B5D4F] mb-2 font-semibold">Integration & Cost</p>
+              <table className="w-full text-[10px] sm:text-xs border-collapse">
+                <thead>
+                  <tr className="bg-[#2C2416] text-[#FAF8F5]">
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Provider</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">API</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Difficulty</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Merchant Fee</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Consumer Fee</th>
+                    <th className="p-1.5 text-left border border-[#4A3D2F]">Settlement</th>
+                  </tr>
+                </thead>
+                <tbody className="text-[#2C2416]">
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Affirm</td><td className="p-1.5 border border-[#D4C5B0]">✅ Full REST</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">Medium</span></td><td className="p-1.5 border border-[#D4C5B0]">4-6%</td><td className="p-1.5 border border-[#D4C5B0]">0-36% APR</td><td className="p-1.5 border border-[#D4C5B0]">T+2</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Klarna</td><td className="p-1.5 border border-[#D4C5B0]">✅ Full REST</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-green-600">Easy</span></td><td className="p-1.5 border border-[#D4C5B0]">3-5%</td><td className="p-1.5 border border-[#D4C5B0]">0-30% APR</td><td className="p-1.5 border border-[#D4C5B0]">T+2</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Afterpay</td><td className="p-1.5 border border-[#D4C5B0]">✅ Full REST</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-green-600">Easy</span></td><td className="p-1.5 border border-[#D4C5B0]">4-6%</td><td className="p-1.5 border border-[#D4C5B0]">$0 (late $10)</td><td className="p-1.5 border border-[#D4C5B0]">T+1</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Zip</td><td className="p-1.5 border border-[#D4C5B0]">✅ Full REST</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-yellow-600">Medium</span></td><td className="p-1.5 border border-[#D4C5B0]">2-5%</td><td className="p-1.5 border border-[#D4C5B0]">$1/payment</td><td className="p-1.5 border border-[#D4C5B0]">T+2</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Sezzle</td><td className="p-1.5 border border-[#D4C5B0]">✅ Full REST</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-green-600">Easy</span></td><td className="p-1.5 border border-[#D4C5B0]">2-8%</td><td className="p-1.5 border border-[#D4C5B0]">$0 (late varies)</td><td className="p-1.5 border border-[#D4C5B0]">T+2</td></tr>
+                  <tr className="bg-[#FAF8F5]"><td className="p-1.5 border border-[#D4C5B0] font-semibold">PayPal</td><td className="p-1.5 border border-[#D4C5B0]">✅ Full REST</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-green-600">Easy</span></td><td className="p-1.5 border border-[#D4C5B0]">2.9%+$0.30</td><td className="p-1.5 border border-[#D4C5B0]">$0</td><td className="p-1.5 border border-[#D4C5B0]">T+1</td></tr>
+                  <tr className="bg-white"><td className="p-1.5 border border-[#D4C5B0] font-semibold">Splitit</td><td className="p-1.5 border border-[#D4C5B0]">✅ Full REST</td><td className="p-1.5 border border-[#D4C5B0]"><span className="text-red-600">Complex</span></td><td className="p-1.5 border border-[#D4C5B0]">2-4%</td><td className="p-1.5 border border-[#D4C5B0]">$0</td><td className="p-1.5 border border-[#D4C5B0]">Instant</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )
+
+      case 'appendix-3':
+        return (
+          <div className="flex flex-col h-full px-4 sm:px-6 md:px-8 pt-16 pb-8 overflow-y-auto bg-gradient-to-br from-[#2C2416] via-[#3D3225] to-[#2C2416]">
+            <p className="text-xs text-[#D4A853] tracking-widest uppercase mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              Appendix 3
+            </p>
+            <h2 className="text-xl sm:text-2xl text-[#FAF8F5] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+              Decision Flow Engine
+            </h2>
+
+            {/* Flow Diagram */}
+            <div className="flex-1 bg-black/30 border border-[#D4A853]/30 rounded-lg p-4 overflow-y-auto">
+              <div className="text-[10px] sm:text-xs text-[#D4C5B0] font-mono space-y-3">
+                {/* Stage 1 */}
+                <div className="border border-[#4A3D2F] p-3 rounded">
+                  <p className="text-[#D4A853] font-semibold mb-2">STAGE 1: ELIGIBILITY</p>
+                  <p>User submits BNPL request → Age 18+? → Valid phone/email? → SSN? → Payment method?</p>
+                  <p className="text-red-400 mt-1">❌ FAIL → Deny: Basic requirements not met</p>
+                  <p className="text-green-400">✓ PASS → Continue to fraud screen</p>
+                </div>
+
+                {/* Stage 2 */}
+                <div className="border border-[#4A3D2F] p-3 rounded">
+                  <p className="text-[#D4A853] font-semibold mb-2">STAGE 2: FRAUD SCREEN</p>
+                  <p>Device fingerprint → IP/VPN check → Email verification → Velocity limits</p>
+                  <p className="text-red-400 mt-1">❌ FRAUD → Deny: Risk too high</p>
+                  <p className="text-green-400">✓ CLEAN → Continue to profiling</p>
+                </div>
+
+                {/* Stage 3 */}
+                <div className="border border-[#4A3D2F] p-3 rounded">
+                  <p className="text-[#D4A853] font-semibold mb-2">STAGE 3: USER PROFILING</p>
+                  <p>Pull credit report → Get account history → Check existing loans → Verify bank</p>
+                  <div className="mt-2 p-2 bg-[#FAF8F5]/5 rounded text-[9px]">
+                    <p>Example Profile: Score: 620 | Open Loans: 1 (Klarna) | Payment: Good | Bank: $150</p>
+                  </div>
+                </div>
+
+                {/* Stage 4 */}
+                <div className="border border-[#D4A853]/50 p-3 rounded bg-[#D4A853]/10">
+                  <p className="text-[#D4A853] font-semibold mb-2">STAGE 4: INTELLIGENT ROUTING</p>
+                  <div className="space-y-1">
+                    <p><span className="text-[#FAF8F5]">IF</span> Score ≥680: Affirm → Klarna → PayPal</p>
+                    <p><span className="text-[#FAF8F5]">ELSE IF</span> Score 640-679: Klarna → Affirm → Afterpay</p>
+                    <p><span className="text-[#FAF8F5]">ELSE IF</span> Score 580-639: <span className="text-[#D4A853]">PayPal*</span> → Klarna → Zip</p>
+                    <p><span className="text-[#FAF8F5]">ELSE IF</span> Score &lt;580: Zip → Sezzle → Perpay</p>
+                    <p className="text-[9px] text-[#8B7E6E] mt-2">*If has PayPal account | Skip provider with existing balance</p>
+                  </div>
+                </div>
+
+                {/* Stage 5 */}
+                <div className="border border-[#4A3D2F] p-3 rounded">
+                  <p className="text-[#D4A853] font-semibold mb-2">STAGE 5: WATERFALL EXECUTION</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="px-2 py-1 bg-[#D4A853]/20 rounded">1st: PayPal</span>
+                    <span className="text-[#D4C5B0]">→</span>
+                    <span className="text-green-400">✓ Approved</span>
+                    <span className="text-[#D4C5B0]">|</span>
+                    <span className="text-red-400">❌ Denied →</span>
+                    <span className="px-2 py-1 bg-[#4A3D2F] rounded">2nd: Zip</span>
+                    <span className="text-[#D4C5B0]">→</span>
+                    <span className="text-red-400">❌ →</span>
+                    <span className="px-2 py-1 bg-[#4A3D2F] rounded">3rd: Sezzle</span>
+                  </div>
+                </div>
+
+                {/* Stage 6 */}
+                <div className="border border-green-500/50 p-3 rounded bg-green-500/10">
+                  <p className="text-green-400 font-semibold mb-2">STAGE 6: LOAN EXECUTION</p>
+                  <p>1. Create BNPL loan with provider</p>
+                  <p>2. CoverPay receives funds (T+1/T+2)</p>
+                  <p>3. <span className="text-[#D4A853]">Instant USDC transfer to recipient</span></p>
+                  <p>4. User repays provider on schedule</p>
+                </div>
+
+                {/* ML Feedback */}
+                <div className="border border-blue-500/50 p-3 rounded bg-blue-500/10">
+                  <p className="text-blue-400 font-semibold mb-2">ML FEEDBACK LOOP</p>
+                  <p className="text-[9px]">Track: User profile → Routing decision → Provider responses → Final outcome</p>
+                  <p className="text-[9px] mt-1">Optimize: If Profile X denied by PayPal but approved by Zip → Route similar users to Zip first</p>
+                </div>
+              </div>
             </div>
           </div>
         )
