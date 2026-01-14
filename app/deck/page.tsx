@@ -861,12 +861,8 @@ export default function DeckPage() {
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-[#FAF8F5] rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin-slow">
                       <Image src="/logos/edge-boost.png" alt="EDGE" width={32} height={32} className="w-full h-full object-contain" />
                     </div>
-                    {/* Venmo - bottom right */}
-                    <div className="absolute bottom-[20%] right-[5%] w-10 h-10 sm:w-11 sm:h-11 bg-[#FAF8F5] rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin-slow">
-                      <Image src="/logos/venmo.svg" alt="Venmo" width={32} height={32} className="w-full h-full object-contain" />
-                    </div>
-                    {/* Braintree - bottom left */}
-                    <div className="absolute bottom-[20%] left-[5%] w-10 h-10 sm:w-11 sm:h-11 bg-[#FAF8F5] rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin-slow">
+                    {/* Braintree - bottom */}
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-[#FAF8F5] rounded-full shadow-md flex items-center justify-center p-1.5 animate-counter-spin-slow">
                       <Image src="/logos/braintree.svg" alt="Braintree" width={32} height={32} className="w-full h-full object-contain" />
                     </div>
                   </div>
@@ -897,7 +893,7 @@ export default function DeckPage() {
                     <span className="text-xl">🛡️</span>
                     <h3 className="text-lg text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>Built-in Redundancy</h3>
                   </div>
-                  <p className="text-sm text-[#B8C5D6]" style={{ fontFamily: 'Georgia, serif' }}>Venmo, Braintree, EDGE Boost as fallbacks. Never miss a payment.</p>
+                  <p className="text-sm text-[#B8C5D6]" style={{ fontFamily: 'Georgia, serif' }}>Braintree, EDGE Boost as fallbacks. Never miss a payment.</p>
                 </div>
                 <a
                   href="https://bankroll.live"
