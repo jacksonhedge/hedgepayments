@@ -800,9 +800,12 @@ export default function DeckPage() {
       case 'product-coverpay':
         return (
           <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto bg-gradient-to-br from-[#2C2416] via-[#3D3225] to-[#2C2416]">
-            <p className="text-xs sm:text-sm text-[#D4A853] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-              CoverPay
-            </p>
+            <div className="flex items-center gap-3 mb-4 sm:mb-6">
+              <p className="text-xs sm:text-sm text-[#D4A853] tracking-widest uppercase" style={{ fontFamily: 'Georgia, serif' }}>
+                CoverPay
+              </p>
+              <span className="text-[10px] sm:text-xs px-2 py-1 bg-[#D4A853] text-[#2C2416] font-semibold rounded">Phase 1</span>
+            </div>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#FAF8F5] mb-6 sm:mb-10 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               The invisible split
             </h2>
