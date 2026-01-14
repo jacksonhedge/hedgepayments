@@ -956,31 +956,29 @@ export default function DeckPage() {
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#2C2416] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Simple, scalable revenue
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-3xl">
-              <div className="bg-gradient-to-br from-[#2C2416] to-[#3D3225] p-6 sm:p-8 shadow-lg">
-                <h3 className="text-base sm:text-xl text-[#FAF8F5] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>Hedge PSP</h3>
-                <p className="text-3xl sm:text-4xl text-[#D4A853] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>1%</p>
-                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>of all processed payment volume</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-5xl">
+              <div className="bg-gradient-to-br from-[#2C2416] to-[#3D3225] p-5 sm:p-6 shadow-lg">
+                <h3 className="text-base sm:text-lg text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Hedge PSP</h3>
+                <p className="text-2xl sm:text-3xl text-[#D4A853] mb-1" style={{ fontFamily: 'Georgia, serif' }}>1%</p>
+                <p className="text-[#D4C5B0] text-xs" style={{ fontFamily: 'Georgia, serif' }}>of all processed payment volume</p>
               </div>
-              <div className="bg-gradient-to-br from-[#2C2416] to-[#3D3225] p-6 sm:p-8 shadow-lg">
-                <h3 className="text-base sm:text-xl text-[#FAF8F5] mb-2 sm:mb-3" style={{ fontFamily: 'Georgia, serif' }}>CoverPay</h3>
-                <p className="text-3xl sm:text-4xl text-[#D4A853] mb-1 sm:mb-2" style={{ fontFamily: 'Georgia, serif' }}>2.5%</p>
-                <p className="text-[#D4C5B0] text-xs sm:text-sm" style={{ fontFamily: 'Georgia, serif' }}>of BNPL orchestration volume</p>
+              <div className="bg-gradient-to-br from-[#2C2416] to-[#3D3225] p-5 sm:p-6 shadow-lg">
+                <h3 className="text-base sm:text-lg text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>CoverPay</h3>
+                <p className="text-2xl sm:text-3xl text-[#D4A853] mb-1" style={{ fontFamily: 'Georgia, serif' }}>2.5%</p>
+                <p className="text-[#D4C5B0] text-xs" style={{ fontFamily: 'Georgia, serif' }}>of BNPL orchestration volume</p>
+              </div>
+              <div className="bg-gradient-to-br from-[#2775CA] to-[#1E5A9E] p-5 sm:p-6 shadow-lg relative">
+                <span className="absolute top-2 right-2 text-[10px] text-white/60 bg-white/10 px-2 py-0.5 rounded">Phase 2*</span>
+                <h3 className="text-base sm:text-lg text-[#FAF8F5] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Stablecoin BNPL</h3>
+                <p className="text-2xl sm:text-3xl text-[#FAF8F5] mb-1" style={{ fontFamily: 'Georgia, serif' }}>100%</p>
+                <p className="text-white/70 text-xs" style={{ fontFamily: 'Georgia, serif' }}>of interest — no middleman cut</p>
               </div>
             </div>
-            <div className="mt-4 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
-              <div className="p-4 sm:p-5 bg-white border border-[#D4C5B0] shadow-md">
-                <p className="text-xs text-[#D4A853] mb-2">Example: Hedge PSP</p>
-                <p className="text-sm sm:text-base text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
-                  $10,000 payment volume → <span className="font-semibold text-[#D4A853]">$100 revenue</span>
-                </p>
-              </div>
-              <div className="p-4 sm:p-5 bg-gradient-to-r from-[#2C2416] to-[#3D3225] shadow-md">
-                <p className="text-xs text-[#D4A853] mb-2">Example: CoverPay</p>
-                <p className="text-sm sm:text-base text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>
-                  $10,000 BNPL volume → <span className="font-semibold text-[#D4A853]">$250 revenue</span>
-                </p>
-              </div>
+            <div className="mt-4 sm:mt-6 p-4 bg-white/50 border border-[#D4C5B0] max-w-5xl">
+              <p className="text-xs text-[#6B5D4F] mb-2">*Phase 2 (6-12 months): Stablecoin-Native BNPL</p>
+              <p className="text-sm text-[#2C2416]" style={{ fontFamily: 'Georgia, serif' }}>
+                Users borrow USDC from <span className="text-[#D4A853] font-semibold">our liquidity pool</span> → Smart contract auto-charges repayments → No Affirm/Klarna taking 4-6% → <span className="text-[#D4A853] font-semibold">We keep 100% of fees</span>
+              </p>
             </div>
           </div>
         )
