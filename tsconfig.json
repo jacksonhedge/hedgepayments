@@ -38,6 +38,7 @@
     "node_modules",
     "packages/**/*",
     "docs/**/*",
-    "supabase/**/*"
+    "supabase/**/*",
+    "mcp-server/**/*"
   ]
 }

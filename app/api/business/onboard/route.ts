@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from '@/app/utils/supabase-server'
 
 // Helper function to generate API keys
 function generateApiKey(prefix: string): string {
@@ -14,8 +13,7 @@ function generateApiKey(prefix: string): string {
 
 export async function POST(request: NextRequest) {
   try {
-    const cookieStore = cookies()
-    const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+    const supabase = createRouteHandlerClient()
 
     const body = await request.json()
 

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClientComponentClient } from '@/app/utils/supabase-client'
 import BookstoreNavbar from '../components/BookstoreNavbar'
 
 export default function BusinessLogin() {
