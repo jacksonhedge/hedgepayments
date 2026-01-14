@@ -21,10 +21,15 @@ function Logo3D() {
       const deltaX = e.clientX - centerX
       const deltaY = e.clientY - centerY
 
-      // Calculate rotation (max ~45 degrees for pronounced effect)
-      const maxRotation = 45
-      const rotateY = (deltaX / window.innerWidth) * maxRotation * 3
-      const rotateX = -(deltaY / window.innerHeight) * maxRotation * 3
+      // Calculate rotation with sensitivity but clamped to max angle
+      const sensitivity = 2.5
+      const maxAngle = 25 // Never tilt more than 25 degrees
+      let rotateY = (deltaX / window.innerWidth) * 45 * sensitivity
+      let rotateX = -(deltaY / window.innerHeight) * 45 * sensitivity
+
+      // Clamp rotation to prevent logo from going too flat
+      rotateX = Math.max(-maxAngle, Math.min(maxAngle, rotateX))
+      rotateY = Math.max(-maxAngle, Math.min(maxAngle, rotateY))
 
       setRotation({ x: rotateX, y: rotateY })
     }
@@ -146,9 +151,15 @@ function Logo3DSmall() {
       const deltaX = e.clientX - centerX
       const deltaY = e.clientY - centerY
 
-      const maxRotation = 45
-      const rotateY = (deltaX / window.innerWidth) * maxRotation * 3
-      const rotateX = -(deltaY / window.innerHeight) * maxRotation * 3
+      // Calculate rotation with sensitivity but clamped to max angle
+      const sensitivity = 2.5
+      const maxAngle = 25 // Never tilt more than 25 degrees
+      let rotateY = (deltaX / window.innerWidth) * 45 * sensitivity
+      let rotateX = -(deltaY / window.innerHeight) * 45 * sensitivity
+
+      // Clamp rotation to prevent logo from going too flat
+      rotateX = Math.max(-maxAngle, Math.min(maxAngle, rotateX))
+      rotateY = Math.max(-maxAngle, Math.min(maxAngle, rotateY))
 
       setRotation({ x: rotateX, y: rotateY })
     }
@@ -198,9 +209,15 @@ function Logo3DTiny({ show }: { show: boolean }) {
       const deltaX = e.clientX - centerX
       const deltaY = e.clientY - centerY
 
-      const maxRotation = 35
-      const rotateY = (deltaX / window.innerWidth) * maxRotation * 2
-      const rotateX = -(deltaY / window.innerHeight) * maxRotation * 2
+      // Calculate rotation with sensitivity but clamped to max angle
+      const sensitivity = 2
+      const maxAngle = 20 // Never tilt more than 20 degrees for tiny logo
+      let rotateY = (deltaX / window.innerWidth) * 35 * sensitivity
+      let rotateX = -(deltaY / window.innerHeight) * 35 * sensitivity
+
+      // Clamp rotation to prevent logo from going too flat
+      rotateX = Math.max(-maxAngle, Math.min(maxAngle, rotateX))
+      rotateY = Math.max(-maxAngle, Math.min(maxAngle, rotateY))
 
       setRotation({ x: rotateX, y: rotateY })
     }
