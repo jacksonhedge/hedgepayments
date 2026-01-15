@@ -998,7 +998,7 @@ export default function DeckPage() {
               The Opportunity
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-[#2C2416] mb-4 sm:mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-              Make Payments a forgotten stress
+              Make Payments an afterthought
             </h2>
             <p className="text-base sm:text-xl text-[#6B5D4F] mb-6 sm:mb-12 max-w-3xl" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
               The best payment is one you don't think about
