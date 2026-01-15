@@ -1470,12 +1470,6 @@ export default function DeckPage() {
                 </div>
               </div>
             </div>
-            <div className="p-4 sm:p-6 bg-[#D4A853]/20 border border-[#D4A853]/40 max-w-3xl">
-              <p className="text-lg sm:text-xl text-[#FAF8F5]" style={{ fontFamily: 'Georgia, serif' }}>
-                "I want to spend without feeling like I'm losing something."
-              </p>
-              <p className="text-sm text-[#D4A853] mt-2" style={{ fontFamily: 'Georgia, serif' }}>— The user we're building for</p>
-            </div>
           </div>
         )
 
