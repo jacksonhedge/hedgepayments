@@ -1554,7 +1554,7 @@ export default function DeckPage() {
         return (
           <div className="flex flex-col justify-start sm:justify-center h-full px-4 sm:px-8 md:px-16 lg:px-24 pt-20 pb-16 sm:py-8 overflow-y-auto bg-gradient-to-br from-[#2C2416] via-[#3D3225] to-[#2C2416]">
             <p className="text-xs sm:text-sm text-[#D4A853] tracking-widest uppercase mb-4 sm:mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-              Team
+              Founding Team
             </p>
             <h2 className="text-2xl sm:text-4xl md:text-5xl text-[#FAF8F5] mb-6 sm:mb-12 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
               Builder. Operator. <span className="text-[#D4A853]">Owner.</span>
