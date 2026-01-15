@@ -126,6 +126,10 @@ const slides = [
     type: 'ask',
   },
   {
+    id: 'thank-you',
+    type: 'thank-you',
+  },
+  {
     id: 'appendix-1',
     type: 'appendix-1',
   },
@@ -1642,6 +1646,26 @@ export default function DeckPage() {
                 Let's Talk
               </Link>
             </div>
+          </div>
+        )
+
+      case 'thank-you':
+        return (
+          <div className="flex flex-col items-center justify-center h-full text-center px-8 bg-gradient-to-br from-[#FAF8F5] via-[#F5F0E8] to-[#EDE5D8]">
+            <Logo3D />
+            <h2 className="text-4xl md:text-6xl lg:text-7xl text-[#2C2416] mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+              Thank You
+            </h2>
+            <div className="w-16 h-px bg-[#D4A853] mb-6"></div>
+            <p className="text-xl md:text-2xl text-[#6B5D4F] mb-8" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+              Easy Money
+            </p>
+            <p className="text-lg text-[#8B7E6E] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+              jackson@hedgepayments.com
+            </p>
+            <p className="text-sm text-[#B8A99A]" style={{ fontFamily: 'Georgia, serif' }}>
+              hedgepayments.com
+            </p>
           </div>
         )
 
