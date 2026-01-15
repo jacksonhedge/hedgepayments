@@ -82,24 +82,12 @@ const slides = [
     type: 'market',
   },
   {
-    id: 'solution',
-    type: 'solution',
-  },
-  {
-    id: 'product-overview',
-    type: 'product-overview',
-  },
-  {
     id: 'product-coverpay',
     type: 'product-coverpay',
   },
   {
     id: 'product-bankroll',
     type: 'product-bankroll',
-  },
-  {
-    id: 'why-now',
-    type: 'why-now',
   },
   {
     id: 'distribution',
@@ -116,6 +104,10 @@ const slides = [
   {
     id: 'competition-users',
     type: 'competition-users',
+  },
+  {
+    id: 'why-now',
+    type: 'why-now',
   },
   {
     id: 'traction',
