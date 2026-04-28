@@ -1,261 +1,299 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import BookstoreNavbar from './BookstoreNavbar'
 
-// 3D Logo component that follows cursor
-function Logo3D() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [rotation, setRotation] = useState({ x: 0, y: 0 })
+const platformPillars = [
+  {
+    name: 'Payments core',
+    description:
+      'Ledger orchestration, settlement logic, payouts, fees, and banking-rail flexibility.'
+  },
+  {
+    name: 'Wallet infrastructure',
+    description:
+      'Balances, deposit flows, custody adapters, transfers, and crypto movement across products.'
+  },
+  {
+    name: 'Control layer',
+    description:
+      'Compliance defaults, geography controls, operational review, and partner-safe rollout structure.'
+  }
+]
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return
+const products = [
+  {
+    name: 'Hedge Payments',
+    label: 'Platform',
+    description:
+      'The white-label payments layer for branded deposits, movement of funds, treasury controls, and partner-facing money operations.'
+  },
+  {
+    name: 'SideBet',
+    label: 'Separate product',
+    description:
+      'An independent product that plugs into shared payment and wallet interfaces while keeping its own deployment, workflows, and operational controls.'
+  },
+  {
+    name: 'Vernacular',
+    label: 'Possible layer',
+    description:
+      'A VIP CRM and service layer that can sit alongside the platform when high-value customer management becomes part of the stack.'
+  }
+]
 
-      const rect = containerRef.current.getBoundingClientRect()
-      const centerX = rect.left + rect.width / 2
-      const centerY = rect.top + rect.height / 2
-
-      const deltaX = e.clientX - centerX
-      const deltaY = e.clientY - centerY
-
-      // Calculate rotation with sensitivity but clamped to max angle
-      const sensitivity = 2.5
-      const maxAngle = 25
-      let rotateY = (deltaX / window.innerWidth) * 45 * sensitivity
-      let rotateX = -(deltaY / window.innerHeight) * 45 * sensitivity
-
-      // Clamp rotation
-      rotateX = Math.max(-maxAngle, Math.min(maxAngle, rotateX))
-      rotateY = Math.max(-maxAngle, Math.min(maxAngle, rotateY))
-
-      setRotation({ x: rotateX, y: rotateY })
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
-  return (
-    <div
-      ref={containerRef}
-      className="mb-16 animate-fadeIn"
-      style={{ perspective: '1000px' }}
-    >
-      <div
-        style={{
-          transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-          transition: 'transform 0.1s ease-out',
-          transformStyle: 'preserve-3d',
-        }}
-      >
-        <Image
-          src="/images/hedge-inc-logo.png"
-          alt="Hedge Payments"
-          width={200}
-          height={200}
-          className="w-44 h-44 md:w-52 md:h-52 opacity-90"
-          style={{ filter: 'drop-shadow(0 20px 40px rgba(44, 36, 22, 0.25))' }}
-          priority
-        />
-      </div>
-    </div>
-  )
-}
+const reasons = [
+  'Swap banking tools behind stable capability interfaces.',
+  'Keep SideBet operationally separate while sharing the money engine.',
+  'Launch new branded payment products without rebuilding rails each time.',
+  'Standardize compliance and control logic at the platform layer.'
+]
 
 export default function NewLandingPage() {
-
   return (
-    <div className="min-h-screen bg-[#FAF8F5]" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-      {/* Always-visible Navbar */}
-      <BookstoreNavbar />
+    <div className="min-h-screen bg-[#f4efe6] text-[#1f241d]">
+      <div className="absolute inset-x-0 top-0 -z-10 h-[620px] bg-[radial-gradient(circle_at_top_left,rgba(205,145,73,0.26),transparent_32%),radial-gradient(circle_at_80%_12%,rgba(84,104,73,0.22),transparent_28%),linear-gradient(180deg,#fbf7ef_0%,#f2eadc_58%,#efe4d3_100%)]" />
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-20 pb-32">
-        {/* Hedgehog Logo - 3D Interactive */}
-        <Logo3D />
-
-        {/* Decorative line */}
-        <div className="w-16 h-px bg-[#D4C5B0] mb-10 animate-fadeIn animation-delay-100"></div>
-
-        {/* Headline */}
-        <h1 className="text-5xl md:text-7xl lg:text-8xl text-[#2C2416] text-center mb-8 tracking-tight leading-tight animate-fadeIn animation-delay-200" style={{ fontFamily: 'Georgia, "Palatino Linotype", "Book Antiqua", serif', fontWeight: 400, letterSpacing: '-0.02em' }}>
-          Money in an AI World
-        </h1>
-
-        {/* Subheadline */}
-        <p className="text-xl md:text-2xl text-[#6B5D4F] text-center mb-6 max-w-2xl tracking-wide leading-relaxed animate-fadeIn animation-delay-400" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-          Launch payments fast, grow faster
-        </p>
-
-        {/* AI Integration Badge */}
-        <div className="text-center mb-14 animate-fadeIn animation-delay-500">
-          <p className="text-sm text-[#8B7E6E] tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
-            Works seamlessly with Claude, Claude Code, ChatGPT, Codex & AI agents
-          </p>
-        </div>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-5 animate-fadeIn animation-delay-600">
-          <Link
-            href="/signup"
-            className="inline-flex items-center justify-center px-10 py-4 text-base tracking-wide text-[#FAF8F5] bg-[#2C2416] border border-[#2C2416] hover:bg-[#3D3024] transition-all"
-            style={{ fontFamily: 'Georgia, serif' }}
-          >
-            Start Building
-          </Link>
-          <Link
-            href="/docs"
-            className="inline-flex items-center justify-center px-10 py-4 text-base tracking-wide text-[#2C2416] bg-transparent border border-[#D4C5B0] hover:border-[#2C2416] transition-all"
-            style={{ fontFamily: 'Georgia, serif' }}
-          >
-            Read our docs
-          </Link>
-        </div>
-      </section>
-
-      {/* Logo Ticker */}
-      <section className="py-20 border-t border-[#D4C5B0]">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-xs text-[#8B7E6E] mb-12 tracking-widest uppercase" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.2em' }}>
-            Trusted by AI-first companies
-          </p>
-
-          {/* Ticker Animation */}
-          <div className="relative overflow-hidden">
-            <div className="flex animate-scroll">
-              {/* First set of logos */}
-              <div className="flex items-center space-x-20 px-8">
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <span className="text-2xl text-[#2C2416] tracking-wide" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>Claude</span>
-                </div>
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <span className="text-2xl text-[#2C2416] tracking-wide" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>Gemini</span>
-                </div>
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <span className="text-2xl text-[#2C2416] tracking-wide" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>ChatGPT</span>
-                </div>
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <Image
-                    src="/images/bankroll-logo.png"
-                    alt="Bankroll"
-                    width={100}
-                    height={40}
-                    className="h-10 w-auto opacity-60 grayscale"
-                  />
-                </div>
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <Image
-                    src="/sidebet-logo.png"
-                    alt="SideBet"
-                    width={100}
-                    height={40}
-                    className="h-10 w-auto opacity-60 grayscale"
-                  />
-                </div>
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <Image
-                    src="/images/hedgepay-new-logo.png"
-                    alt="Hedge Pay"
-                    width={100}
-                    height={40}
-                    className="h-10 w-auto opacity-60 grayscale"
-                  />
-                </div>
+      <main className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 pb-16 pt-4 sm:px-6 lg:px-8">
+        <header className="sticky top-4 z-20 rounded-[28px] border border-[#2a31261a] bg-[rgba(255,250,242,0.78)] px-5 py-4 backdrop-blur-xl shadow-[0_24px_70px_rgba(57,49,35,0.10)]">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#394734_0%,#182215_100%)] text-sm tracking-[0.18em] text-[#f6f1e7]">
+                HP
               </div>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b7c60]">
+                  Hedge Payments
+                </p>
+                <p className="text-sm text-[#5d6259]">
+                  White-label payments infrastructure
+                </p>
+              </div>
+            </div>
 
-              {/* Duplicate set for seamless loop */}
-              <div className="flex items-center space-x-20 px-8">
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <span className="text-2xl text-[#2C2416] tracking-wide" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>Claude</span>
-                </div>
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <span className="text-2xl text-[#2C2416] tracking-wide" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>Gemini</span>
-                </div>
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <span className="text-2xl text-[#2C2416] tracking-wide" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>ChatGPT</span>
-                </div>
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <Image
-                    src="/images/bankroll-logo.png"
-                    alt="Bankroll"
-                    width={100}
-                    height={40}
-                    className="h-10 w-auto opacity-60 grayscale"
-                  />
-                </div>
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <Image
-                    src="/sidebet-logo.png"
-                    alt="SideBet"
-                    width={100}
-                    height={40}
-                    className="h-10 w-auto opacity-60 grayscale"
-                  />
-                </div>
-                <div className="flex-shrink-0 flex items-center justify-center w-36 h-16">
-                  <Image
-                    src="/images/hedgepay-new-logo.png"
-                    alt="Hedge Pay"
-                    width={100}
-                    height={40}
-                    className="h-10 w-auto opacity-60 grayscale"
-                  />
+            <nav className="flex flex-wrap items-center gap-4 text-sm text-[#2d3329]">
+              <a href="#platform" className="transition hover:text-[#bf6b42]">
+                Platform
+              </a>
+              <a href="#products" className="transition hover:text-[#bf6b42]">
+                Products
+              </a>
+              <a href="#control" className="transition hover:text-[#bf6b42]">
+                Control
+              </a>
+              <Link href="/sidebet" className="transition hover:text-[#bf6b42]">
+                SideBet
+              </Link>
+            </nav>
+          </div>
+        </header>
+
+        <section className="grid gap-6 overflow-hidden rounded-[36px] border border-[#2a31261a] bg-[rgba(255,251,245,0.82)] p-8 shadow-[0_28px_80px_rgba(46,41,29,0.12)] lg:grid-cols-[1.15fr_0.85fr] lg:p-12">
+          <div className="flex flex-col justify-center">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#6b7c60]">
+              Shared rails. Separate products.
+            </p>
+            <h1 className="mt-5 max-w-[11ch] font-serif text-5xl leading-[0.95] tracking-[-0.04em] text-[#1f241d] sm:text-6xl lg:text-8xl">
+              White-label payments infrastructure for modern products.
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#5d6259]">
+              Hedge Payments is the platform layer for branded money movement,
+              crypto wallet flows, and provider-flexible banking tools. It powers
+              products like SideBet through stable interfaces, not fragile vendor-specific
+              rewrites.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/contact"
+                className="inline-flex min-h-12 items-center justify-center rounded-full bg-[linear-gradient(135deg,#394734_0%,#131a11_100%)] px-6 text-sm font-medium tracking-[0.08em] text-[#f8f3ea] transition hover:-translate-y-0.5"
+              >
+                Book a Demo
+              </Link>
+              <Link
+                href="/products"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#2a312624] bg-white/40 px-6 text-sm font-medium tracking-[0.08em] text-[#1f241d] transition hover:-translate-y-0.5 hover:border-[#394734]"
+              >
+                Explore Products
+              </Link>
+            </div>
+          </div>
+
+          <div className="grid gap-4">
+            <div className="rounded-[28px] border border-[#2a31261a] bg-[linear-gradient(135deg,rgba(57,71,52,0.98)_0%,rgba(18,23,16,0.98)_100%)] p-6 text-[#f2ecdf] shadow-[0_20px_50px_rgba(25,25,20,0.18)]">
+              <p className="text-[11px] uppercase tracking-[0.24em] text-[#cbc2b1]">
+                Platform posture
+              </p>
+              <div className="mt-4 flex items-center gap-4">
+                <Image
+                  src="/images/hedge-inc-logo.png"
+                  alt="Hedge Payments"
+                  width={68}
+                  height={68}
+                  className="h-[68px] w-[68px] object-contain"
+                  priority
+                />
+                <div>
+                  <p className="font-serif text-4xl leading-none tracking-[-0.03em]">
+                    White-label first
+                  </p>
+                  <p className="mt-3 max-w-sm text-sm leading-6 text-[#d9d1c3]">
+                    Shared payment rails, wallet infrastructure, compliance defaults,
+                    and room for separate products underneath.
+                  </p>
                 </div>
               </div>
             </div>
+
+            <div className="grid gap-4">
+              {platformPillars.map((pillar, index) => (
+                <article
+                  key={pillar.name}
+                  className="rounded-[24px] border border-[#2a31261a] bg-[rgba(255,252,247,0.82)] p-5"
+                >
+                  <p className="font-serif text-lg text-[#d58e3d]">0{index + 1}</p>
+                  <h2 className="mt-2 text-xl font-semibold text-[#1f241d]">
+                    {pillar.name}
+                  </h2>
+                  <p className="mt-2 text-sm leading-6 text-[#5d6259]">
+                    {pillar.description}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+        <section
+          id="platform"
+          className="rounded-[32px] border border-[#2a31261a] bg-[rgba(255,251,245,0.76)] p-8 shadow-[0_28px_80px_rgba(46,41,29,0.10)] lg:p-10"
+        >
+          <div className="max-w-3xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#6b7c60]">
+              Platform model
+            </p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight tracking-[-0.03em] text-[#1f241d] sm:text-5xl">
+              One money layer with clear boundaries around each product.
+            </h2>
+          </div>
 
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+            <article className="rounded-[28px] border border-[#2a31261a] bg-white/70 p-6">
+              <p className="text-[11px] uppercase tracking-[0.24em] text-[#6b7c60]">
+                Shared by design
+              </p>
+              <h3 className="mt-3 text-2xl font-semibold text-[#1f241d]">
+                Hedge Payments
+              </h3>
+              <p className="mt-3 text-base leading-7 text-[#5d6259]">
+                The white-label platform for partner-facing payment operations,
+                banking-tool abstraction, treasury flows, ledger logic, and controlled rollout.
+              </p>
+              <ul className="mt-5 space-y-3 text-sm leading-6 text-[#5d6259]">
+                <li>ACH, wire, book transfer, and stablecoin settlement rails</li>
+                <li>Ledger and reconciliation models that can be reused across products</li>
+                <li>Compliance and audit rules enforced at the platform level</li>
+              </ul>
+            </article>
 
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out forwards;
-          opacity: 0;
-        }
+            <article className="rounded-[28px] border border-[#2a31261a] bg-[linear-gradient(180deg,rgba(191,107,66,0.12),rgba(255,252,246,0.84)_36%)] p-6">
+              <p className="text-[11px] uppercase tracking-[0.24em] text-[#6b7c60]">
+                Separate, but connected
+              </p>
+              <h3 className="mt-3 text-2xl font-semibold text-[#1f241d]">
+                SideBet
+              </h3>
+              <p className="mt-3 text-base leading-7 text-[#5d6259]">
+                A separate product using shared payment and wallet capabilities through
+                interfaces, so banking tools can change without forcing a full product rewrite.
+              </p>
+              <ul className="mt-5 space-y-3 text-sm leading-6 text-[#5d6259]">
+                <li>Own deployment, configuration, and release cadence</li>
+                <li>Own product workflows and user operations</li>
+                <li>Shared capabilities without shared fragility</li>
+              </ul>
+            </article>
+          </div>
+        </section>
 
-        .animation-delay-200 {
-          animation-delay: 0.2s;
-        }
+        <section
+          id="products"
+          className="rounded-[32px] border border-[#2a31261a] bg-[rgba(255,251,245,0.76)] p-8 shadow-[0_28px_80px_rgba(46,41,29,0.10)] lg:p-10"
+        >
+          <div className="max-w-3xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#6b7c60]">
+              Products
+            </p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight tracking-[-0.03em] text-[#1f241d] sm:text-5xl">
+              Hedge at the center, with room for multiple product surfaces.
+            </h2>
+          </div>
 
-        .animation-delay-400 {
-          animation-delay: 0.4s;
-        }
+          <div className="mt-8 grid gap-5 lg:grid-cols-3">
+            {products.map((product, index) => (
+              <article
+                key={product.name}
+                className="min-h-[250px] rounded-[28px] border border-[#2a31261a] bg-white/70 p-6"
+              >
+                <p className="font-serif text-lg text-[#d58e3d]">0{index + 1}</p>
+                <p className="mt-4 text-[11px] uppercase tracking-[0.24em] text-[#6b7c60]">
+                  {product.label}
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold text-[#1f241d]">
+                  {product.name}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-[#5d6259]">
+                  {product.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-        .animation-delay-600 {
-          animation-delay: 0.6s;
-        }
+        <section
+          id="control"
+          className="grid gap-5 rounded-[32px] border border-[#2a31261a] bg-[rgba(255,251,245,0.76)] p-8 shadow-[0_28px_80px_rgba(46,41,29,0.10)] lg:grid-cols-[1.1fr_0.9fr] lg:p-10"
+        >
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#6b7c60]">
+              Why this structure works
+            </p>
+            <h2 className="mt-4 max-w-2xl font-serif text-4xl leading-tight tracking-[-0.03em] text-[#1f241d] sm:text-5xl">
+              Built to change providers without changing identity.
+            </h2>
+            <div className="mt-8 grid gap-4">
+              {reasons.map((reason) => (
+                <article
+                  key={reason}
+                  className="rounded-[24px] border border-[#2a31261a] bg-white/70 px-5 py-4 text-sm leading-7 text-[#5d6259]"
+                >
+                  {reason}
+                </article>
+              ))}
+            </div>
+          </div>
 
-        .animate-scroll {
-          animation: scroll 30s linear infinite;
-        }
-
-        .animate-scroll:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
+          <aside className="flex flex-col justify-between rounded-[28px] border border-[#2a31261a] bg-[linear-gradient(135deg,rgba(213,142,61,0.18),rgba(255,252,246,0.84))] p-6">
+            <p className="font-serif text-2xl text-[#d58e3d]">/ /</p>
+            <p className="mt-10 font-serif text-3xl leading-tight tracking-[-0.03em] text-[#1f241d]">
+              Own the interface layer, and the business stays flexible even when the vendors change.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/contact"
+                className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#1f241d] px-5 text-sm font-medium tracking-[0.08em] text-[#f8f3ea] transition hover:-translate-y-0.5"
+              >
+                Talk to Hedge
+              </Link>
+              <Link
+                href="/sidebet"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#2a312624] bg-white/40 px-5 text-sm font-medium tracking-[0.08em] text-[#1f241d] transition hover:-translate-y-0.5 hover:border-[#394734]"
+              >
+                See SideBet
+              </Link>
+            </div>
+          </aside>
+        </section>
+      </main>
     </div>
   )
 }
