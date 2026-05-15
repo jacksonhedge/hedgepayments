@@ -3,7 +3,10 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Script from 'next/script'
 import { createClientComponentClient } from '@/app/utils/supabase-client'
+import { useSideBetApi } from './hooks/useSideBetApi'
+import { PlaidLinkButton, CasinoLinkButton } from './components'
 
 interface RoundUpRule {
   id: string
@@ -14,26 +17,6 @@ interface RoundUpRule {
   maxRoundUp: number
   categories: string[]
 }
-
-interface MockTransaction {
-  id: string
-  merchant: string
-  amount: number
-  roundUp: number
-  category: string
-  date: string
-  status: 'collected' | 'pending' | 'settled'
-}
-
-const MOCK_TRANSACTIONS: MockTransaction[] = [
-  { id: '1', merchant: 'Starbucks', amount: 5.75, roundUp: 0.25, category: 'Food & Drink', date: '2024-01-08', status: 'settled' },
-  { id: '2', merchant: 'Amazon', amount: 34.99, roundUp: 0.01, category: 'Shopping', date: '2024-01-08', status: 'collected' },
-  { id: '3', merchant: 'Uber', amount: 18.50, roundUp: 0.50, category: 'Transportation', date: '2024-01-07', status: 'settled' },
-  { id: '4', merchant: 'Netflix', amount: 15.99, roundUp: 0.01, category: 'Entertainment', date: '2024-01-07', status: 'pending' },
-  { id: '5', merchant: 'Whole Foods', amount: 67.23, roundUp: 0.77, category: 'Groceries', date: '2024-01-06', status: 'settled' },
-  { id: '6', merchant: 'Shell Gas', amount: 42.18, roundUp: 0.82, category: 'Gas', date: '2024-01-06', status: 'settled' },
-  { id: '7', merchant: 'Apple', amount: 99.00, roundUp: 1.00, category: 'Shopping', date: '2024-01-05', status: 'collected' },
-]
 
 const CATEGORIES = [
   'Food & Drink',
@@ -52,16 +35,36 @@ export default function SideBetDashboard() {
   const supabase = createClientComponentClient()
 
   const [activeTab, setActiveTab] = useState<'overview' | 'settings' | 'transactions' | 'integration'>('overview')
-  const [isLoading, setIsLoading] = useState(true)
-  const [stripeConnected, setStripeConnected] = useState(true)
-  const [plaidConnected, setPlaidConnected] = useState(true)
+  const [authLoading, setAuthLoading] = useState(true)
+  const [userId, setUserId] = useState<string | null>(null)
+  const [settlingInProgress, setSettlingInProgress] = useState(false)
+  const [savingSettings, setSavingSettings] = useState(false)
+
+  // Use the SideBet API hook
+  const {
+    isLoading: dataLoading,
+    error,
+    stats,
+    transactions,
+    bankConnections,
+    casinoAccounts,
+    userSettings,
+    refresh,
+    triggerSettlement,
+    updateSettings,
+    pauseRoundups,
+    resumeRoundups,
+    exchangeBankToken,
+    removeBankConnection,
+    setPrimaryCasino
+  } = useSideBetApi(userId)
 
   const [roundUpRules, setRoundUpRules] = useState<RoundUpRule[]>([
     {
       id: '1',
       name: 'Default Round-Up',
       enabled: true,
-      multiplier: 1,
+      multiplier: userSettings?.roundupMultiplier || 1,
       minTransaction: 1.00,
       maxRoundUp: 5.00,
       categories: []
@@ -71,8 +74,8 @@ export default function SideBetDashboard() {
   const [settings, setSettings] = useState({
     destination: 'gaming_wallet',
     autoSettle: true,
-    settleThreshold: 10.00,
-    settleCadence: 'daily'
+    settleThreshold: (userSettings?.settlementThresholdCents || 1000) / 100,
+    settleCadence: userSettings?.settlementCadence || 'daily'
   })
 
   useEffect(() => {
@@ -82,12 +85,66 @@ export default function SideBetDashboard() {
         router.push('/business-login')
         return
       }
-      setIsLoading(false)
+      setUserId(user.id)
+      setAuthLoading(false)
     }
     checkAuth()
   }, [router, supabase])
 
-  if (isLoading) {
+  // Update local state when API settings load
+  useEffect(() => {
+    if (userSettings) {
+      setRoundUpRules(prev => prev.map(r => ({
+        ...r,
+        multiplier: userSettings.roundupMultiplier || r.multiplier
+      })))
+      setSettings(prev => ({
+        ...prev,
+        settleThreshold: (userSettings.settlementThresholdCents || 1000) / 100,
+        settleCadence: userSettings.settlementCadence || prev.settleCadence
+      }))
+    }
+  }, [userSettings])
+
+  const handleSettlement = async () => {
+    setSettlingInProgress(true)
+    try {
+      await triggerSettlement()
+    } catch (err) {
+      console.error('Settlement failed:', err)
+    } finally {
+      setSettlingInProgress(false)
+    }
+  }
+
+  const handleBankLinked = async (publicToken: string, metadata: any) => {
+    try {
+      await exchangeBankToken(publicToken, metadata?.accounts?.map((a: any) => a.id))
+    } catch (err) {
+      console.error('Failed to link bank:', err)
+    }
+  }
+
+  const handleSaveSettings = async () => {
+    setSavingSettings(true)
+    try {
+      const currentRule = roundUpRules[0]
+      await updateSettings({
+        roundupMultiplier: currentRule?.multiplier || 1,
+        minTransactionCents: Math.round((currentRule?.minTransaction || 1) * 100),
+        maxRoundupCents: Math.round((currentRule?.maxRoundUp || 5) * 100),
+        settlementCadence: settings.settleCadence,
+        settlementThresholdCents: Math.round(settings.settleThreshold * 100),
+        excludedCategories: currentRule?.categories || []
+      })
+    } catch (err) {
+      console.error('Failed to save settings:', err)
+    } finally {
+      setSavingSettings(false)
+    }
+  }
+
+  if (authLoading || dataLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
         <div className="animate-spin w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full"></div>
@@ -95,12 +152,17 @@ export default function SideBetDashboard() {
     )
   }
 
-  const totalRoundUps = MOCK_TRANSACTIONS.reduce((acc, t) => acc + t.roundUp, 0)
-  const settledAmount = MOCK_TRANSACTIONS.filter(t => t.status === 'settled').reduce((acc, t) => acc + t.roundUp, 0)
-  const pendingAmount = MOCK_TRANSACTIONS.filter(t => t.status !== 'settled').reduce((acc, t) => acc + t.roundUp, 0)
+  const totalRoundUps = (stats?.totalRoundupsCents || 0) / 100
+  const settledAmount = (stats?.settledCents || 0) / 100
+  const pendingAmount = (stats?.pendingCents || 0) / 100
+  const hasLinkedBank = bankConnections.length > 0
+  const hasLinkedCasino = casinoAccounts.length > 0
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      {/* Plaid SDK */}
+      <Script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js" />
+
       {/* Header */}
       <header className="border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -175,78 +237,123 @@ export default function SideBetDashboard() {
 
             {/* Connection Status */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Stripe */}
-              <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-[#635BFF] rounded-lg flex items-center justify-center">
-                      <span className="text-white font-bold">S</span>
-                    </div>
-                    <div>
-                      <h3 className="text-white font-semibold">Stripe</h3>
-                      <p className="text-gray-400 text-sm">Payment Processing</p>
-                    </div>
-                  </div>
-                  {stripeConnected ? (
-                    <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">Connected</span>
-                  ) : (
-                    <button className="px-4 py-2 bg-[#635BFF] text-white rounded-lg text-sm hover:bg-[#5851DB] transition-colors">
-                      Connect Stripe
-                    </button>
-                  )}
-                </div>
-                {stripeConnected && (
-                  <div className="mt-4 pt-4 border-t border-white/10">
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="text-gray-500">Account</p>
-                        <p className="text-white">acct_1234...xyz</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Mode</p>
-                        <p className="text-yellow-400">Test Mode</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Plaid */}
+              {/* Bank Connection */}
               <div className="bg-white/5 rounded-xl border border-white/10 p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                      <span className="text-white font-bold">P</span>
+                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                      </svg>
                     </div>
                     <div>
-                      <h3 className="text-white font-semibold">Plaid</h3>
-                      <p className="text-gray-400 text-sm">Bank Connections</p>
+                      <h3 className="text-white font-semibold">Bank Account</h3>
+                      <p className="text-gray-400 text-sm">via Plaid</p>
                     </div>
                   </div>
-                  {plaidConnected ? (
+                  {hasLinkedBank ? (
                     <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">Connected</span>
-                  ) : (
-                    <button className="px-4 py-2 bg-black text-white rounded-lg text-sm hover:bg-gray-900 transition-colors">
-                      Connect Plaid
-                    </button>
+                  ) : userId && (
+                    <PlaidLinkButton userId={userId} onSuccess={handleBankLinked} />
                   )}
                 </div>
-                {plaidConnected && (
-                  <div className="mt-4 pt-4 border-t border-white/10">
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="text-gray-500">Client ID</p>
-                        <p className="text-white">client_1234...xyz</p>
+                {hasLinkedBank && (
+                  <div className="mt-4 pt-4 border-t border-white/10 space-y-2">
+                    {bankConnections.map(conn => (
+                      <div key={conn.id} className="flex items-center justify-between text-sm">
+                        <div className="flex items-center gap-2">
+                          <span className="text-white">{conn.institutionName}</span>
+                          <span className="text-gray-500">
+                            ({conn.accounts.length} account{conn.accounts.length !== 1 ? 's' : ''})
+                          </span>
+                        </div>
+                        <button
+                          onClick={() => removeBankConnection(conn.id)}
+                          className="text-red-400 hover:text-red-300 text-xs"
+                        >
+                          Remove
+                        </button>
                       </div>
-                      <div>
-                        <p className="text-gray-500">Environment</p>
-                        <p className="text-yellow-400">Sandbox</p>
-                      </div>
+                    ))}
+                    {userId && (
+                      <PlaidLinkButton
+                        userId={userId}
+                        onSuccess={handleBankLinked}
+                        className="mt-2 text-sm"
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Casino Connection */}
+              <div className="bg-white/5 rounded-xl border border-white/10 p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
                     </div>
+                    <div>
+                      <h3 className="text-white font-semibold">Casino Account</h3>
+                      <p className="text-gray-400 text-sm">Gaming Wallet</p>
+                    </div>
+                  </div>
+                  {hasLinkedCasino ? (
+                    <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">Connected</span>
+                  ) : null}
+                </div>
+                {hasLinkedCasino ? (
+                  <div className="mt-4 pt-4 border-t border-white/10 space-y-2">
+                    {casinoAccounts.map(acct => (
+                      <div key={acct.id} className="flex items-center justify-between text-sm">
+                        <div className="flex items-center gap-2">
+                          <span className="text-white">{acct.displayName}</span>
+                          <span className="text-gray-500">@{acct.username}</span>
+                          {acct.isPrimary && (
+                            <span className="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">Primary</span>
+                          )}
+                        </div>
+                        {!acct.isPrimary && (
+                          <button
+                            onClick={() => setPrimaryCasino(acct.id)}
+                            className="text-blue-400 hover:text-blue-300 text-xs"
+                          >
+                            Set Primary
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : userId && (
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <CasinoLinkButton userId={userId} showSelector />
                   </div>
                 )}
               </div>
             </div>
+
+            {/* Quick Actions */}
+            {hasLinkedBank && hasLinkedCasino && pendingAmount > 0 && (
+              <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-white font-semibold">Ready to Settle</h3>
+                    <p className="text-gray-400 text-sm">
+                      You have ${pendingAmount.toFixed(2)} in pending round-ups ready to deposit
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleSettlement}
+                    disabled={settlingInProgress}
+                    className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors disabled:opacity-50"
+                  >
+                    {settlingInProgress ? 'Processing...' : 'Settle Now'}
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* How It Works */}
             <div className="bg-white/5 rounded-xl border border-white/10 p-6">
@@ -295,23 +402,30 @@ export default function SideBetDashboard() {
                 </button>
               </div>
               <div className="divide-y divide-white/10">
-                {MOCK_TRANSACTIONS.slice(0, 5).map(transaction => (
-                  <div key={transaction.id} className="p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                        <span className="text-white font-medium">{transaction.merchant.charAt(0)}</span>
-                      </div>
-                      <div>
-                        <p className="text-white font-medium">{transaction.merchant}</p>
-                        <p className="text-gray-500 text-sm">{transaction.category}</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-white font-medium">${transaction.amount.toFixed(2)}</p>
-                      <p className="text-green-400 text-sm">+${transaction.roundUp.toFixed(2)}</p>
-                    </div>
+                {transactions.length === 0 ? (
+                  <div className="p-8 text-center text-gray-400">
+                    <p>No round-ups yet.</p>
+                    <p className="text-sm mt-1">Start making purchases to see your round-ups here.</p>
                   </div>
-                ))}
+                ) : (
+                  transactions.slice(0, 5).map(transaction => (
+                    <div key={transaction.id} className="p-4 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                          <span className="text-white font-medium">{transaction.merchant.charAt(0)}</span>
+                        </div>
+                        <div>
+                          <p className="text-white font-medium">{transaction.merchant}</p>
+                          <p className="text-gray-500 text-sm">{transaction.category}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-white font-medium">${transaction.amount.toFixed(2)}</p>
+                        <p className="text-green-400 text-sm">+${transaction.roundUp.toFixed(2)}</p>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>
@@ -492,8 +606,12 @@ export default function SideBetDashboard() {
               </div>
 
               <div className="mt-6 pt-6 border-t border-white/10 flex justify-end">
-                <button className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
-                  Save Settings
+                <button
+                  onClick={handleSaveSettings}
+                  disabled={savingSettings}
+                  className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors disabled:opacity-50"
+                >
+                  {savingSettings ? 'Saving...' : 'Save Settings'}
                 </button>
               </div>
             </div>
@@ -519,47 +637,57 @@ export default function SideBetDashboard() {
             </div>
 
             <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="text-left p-4 text-gray-400 text-sm font-medium">Merchant</th>
-                    <th className="text-left p-4 text-gray-400 text-sm font-medium">Category</th>
-                    <th className="text-right p-4 text-gray-400 text-sm font-medium">Amount</th>
-                    <th className="text-right p-4 text-gray-400 text-sm font-medium">Round-Up</th>
-                    <th className="text-left p-4 text-gray-400 text-sm font-medium">Date</th>
-                    <th className="text-left p-4 text-gray-400 text-sm font-medium">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/10">
-                  {MOCK_TRANSACTIONS.map(transaction => (
-                    <tr key={transaction.id} className="hover:bg-white/5">
-                      <td className="p-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
-                            <span className="text-white text-sm font-medium">{transaction.merchant.charAt(0)}</span>
-                          </div>
-                          <span className="text-white">{transaction.merchant}</span>
-                        </div>
-                      </td>
-                      <td className="p-4 text-gray-400">{transaction.category}</td>
-                      <td className="p-4 text-white text-right">${transaction.amount.toFixed(2)}</td>
-                      <td className="p-4 text-green-400 text-right font-medium">+${transaction.roundUp.toFixed(2)}</td>
-                      <td className="p-4 text-gray-400">{transaction.date}</td>
-                      <td className="p-4">
-                        <span className={`px-2 py-1 rounded-full text-xs ${
-                          transaction.status === 'settled'
-                            ? 'bg-green-500/20 text-green-400'
-                            : transaction.status === 'collected'
-                              ? 'bg-blue-500/20 text-blue-400'
-                              : 'bg-yellow-500/20 text-yellow-400'
-                        }`}>
-                          {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
-                        </span>
-                      </td>
+              {transactions.length === 0 ? (
+                <div className="p-12 text-center text-gray-400">
+                  <svg className="w-12 h-12 mx-auto mb-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                  <p className="text-lg">No transactions yet</p>
+                  <p className="text-sm mt-1">Connect a bank account to start tracking round-ups.</p>
+                </div>
+              ) : (
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-white/10">
+                      <th className="text-left p-4 text-gray-400 text-sm font-medium">Merchant</th>
+                      <th className="text-left p-4 text-gray-400 text-sm font-medium">Category</th>
+                      <th className="text-right p-4 text-gray-400 text-sm font-medium">Amount</th>
+                      <th className="text-right p-4 text-gray-400 text-sm font-medium">Round-Up</th>
+                      <th className="text-left p-4 text-gray-400 text-sm font-medium">Date</th>
+                      <th className="text-left p-4 text-gray-400 text-sm font-medium">Status</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-white/10">
+                    {transactions.map(transaction => (
+                      <tr key={transaction.id} className="hover:bg-white/5">
+                        <td className="p-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+                              <span className="text-white text-sm font-medium">{transaction.merchant.charAt(0)}</span>
+                            </div>
+                            <span className="text-white">{transaction.merchant}</span>
+                          </div>
+                        </td>
+                        <td className="p-4 text-gray-400">{transaction.category}</td>
+                        <td className="p-4 text-white text-right">${transaction.amount.toFixed(2)}</td>
+                        <td className="p-4 text-green-400 text-right font-medium">+${transaction.roundUp.toFixed(2)}</td>
+                        <td className="p-4 text-gray-400">{transaction.date}</td>
+                        <td className="p-4">
+                          <span className={`px-2 py-1 rounded-full text-xs ${
+                            transaction.status === 'settled'
+                              ? 'bg-green-500/20 text-green-400'
+                              : transaction.status === 'collected'
+                                ? 'bg-blue-500/20 text-blue-400'
+                                : 'bg-yellow-500/20 text-yellow-400'
+                          }`}>
+                            {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         )}

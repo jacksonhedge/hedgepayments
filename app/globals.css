@@ -14,6 +14,39 @@
   --success: #2e7d32;
   --border: #dde1e5;
   --shadow: rgba(0, 0, 0, 0.1);
+
+  /* Dashboard Design System - Stripe-inspired with Hedge Green */
+  --dashboard-primary-500: #2e7d32;
+  --dashboard-primary-600: #1b5e20;
+  --dashboard-primary-400: #4caf50;
+
+  /* Surfaces */
+  --dashboard-surface-bg: #f6f9fc;
+  --dashboard-surface-card: #ffffff;
+  --dashboard-surface-border: #e3e8ee;
+  --dashboard-surface-hover: #f0f4f8;
+
+  /* Text */
+  --dashboard-text-primary: #0a2540;
+  --dashboard-text-secondary: #425466;
+  --dashboard-text-muted: #697386;
+
+  /* Status */
+  --dashboard-status-success: #30a46c;
+  --dashboard-status-warning: #f5a623;
+  --dashboard-status-error: #e54d42;
+  --dashboard-status-info: #0073e6;
+
+  /* Mode Indicators */
+  --dashboard-mode-test: #f5a623;
+  --dashboard-mode-live: #2e7d32;
+
+  /* Sidebar */
+  --dashboard-sidebar-bg: #0a2540;
+  --dashboard-sidebar-hover: #1a3654;
+  --dashboard-sidebar-active: #2e7d32;
+  --dashboard-sidebar-text: #8d9caa;
+  --dashboard-sidebar-text-active: #ffffff;
 }
 
 * {

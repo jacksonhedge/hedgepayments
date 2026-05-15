@@ -85,23 +85,23 @@ export default function BusinessLogin() {
       >
         <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-8 md:p-10">
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               Welcome Back
             </h1>
-            <p className="text-gray-300">
+            <p className="text-gray-600">
               Log in to your Hedge Payments dashboard
             </p>
           </div>
 
           {loginError && (
-            <div className="mb-4 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm">
+            <div className="mb-4 p-4 bg-red-50 border border-red-300 rounded-lg text-red-700 text-sm">
               {loginError}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-200 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
               </label>
               <input
@@ -109,14 +109,14 @@ export default function BusinessLogin() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-white bg-opacity-20 border ${errors.email ? 'border-red-500' : 'border-gray-600'} rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors`}
+                className={`w-full px-4 py-3 bg-gray-100 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-colors`}
                 placeholder="your@company.com"
               />
-              {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-200 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
               <input
@@ -124,10 +124,10 @@ export default function BusinessLogin() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-white bg-opacity-20 border ${errors.password ? 'border-red-500' : 'border-gray-600'} rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors`}
+                className={`w-full px-4 py-3 bg-gray-100 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-colors`}
                 placeholder="••••••••"
               />
-              {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
+              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
             </div>
 
             <div className="flex items-center justify-between">
@@ -140,11 +140,11 @@ export default function BusinessLogin() {
                   onChange={handleChange}
                   className="mr-2"
                 />
-                <label htmlFor="rememberMe" className="text-sm text-gray-300">
+                <label htmlFor="rememberMe" className="text-sm text-gray-600">
                   Remember me
                 </label>
               </div>
-              <Link href="/forgot-password" className="text-sm text-purple-400 hover:text-purple-300">
+              <Link href="/forgot-password" className="text-sm text-orange-500 hover:text-orange-600">
                 Forgot password?
               </Link>
             </div>
@@ -154,23 +154,23 @@ export default function BusinessLogin() {
               disabled={isLoading}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-4 bg-purple-600 text-white rounded-lg font-semibold text-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-orange-500 text-white rounded-lg font-semibold text-lg hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Logging in...' : 'Log In'}
             </motion.button>
           </form>
 
-          <div className="mt-8 pt-6 border-t border-gray-700">
-            <p className="text-center text-gray-300">
+          <div className="mt-8 pt-6 border-t border-gray-300">
+            <p className="text-center text-gray-600">
               Don't have an account yet?{' '}
-              <Link href="/get-started" className="text-purple-400 hover:text-purple-300 font-medium">
+              <Link href="/get-started" className="text-orange-500 hover:text-orange-600 font-medium">
                 Sign up for free
               </Link>
             </p>
           </div>
 
           <div className="mt-6 text-center">
-            <Link href="/" className="text-sm text-gray-400 hover:text-gray-300">
+            <Link href="/" className="text-sm text-gray-500 hover:text-gray-700">
               ← Back to Home
             </Link>
           </div>

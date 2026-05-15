@@ -404,7 +404,7 @@ https://pay.hedgepayments.com/?amount=50&currency=USD&description=Order`
       "command": "node",
       "args": ["/path/to/mcp-server/dist/index.js"],
       "env": {
-        "STRIPE_SECRET_KEY": "your_key"
+        "HEDGE_API_KEY": "your_key"
       }
     }
   }
