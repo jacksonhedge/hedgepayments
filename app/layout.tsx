@@ -1,53 +1,45 @@
 import type { Metadata } from 'next'
+import { Inter, Fraunces } from 'next/font/google'
 import './globals.css'
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  display: 'swap',
+  axes: ['opsz', 'SOFT'],
+})
+
+const title = 'Hedge Payments — A small portfolio of focused products'
+const description =
+  'Hedge Payments builds and operates a handful of independent consumer products: FraternityBase, Sneakers, SideBet, and Vernacular.'
+
 export const metadata: Metadata = {
-  title: 'Hedge Payments - Money in an AI World',
-  description: 'Modern Payment Solutions',
+  title,
+  description,
   metadataBase: new URL('https://hedgepayments.com'),
   openGraph: {
-    title: 'Hedge Payments - Money in an AI World',
-    description: 'Modern Payment Solutions',
+    title,
+    description,
     url: 'https://hedgepayments.com',
     siteName: 'Hedge Payments',
-    images: [
-      {
-        url: '/images/hedge-inc-logo.png',
-        width: 1200,
-        height: 1200,
-        alt: 'Hedge Payments - Money in an AI World',
-      },
-    ],
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Hedge Payments - Money in an AI World',
-    description: 'Modern Payment Solutions',
-    images: ['/images/hedge-inc-logo.png'],
+    title,
+    description,
     creator: '@hedgepayments',
-  },
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/images/hedge-inc-logo.png', sizes: 'any' },
-    ],
-    apple: {
-      url: '/apple-touch-icon.png',
-      sizes: '180x180',
-    },
-    other: [
-      {
-        rel: 'apple-touch-icon-precomposed',
-        url: '/apple-touch-icon.png',
-      },
-    ],
   },
   alternates: {
     canonical: 'https://hedgepayments.com',
   },
-  keywords: ['Hedge Payments', 'AI payments', 'crypto payments', 'payment infrastructure', 'AI agents', 'Web3', 'payment processing', 'Coinflow'],
   authors: [{ name: 'Hedge Payments Team' }],
   creator: 'Hedge Payments',
   publisher: 'Hedge Payments',
@@ -59,25 +51,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <head>
-        <meta name="theme-color" content="#FAF8F5" />
+        <meta name="theme-color" content="#f4efe6" />
         <meta name="color-scheme" content="light" />
-        <meta property="fb:app_id" content="your-fb-app-id" />
         <meta name="format-detection" content="telephone=no" />
-        <link rel="canonical" href="https://hedgepayments.com" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
-        <meta property="og:image" content="https://hedgepayments.com/images/hedge-inc-logo.png" />
-        <meta name="twitter:image" content="https://hedgepayments.com/images/hedge-inc-logo.png" />
-        <meta property="og:title" content="Hedge Payments - Money in an AI World" />
-        <meta property="og:description" content="Modern Payment Solutions" />
-        <meta name="twitter:title" content="Hedge Payments - Money in an AI World" />
-        <meta name="twitter:description" content="Modern Payment Solutions" />
       </head>
-      <body>
+      <body className="font-sans antialiased">
         {children}
       </body>
     </html>

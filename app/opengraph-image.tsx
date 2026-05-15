@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
-export const alt = 'SideBet - Join the Waitlist for Your Favorite Sportsbooks';
+export const alt = 'Hedge Payments — White-label payments infrastructure';
 export const size = {
   width: 1200,
   height: 630,
@@ -16,93 +16,89 @@ export default async function Image() {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
           width: '100%',
           height: '100%',
-          backgroundColor: '#DEFFE6', // Light mint background
-          position: 'relative',
+          padding: '72px 80px',
+          backgroundColor: '#f4efe6',
+          backgroundImage:
+            'radial-gradient(circle at 0% 0%, rgba(205,145,73,0.26), transparent 32%), radial-gradient(circle at 95% 10%, rgba(84,104,73,0.22), transparent 28%), linear-gradient(180deg, #fbf7ef 0%, #f2eadc 58%, #efe4d3 100%)',
+          color: '#1f241d',
+          fontFamily: 'sans-serif',
         }}
       >
-        {/* Background pattern */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundImage: 'radial-gradient(circle, #0070f330 2px, transparent 2px)',
-            backgroundSize: '30px 30px',
-            opacity: 0.2,
-          }}
-        />
-        
-        {/* SideBet Icon - Use actual image URL */}
         <div
           style={{
             display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center',
-            marginBottom: 30,
-            width: 300,
-            height: 300,
-            position: 'relative',
+            gap: 16,
+            fontSize: 18,
+            letterSpacing: 6,
+            textTransform: 'uppercase',
+            color: '#6b7c60',
           }}
         >
-          <img
-            src="https://raw.githubusercontent.com/jacksonhedge/hedgepayments/main/public/images/social/sidebet-og.png"
-            width={300}
-            height={300}
-            alt="SideBet logo"
+          <div
             style={{
-              objectFit: 'contain',
+              width: 56,
+              height: 56,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 16,
+              background: 'linear-gradient(135deg, #394734 0%, #182215 100%)',
+              color: '#f6f1e7',
+              fontSize: 16,
+              letterSpacing: 4,
             }}
-          />
+          >
+            HP
+          </div>
+          Hedge Payments
         </div>
-        
-        {/* Title */}
+
         <div
           style={{
-            fontSize: 60,
-            fontWeight: 'bold',
-            color: '#132A45',
-            marginBottom: 20,
-            textAlign: 'center',
+            display: 'flex',
+            marginTop: 56,
+            fontSize: 80,
+            lineHeight: 1.02,
+            letterSpacing: -2.5,
+            color: '#1f241d',
+            maxWidth: '95%',
           }}
         >
-          SideBet
+          White-label payments infrastructure for modern products.
         </div>
-        
-        {/* Main CTA */}
+
         <div
           style={{
-            fontSize: 36,
-            fontWeight: 'bold',
-            maxWidth: '80%',
-            textAlign: 'center',
-            marginBottom: 20,
-            background: 'linear-gradient(90deg, #0070f3, #00d1d1)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            color: 'transparent',
-            padding: '10px 20px',
+            display: 'flex',
+            marginTop: 32,
+            fontSize: 28,
+            lineHeight: 1.4,
+            color: '#5d6259',
+            maxWidth: '88%',
           }}
         >
-          Join the Waitlist for Your Favorite Sportsbooks
+          Shared rails. Separate products. Branded money movement, wallet flows,
+          and provider-flexible banking tools.
         </div>
-        
-        {/* Description */}
+
         <div
           style={{
-            fontSize: 24,
-            color: '#444',
-            maxWidth: '80%',
-            textAlign: 'center',
-            marginBottom: 30,
+            display: 'flex',
+            marginTop: 'auto',
+            gap: 32,
+            fontSize: 20,
+            color: '#394734',
+            letterSpacing: 1,
           }}
         >
-          Turn spare change into winnings! Automatically round up your purchases and place bets on DraftKings, FanDuel, and more.
+          <div style={{ display: 'flex' }}>Payments core</div>
+          <div style={{ display: 'flex', color: '#bf6b42' }}>·</div>
+          <div style={{ display: 'flex' }}>Wallet infrastructure</div>
+          <div style={{ display: 'flex', color: '#bf6b42' }}>·</div>
+          <div style={{ display: 'flex' }}>Control layer</div>
         </div>
       </div>
     ),
@@ -110,4 +106,4 @@ export default async function Image() {
       ...size,
     }
   );
-} 
+}

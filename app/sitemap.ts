@@ -1,28 +1,25 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://sidebet.io';
-  
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-    },
-    {
-      url: `${baseUrl}/partners`,
-      lastModified: new Date(),
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-    },
-    {
-      url: `${baseUrl}/privacy`,
-      lastModified: new Date(),
-    },
-    {
-      url: `${baseUrl}/terms`,
-      lastModified: new Date(),
-    },
+  const baseUrl = 'https://hedgepayments.com';
+  const lastModified = new Date();
+
+  const routes = [
+    '',
+    '/products',
+    '/sidebet',
+    '/wallet',
+    '/developers',
+    '/docs',
+    '/partners',
+    '/marketing-partners',
+    '/blog',
+    '/contact',
+    '/get-started',
   ];
-} 
+
+  return routes.map((path) => ({
+    url: `${baseUrl}${path}`,
+    lastModified,
+  }));
+}

@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/*', '/admin/*'],
+      disallow: ['/api/*', '/admin/*', '/dashboard/*'],
     },
-    sitemap: 'https://sidebet.io/sitemap.xml',
+    sitemap: 'https://hedgepayments.com/sitemap.xml',
   };
-} 
+}
