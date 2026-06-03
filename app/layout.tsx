@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Fraunces } from 'next/font/google'
+import { Inter, Fraunces, Anton, Press_Start_2P, Sora } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -15,9 +15,30 @@ const fraunces = Fraunces({
   axes: ['opsz', 'SOFT'],
 })
 
-const title = 'Hedge Payments — A small portfolio of focused products'
+// Arcade-Neon display system for the marketing site
+const anton = Anton({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-anton',
+  display: 'swap',
+})
+
+const pressStart = Press_Start_2P({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-pixel',
+  display: 'swap',
+})
+
+const sora = Sora({
+  subsets: ['latin'],
+  variable: '--font-sora',
+  display: 'swap',
+})
+
+const title = 'Hedge — Fun, easy payments for the people who use them'
 const description =
-  'Hedge Payments builds and operates a handful of independent consumer products: FraternityBase, Sneakers, SideBet, and Vernacular.'
+  'Hedge is the fun money layer behind your favorite products: wallets, round-ups, and pay-a-little-more-to-win-it-free checkout. You bring the users — we bring the rails. Powering HedgePay, SideBet, Chance™, and FraternityBase.'
 
 export const metadata: Metadata = {
   title,
@@ -51,10 +72,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${fraunces.variable} ${anton.variable} ${pressStart.variable} ${sora.variable}`}
+    >
       <head>
-        <meta name="theme-color" content="#f4efe6" />
-        <meta name="color-scheme" content="light" />
+        <meta name="theme-color" content="#07060e" />
+        <meta name="color-scheme" content="dark" />
         <meta name="format-detection" content="telephone=no" />
       </head>
       <body className="font-sans antialiased">

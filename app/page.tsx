@@ -1,5 +1,6 @@
-import NewLandingPage from './components/NewLandingPage'
+import ArcadeLanding from './components/ArcadeLanding'
 
+// Previous landing kept at ./components/NewLandingPage for fallback.
 export default function Home() {
-  return <NewLandingPage />
+  return <ArcadeLanding />
 }
