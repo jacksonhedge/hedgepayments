@@ -20,6 +20,13 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      # Transitive deps (puppeteer, etc.) try to download browser binaries on
+      # install, which hangs `npm ci` on the runner. The static export never
+      # launches a browser, so skip those downloads.
+      PUPPETEER_SKIP_DOWNLOAD: 'true'
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
