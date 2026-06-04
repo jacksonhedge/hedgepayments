@@ -1,5 +1,5 @@
 /**
- * Chance™ by Hedge — embeddable checkout drop-in (Plaid-style flow).
+ * Chance™ — a Hedge Pay product. Embeddable checkout drop-in (Plaid-style flow).
  *
  * Add a shot at a discounted/free order to ANY checkout with two lines:
  *
@@ -421,7 +421,7 @@
       this.shadowRoot.innerHTML = this.shell(
         '<div class="overlay"><div class="sheet">' +
         '<div class="hdr"><button class="hbtn navBack" data-nav="back" style="visibility:hidden">‹</button>' +
-        '<span class="brandMark"><span class="dot">✦</span> <span class="script">Chance</span> by Hedge</span>' +
+        '<span class="brandMark"><span class="dot">✦</span> <span class="script">Chance</span><span style="opacity:.6;font-weight:600;margin-left:5px">· a Hedge Pay product</span></span>' +
         '<button class="hbtn" data-nav="close">✕</button></div>' +
         '<div class="body"></div><div class="foot"></div></div></div>')
       var ov = this.shadowRoot.querySelector('.overlay')
@@ -736,7 +736,7 @@
       }
       this.morph(false,
         '<div class="step result">' + body +
-        '<div class="note" style="margin-top:18px">Powered by <b>Hedge</b> · markets via Kalshi &amp; Polymarket<br>' +
+        '<div class="note" style="margin-top:18px">Powered by <b>Hedge Pay</b> · markets via Kalshi &amp; Polymarket<br>' +
         '<span class="demoTag">Demo settlement — real routing coming</span></div></div>',
         '<button class="cta" data-act="close">Done</button>')
     }

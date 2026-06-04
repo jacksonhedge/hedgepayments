@@ -63,7 +63,7 @@ export default function ChanceEmbedDemo() {
         </div>
         <span style={S.poweredPill}>
           <span className="coinMini" /> checkout powered by{' '}
-          <b style={{ fontFamily: 'var(--font-script), cursive', color: '#b8ff3a', fontSize: '1.25em', margin: '0 2px' }}>Chance</b> by Hedge
+          <b style={{ fontFamily: 'var(--font-script), cursive', color: '#b8ff3a', fontSize: '1.25em', margin: '0 2px' }}>Chance</b> · a Hedge Pay product
         </span>
       </header>
 
@@ -102,7 +102,7 @@ export default function ChanceEmbedDemo() {
           </div>
 
           <p style={S.fineprint}>
-            Chance is optional and routes your stake to a real market — Hedge isn’t the house. Markets are live from
+            Chance is optional and routes your stake to a real market — Hedge Pay isn’t the house. Markets are live from
             Polymarket; settlement is simulated in this demo.
           </p>
         </div>
