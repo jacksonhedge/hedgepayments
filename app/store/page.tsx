@@ -56,7 +56,8 @@ function VenueTag({ venue }: { venue: string }) {
   if (venue === 'kalshi') {
     return (
       <span className={`${styles.venue} ${styles.venueKalshi}`}>
-        <img src="/logos/kalshi.png" alt="Kalshi" className={styles.venueLogo} />
+        <span className={styles.kalshiIcon}>K</span>
+        <span className={styles.venueNameK}>Kalshi</span>
       </span>
     )
   }

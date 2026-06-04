@@ -265,19 +265,33 @@
   padding: 16px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
 }
 .mkt:hover { border-color: #c9ccd4; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-.mktOn {
+.mkt.mktOn,
+.mkt.mktOn:hover {
   border-color: var(--chance);
   background: #effdf6;
   box-shadow: 0 0 0 2px var(--chance), 0 10px 28px rgba(14, 159, 110, 0.2);
 }
-.mktOn .mktYes { background: var(--chance); color: #fff; border-color: var(--chance); }
+.mkt.mktOn .mktYes { background: var(--chance); color: #fff; border-color: var(--chance); }
 .mktTop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .venue { display: inline-flex; align-items: center; gap: 8px; padding: 4px 11px 4px 5px; border-radius: 24px; }
 .venuePoly { background: #e9f0ff; }
-.venueKalshi { background: #e3fbf3; padding-right: 7px; }
+.venueKalshi { background: #e3fbf3; }
 .venueLogo { height: 26px; width: auto; border-radius: 5px; display: block; }
 .venueLogoSq { height: 28px; width: 28px; border-radius: 7px; display: block; }
 .venueName { font-size: 14px; font-weight: 800; color: #2b6ef6; }
+.kalshiIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: #00c79a;
+  color: #042b22;
+  font-weight: 900;
+  font-size: 17px;
+}
+.venueNameK { font-size: 14px; font-weight: 800; color: #0a8f72; }
 .mktChance { font-size: 12px; font-weight: 600; color: var(--muted); }
 .mktQ { font-size: 16px; font-weight: 700; line-height: 1.3; min-height: 44px; color: var(--ink); }
 .mktBot { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
