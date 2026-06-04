@@ -224,7 +224,10 @@
   .hbtn { width:34px; height:34px; border:none; background:transparent; color:var(--muted); border-radius:10px; cursor:pointer;
     font-size:17px; display:grid; place-items:center; transition:background .15s, color .15s; }
   .hbtn:hover { background:var(--soft); color:var(--ink); }
-  .brandMark { justify-self:center; display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:700; color:var(--ink2); }
+  .brandWrap { justify-self:center; display:flex; flex-direction:column; align-items:center; gap:3px; }
+  .brandMark { display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:700; color:var(--ink2); }
+  .demoStrip { font-size:9px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:#b9860b; background:rgba(255,210,63,.14); border:1px solid rgba(255,210,63,.4); border-radius:20px; padding:1px 9px; }
+  .wrap.dark .demoStrip { color:#ffd23f; }
   .brandMark .dot { width:19px; height:19px; border-radius:6px; display:grid; place-items:center; font-size:11px; color:#fff;
     background:radial-gradient(120% 120% at 30% 20%, #14b87f, #0b8159); }
 
@@ -421,7 +424,8 @@
       this.shadowRoot.innerHTML = this.shell(
         '<div class="overlay"><div class="sheet">' +
         '<div class="hdr"><button class="hbtn navBack" data-nav="back" style="visibility:hidden">‹</button>' +
-        '<span class="brandMark"><span class="dot">✦</span> <span class="script">Chance</span><span style="opacity:.6;font-weight:600;margin-left:5px">· a Hedge Pay product</span></span>' +
+        '<span class="brandWrap"><span class="brandMark"><span class="dot">✦</span> <span class="script">Chance</span><span style="opacity:.6;font-weight:600;margin-left:5px">· a Hedge Pay product</span></span>' +
+        '<span class="demoStrip">Demo · no real money yet</span></span>' +
         '<button class="hbtn" data-nav="close">✕</button></div>' +
         '<div class="body"></div><div class="foot"></div></div></div>')
       var ov = this.shadowRoot.querySelector('.overlay')
