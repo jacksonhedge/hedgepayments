@@ -36,6 +36,9 @@
   if (window.customElements && customElements.get('chance-checkout')) return
   var THIS_SCRIPT = document.currentScript
   var ASSET_BASE = (function () {
+    // host integrations (e.g. the browser extension, loaded as a content script
+    // where document.currentScript is null) can pin the asset origin.
+    if (window.__CHANCE_ASSET_BASE) return window.__CHANCE_ASSET_BASE
     try { return new URL(THIS_SCRIPT.src).origin } catch (e) { return 'https://hedgepayments.com' }
   })()
 
