@@ -8,7 +8,9 @@
 
 ## 1. One-paragraph summary
 
-Chance becomes a single embeddable **web component** — `<chance-checkout>` — that a merchant drops into any checkout with two lines of HTML. Behind it sits **one market-sourcing engine** (ported, network-free, from `sneakers-trading`) that selects real prediction-market positions near a target probability. The same selected offer renders in **two settlement modes** the merchant chooses by config: **flip-to-free** (shopper pays item price + a small premium that buys a real YES position; a win covers the whole purchase → pay $0) and **win-it-back** (shopper pays full price, stake is fronted on the house, a win credits a slice back). The proof is fully self-contained in the HedgePayments website (vendored engine + seeded market snapshot + a `/api/chance/offers` route) so it deploys to Vercel with no new infrastructure.
+Chance becomes a single embeddable **web component** — `<chance-checkout>` — that a merchant drops into any checkout with two lines of HTML. Behind it sits **one market-sourcing engine** (ported, network-free, from `sneakers-trading`) that selects real prediction-market positions near a target probability. The same selected offer renders in **two settlement modes** the merchant chooses by config: **flip-to-free** (shopper pays item price + a small premium that buys a real YES position; a win covers the whole purchase → pay $0) and **win-it-back** (shopper pays full price, stake is fronted on the house, a win credits a slice back). The proof is fully self-contained in the HedgePayments website: the engine + a seeded market snapshot are **bundled into the embed and run client-side**, so it works on the site's **static export** (`output: 'export'` → no server routes) and deploys to Vercel with no new infrastructure. The `api-base` attribute is the seam to a real hosted Hedge offers API later.
+
+> **Constraint note (2026-06-04):** the website ships as a Next.js **static export** (`next.config.js` → `output: 'export'`), which is why the `/store` demo is entirely client-side. Server-side API routes do not run on the deploy, so the proof computes offers in the browser. This is also a *better* drop-in story: the sourcing demo needs no merchant backend.
 
 ---
 
@@ -19,7 +21,7 @@ Chance becomes a single embeddable **web component** — `<chance-checkout>` —
 | Mechanic | **Both, merchant-configurable** (`mode` flag) | One sourcing engine, two settlement framings — covers the `/store` win-back demo *and* the spec's flip-to-free. |
 | Form factor | **Script + web component** (`<chance-checkout>`) | Framework-agnostic, "drop 2 lines into any checkout," isolates our logic. |
 | Isolation | **Shadow DOM** (no iframe) | iframe-grade CSS isolation without iframe overhead; the bet never touches card data, so no PCI reason to need one. |
-| Proof host | **Self-contained in the website** | Vendored pure engine + seeded snapshot + API route → deploys to Vercel today, no cross-origin/live-data flakiness. |
+| Proof host | **Self-contained, client-side in the embed** | Static export has no server routes; the pure engine + seeded snapshot bundle into the embed JS and run in the browser. Deploys to Vercel today, no cross-origin/live-data flakiness. `api-base` = future hosted-API seam. |
 | Settlement (proof) | **Simulated**, seeded by the offer's true probability, labeled as such | Matches the architecture spec: Chance is sourcing/routing now, execution later. |
 | Demo surface | **New generic checkout page**, not the Lumen `/store` | Proves portability ("any checkout"); avoids regressing the polished demo. |
 
@@ -31,11 +33,10 @@ Chance becomes a single embeddable **web component** — `<chance-checkout>` —
 Merchant checkout (any site)
   │  <script src=".../embed/chance.js"> + <chance-checkout amount mode theme>
   ▼
-<chance-checkout>  (Shadow DOM, vanilla TS, public/embed/chance.js)
-  │  POST { amount, currency, mode, country?, region? }
-  ▼
-/api/chance/offers  (Next route in the website)
-  │  resolveEligibility → loadSeedSnapshots(venue) → findChanceOffers
+<chance-checkout>  (Shadow DOM, vanilla JS, public/embed/chance.js)
+  │  getOffers({ amount, mode, country?, region? })
+  │    ├─ default: compute in-browser  ── resolveEligibility → seedSnapshots(venue) → findChanceOffers
+  │    └─ if [api-base] set: POST to hosted Hedge offers API  (future)
   ▼
 { eligible, venue, brand, mode, offers[] }
   │  render picker + result (ported /store UI) in Shadow DOM
@@ -56,14 +57,15 @@ DOM events back to host:  chance:applied  ·  chance:result
 
 ## 4. Components (each one job)
 
-1. **`lib/chance/engine.ts`** — vendored verbatim from `sneakers-trading/apps/platform/src/lib/chance/engine.ts`. Pure: `MarketSnapshot[]` → `ChanceOffer[]`. No network. Source of `premiumToProb`, `probToPremium`, `oddsLabel`, `findChanceOffers`, `defaultTiers`.
-2. **`lib/chance/snapshots.ts`** — seeded, deterministic `MarketSnapshot[]` (a Kalshi set + a Polymarket set) covering a spread of probabilities so every default tier finds a match. Replaces the live `source.ts`. Exposes `loadSeedSnapshots(venue)`.
-3. **`lib/chance/eligibility.ts`** — vendored, trimmed geo gate (`resolveEligibility`, `venueBrand`): US→Kalshi, intl→Polymarket, blocked → not offered. Demo defaults to US/Kalshi when geo is absent.
-4. **`lib/chance/types.ts`** — the `MarketSnapshot` shape the engine needs (extracted minimal subset, so we don't drag in `markets-data`).
-5. **`app/api/chance/offers/route.ts`** — `POST` handler. Validates `amount`, resolves eligibility, loads seed snapshots, runs the engine, returns mode-aware payload. Graceful states for ineligible / no-markets / bad-amount.
-6. **`embed/chance.ts`** → built to **`public/embed/chance.js`** — the `<chance-checkout>` custom element. Vanilla TS, Shadow DOM, attribute config, fetch → render picker + result, emit events. Picker + result UI ported from `/store`.
-7. **`scripts/build-embed.mjs`** — esbuild bundle step (IIFE, minified) producing `public/embed/chance.js`; wired into an npm script and the build so Vercel emits it.
-8. **`app/chance/page.tsx`** — the proof: a generic third-party checkout that drops in the two lines, plus a live `mode`/`theme` switcher and the copy-paste snippet + event-listener integration story.
+Everything the sourcing demo needs lives **inside the embed** (hand-authored vanilla JS, served as a static asset — same pattern as the existing `public/embed/coverpay-widget.js` and `hedge-widget.js`). No new dependency, no build step, no `package-lock` churn.
+
+1. **`public/embed/chance.js`** — the `<chance-checkout>` custom element, an IIFE with four internal sections, each one job:
+   - **engine** — ported from `sneakers-trading/apps/platform/src/lib/chance/engine.ts`: `premiumToProb`, `probToPremium`, `oddsLabel`, `findChanceOffers`. Pure: `snapshots[]` → `offers[]`.
+   - **eligibility** — ported geo gate: US→Kalshi, intl→Polymarket, blocked → not offered; defaults to US/Kalshi when geo is absent.
+   - **seed snapshots** — deterministic Kalshi + Polymarket market sets spanning a spread of probabilities so every default tier finds a match (replaces the live `source.ts`).
+   - **element** — Shadow DOM, attribute config, `getOffers()` (local compute, or POST to `api-base` if set), renders trigger → modal with picker + result (UI ported from `/store`), emits events.
+2. **`app/chance/page.tsx`** — the proof: a generic third-party checkout that loads the script and drops in `<chance-checkout>`, with a live `mode`/`theme` switcher, the copy-paste snippet, and an event log showing `chance:applied` / `chance:result`.
+3. **`lib/chance/engine.mjs`** *(dev-only, not shipped)* — the engine math as a plain-JS module plus inline assertions, run with `node` to verify the ported math (no test-runner dependency). Mirrors the logic embedded in `chance.js`.
 
 ---
 
@@ -105,9 +107,11 @@ DOM events back to host:  chance:applied  ·  chance:result
 
 ## 7. Testing
 
-- **Unit:** engine math (`premiumToProb`/`probToPremium`/`oddsLabel`) and `findChanceOffers` (match, no-match → `available:false`, `mustMakeWhole`).
-- **API route:** eligible → offers; ineligible geo → blocked; both modes return correct framing.
-- **Smoke (Playwright):** load `/chance`, open the modal, assert an offer renders and `chance:applied` fires.
+No test runner is configured and the deploy is `package-lock`-sensitive, so verification avoids adding infra:
+
+- **Engine math (`node`):** `lib/chance/engine.mjs` carries inline assertions for `premiumToProb`/`probToPremium`/`oddsLabel` and `findChanceOffers` (match, no-match → `available:false`, `mustMakeWhole`, both-mode framing). Run with `node lib/chance/engine.mjs`.
+- **Smoke (Playwright MCP):** load `/chance` on the dev server, open the modal, assert an offer renders, place a bet, and confirm `chance:applied` / `chance:result` fire with correct totals in both modes.
+- **Build check:** `next build` succeeds (static export emits `/chance` and copies `public/embed/chance.js`).
 
 ---
 
