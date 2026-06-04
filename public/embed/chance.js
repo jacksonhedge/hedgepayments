@@ -110,24 +110,79 @@
       ['p-spx', 'Will SpaceX launch Starship this week?', 0.09, 70, ['space']],
     ],
   }
-  // Build the flat candidate pool across both venues (demo shows both logos;
-  // production restricts to the single geo-legal venue).
-  function buildCandidates(now) {
-    var out = []
-    ;['kalshi', 'polymarket'].forEach(function (v) {
-      SEED[v].forEach(function (m) {
-        var c = {
-          marketId: m[0], question: m[1], venue: v, price: m[2],
-          resolvesInHours: m[3], liquidity: 5000, tags: m[4],
-        }
-        if (!passes(c, ENGINE_DEFAULTS)) return
-        out.push({ marketId: c.marketId, question: c.question, venue: v, price: c.price, winProbPct: Math.round(c.price * 100), resolvesInHours: c.resolvesInHours })
-      })
-    })
-    return out.sort(function (a, b) { return b.price - a.price })
+  // --- live source: Polymarket public Gamma API (CORS-open → fetch from browser) ---
+  var GAMMA = 'https://gamma-api.polymarket.com'
+  var POLY_TAGS = ['nba', 'nfl', 'mlb', 'nhl', 'soccer', 'ufc', 'tennis', 'crypto']
+  function parseArr(s) { if (!s) return null; try { var v = JSON.parse(s); return Array.isArray(v) ? v.map(String) : null } catch (e) { return null } }
+
+  // human expiration from an ISO timestamp: "ends in 6h" / "ends Sat" / "ends Jun 7"
+  function fmtExpiry(iso) {
+    if (!iso) return ''
+    var ms = Date.parse(iso) - Date.now()
+    if (!(ms > 0)) return 'ending soon'
+    var h = ms / 3600000
+    if (h < 1) return 'ends in <1h'
+    if (h < 24) return 'ends in ' + Math.round(h) + 'h'
+    var d = new Date(iso)
+    if (h < 24 * 7) return 'ends ' + d.toLocaleDateString(undefined, { weekday: 'short' })
+    return 'ends ' + d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+  }
+
+  // Seed fallback (Polymarket only) — used if the live API is slow/unreachable.
+  function buildSeedCandidates(now) {
+    return SEED.polymarket.map(function (m) {
+      return {
+        marketId: m[0], question: m[1], outcome: 'Yes', venue: 'polymarket', price: m[2],
+        winProbPct: Math.round(m[2] * 100), resolves_at: new Date(now + m[3] * 3600000).toISOString(),
+        liquidity: 5000, tags: m[4], seed: true,
+      }
+    }).sort(function (a, b) { return b.price - a.price })
+  }
+
+  // Live Polymarket candidates straight from the public Gamma API.
+  function fetchPolymarketCandidates(now) {
+    var out = [], seen = {}
+    return Promise.all(POLY_TAGS.map(function (tag) {
+      return fetch(GAMMA + '/events?closed=false&active=true&limit=40&tag_slug=' + tag, { headers: { accept: 'application/json' } })
+        .then(function (r) { return r.ok ? r.json() : [] })
+        .then(function (events) {
+          (events || []).forEach(function (ev) {
+            var evTags = (ev.tags || []).map(function (t) { return (t.slug || '').toLowerCase() })
+            if (ENGINE_DEFAULTS.blockTags.some(function (b) { return evTags.indexOf(b) >= 0 })) return
+            ;(ev.markets || []).forEach(function (m) {
+              if (m.closed || m.archived) return
+              var id = m.conditionId || m.id || m.slug; if (!id || seen[id]) return
+              var names = parseArr(m.outcomes), prices = parseArr(m.outcomePrices)
+              if (!names || !prices || names.length !== prices.length) return
+              var liq = m.liquidityNum != null ? m.liquidityNum : (m.liquidity ? Number(m.liquidity) : null)
+              var rIso = m.endDate || null
+              var rIn = rIso ? (Date.parse(rIso) - now) / 3600000 : null
+              if (liq == null || liq < 250) return
+              if (rIn == null || rIn < 1 || rIn > 24 * 21) return
+              seen[id] = 1
+              names.forEach(function (name, i) {
+                var price = Number(prices[i])
+                if (!(price > 0 && price < 1)) return
+                out.push({
+                  marketId: (m.slug || id) + '|' + name, question: m.question || ev.title || '', outcome: name,
+                  venue: 'polymarket', price: price, winProbPct: Math.round(price * 100),
+                  resolves_at: rIso, liquidity: liq, tags: evTags,
+                })
+              })
+            })
+          })
+        }).catch(function () { /* tag fetch failed — skip */ })
+    })).then(function () { return out.sort(function (a, b) { return b.price - a.price }) })
+  }
+
+  // market label: append the outcome when it isn't a plain Yes/No
+  function displayMarket(m) {
+    var o = (m.outcome || '').toLowerCase()
+    return (o === 'yes' || o === 'no' || !m.outcome) ? m.question : m.question + ' — ' + m.outcome
   }
 
   var BAND = 0.075 // how near a market's price must be to the target chance to count as a match
+  var SHOW_CAP = 12 // most live markets to surface near the odds (closest first)
 
   // ===========================================================================
   // 4. Styles (scoped to the shadow root) — refined-minimal, Plaid-inspired
@@ -335,19 +390,23 @@
         winMin: Math.max(2, Math.round(a * 0.15)), winMax: a,
       }
     }
+    // markets near a target probability — closest-to-odds first, then most liquid, capped
+    matchMarkets(risk, win) {
+      var p = clamp(risk / win, 0.01, 0.97)
+      return (this.state.candidates || [])
+        .filter(function (c) { return Math.abs(c.price - p) <= BAND })
+        .sort(function (a, b) { return Math.abs(a.price - p) - Math.abs(b.price - p) || (b.liquidity || 0) - (a.liquidity || 0) })
+        .slice(0, SHOW_CAP)
+    }
     // core derived numbers for a (risk, win) pair
     calc(risk, win) {
       var a = this.cfg().amount
       var p = clamp(risk / win, 0.01, 0.97)
-      var venueF = this.state.venue
-      var matches = this.state.candidates.filter(function (c) {
-        return Math.abs(c.price - p) <= BAND && (venueF === 'all' || c.venue === venueF)
-      })
       return {
         p: p, chancePct: Math.round(p * 100), odds: oddsLabel(p),
         discountPct: Math.round((win / a) * 100),
         payToday: this.flip ? round2(a + risk) : a,
-        matches: matches,
+        matches: this.matchMarkets(risk, win),
       }
     }
 
@@ -425,13 +484,27 @@
     open() {
       var c = this.cfg()
       this.state.elig = resolveEligibility(c.country, c.region)
-      this.state.candidates = this.state.elig.eligible ? buildCandidates(Date.now()) : []
       var b = this.bounds()
       this.state.risk = Math.max(b.riskMin, Math.round(c.amount * 0.06))
       this.state.win = Math.round(c.amount * 0.5)
       this.state.venue = 'all'; this.state.picked = null; this.state.outcome = null
+      this.state.candidates = []; this.state.live = false
+      this.state.loading = this.state.elig.eligible
       this.mountSheet()
       this.renderIntro()
+      if (this.state.elig.eligible) this.loadCandidates()
+    }
+    // fetch live Polymarket markets; fall back to seed; refresh whatever step is showing
+    loadCandidates() {
+      var self = this, now = Date.now()
+      var done = function (list, live) {
+        self.state.candidates = list; self.state.live = live; self.state.loading = false
+        if (self.state.view === 'config' && self._cfgUpdate) self._cfgUpdate()
+        else if (self.state.view === 'markets') self.renderMarkets()
+      }
+      fetchPolymarketCandidates(now)
+        .then(function (live) { (live && live.length >= 4) ? done(live, true) : done(buildSeedCandidates(now), false) })
+        .catch(function () { done(buildSeedCandidates(now), false) })
     }
     close() { this.renderTrigger() }
 
@@ -499,6 +572,11 @@
         self.shadowRoot.querySelector('#vOdds').textContent = k.odds + ' odds'
         self.shadowRoot.querySelector('#vPay').textContent = '$' + FMT(k.payToday)
         var hint = self.shadowRoot.querySelector('#vHint'), btn = self.shadowRoot.querySelector('#findBtn')
+        if (self.state.loading) {
+          hint.textContent = 'Finding live markets…'
+          btn.disabled = true; btn.textContent = 'Finding live markets…'
+          return
+        }
         if (k.matches.length) {
           hint.innerHTML = '<b>' + k.matches.length + '</b> live market' + (k.matches.length > 1 ? 's' : '') + ' near these odds'
           btn.disabled = false; btn.textContent = 'Find ' + k.matches.length + ' market' + (k.matches.length > 1 ? 's' : '') + ' →'
@@ -507,6 +585,7 @@
           btn.disabled = true; btn.textContent = 'No markets at these odds'
         }
       }
+      self._cfgUpdate = update
       sRisk.oninput = update; sWin.oninput = update
       update()
       })
@@ -521,9 +600,10 @@
     renderMarkets() {
       this.state.view = 'markets'
       var self = this, c = this.cfg()
+      if (this.state.loading) { this.morph(true, '<div class="stateBox"><div class="spin"></div>Finding live markets…</div>', ''); return }
       var pNow = clamp(this.state.risk / this.state.win, 0.01, 0.97)
       // freeze the matched set on entry; the stake stepper only re-prices these
-      this.state.matched = this.state.candidates.filter(function (x) { return Math.abs(x.price - pNow) <= BAND })
+      this.state.matched = this.matchMarkets(this.state.risk, this.state.win)
       var venues = this.state.matched.reduce(function (s, o) { return s.indexOf(o.venue) < 0 ? s.concat(o.venue) : s }, [])
       if (this.state.venue !== 'all' && venues.indexOf(this.state.venue) < 0) this.state.venue = 'all'
       var chancePct = Math.round(pNow * 100)
@@ -532,7 +612,7 @@
         '<div class="step"><div class="title">Markets near your odds</div>' +
         '<p class="sub">Risk <b style="color:var(--ink)">$' + FMT(this.state.risk) + '</b> to win about <b style="color:var(--ink)">$' + FMT(this.state.win) + '</b> · ~' + chancePct + '% chance. Pick one — nudge the stake to fine-tune.</p>' +
         '<div class="toolbar"><div class="chips">' +
-        ['all'].concat(venues).map(function (v) { return '<button class="chip ' + (self.state.venue === v ? 'on' : '') + '" data-venue="' + v + '">' + (v === 'all' ? 'All' : venueOf(v).name) + '</button>' }).join('') +
+        (function () { var cv = ['all'].concat(venues); if (cv.indexOf('kalshi') < 0) cv.push('kalshi'); return cv.map(function (v) { var lbl = v === 'all' ? 'All' : (v === 'kalshi' ? 'Kalshi · soon' : venueOf(v).name); return '<button class="chip ' + (self.state.venue === v ? 'on' : '') + '" data-venue="' + v + '">' + lbl + '</button>' }).join('') })() +
         '</div><div class="stepper"><button data-step="-1">−</button><span class="sv">$' + FMT(this.state.risk) + '<small>risk</small></span><button data-step="1">+</button></div></div>' +
         '<div class="rows" id="rows"></div></div>'
 
@@ -554,15 +634,19 @@
     // (re)draw the market rows + foot in place — no sheet rebuild
     paintRows() {
       var self = this, c = this.cfg()
-      var list = (this.state.matched || []).filter(function (m) { return self.state.venue === 'all' || m.venue === self.state.venue })
       var rowsEl = this.shadowRoot.querySelector('#rows')
+      if (this.state.venue === 'kalshi') {
+        rowsEl.innerHTML = '<div class="empty"><b>Kalshi markets are coming online</b>Polymarket is live now — switch to “All” or “Polymarket”.</div>'
+        this.shadowRoot.querySelector('.foot').innerHTML = this.placeFoot(); this.bindActs(); return
+      }
+      var list = (this.state.matched || []).filter(function (m) { return self.state.venue === 'all' || m.venue === self.state.venue })
       rowsEl.innerHTML = list.length ? list.map(function (m) {
         var V = venueOf(m.venue)
         var winAt = Math.min(c.amount, round2(self.state.risk / m.price))
         var on = self.state.picked === m.marketId ? ' on' : ''
         return '<button class="row' + on + '" data-id="' + m.marketId + '">' + V.avatar(40) +
-          '<div class="rowMid"><div class="rowQ">' + esc(m.question) + '</div>' +
-          '<div class="rowSub"><span class="vName" style="color:' + V.accent + '">' + V.name + '</span> · ' + m.winProbPct + '% chance · ~' + m.resolvesInHours + 'h</div></div>' +
+          '<div class="rowMid"><div class="rowQ">' + esc(displayMarket(m)) + '</div>' +
+          '<div class="rowSub"><span class="vName" style="color:' + V.accent + '">' + V.name + '</span> · ' + m.winProbPct + '% chance · ' + fmtExpiry(m.resolves_at) + '</div></div>' +
           '<div class="rowRight"><div class="rowVal"><b>win $' + FMT(winAt) + '</b><small>' + Math.round(winAt / c.amount * 100) + '% off</small></div><span class="chev">›</span></div></button>'
       }).join('') : '<div class="empty"><b>No markets in this filter</b>Switch venue, or go back and widen your risk.</div>'
       rowsEl.querySelectorAll('.row').forEach(function (x) { x.onclick = function () { self.selectRow(x.getAttribute('data-id')) } })
@@ -614,7 +698,7 @@
         '<span class="hsTrack"><i></i><i></i><i></i></span>' +
         '<span class="hsNode delay">' + V.avatar(62) + '</span></div>' +
         '<div class="rTitle">Connecting to ' + V.name + '…</div>' +
-        '<p class="sub" style="text-align:center">Placing your position on “' + esc(m.question) + '”</p></div>')
+        '<p class="sub" style="text-align:center">Placing your position on “' + esc(displayMarket(m)) + '” · ' + fmtExpiry(m.resolves_at) + '</p></div>')
 
       setTimeout(function () {
         var won = Math.random() < m.price // seeded by the market's true probability
@@ -633,14 +717,14 @@
       var body
       if (won) {
         body = '<div class="emoji">🎉</div><div class="rTitle rWin">' + (winAt >= c.amount ? 'Your order’s free!' : 'You won $' + FMT(winAt) + ' off!') + '</div>' +
-          '<p class="sub" style="text-align:center">“' + esc(m.question) + '” resolved <b>Yes</b> on ' + V.name + '. ' + offPct + '% knocked off your order.</p>' +
+          '<p class="sub" style="text-align:center">“' + esc(displayMarket(m)) + '” resolved <b>Yes</b> on ' + V.name + '. ' + offPct + '% knocked off your order.</p>' +
           '<div class="break"><div><span>Order</span><span>$' + FMT(c.amount) + '</span></div>' +
           (flip ? '<div><span><span class="script" style="font-size:1em">Chance</span> stake</span><span>+$' + FMT(P.risk) + '</span></div>' : '') +
           '<div><span><span class="script" style="font-size:1em">Chance</span> win-back</span><span class="neg">−$' + FMT(winAt) + '</span></div>' +
           '<div class="fin winFin"><span>You paid</span><span>$' + FMT(netPaid) + '</span></div></div>'
       } else {
         body = '<div class="emoji">🪙</div><div class="rTitle">So close!</div>' +
-          '<p class="sub" style="text-align:center">“' + esc(m.question) + '” resolved <b>No</b> on ' + V.name + '. Your order still ships' + (flip ? '.' : ' — no harm in the swing.') + '</p>' +
+          '<p class="sub" style="text-align:center">“' + esc(displayMarket(m)) + '” resolved <b>No</b> on ' + V.name + '. Your order still ships' + (flip ? '.' : ' — no harm in the swing.') + '</p>' +
           '<div class="break"><div><span>Order</span><span>$' + FMT(c.amount) + '</span></div>' +
           (flip ? '<div><span><span class="script" style="font-size:1em">Chance</span> stake</span><span>$' + FMT(P.risk) + '</span></div>' : '') +
           '<div class="fin"><span>You paid</span><span>$' + FMT(P.payToday) + '</span></div></div>'
