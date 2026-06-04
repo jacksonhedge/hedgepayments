@@ -115,6 +115,17 @@ No test runner is configured and the deploy is `package-lock`-sensitive, so veri
 
 ---
 
+## 7a. Addendum — Plaid-style flow (2026-06-04)
+
+The picker was redesigned into a **Plaid Link-style multi-step flow** (refined-minimal fintech aesthetic) inside the same web component:
+
+1. **Pick** — a searchable, venue-filtered vertical list. Each row is a **venue avatar + market prompt + odds + the mode value + chevron** (Plaid's "select your institution" list, mapped to venues + prompts). Real venue logos: Polymarket's PNG (`<img>` from `ASSET_BASE/logos/polymarket.png`, derived from the embed script's own origin) and a brand-teal "K" tile for Kalshi. The demo merges **both venues' markets** so both logos appear; production restricts to the single geo-legal venue.
+2. **Confirm** — selected-market hero + a clean math card (mode-aware) + one CTA (Plaid's "connect" step).
+3. **Resolving** — the signature **handshake**: a Hedge ✦ node connected to the venue avatar by a dotted track with traveling dots + a pulse ring ("Connecting to {venue}…").
+4. **Result** — Plaid-clean win/lose with breakdown.
+
+Search filters prompts live; venue chips (All / Kalshi / Polymarket) appear when >1 venue is present. Light + dark themes. `chance:applied` fires on confirm→place; `chance:result` after the (simulated) resolve. HTML built from offer data is escaped (`esc()`); the `api-base` path should still sanitize remote `question` strings server-side.
+
 ## 8. Out of scope (YAGNI for this proof)
 
 - Real bet execution / settlement on Kalshi/Polymarket (spec: later phase).
