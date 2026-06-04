@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import styles from './store.module.css'
 
 // ---- catalog (keyboard is the default) ----
@@ -76,6 +76,21 @@ export default function StorePage() {
   const [picked, setPicked] = useState<number | null>(null)
   const [resolving, setResolving] = useState(false)
   const [outcome, setOutcome] = useState<'win' | 'lose' | 'card' | null>(null)
+
+  // When returning to checkout from Chance, land on the Payment section (not the address form).
+  const paymentRef = useRef<HTMLDivElement>(null)
+  const [focusPayment, setFocusPayment] = useState(false)
+  useEffect(() => {
+    if (view === 'checkout' && focusPayment) {
+      paymentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      setFocusPayment(false)
+    }
+  }, [view, focusPayment])
+
+  function backToCheckout() {
+    setFocusPayment(true)
+    setView('checkout')
+  }
 
   const product = PRODUCTS[prodIdx]
   const order = product.price
@@ -241,7 +256,7 @@ export default function StorePage() {
                   </div>
                 </div>
 
-                <div className={styles.coSection}>
+                <div className={styles.coSection} ref={paymentRef}>
                   <h3 className={styles.coH}>Payment</h3>
                   <div className={styles.pm}>
                     {METHODS.map((m) => {
@@ -307,10 +322,25 @@ export default function StorePage() {
                       )
                     })}
                   </div>
+                  {pay === 'chance' ? (
+                    <button
+                      className={`${styles.pay} ${styles.payChance}`}
+                      onClick={() => setView('chance')}
+                    >
+                      Continue with <span className={styles.script}>Chance</span> →
+                    </button>
+                  ) : (
+                    <button className={styles.pay} onClick={payCard}>
+                      Pay ${order}.00
+                    </button>
+                  )}
                 </div>
+                {/* scroll room so "Back to checkout" can land on Payment, not the address */}
+                <div aria-hidden style={{ height: '46vh' }} />
               </div>
 
               {/* order summary */}
+              <div className={styles.summaryCol}>
               <div className={styles.summary}>
                 <div className={styles.sumItem}>
                   <div className={styles.sumShot} style={{ background: product.bg }}>
@@ -346,6 +376,7 @@ export default function StorePage() {
                   </button>
                 )}
               </div>
+              </div>
             </div>
           </>
         )}
@@ -353,7 +384,7 @@ export default function StorePage() {
         {/* ============ CHANCE ============ */}
         {view === 'chance' && (
           <>
-            <button className={styles.coBack} onClick={() => setView('checkout')}>
+            <button className={styles.coBack} onClick={backToCheckout}>
               ← Back to checkout
             </button>
             <div className={styles.chanceHead}>
@@ -394,7 +425,7 @@ export default function StorePage() {
             </div>
 
             <div className={styles.chanceActions}>
-              <button className={styles.ghost} onClick={() => setView('checkout')}>
+              <button className={styles.ghost} onClick={backToCheckout}>
                 Pay ${order} as usual
               </button>
               <button
