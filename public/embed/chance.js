@@ -161,7 +161,7 @@
   @keyframes fade { from{opacity:0} to{opacity:1} }
   .sheet { width:100%; max-width:452px; max-height:92vh; display:flex; flex-direction:column; overflow:hidden;
     background:var(--bg); color:var(--ink); border-radius:24px 24px 0 0; box-shadow:0 -12px 70px rgba(0,0,0,.45);
-    animation:rise .3s cubic-bezier(.18,.84,.27,1); }
+    animation:rise .3s cubic-bezier(.18,.84,.27,1); transition:height .34s cubic-bezier(.4,0,.2,1); }
   @media (min-width:640px){ .sheet{ border-radius:24px; } }
   @keyframes rise { from{transform:translateY(26px); opacity:.5} to{transform:translateY(0); opacity:1} }
 
@@ -173,10 +173,9 @@
   .brandMark .dot { width:19px; height:19px; border-radius:6px; display:grid; place-items:center; font-size:11px; color:#fff;
     background:radial-gradient(120% 120% at 30% 20%, #14b87f, #0b8159); }
 
-  .body { padding:6px 20px 0; overflow-y:auto; }
-  .foot { padding:14px 20px 18px; border-top:1px solid transparent; }
-  .step { animation:stepIn .28s cubic-bezier(.2,.8,.2,1); }
-  @keyframes stepIn { from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)} }
+  .body { padding:6px 20px 0; overflow-y:auto; transition:opacity .18s ease, transform .18s ease; }
+  .foot { padding:14px 20px 18px; border-top:1px solid transparent; transition:opacity .18s ease; }
+  .step { }
 
   .title { font-size:20px; font-weight:800; letter-spacing:-.02em; margin:6px 0 5px; line-height:1.15; }
   .sub { color:var(--muted); font-size:13px; line-height:1.45; margin:0 0 14px; }
@@ -352,26 +351,55 @@
       }
     }
 
-    // ---------- shells ----------
+    // ---------- shell + morph (mount the sheet ONCE; only the body morphs between steps) ----------
     shell(inner) { return '<style>' + STYLE + '</style><div class="wrap ' + this.cfg().theme + '">' + inner + '</div>' }
-    paint(headerHtml, bodyHtml, footHtml) {
-      this.shadowRoot.innerHTML = this.shell('<div class="overlay"><div class="sheet">' + headerHtml +
-        '<div class="body">' + bodyHtml + '</div>' + (footHtml ? '<div class="foot">' + footHtml + '</div>' : '') + '</div></div>')
+    mountSheet() {
       var self = this
-      this.shadowRoot.querySelectorAll('[data-act]').forEach(function (b) {
-        b.onclick = function () { var a = b.getAttribute('data-act'); self.act(a) }
-      })
-      var ov = this.shadowRoot.querySelector('.overlay')
-      if (ov) ov.onclick = function (e) { if (e.target === ov) self.close() }
-    }
-    header(back) {
-      return '<div class="hdr">' + (back ? '<button class="hbtn" data-act="back">‹</button>' : '<span></span>') +
+      this.shadowRoot.innerHTML = this.shell(
+        '<div class="overlay"><div class="sheet">' +
+        '<div class="hdr"><button class="hbtn navBack" data-nav="back" style="visibility:hidden">‹</button>' +
         '<span class="brandMark"><span class="dot">✦</span> <span class="script">Chance</span> by Hedge</span>' +
-        '<button class="hbtn" data-act="close">✕</button></div>'
+        '<button class="hbtn" data-nav="close">✕</button></div>' +
+        '<div class="body"></div><div class="foot"></div></div></div>')
+      var ov = this.shadowRoot.querySelector('.overlay')
+      ov.onclick = function (e) { if (e.target === ov) self.close() }
+      this.shadowRoot.querySelector('[data-nav="close"]').onclick = function () { self.close() }
+      this.shadowRoot.querySelector('[data-nav="back"]').onclick = function () { self.back() }
+    }
+    bindActs() {
+      var self = this
+      this.shadowRoot.querySelectorAll('.body [data-act], .foot [data-act]').forEach(function (b) {
+        b.onclick = function () { self.act(b.getAttribute('data-act')) }
+      })
+    }
+    // smoothly tween the sheet's height around a DOM mutation
+    tweenHeight(mutate) {
+      var sheet = this.shadowRoot.querySelector('.sheet')
+      var startH = sheet.offsetHeight
+      mutate()
+      sheet.style.height = 'auto'
+      var endH = sheet.offsetHeight
+      sheet.style.height = startH + 'px'
+      void sheet.offsetHeight
+      sheet.style.height = endH + 'px'
+      window.setTimeout(function () { sheet.style.height = 'auto' }, 360)
+    }
+    // cross-fade + height-morph the body/foot to a new step — NO overlay/sheet/header rebuild
+    morph(back, bodyHtml, footHtml, bind) {
+      var self = this, sr = this.shadowRoot
+      var body = sr.querySelector('.body'), foot = sr.querySelector('.foot')
+      sr.querySelector('.navBack').style.visibility = back ? 'visible' : 'hidden'
+      var apply = function () {
+        body.innerHTML = bodyHtml; foot.innerHTML = footHtml || ''
+        self.bindActs(); if (bind) bind()
+        body.style.opacity = '1'; body.style.transform = 'none'; foot.style.opacity = '1'
+      }
+      if (!body.innerHTML) { body.style.opacity = '0'; apply(); return } // first paint — let the sheet rise in
+      body.style.opacity = '0'; body.style.transform = 'translateY(6px)'; foot.style.opacity = '0'
+      window.setTimeout(function () { self.tweenHeight(apply) }, 150)
     }
     act(a) {
       if (a === 'close') return this.close()
-      if (a === 'back') return this.back()
       if (a === 'intro-next') return this.renderConfig()
       if (a === 'config-next') return this.renderMarkets()
       if (a === 'place') return this.place()
@@ -402,6 +430,7 @@
       this.state.risk = Math.max(b.riskMin, Math.round(c.amount * 0.06))
       this.state.win = Math.round(c.amount * 0.5)
       this.state.venue = 'all'; this.state.picked = null; this.state.outcome = null
+      this.mountSheet()
       this.renderIntro()
     }
     close() { this.renderTrigger() }
@@ -411,15 +440,15 @@
       this.state.view = 'intro'
       var c = this.cfg(), free = this.flip ? 'risk a little' : 'free to play'
       if (!this.state.elig.eligible) {
-        this.paint(this.header(false), '<div class="stateBox"><div class="se">📍</div><b>Chance isn’t available in your area yet</b>' +
-          (this.state.elig.reason === 'state-restricted' ? 'Not offered in your state right now.' : 'Not offered in your region right now.') + '</div>')
+        this.morph(false, '<div class="stateBox"><div class="se">📍</div><b>Chance isn’t available in your area yet</b>' +
+          (this.state.elig.reason === 'state-restricted' ? 'Not offered in your state right now.' : 'Not offered in your region right now.') + '</div>', '')
         return
       }
       var exRisk = Math.max(1, Math.round(c.amount * 0.06)), exWin = Math.round(c.amount * 0.5)
       var step1 = this.flip
         ? ['Set your risk &amp; reward', 'Choose how much to stake and the discount you want to win.']
         : ['Pick your reward', 'Choose the discount you want a shot at — free to play.']
-      this.paint(this.header(false),
+      this.morph(false,
         '<div class="step"><div class="hero"><span class="heroBadge">✦</span></div>' +
         '<div class="title" style="text-align:center">Turn your order into a <span class="rWin">win</span></div>' +
         '<p class="sub" style="text-align:center">Back a real market at checkout. If it hits, you ' + (this.flip ? 'knock money off — up to a free order' : 'win money off your order') + '. Either way, it ships.</p>' +
@@ -446,7 +475,7 @@
         : '<div class="sl"><div class="slTop"><span class="slLbl">Your stake <small style="color:var(--chance);font-weight:700">· on the house</small></span><span class="slVal" id="vRisk">$' + FMT(this.state.risk) + '</span></div>' +
           '<input class="rng" id="sRisk" type="range" min="' + b.riskMin + '" max="' + b.riskMax + '" step="1" value="' + this.state.risk + '"></div>'
 
-      this.paint(this.header(true),
+      this.morph(true,
         '<div class="step"><div class="title">Set your bet</div>' +
         '<p class="sub">Slide to choose your risk and the discount you want. We’ll find real markets at those odds.</p>' +
         riskCtrl +
@@ -455,9 +484,9 @@
         '<div class="readout"><div class="roMain"><div class="roChance" id="vChance">—<small>chance it hits</small></div><span class="roOdds" id="vOdds">—</span></div>' +
         '<div class="roLine"><span>Pay today</span><b id="vPay">—</b></div>' +
         '<div class="roHint" id="vHint">—</div></div></div>',
-        '<button class="cta" id="findBtn" data-act="config-next">Find markets →</button>')
-
-      var sRisk = this.shadowRoot.querySelector('#sRisk'), sWin = this.shadowRoot.querySelector('#sWin')
+        '<button class="cta" id="findBtn" data-act="config-next">Find markets →</button>',
+      function () {
+      var sRisk = self.shadowRoot.querySelector('#sRisk'), sWin = self.shadowRoot.querySelector('#sWin')
       var update = function () {
         self.state.risk = parseInt(sRisk.value, 10); self.state.win = parseInt(sWin.value, 10)
         // keep win strictly greater than risk so odds stay < 100%
@@ -480,6 +509,7 @@
       }
       sRisk.oninput = update; sWin.oninput = update
       update()
+      })
     }
     fillTrack(el, min, max) {
       var pct = ((el.value - min) / (max - min)) * 100
@@ -487,46 +517,78 @@
       el.style.background = 'linear-gradient(90deg,' + accent + ' 0 ' + pct + '%, var(--line2) ' + pct + '% 100%)'
     }
 
-    // ---------- step 3: markets (pick + fine-tune + place) ----------
+    // ---------- step 3: markets — morph the frame once, then update rows in place ----------
     renderMarkets() {
       this.state.view = 'markets'
-      var self = this, c = this.cfg(), b = this.bounds()
-      var k = this.calc(this.state.risk, this.state.win)
+      var self = this, c = this.cfg()
       var pNow = clamp(this.state.risk / this.state.win, 0.01, 0.97)
-      var nearAll = this.state.candidates.filter(function (x) { return Math.abs(x.price - pNow) <= BAND })
-      var venues = nearAll.reduce(function (s, o) { return s.indexOf(o.venue) < 0 ? s.concat(o.venue) : s }, [])
+      // freeze the matched set on entry; the stake stepper only re-prices these
+      this.state.matched = this.state.candidates.filter(function (x) { return Math.abs(x.price - pNow) <= BAND })
+      var venues = this.state.matched.reduce(function (s, o) { return s.indexOf(o.venue) < 0 ? s.concat(o.venue) : s }, [])
+      if (this.state.venue !== 'all' && venues.indexOf(this.state.venue) < 0) this.state.venue = 'all'
+      var chancePct = Math.round(pNow * 100)
 
-      var rows = k.matches.length ? k.matches.map(function (m) {
+      var bodyHtml =
+        '<div class="step"><div class="title">Markets near your odds</div>' +
+        '<p class="sub">Risk <b style="color:var(--ink)">$' + FMT(this.state.risk) + '</b> to win about <b style="color:var(--ink)">$' + FMT(this.state.win) + '</b> · ~' + chancePct + '% chance. Pick one — nudge the stake to fine-tune.</p>' +
+        '<div class="toolbar"><div class="chips">' +
+        ['all'].concat(venues).map(function (v) { return '<button class="chip ' + (self.state.venue === v ? 'on' : '') + '" data-venue="' + v + '">' + (v === 'all' ? 'All' : venueOf(v).name) + '</button>' }).join('') +
+        '</div><div class="stepper"><button data-step="-1">−</button><span class="sv">$' + FMT(this.state.risk) + '<small>risk</small></span><button data-step="1">+</button></div></div>' +
+        '<div class="rows" id="rows"></div></div>'
+
+      this.morph(true, bodyHtml, '', function () {
+        var b = self.bounds()
+        self.shadowRoot.querySelectorAll('[data-venue]').forEach(function (x) {
+          x.onclick = function () {
+            self.state.venue = x.getAttribute('data-venue')
+            self.shadowRoot.querySelectorAll('[data-venue]').forEach(function (y) { y.classList.toggle('on', y === x) })
+            self.tweenHeight(function () { self.paintRows() })
+          }
+        })
+        self.shadowRoot.querySelectorAll('[data-step]').forEach(function (x) {
+          x.onclick = function () { self.state.risk = clamp(self.state.risk + parseInt(x.getAttribute('data-step'), 10), b.riskMin, b.riskMax); self.refreshValues() }
+        })
+        self.paintRows()
+      })
+    }
+    // (re)draw the market rows + foot in place — no sheet rebuild
+    paintRows() {
+      var self = this, c = this.cfg()
+      var list = (this.state.matched || []).filter(function (m) { return self.state.venue === 'all' || m.venue === self.state.venue })
+      var rowsEl = this.shadowRoot.querySelector('#rows')
+      rowsEl.innerHTML = list.length ? list.map(function (m) {
         var V = venueOf(m.venue)
-        var winAt = Math.min(c.amount, round2(self.state.risk / m.price)) // what the stake actually wins here
+        var winAt = Math.min(c.amount, round2(self.state.risk / m.price))
         var on = self.state.picked === m.marketId ? ' on' : ''
         return '<button class="row' + on + '" data-id="' + m.marketId + '">' + V.avatar(40) +
           '<div class="rowMid"><div class="rowQ">' + esc(m.question) + '</div>' +
           '<div class="rowSub"><span class="vName" style="color:' + V.accent + '">' + V.name + '</span> · ' + m.winProbPct + '% chance · ~' + m.resolvesInHours + 'h</div></div>' +
           '<div class="rowRight"><div class="rowVal"><b>win $' + FMT(winAt) + '</b><small>' + Math.round(winAt / c.amount * 100) + '% off</small></div><span class="chev">›</span></div></button>'
-      }).join('') : '<div class="empty"><b>No markets at these odds right now</b>Go back and widen your risk or lower the discount.</div>'
-
-      var foot = this.placeFoot()
-      this.paint(this.header(true),
-        '<div class="step"><div class="title">Markets near your odds</div>' +
-        '<p class="sub">Risk <b style="color:var(--ink)">$' + FMT(this.state.risk) + '</b> to win about <b style="color:var(--ink)">$' + FMT(this.state.win) + '</b> · ~' + k.chancePct + '% chance. Pick one — nudge the stake to fine-tune.</p>' +
-        '<div class="toolbar"><div class="chips">' +
-        ['all'].concat(venues).map(function (v) { return '<button class="chip ' + (self.state.venue === v ? 'on' : '') + '" data-venue="' + v + '">' + (v === 'all' ? 'All' : venueOf(v).name) + '</button>' }).join('') +
-        '</div><div class="stepper"><button data-step="-1">−</button><span class="sv">$' + FMT(this.state.risk) + '<small>risk</small></span><button data-step="1">+</button></div></div>' +
-        '<div class="rows">' + rows + '</div></div>',
-        foot)
-
-      this.shadowRoot.querySelectorAll('[data-venue]').forEach(function (x) { x.onclick = function () { self.state.venue = x.getAttribute('data-venue'); self.renderMarkets() } })
-      this.shadowRoot.querySelectorAll('[data-step]').forEach(function (x) {
-        x.onclick = function () { self.state.risk = clamp(self.state.risk + parseInt(x.getAttribute('data-step'), 10), b.riskMin, b.riskMax); self.renderMarkets() }
+      }).join('') : '<div class="empty"><b>No markets in this filter</b>Switch venue, or go back and widen your risk.</div>'
+      rowsEl.querySelectorAll('.row').forEach(function (x) { x.onclick = function () { self.selectRow(x.getAttribute('data-id')) } })
+      this.shadowRoot.querySelector('.foot').innerHTML = this.placeFoot(); this.bindActs()
+    }
+    // highlight a pick + reveal the place bar — toggle classes, don't redraw the list
+    selectRow(id) {
+      var self = this
+      this.state.picked = id
+      this.shadowRoot.querySelectorAll('#rows .row').forEach(function (r) { r.classList.toggle('on', r.getAttribute('data-id') === id) })
+      this.tweenHeight(function () { self.shadowRoot.querySelector('.foot').innerHTML = self.placeFoot(); self.bindActs() })
+    }
+    // fine-tune stepper — re-price the same rows in place (set changes, height doesn't)
+    refreshValues() {
+      var self = this, c = this.cfg()
+      this.shadowRoot.querySelectorAll('#rows .row').forEach(function (r) {
+        var m = (self.state.matched || []).filter(function (x) { return x.marketId === r.getAttribute('data-id') })[0]; if (!m) return
+        var winAt = Math.min(c.amount, round2(self.state.risk / m.price))
+        var rv = r.querySelector('.rowVal'); if (rv) rv.innerHTML = '<b>win $' + FMT(winAt) + '</b><small>' + Math.round(winAt / c.amount * 100) + '% off</small>'
       })
-      this.shadowRoot.querySelectorAll('.row').forEach(function (x) {
-        x.onclick = function () { self.state.picked = x.getAttribute('data-id'); self.renderMarkets() }
-      })
+      var sv = this.shadowRoot.querySelector('.stepper .sv'); if (sv) sv.innerHTML = '$' + FMT(this.state.risk) + '<small>risk</small>'
+      this.shadowRoot.querySelector('.foot').innerHTML = this.placeFoot(); this.bindActs()
     }
     placeFoot() {
-      var c = this.cfg()
-      var m = this.state.picked && this.state.candidates.filter(function (x) { return x.marketId === this.state.picked }, this)[0]
+      var self = this, c = this.cfg()
+      var m = this.state.picked ? (this.state.matched || []).filter(function (x) { return x.marketId === self.state.picked })[0] : null
       if (!m) return '<button class="cta" disabled>Pick a market to place</button>'
       var winAt = Math.min(c.amount, round2(this.state.risk / m.price))
       var payToday = this.flip ? round2(c.amount + this.state.risk) : c.amount
@@ -547,7 +609,7 @@
       this.emit('chance:applied', { mode: c.mode, risk: this.flip ? this.state.risk : 0, win: winAt, total: payToday, offer: m })
       this.state.view = 'resolving'
 
-      this.paint(this.header(false),
+      this.morph(false,
         '<div class="step hsWrap"><div class="hs"><span class="hsNode hsHedge">✦</span>' +
         '<span class="hsTrack"><i></i><i></i><i></i></span>' +
         '<span class="hsNode delay">' + V.avatar(62) + '</span></div>' +
@@ -583,7 +645,7 @@
           (flip ? '<div><span><span class="script" style="font-size:1em">Chance</span> stake</span><span>$' + FMT(P.risk) + '</span></div>' : '') +
           '<div class="fin"><span>You paid</span><span>$' + FMT(P.payToday) + '</span></div></div>'
       }
-      this.paint(this.header(false),
+      this.morph(false,
         '<div class="step result">' + body +
         '<div class="note" style="margin-top:18px">Powered by <b>Hedge</b> · markets via Kalshi &amp; Polymarket<br>' +
         '<span class="demoTag">Demo settlement — real routing coming</span></div></div>',

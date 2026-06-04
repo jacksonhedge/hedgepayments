@@ -125,6 +125,8 @@ The widget is a **Plaid Link-style, intent-first flow** (refined-minimal fintech
 4. **Resolving** — the signature **handshake**: a Hedge ✦ node connected to the venue avatar by a dotted track with traveling dots + a pulse ring ("Connecting to {venue}…").
 5. **Result** — partial-discount breakdown: `Order + stake − win-back = you paid` (e.g. $85 + $5 − $33.33 = $56.67).
 
+**Single mounted sheet, morphing content.** The overlay + sheet + header mount **once** per open (`mountSheet()`); step transitions only cross-fade + height-tween the `.body`/`.foot` (`morph()`), never rebuilding the shell — so the modal never "reloads." In-step changes on the markets step are also in place: selecting a row toggles classes + reveals the place bar (`selectRow`), the venue filter re-draws only `#rows` (`paintRows`), and the stake stepper re-prices the same frozen row set without re-filtering (`refreshValues`).
+
 Real venue logos: Polymarket's PNG (`<img>` from `ASSET_BASE/logos/polymarket.png`, derived from the embed script's own origin) + a brand-teal "K" tile for Kalshi. Demo merges **both venues**; production restricts to the single geo-legal venue. Light + dark themes. Events: `chance:applied` `{mode, risk, win, total, offer}` on place; `chance:result` `{won, mode, amountBack, finalPrice, offer}` after the (simulated) resolve. Offer text is escaped (`esc()`); the `api-base` path should still sanitize remote strings server-side. The ✦ brand mark is a placeholder for the real Chance logo (swap in one place: `.heroBadge` / `.hsHedge` / `.brandMark .dot` / `.trigBadge`).
 
 ## 8. Out of scope (YAGNI for this proof)
