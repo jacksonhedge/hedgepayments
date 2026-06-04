@@ -115,16 +115,17 @@ No test runner is configured and the deploy is `package-lock`-sensitive, so veri
 
 ---
 
-## 7a. Addendum — Plaid-style flow (2026-06-04)
+## 7a. Addendum — Plaid-style, intent-first flow (2026-06-04)
 
-The picker was redesigned into a **Plaid Link-style multi-step flow** (refined-minimal fintech aesthetic) inside the same web component:
+The widget is a **Plaid Link-style, intent-first flow** (refined-minimal fintech aesthetic): the shopper sets *how much to risk and what discount to win* **before** seeing markets, and the win is a **partial discount** (not just "free"). Implied odds fall out of it: `chance ≈ risk ÷ win`.
 
-1. **Pick** — a searchable, venue-filtered vertical list. Each row is a **venue avatar + market prompt + odds + the mode value + chevron** (Plaid's "select your institution" list, mapped to venues + prompts). Real venue logos: Polymarket's PNG (`<img>` from `ASSET_BASE/logos/polymarket.png`, derived from the embed script's own origin) and a brand-teal "K" tile for Kalshi. The demo merges **both venues' markets** so both logos appear; production restricts to the single geo-legal venue.
-2. **Confirm** — selected-market hero + a clean math card (mode-aware) + one CTA (Plaid's "connect" step).
-3. **Resolving** — the signature **handshake**: a Hedge ✦ node connected to the venue avatar by a dotted track with traveling dots + a pulse ring ("Connecting to {venue}…").
-4. **Result** — Plaid-clean win/lose with breakdown.
+1. **Intro** — "how it works": three numbered steps + a dynamic example (`your $A order → risk $R to win $W (Z% off)`). Mode-aware (win-it-back = "free to play").
+2. **Configure** — two linked sliders: **Risk** (green) and **Discount you win** (blue). A live readout shows `chance% · odds · pay today` and a live **count of real markets near those odds** ("Find N markets →"). win-it-back relabels Risk as "your stake · on the house" and excludes it from pay-today.
+3. **Markets** — the real props within `BAND` (±0.075) of the target probability, each row = **venue avatar + prompt + this market's actual win for the chosen stake** (`win = risk ÷ price`, capped at the order). Venue chips (only venues with matches) + a **risk stepper** to fine-tune the exact stake. Pick one → a sticky place bar (pay today / if-it-hits) → place.
+4. **Resolving** — the signature **handshake**: a Hedge ✦ node connected to the venue avatar by a dotted track with traveling dots + a pulse ring ("Connecting to {venue}…").
+5. **Result** — partial-discount breakdown: `Order + stake − win-back = you paid` (e.g. $85 + $5 − $33.33 = $56.67).
 
-Search filters prompts live; venue chips (All / Kalshi / Polymarket) appear when >1 venue is present. Light + dark themes. `chance:applied` fires on confirm→place; `chance:result` after the (simulated) resolve. HTML built from offer data is escaped (`esc()`); the `api-base` path should still sanitize remote `question` strings server-side.
+Real venue logos: Polymarket's PNG (`<img>` from `ASSET_BASE/logos/polymarket.png`, derived from the embed script's own origin) + a brand-teal "K" tile for Kalshi. Demo merges **both venues**; production restricts to the single geo-legal venue. Light + dark themes. Events: `chance:applied` `{mode, risk, win, total, offer}` on place; `chance:result` `{won, mode, amountBack, finalPrice, offer}` after the (simulated) resolve. Offer text is escaped (`esc()`); the `api-base` path should still sanitize remote strings server-side. The ✦ brand mark is a placeholder for the real Chance logo (swap in one place: `.heroBadge` / `.hsHedge` / `.brandMark .dot` / `.trigBadge`).
 
 ## 8. Out of scope (YAGNI for this proof)
 
