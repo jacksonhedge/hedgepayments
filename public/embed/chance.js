@@ -749,5 +749,9 @@
     }
   }
 
-  customElements.define('chance-checkout', ChanceCheckout)
+  // guard: some pages have a null customElements (e.g. sandboxed/non-HTML docs);
+  // and avoid redefining if another instance already registered it.
+  if (window.customElements && !customElements.get('chance-checkout')) {
+    customElements.define('chance-checkout', ChanceCheckout)
+  }
 })()
