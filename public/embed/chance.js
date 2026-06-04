@@ -364,6 +364,9 @@
       this._mounted = true
       this.attachShadow({ mode: 'open' })
       this.state = { view: 'trigger', elig: null, candidates: [], risk: 0, win: 0, venue: 'all', picked: null, outcome: null }
+      // host integrations (e.g. the Chance browser extension) can open the sheet
+      // programmatically without rendering the inline trigger (trigger="none").
+      this.addEventListener('chance:open', this.open.bind(this))
       this.renderTrigger()
     }
 
@@ -377,6 +380,7 @@
         apiBase: attr(this, 'api-base', null),
         country: attr(this, 'country', null),
         region: attr(this, 'region', null),
+        trigger: attr(this, 'trigger', 'default'),
       }
     }
     get flip() { return this.cfg().mode === 'flip-to-free' }
@@ -473,6 +477,7 @@
     renderTrigger() {
       this.state.view = 'trigger'
       var c = this.cfg()
+      if (c.trigger === 'none') { this.shadowRoot.innerHTML = this.shell('') ; return } // headless: opened via chance:open
       var sub = c.mode === 'win-it-back' ? 'Free shot to win money off your order' : 'Risk a little for a discount — or a free order'
       this.shadowRoot.innerHTML = this.shell(
         '<button class="trigger shimmer"><span class="trigBadge">✦</span>' +
