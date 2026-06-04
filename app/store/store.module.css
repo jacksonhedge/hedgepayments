@@ -1,0 +1,309 @@
+/* Simulated Shopify storefront + Chance checkout — clean, light, merchant-style */
+.root {
+  --ink: #1a1a1f;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --bg: #f4f4f6;
+  --card: #ffffff;
+  --accent: #5b3df5;
+  --accent-dk: #4a2fd6;
+  --chance: #0e9f6e;
+  --chance-dk: #0b8159;
+  --win: #0e9f6e;
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- store header ---- */
+.storeBar {
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.storeBarIn {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -0.02em; }
+.brandDot { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, #1a1a1f, #444); display: grid; place-items: center; color: #fff; font-size: 14px; }
+.barLinks { display: flex; gap: 22px; color: var(--muted); font-size: 14px; }
+.barLinks span { cursor: default; }
+.cart { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--ink); }
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 32px 24px 64px; }
+
+/* ---- product view ---- */
+.product { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+@media (max-width: 860px) { .product { grid-template-columns: 1fr; gap: 28px; } }
+
+.shot {
+  border-radius: 20px;
+  aspect-ratio: 1 / 0.82;
+  display: grid;
+  place-items: center;
+  font-size: 120px;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.thumbs { display: flex; gap: 12px; margin-top: 16px; }
+.thumb {
+  width: 64px; height: 56px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 28px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow: inset 0 0 0 1px var(--line);
+  background: var(--card);
+  transition: border-color 0.15s;
+}
+.thumbOn { border-color: var(--ink); }
+
+.pInfo { }
+.pEyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.pTitle { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin: 10px 0 8px; line-height: 1.05; }
+.pPrice { font-size: 26px; font-weight: 700; }
+.pDesc { color: var(--muted); line-height: 1.6; margin: 16px 0 26px; font-size: 15px; max-width: 44ch; }
+.pStars { color: #f5a623; font-size: 14px; margin-bottom: 4px; }
+.pStars span { color: var(--muted); margin-left: 6px; }
+
+.buy {
+  width: 100%;
+  max-width: 360px;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.buy:hover { background: var(--accent-dk); }
+.buy:active { transform: translateY(1px); }
+.buyNote { color: var(--muted); font-size: 12.5px; margin-top: 14px; display: flex; align-items: center; gap: 6px; }
+.chanceTease { color: var(--chance); font-family: var(--font-script), cursive; font-size: 1.25em; line-height: 1; }
+
+/* cursive "Chance" wordmark */
+.script {
+  font-family: var(--font-script), cursive;
+  font-weight: 400;
+  font-size: 1.16em;
+  letter-spacing: 0.01em;
+}
+
+/* express checkout buttons */
+.expressLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 12px;
+  max-width: 360px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.expressLabel::before,
+.expressLabel::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.expressGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-width: 360px;
+}
+.expressGrid > :last-child { grid-column: 1 / -1; }
+.pmBtn {
+  border: none;
+  border-radius: 11px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.1s, filter 0.15s;
+}
+.pmBtn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.pmBtn:active { transform: translateY(1px); }
+
+.methodNote {
+  padding: 13px 16px;
+  background: #fafafb;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ---- checkout ---- */
+.coGrid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: start; }
+@media (max-width: 860px) { .coGrid { grid-template-columns: 1fr; } }
+
+.coBack { background: none; border: none; color: var(--muted); font-size: 14px; cursor: pointer; padding: 0; margin-bottom: 18px; }
+.coBack:hover { color: var(--ink); }
+
+.coSection { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+.coH { font-size: 16px; font-weight: 700; margin: 0 0 14px; display: flex; justify-content: space-between; align-items: center; }
+.field { margin-bottom: 12px; }
+.field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; }
+.input {
+  width: 100%; padding: 12px 13px; border-radius: 9px;
+  border: 1px solid var(--line); background: #fafafb; font-size: 14px; color: var(--ink);
+  font-family: inherit;
+}
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* payment method options */
+.pm { border: 1px solid var(--line); border-radius: 11px; overflow: hidden; }
+.pmRow {
+  display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+  cursor: pointer; border-bottom: 1px solid var(--line); background: var(--card);
+}
+.pmRow:last-child { border-bottom: none; }
+.pmSel { background: #f6f4ff; box-shadow: inset 3px 0 0 var(--accent); }
+.pmSelChance { background: #effdf6; box-shadow: inset 3px 0 0 var(--chance); }
+.radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #c4c7cf; flex: none; }
+.radioOn { border-color: var(--accent); box-shadow: inset 0 0 0 3px #fff, 0 0 0 1px var(--accent); background: var(--accent); }
+.radioOnChance { border-color: var(--chance); box-shadow: inset 0 0 0 3px #fff, 0 0 0 1px var(--chance); background: var(--chance); }
+.pmName { flex: 1; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+.pmMeta { font-size: 12px; color: var(--muted); }
+.chanceBadge { font-size: 10px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 7px; border-radius: 20px; background: var(--chance); color: #fff; }
+.cardFields { padding: 14px 16px; background: #fafafb; border-top: 1px solid var(--line); }
+
+/* order summary */
+.summary { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; position: sticky; top: 90px; }
+.sumItem { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.sumShot { width: 56px; height: 56px; border-radius: 11px; display: grid; place-items: center; font-size: 28px; box-shadow: inset 0 0 0 1px var(--line); flex: none; position: relative; }
+.sumQty { position: absolute; top: -7px; right: -7px; width: 20px; height: 20px; border-radius: 50%; background: #6b7280; color: #fff; font-size: 11px; display: grid; place-items: center; }
+.sumName { flex: 1; font-size: 14px; font-weight: 600; }
+.sumName small { display: block; color: var(--muted); font-weight: 400; }
+.sumLine { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); padding: 9px 0; }
+.sumTotal { display: flex; justify-content: space-between; font-size: 18px; font-weight: 800; padding-top: 12px; border-top: 1px solid var(--line); margin-top: 4px; }
+.sumWin { color: var(--win); }
+
+.pay {
+  width: 100%; margin-top: 18px; padding: 15px; border: none; border-radius: 11px;
+  background: var(--accent); color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.15s;
+}
+.pay:hover { background: var(--accent-dk); }
+.payChance { background: var(--chance); }
+.payChance:hover { background: var(--chance-dk); }
+
+/* ---- Chance: shine & shimmer ---- */
+.chanceShine,
+.payChance,
+.chanceBadge {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.chanceShine::after,
+.payChance::after,
+.chanceBadge::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -160%;
+  width: 55%;
+  height: 120%;
+  pointer-events: none;
+  transform: skewX(-20deg);
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 38%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0.15) 62%,
+    transparent 100%
+  );
+  animation: chanceShimmer 2.8s ease-in-out infinite;
+}
+.chanceBadge::after { animation-duration: 3.4s; }
+@keyframes chanceShimmer {
+  0% { left: -160%; }
+  55% { left: 160%; }
+  100% { left: 160%; }
+}
+
+/* gentle glow pulse so the green Chance button stands out */
+.chanceShine {
+  animation: chanceGlow 2.8s ease-in-out infinite;
+}
+@keyframes chanceGlow {
+  0%, 100% { box-shadow: 0 0 16px rgba(14, 159, 110, 0.4); }
+  50% { box-shadow: 0 0 30px rgba(14, 159, 110, 0.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chanceShine,
+  .payChance,
+  .chanceBadge { animation: none; }
+  .chanceShine::after,
+  .payChance::after,
+  .chanceBadge::after { display: none; }
+}
+
+/* ---- chance flow ---- */
+.chanceHead { text-align: center; margin-bottom: 24px; }
+.chancePill { display: inline-flex; align-items: center; gap: 8px; background: #effdf6; color: var(--chance); font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: 30px; border: 1px solid #bbf3d8; }
+.chanceTitle { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin: 16px 0 6px; }
+.chanceSub { color: var(--muted); font-size: 15px; max-width: 52ch; margin: 0 auto; line-height: 1.5; }
+
+.mkts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 760px; margin: 26px auto 0; }
+@media (max-width: 720px) { .mkts { grid-template-columns: 1fr; } }
+.mkt {
+  text-align: left; background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 16px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+.mkt:hover { border-color: #c9ccd4; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+.mktOn {
+  border-color: var(--chance);
+  background: #effdf6;
+  box-shadow: 0 0 0 2px var(--chance), 0 10px 28px rgba(14, 159, 110, 0.2);
+}
+.mktOn .mktYes { background: var(--chance); color: #fff; border-color: var(--chance); }
+.mktTop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.venue { display: inline-flex; align-items: center; gap: 8px; padding: 4px 11px 4px 5px; border-radius: 24px; }
+.venuePoly { background: #e9f0ff; }
+.venueKalshi { background: #e3fbf3; padding-right: 7px; }
+.venueLogo { height: 26px; width: auto; border-radius: 5px; display: block; }
+.venueLogoSq { height: 28px; width: 28px; border-radius: 7px; display: block; }
+.venueName { font-size: 14px; font-weight: 800; color: #2b6ef6; }
+.mktChance { font-size: 12px; font-weight: 600; color: var(--muted); }
+.mktQ { font-size: 16px; font-weight: 700; line-height: 1.3; min-height: 44px; color: var(--ink); }
+.mktBot { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+.mktYes { font-weight: 700; font-size: 13px; color: var(--chance); background: #effdf6; border: 1px solid #bbf3d8; border-radius: 8px; padding: 6px 12px; }
+.mktWin { font-size: 14px; font-weight: 800; }
+.mktWin small { color: var(--muted); font-weight: 500; display: block; font-size: 11px; }
+
+.chanceActions { max-width: 760px; margin: 22px auto 0; display: flex; gap: 12px; }
+.ghost { flex: none; padding: 15px 22px; border-radius: 11px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font-weight: 600; cursor: pointer; }
+.ghost:hover { border-color: #c4c7cf; }
+
+/* ---- result ---- */
+.result { max-width: 520px; margin: 20px auto 0; text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 40px 32px; }
+.resolving { padding: 28px 0; }
+.spinner { width: 48px; height: 48px; border: 4px solid var(--line); border-top-color: var(--chance); border-radius: 50%; margin: 0 auto 18px; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.resEmoji { font-size: 64px; line-height: 1; }
+.resTitle { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin: 16px 0 8px; }
+.resTitleWin { color: var(--win); }
+.resSub { color: var(--muted); font-size: 15px; line-height: 1.5; }
+.resVenue { display: inline-flex; align-items: center; gap: 8px; margin: 18px 0; padding: 8px 14px; border-radius: 30px; background: var(--bg); font-size: 13px; }
+.resBreak { background: var(--bg); border-radius: 12px; padding: 16px; margin: 18px 0; text-align: left; }
+.resBreak div { display: flex; justify-content: space-between; font-size: 14px; padding: 4px 0; color: var(--muted); }
+.resBreak .resFinal { font-weight: 800; font-size: 17px; color: var(--ink); border-top: 1px solid var(--line); padding-top: 10px; margin-top: 4px; }
+.resBreak .resFinal.resFinalWin { color: var(--win); }
+
+.foot { text-align: center; color: var(--muted); font-size: 12.5px; margin-top: 34px; }
+.foot b { color: var(--ink); }
+.foot a { color: var(--chance); text-decoration: none; }

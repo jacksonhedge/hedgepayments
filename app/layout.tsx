@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Fraunces, Anton, Press_Start_2P, Sora } from 'next/font/google'
+import { Inter, Fraunces, Anton, Press_Start_2P, Sora, Pacifico } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -33,6 +33,14 @@ const pressStart = Press_Start_2P({
 const sora = Sora({
   subsets: ['latin'],
   variable: '--font-sora',
+  display: 'swap',
+})
+
+// Cursive script for the Chance wordmark
+const pacifico = Pacifico({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-script',
   display: 'swap',
 })
 
@@ -74,7 +82,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${anton.variable} ${pressStart.variable} ${sora.variable}`}
+      className={`${inter.variable} ${fraunces.variable} ${anton.variable} ${pressStart.variable} ${sora.variable} ${pacifico.variable}`}
     >
       <head>
         <meta name="theme-color" content="#07060e" />

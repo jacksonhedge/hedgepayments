@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import styles from './ArcadeLanding.module.css'
 
 /* ---- Reveal-on-scroll wrapper ---- */
@@ -74,11 +74,55 @@ const CHANCE_TIERS = [
   { add: '+$25', odds: '2 : 1', note: '1 in 3' },
 ]
 
+// ---- Market-picker screen ----
+// "Pick a price" (your stake) and "pick a percent" (the odds), then pick a real
+// prediction-market bet to try to break even on the order.
+const STAKE_OPTIONS = [5, 10, 25]
+const PCT_OPTIONS = [8, 17, 33, 50] // implied % to win → longer to shorter odds
+
+// Representative markets (the live picker pulls real ones via the Chance engine).
+const PICKER_MARKETS = [
+  // ~8% — longshots
+  { venue: 'Polymarket', q: 'Spurs cover -22.5 vs Knicks', pct: 8, resolvesIn: '8h' },
+  { venue: 'Polymarket', q: 'Solana between $50–$60 Friday', pct: 8, resolvesIn: '2d' },
+  { venue: 'Kalshi', q: 'NYC high above 95°F this week', pct: 8, resolvesIn: '3d' },
+  { venue: 'Polymarket', q: 'Any MLB no-hitter this weekend', pct: 8, resolvesIn: '3d' },
+  { venue: 'Kalshi', q: 'Bitcoin above $130k by Sunday', pct: 8, resolvesIn: '4d' },
+  // ~17%
+  { venue: 'Kalshi', q: 'NYC high above 90°F tomorrow', pct: 17, resolvesIn: '1d' },
+  { venue: 'Polymarket', q: 'Knicks/Spurs total Under 202.5', pct: 17, resolvesIn: '8h' },
+  { venue: 'Polymarket', q: 'ETH above $4,000 Friday', pct: 17, resolvesIn: '2d' },
+  { venue: 'Kalshi', q: 'Jobless claims above 250k', pct: 17, resolvesIn: '4d' },
+  { venue: 'Polymarket', q: 'Yankees sweep the series', pct: 17, resolvesIn: '3d' },
+  // ~33%
+  { venue: 'Kalshi', q: 'Fed holds rates at June meeting', pct: 33, resolvesIn: '5d' },
+  { venue: 'Polymarket', q: 'BTC above $120k this week', pct: 33, resolvesIn: '4d' },
+  { venue: 'Polymarket', q: 'Yankees win tonight vs Red Sox', pct: 33, resolvesIn: '6h' },
+  { venue: 'Kalshi', q: 'S&P 500 down on the week', pct: 33, resolvesIn: '2d' },
+  { venue: 'Polymarket', q: 'Lakers cover -6.5', pct: 33, resolvesIn: '5h' },
+  // ~50% — coin flips
+  { venue: 'Kalshi', q: 'S&P 500 closes green today', pct: 50, resolvesIn: '6h' },
+  { venue: 'Polymarket', q: 'Lakers win tonight', pct: 50, resolvesIn: '5h' },
+  { venue: 'Polymarket', q: 'Bitcoin up on the day', pct: 50, resolvesIn: '10h' },
+  { venue: 'Kalshi', q: 'Rain in Chicago tomorrow', pct: 50, resolvesIn: '1d' },
+  { venue: 'Polymarket', q: 'Mets beat the Braves', pct: 50, resolvesIn: '7h' },
+]
+
+// Representative 24h volumes, for the prediction-market card look.
+const MKT_VOL = ['2.4M', '1.1M', '840K', '3.2M', '560K', '1.7M', '920K']
+
 export default function ArcadeLanding() {
   const [flipping, setFlipping] = useState(false)
   const [result, setResult] = useState<'idle' | 'win' | 'lose'>('idle')
   const [score, setScore] = useState(0)
   const [method, setMethod] = useState<'card' | 'apple' | 'chance'>('chance')
+
+  // Market-picker screen
+  const [pickerOpen, setPickerOpen] = useState(false)
+  const [stake, setStake] = useState(5)
+  const [winBack, setWinBack] = useState(PAY_WITH_CHANCE) // default: win back the whole order
+  const [pickedMarket, setPickedMarket] = useState<number | null>(null)
+  const [step, setStep] = useState(1) // 1 price · 2 win-back · 3 market
 
   function play(prob: number) {
     if (flipping) return
@@ -108,6 +152,21 @@ export default function ArcadeLanding() {
       : flipping
       ? 'ROLLING…'
       : '1 IN 10 TO PAY $0'
+
+  // Market-picker derived values (rendered inside the checkout screen)
+  const pOrder = PAY_WITH_CHANCE
+  const pTotal = pOrder + stake
+  const pMarket = pickedMarket != null ? PICKER_MARKETS[pickedMarket] : null
+  const pPayout = pMarket ? stake / (pMarket.pct / 100) : 0 // actual win-back if it hits
+  const winsFull = pPayout >= pOrder
+  const winBackOptions = [PAY_WITH_CHANCE, 35, 25].filter((w) => w > stake)
+  const sortedMarkets = PICKER_MARKETS.map((m, i) => ({
+    m,
+    i,
+    payout: stake / (m.pct / 100),
+  }))
+    .sort((a, b) => Math.abs(a.payout - winBack) - Math.abs(b.payout - winBack))
+    .slice(0, 7)
 
   return (
     <div className={styles.root}>
@@ -268,32 +327,203 @@ export default function ArcadeLanding() {
                 </div>
 
                 {method === 'chance' ? (
-                  <div className={styles.coFlip}>
-                    <div
-                      className={`${styles.coin} ${flipping ? styles.coinFlip : styles.coinIdle}`}
-                      style={{ width: 64, height: 64 }}
-                    >
-                      <div className={styles.coinFace}>${PAY_WITH_CHANCE}</div>
-                      <div className={`${styles.coinFace} ${styles.coinBack}`}>$0</div>
-                    </div>
-                    <div className={`${styles.priceTag} ${priceClass}`} style={{ fontSize: 34 }}>
-                      {priceText}
-                    </div>
-                    <div className={styles.priceCaption}>{caption}</div>
-                    {result === 'idle' ? (
+                  <>
+                    <div className={styles.coFlip}>
+                      <div
+                        className={`${styles.coin} ${flipping ? styles.coinFlip : styles.coinIdle}`}
+                        style={{ width: 64, height: 64 }}
+                      >
+                        <div className={styles.coinFace}>${PAY_WITH_CHANCE}</div>
+                        <div className={`${styles.coinFace} ${styles.coinBack}`}>$0</div>
+                      </div>
+                      <div className={`${styles.priceTag} ${priceClass}`} style={{ fontSize: 34 }}>
+                        {priceText}
+                      </div>
+                      <div className={styles.priceCaption}>{caption}</div>
                       <button
                         className={styles.payBtn}
-                        onClick={() => play(WIN_PROB)}
-                        disabled={flipping}
+                        onClick={() => {
+                          setStep(1)
+                          setWinBack(PAY_WITH_CHANCE)
+                          setPickedMarket(null)
+                          setPickerOpen((o) => !o)
+                        }}
                       >
-                        Add Chance · Pay ${PAY_WITH_CHANCE} →
+                        {pickerOpen ? 'Hide markets ↑' : 'Pick your market →'}
                       </button>
-                    ) : (
-                      <button className={styles.payBtn} onClick={reset}>
-                        ↺ Try again
-                      </button>
-                    )}
-                  </div>
+                    </div>
+
+                    <AnimatePresence initial={false}>
+                      {pickerOpen && (
+                        <motion.div
+                          key="picker-drawer"
+                          className={styles.pickerOverlayInScreen}
+                          initial={{ y: '100%' }}
+                          animate={{ y: 0 }}
+                          exit={{ y: '100%' }}
+                          transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                          <div className={styles.pickerWiz}>
+                            <div className={styles.wizTop}>
+                              <button
+                                className={styles.pickerBack}
+                                onClick={() => (step > 1 ? setStep((s) => s - 1) : setPickerOpen(false))}
+                                aria-label="Back"
+                              >
+                                ←
+                              </button>
+                              <div className={styles.wizDots}>
+                                {[1, 2, 3].map((n) => (
+                                  <span
+                                    key={n}
+                                    className={`${styles.wizDot} ${step >= n ? styles.wizDotOn : ''}`}
+                                  />
+                                ))}
+                              </div>
+                              <div className={styles.pickerVenues}>
+                                <span className={styles.vChip}>POLY</span>
+                                <span className={styles.vChip}>KALSHI</span>
+                              </div>
+                            </div>
+
+                            {step === 1 && (
+                              <div className={styles.wizBody}>
+                                <div className={styles.wizKicker}>Step 1 of 3</div>
+                                <h3 className={styles.wizTitle}>Pick your price</h3>
+                                <p className={styles.wizSub}>
+                                  How much do you want to risk for a shot at paying $0?
+                                </p>
+                                <div className={styles.wizBigNum}>${stake}</div>
+                                <div className={styles.wizChoices}>
+                                  {STAKE_OPTIONS.map((s) => (
+                                    <button
+                                      key={s}
+                                      className={`${styles.chip} ${stake === s ? styles.chipSel : ''}`}
+                                      onClick={() => {
+                                        setStake(s)
+                                        setWinBack(PAY_WITH_CHANCE)
+                                        setPickedMarket(null)
+                                      }}
+                                    >
+                                      Bet ${s}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {step === 2 && (
+                              <div className={styles.wizBody}>
+                                <div className={styles.wizKicker}>Step 2 of 3</div>
+                                <h3 className={styles.wizTitle}>Win back</h3>
+                                <p className={styles.wizSub}>
+                                  How much of your ${pOrder} order do you want a shot at? Less = better odds.
+                                </p>
+                                <div className={styles.wizBigNum}>
+                                  ${winBack}
+                                  {winBack >= pOrder && <span className={styles.wizBigSub}>ALL</span>}
+                                </div>
+                                <div className={styles.wizChoices}>
+                                  {winBackOptions.map((w) => (
+                                    <button
+                                      key={w}
+                                      className={`${styles.chip} ${winBack === w ? styles.chipSel : ''}`}
+                                      onClick={() => {
+                                        setWinBack(w)
+                                        setPickedMarket(null)
+                                      }}
+                                    >
+                                      <b>{w >= pOrder ? `All $${w}` : `$${w}`}</b>
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {step === 3 && (
+                              <div className={styles.wizBody}>
+                                <div className={styles.wizKicker}>Step 3 of 3</div>
+                                <h3 className={styles.wizTitle}>Pick a market</h3>
+                                <p className={styles.wizSub}>
+                                  Bet ${stake} to win back{' '}
+                                  {winBack >= pOrder ? 'your full' : `~$${winBack} of your`} ${pOrder} order.
+                                </p>
+                                <div className={styles.marketList}>
+                                  {sortedMarkets.map(({ m, i, payout }) => (
+                                    <button
+                                      key={i}
+                                      className={`${styles.market} ${pickedMarket === i ? styles.marketSel : ''}`}
+                                      onClick={() => setPickedMarket(i)}
+                                    >
+                                      <div className={styles.mTop}>
+                                        <span
+                                          className={`${styles.mVenue} ${m.venue === 'Kalshi' ? styles.mKalshi : styles.mPoly}`}
+                                        >
+                                          {m.venue}
+                                        </span>
+                                        <span className={styles.mVol}>
+                                          ${MKT_VOL[i % MKT_VOL.length]} Vol
+                                        </span>
+                                      </div>
+                                      <div className={styles.mQ}>{m.q}</div>
+                                      <div className={styles.mBot}>
+                                        <span className={styles.mYes}>Yes {m.pct}¢</span>
+                                        <span className={styles.mNo}>No {100 - m.pct}¢</span>
+                                        <span className={styles.mWin}>win ${payout.toFixed(0)}</span>
+                                        <span className={styles.mTime}>{m.resolvesIn}</span>
+                                      </div>
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            <div className={styles.wizFoot}>
+                              {step < 3 ? (
+                                <button
+                                  className={styles.payBtn}
+                                  onClick={() => setStep((s) => s + 1)}
+                                >
+                                  Next →
+                                </button>
+                              ) : (
+                                <>
+                                  <div
+                                    className={`${styles.pickerMath} ${pMarket ? styles.mathWin : ''}`}
+                                  >
+                                    {!pMarket ? (
+                                      <span>Pick a market to see your win-back.</span>
+                                    ) : winsFull ? (
+                                      <span>
+                                        If it hits → win back <b>${pPayout.toFixed(0)}</b> — your order’s <b>free</b>.
+                                      </span>
+                                    ) : (
+                                      <span>
+                                        If it hits → win back <b>${pPayout.toFixed(0)}</b> of your ${pOrder}.
+                                      </span>
+                                    )}
+                                  </div>
+                                  <button
+                                    className={styles.payBtn}
+                                    disabled={!pMarket}
+                                    onClick={() => setPickerOpen(false)}
+                                  >
+                                    Place bet · Pay ${pTotal}
+                                  </button>
+                                  <button
+                                    className={styles.pickerAsIs}
+                                    onClick={() => setPickerOpen(false)}
+                                  >
+                                    Pay ${pOrder} as is
+                                  </button>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
                 ) : (
                   <button className={styles.payBtn}>Pay ${ITEM}.00</button>
                 )}
@@ -523,6 +753,7 @@ export default function ArcadeLanding() {
           </div>
         </div>
       </footer>
+
     </div>
   )
 }
