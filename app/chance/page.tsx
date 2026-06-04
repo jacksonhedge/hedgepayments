@@ -8,6 +8,10 @@ type LogEntry = { t: string; name: string; detail: string }
 
 const AMOUNTS = [24, 48, 85, 140]
 
+// Where "Add Chrome Extension" routes. Swap to the real Chrome Web Store listing
+// URL once the extension is published.
+const EXTENSION_URL = 'https://chrome.google.com/webstore'
+
 export default function ChanceEmbedDemo() {
   const [amount, setAmount] = useState(85)
   const [mode, setMode] = useState<Mode>('flip-to-free')
@@ -61,10 +65,15 @@ export default function ChanceEmbedDemo() {
           <span style={S.brandDot}>N</span>
           <span style={{ fontFamily: 'var(--font-pixel), monospace', fontSize: 13 }}>NORTHWIND</span>
         </div>
-        <span style={S.poweredPill}>
-          <span className="coinMini" /> checkout powered by{' '}
-          <b style={{ fontFamily: 'var(--font-script), cursive', color: '#b8ff3a', fontSize: '1.25em', margin: '0 2px' }}>Chance</b> · a Hedge Pay product
-        </span>
+        <div style={S.topRight}>
+          <span style={S.poweredPill}>
+            <span className="coinMini" /> powered by{' '}
+            <b style={{ fontFamily: 'var(--font-script), cursive', color: '#b8ff3a', fontSize: '1.25em', margin: '0 2px' }}>Chance</b>
+          </span>
+          <a href={EXTENSION_URL} target="_blank" rel="noopener noreferrer" style={S.extBtn}>
+            🧩 Add Chrome Extension
+          </a>
+        </div>
       </header>
 
       <div style={S.grid2}>
@@ -220,6 +229,8 @@ const S: Record<string, React.CSSProperties> = {
   brand: { display: 'flex', alignItems: 'center', gap: 11, fontWeight: 800, letterSpacing: '0.04em' },
   brandDot: { width: 28, height: 28, borderRadius: 9, background: 'linear-gradient(135deg,#b8ff3a,#2fe08a)', color: '#08130a', display: 'grid', placeItems: 'center', fontWeight: 900, boxShadow: '0 0 16px rgba(184,255,58,0.5)' },
   poweredPill: { fontSize: 12, color: '#aab6d6', display: 'flex', alignItems: 'center' },
+  topRight: { display: 'flex', alignItems: 'center', gap: 16 },
+  extBtn: { display: 'inline-flex', alignItems: 'center', gap: 7, padding: '9px 16px', borderRadius: 11, fontSize: 13, fontWeight: 800, textDecoration: 'none', color: '#04130a', background: 'linear-gradient(135deg,#b8ff3a,#2fe08a)', border: '1px solid #cdff84', boxShadow: '0 0 20px rgba(184,255,58,.45)', whiteSpace: 'nowrap', letterSpacing: '-0.01em' },
   grid2: { position: 'relative', zIndex: 1, maxWidth: 1080, margin: '0 auto', padding: '40px 24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 34, alignItems: 'start' },
   checkout: { background: '#fff', color: '#1a1a1f', borderRadius: 20, padding: 26, boxShadow: '0 24px 70px rgba(0,0,0,.5), 0 0 0 1px rgba(0,234,255,0.25), 0 0 40px rgba(0,234,255,0.12)' },
   h2: { fontSize: 20, fontWeight: 800, margin: '0 0 18px', fontFamily: 'var(--font-anton), sans-serif', letterSpacing: '0.01em' },
