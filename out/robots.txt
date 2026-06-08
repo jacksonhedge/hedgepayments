@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/*
-Disallow: /admin/*
-Disallow: /dashboard/*
-
-Sitemap: https://hedgepayments.com/sitemap.xml

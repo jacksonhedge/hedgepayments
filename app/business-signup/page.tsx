@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-// import { createBusinessAccount } from '@/lib/firebase/auth'
+import { supabaseBrowser } from '@/app/utils/supabase-browser'
 
 export default function BusinessSignUp() {
   const router = useRouter()
@@ -61,20 +61,28 @@ export default function BusinessSignUp() {
     setIsLoading(true)
     
     try {
-      // Temporarily disabled for Firebase hosting migration
-      // const { user, businessData } = await createBusinessAccount({
-      //   email: formData.email,
-      //   password: formData.password,
-      //   businessName: formData.businessName,
-      //   contactName: formData.contactName,
-      //   phone: formData.phone,
-      //   website: formData.website,
-      //   businessType: formData.businessType,
-      //   expectedVolume: formData.expectedVolume
-      // })
-
-      // Success! Redirect to dashboard
-      console.log('Business signup temporarily disabled during migration')
+      // Create the account via Supabase Auth; business details ride along as
+      // user metadata (the Firebase business-doc equivalent).
+      const { error } = await supabaseBrowser.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            account_type: 'business',
+            business_name: formData.businessName,
+            contact_name: formData.contactName,
+            phone: formData.phone,
+            website: formData.website,
+            business_type: formData.businessType,
+            expected_monthly_volume: formData.expectedVolume,
+          },
+        },
+      })
+      if (error) {
+        setErrors({ submit: error.message })
+        setIsLoading(false)
+        return
+      }
       router.push('/dashboard')
     } catch (error: any) {
       setErrors({
