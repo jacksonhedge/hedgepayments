@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
+import { notifySlack } from '@/lib/slack';
 import { sendWaitlistConfirmation, addUserToMarketingList } from '../../../lib/emailService';
 
 // Function to generate a unique referral code
@@ -96,6 +97,8 @@ export async function POST(request: NextRequest) {
       console.error('Error creating waitlist record:', insertError);
       throw insertError;
     }
+
+    await notifySlack(`🎟️ New waitlist signup: ${email}`);
 
     // Send welcome email
     try {

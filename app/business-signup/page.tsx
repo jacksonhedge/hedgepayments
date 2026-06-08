@@ -83,6 +83,19 @@ export default function BusinessSignUp() {
         setIsLoading(false)
         return
       }
+      // Best-effort Slack notification (never blocks the signup).
+      try {
+        await fetch('/api/business-signup', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            businessName: formData.businessName,
+            contactName: formData.contactName,
+            email: formData.email,
+            businessType: formData.businessType,
+          }),
+        })
+      } catch {}
       router.push('/dashboard')
     } catch (error: any) {
       setErrors({
