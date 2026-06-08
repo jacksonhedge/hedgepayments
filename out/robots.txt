@@ -2,5 +2,6 @@ User-Agent: *
 Allow: /
 Disallow: /api/*
 Disallow: /admin/*
+Disallow: /dashboard/*
 
-Sitemap: https://sidebet.io/sitemap.xml
+Sitemap: https://hedgepayments.com/sitemap.xml
