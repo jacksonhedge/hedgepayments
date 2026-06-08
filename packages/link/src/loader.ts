@@ -46,7 +46,7 @@ export function createLink(config: CreateConfig): LinkHandler {
   iframe.setAttribute('sandbox', 'allow-scripts allow-forms allow-popups allow-same-origin')
   iframe.setAttribute('allow', 'payment')
   iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;'
-  iframe.src = appBase() + '/index.html'
+  iframe.src = appBase() + '/index.html?ho=' + encodeURIComponent(location.origin)
 
   overlay.appendChild(iframe)
   document.body.appendChild(overlay)

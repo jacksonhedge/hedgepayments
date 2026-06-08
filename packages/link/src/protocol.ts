@@ -33,7 +33,7 @@ export type InboundMessage =
 function rand(): string { return Math.random().toString(36).slice(2, 12) }
 
 export function makeMeta(sessionId: string, extra: Record<string, unknown> = {}): Meta {
-  return { session_id: sessionId, request_id: 'req_' + rand(), timestamp: new Date().toISOString(), ...extra }
+  return { ...extra, session_id: sessionId, request_id: 'req_' + rand(), timestamp: new Date().toISOString() }
 }
 
 export function isInbound(d: unknown): d is InboundMessage {

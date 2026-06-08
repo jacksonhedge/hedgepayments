@@ -1,7 +1,15 @@
 import { InboundMessage, OutboundMessage, makeMeta } from '../protocol'
 
 function hostOrigin(): string {
-  return (typeof window !== 'undefined' && (window as any).__HEDGE_LINK_HOST_ORIGIN) || '*'
+  if (typeof window !== 'undefined') {
+    const override = (window as any).__HEDGE_LINK_HOST_ORIGIN
+    if (override) return override
+    try {
+      const ho = new URLSearchParams(window.location.search).get('ho')
+      if (ho) return ho
+    } catch (e) { /* ignore */ }
+  }
+  return '*'
 }
 
 /** Returns the parent target. In tests jsdom makes window.parent read-only (=== window),
