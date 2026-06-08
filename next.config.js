@@ -5,7 +5,9 @@ const nextConfig = {
   images: {
     unoptimized: true
   },
-  output: 'export',
+  // NOTE: removed `output: 'export'` — static export silently dropped every /api/* route
+  // (waitlist/subscribe were 404 in prod). Running as a normal Next server on Vercel so
+  // the existing route handlers work. API routes need their env vars set in Vercel.
   trailingSlash: true
 }
 
