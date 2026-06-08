@@ -12,12 +12,13 @@ Status legend: ✅ shipped · 🔨 in progress · ⏭️ queued · 🔒 blocked 
 
 ## NOW
 
-### 🔨 Payments — Slice 1: Funding (cash-in) — *Stripe test mode*
-Load real money (Stripe **test**) into a wallet on Hedge's shared ledger, confirmed by webhook, shown in the extension. One config-flip from live.
-- **Spec:** `docs/superpowers/specs/2026-06-05-chance-wallet-funding-design.md`
-- **Plan:** `docs/superpowers/plans/2026-06-08-chance-wallet-funding-slice1.md` (9 TDD tasks, ready to execute)
-- **Decisions locked:** Chance = branded view of Hedge's shared wallet ledger (migration 001); hosted Stripe Checkout via `@hedge/api`; anonymous device wallet for now.
-- 🔒 **Blocked on:** Stripe test keys (`sk_test_…`) + a test Supabase with migrations 001 + 004 applied + an `@hedge/api` deploy target (or local + Stripe CLI).
+### ✅ Payments — Slice 1: Funding (cash-in) — BUILT (Stripe test mode), pending live wiring
+The full **confirmed-payment** pipeline is implemented, tested (12/12 backend + extension funding test), reviewed, and merged to `main`: `@hedge/api` endpoints (`POST /wallet`, `POST /funding/sessions`, raw-body Stripe **webhook**, `GET /wallet/:id`), idempotent `credit_wallet` (migration `004`), and the extension's real "pay with card" path. CoinFlow stays simulated.
+- **Spec:** `docs/superpowers/specs/2026-06-05-chance-wallet-funding-design.md` · **Plan:** `docs/superpowers/plans/2026-06-08-chance-wallet-funding-slice1.md` · **Runbook:** `packages/api/CHANCE_FUNDING.md`
+- 🔒 **Live E2E pending (needs you):** Stripe test keys (`sk_test_…` + `whsec_…`) + a test Supabase with migrations 001 + 004 applied + `@hedge/api` running (local + Stripe CLI is fine).
+
+### 🔨 Up next — Slice 2: Wallet identity + auth
+Replace the anonymous device wallet with Supabase auth (sign in to the extension); tie wallets to a real user. (See NEXT.)
 
 ---
 
