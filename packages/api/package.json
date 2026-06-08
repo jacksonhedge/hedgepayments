@@ -12,6 +12,7 @@
     "db:reset": "knex migrate:rollback --all && knex migrate:latest && knex seed:run"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.108.0",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
