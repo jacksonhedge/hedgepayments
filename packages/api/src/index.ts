@@ -8,6 +8,7 @@ import { logger } from './utils/logger';
 import { chanceRouter } from './routes/chance';
 import { chanceWebhook } from './routes/chanceWebhook';
 import { marketingRouter } from './routes/marketing';
+import { linkRouter } from './routes/link';
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/v1/chance', chanceRouter);
+app.use('/api/v1/link', linkRouter);
 app.use('/api/v1', marketingRouter); // /api/v1/waitlist, /api/v1/subscribe
 
 // Error handling
