@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { addSubscriber } from '../../utils/supabase';
 
-// For security in a production app, this would be an environment variable
-// But for now, we'll use the key directly to get things working
-const CONVERTKIT_API_KEY = 'kit_67222418319376df0250f010cdd975b7';
-const CONVERTKIT_FORM_ID = '8047084';
+// ConvertKit credentials come from env. The form ID is public; the API key is a secret.
+// NOTE: the previously hardcoded key (kit_672…) is in git history and MUST be rotated/revoked
+// in the ConvertKit dashboard.
+const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY || '';
+const CONVERTKIT_FORM_ID = process.env.CONVERTKIT_FORM_ID || '8047084';
 
 export async function POST(req: NextRequest) {
   try {
@@ -31,6 +32,12 @@ export async function POST(req: NextRequest) {
     const nameParts = name.split(' ');
     const firstName = nameParts[0];
     const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+
+    // If ConvertKit isn't configured, the Supabase save above is the source of truth — done.
+    if (!CONVERTKIT_API_KEY) {
+      const generatedRefCode = `${firstName.substring(0, 1)}${lastName ? lastName.substring(0, 1) : ''}${Math.floor(1000 + Math.random() * 9000)}`;
+      return NextResponse.json({ success: supabaseResult.success, referralCode: generatedRefCode, supabase: supabaseResult.success, convertkit: false });
+    }
 
     // Let's try a different approach - building the URL with query parameters
     // instead of using the JSON body as ConvertKit's API might be picky
