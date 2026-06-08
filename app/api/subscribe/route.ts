@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { addSubscriber } from '../../utils/supabase';
+import { notifySlack } from '@/lib/slack';
 
 // ConvertKit credentials come from env. The form ID is public; the API key is a secret.
 // NOTE: the previously hardcoded key (kit_672…) is in git history and MUST be rotated/revoked
@@ -26,6 +27,7 @@ export async function POST(req: NextRequest) {
       // Continue with ConvertKit anyway - we'll log the error but not fail the request
     } else {
       console.log('Successfully saved subscriber to Supabase:', supabaseResult.data);
+      await notifySlack(`📧 New subscriber: ${name} <${email}>`);
     }
 
     // Split the name into first and last
