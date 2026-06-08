@@ -1,11 +1,10 @@
+import { randomBytes } from 'crypto';
 import { supabase } from '../lib/supabase';
 
 const TTL_MS = 30 * 60 * 1000;
 
 function genToken(): string {
-  let s = '';
-  for (let i = 0; i < 32; i++) s += Math.floor(Math.random() * 36).toString(36);
-  return 'lt_' + s;
+  return 'lt_' + randomBytes(32).toString('base64url');
 }
 
 export interface NewSession { product: string; config?: Record<string, unknown>; env?: string }
