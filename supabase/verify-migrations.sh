@@ -41,6 +41,15 @@ SQL
 "${PSQL[@]}" -f "$HERE/migrations/004_chance_funding.sql"        >/dev/null || fail "004 did not apply"
 echo "✅ migrations 001 + 004 apply cleanly"
 
+"${PSQL[@]}" -f "$HERE/migrations/005_link_sessions.sql" >/dev/null || fail "005 did not apply"
+echo "✅ migration 005 applies"
+
+# link_sessions round-trip: insert a pending session and read it back
+"${PSQL[@]}" -c "INSERT INTO link_sessions (token, product, env, expires_at) VALUES ('lt_verify', 'chance', 'sandbox', NOW() + INTERVAL '30 minutes');" >/dev/null || fail "link_sessions insert failed"
+ls_status=$("${PSQL[@]}" -c "SELECT status FROM link_sessions WHERE token='lt_verify';")
+[ "$ls_status" = "pending" ] || fail "link_sessions status should be 'pending' (got '$ls_status')"
+echo "✅ link_sessions round-trip: pending"
+
 W='00000000-0000-0000-0000-0000000000b1'
 "${PSQL[@]}" -c "INSERT INTO wallets (id,user_id,currency,status) VALUES ('$W','00000000-0000-0000-0000-0000000000a1','USD','active');" >/dev/null || fail "wallet insert failed"
 c1=$("${PSQL[@]}"  -c "SELECT credited FROM credit_wallet('$W',2500,'USD','e1');")
