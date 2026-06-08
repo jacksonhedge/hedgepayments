@@ -69,6 +69,20 @@ export const config = {
     },
   },
   
+  // Stripe (Chance wallet funding)
+  stripe: {
+    secretKey: process.env.STRIPE_SECRET_KEY || '',
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || '',
+  },
+
+  // Chance wallet
+  chance: {
+    anonUserId: process.env.CHANCE_ANON_USER_ID || '00000000-0000-0000-0000-0000000000a1',
+    successUrl: process.env.CHANCE_SUCCESS_URL || 'https://hedgepayments.com/chance/funded',
+    cancelUrl: process.env.CHANCE_CANCEL_URL || 'https://hedgepayments.com/chance/cancelled',
+    extensionOrigin: process.env.CHANCE_EXTENSION_ORIGIN || '*',
+  },
+
   // CORS
   cors: {
     origin: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'],
