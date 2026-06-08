@@ -55,10 +55,12 @@ BEGIN
     RETURN;
   END;
 
-  UPDATE wallets
-    SET balance_available = balance_available + p_amount, updated_at = NOW()
-    WHERE id = p_wallet_id
-    RETURNING balance_available INTO v_balance;
+  -- Alias the table: the RETURNS TABLE out-column `balance_available` otherwise
+  -- collides with wallets.balance_available ("column reference is ambiguous").
+  UPDATE wallets w
+    SET balance_available = w.balance_available + p_amount, updated_at = NOW()
+    WHERE w.id = p_wallet_id
+    RETURNING w.balance_available INTO v_balance;
 
   RETURN QUERY SELECT v_balance, TRUE;
 END;
