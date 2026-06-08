@@ -134,11 +134,13 @@ CREATE TABLE wallets (
   metadata JSONB DEFAULT '{}',
 
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-
-  -- Ensure one primary wallet per currency per user
-  UNIQUE(user_id, currency, is_primary) WHERE is_primary = TRUE
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Ensure one primary wallet per currency per user.
+-- (Partial uniqueness must be an index in Postgres, not an inline table constraint.)
+CREATE UNIQUE INDEX wallets_one_primary_per_user_currency
+  ON wallets(user_id, currency) WHERE is_primary = TRUE;
 
 -- Create indexes for wallet queries
 CREATE INDEX idx_wallets_user_id ON wallets(user_id);
@@ -283,11 +285,13 @@ CREATE TABLE payment_methods (
   metadata JSONB DEFAULT '{}',
 
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-
-  -- Ensure one default per type per user
-  UNIQUE(user_id, type, is_default) WHERE is_default = TRUE
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Ensure one default payment method per type per user.
+-- (Partial uniqueness must be an index in Postgres, not an inline table constraint.)
+CREATE UNIQUE INDEX payment_methods_one_default_per_user_type
+  ON payment_methods(user_id, type) WHERE is_default = TRUE;
 
 -- Create indexes for payment method queries
 CREATE INDEX idx_payment_methods_user_id ON payment_methods(user_id);
@@ -625,7 +629,12 @@ CREATE POLICY payout_methods_read_own ON payout_methods
 -- Initial Data / Seed
 -- =====================================================
 
--- Create system wallet for fees
+-- Create system wallet for fees.
+-- Seed the auth row first — users.id references auth.users(id).
+INSERT INTO auth.users (id, email, created_at, updated_at)
+VALUES ('00000000-0000-0000-0000-000000000000', 'system@hedgepayments.com', NOW(), NOW())
+ON CONFLICT (id) DO NOTHING;
+
 INSERT INTO users (id, email, first_name, last_name, kyc_status)
 VALUES (
   '00000000-0000-0000-0000-000000000000',
