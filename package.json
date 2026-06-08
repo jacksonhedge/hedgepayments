@@ -14,11 +14,7 @@
     "build:all": "npm run build && cd packages/api && npm run build",
     "start": "next start --port 3000",
     "lint": "next lint",
-    "clean": "rm -rf .next node_modules package-lock.json",
-    "predeploy": "npm run build",
-    "deploy": "firebase deploy --only hosting",
-    "deploy:all": "firebase deploy",
-    "deploy:github": "npm run build && touch out/.nojekyll"
+    "clean": "rm -rf .next node_modules package-lock.json"
   },
   "keywords": [],
   "author": "",
