@@ -34,18 +34,26 @@ CREATE OR REPLACE FUNCTION credit_wallet(
 DECLARE
   v_balance BIGINT;
 BEGIN
-  -- Idempotency: if this external_id already credited, return current balance.
+  -- Idempotency (fast path): if this external_id already credited, return current balance.
   IF EXISTS (SELECT 1 FROM transactions WHERE external_id = p_external_id) THEN
     SELECT w.balance_available INTO v_balance FROM wallets w WHERE w.id = p_wallet_id;
     RETURN QUERY SELECT v_balance, FALSE;
     RETURN;
   END IF;
 
-  INSERT INTO transactions
-    (destination_wallet_id, type, status, currency, amount, external_id, description, completed_at)
-  VALUES
-    (p_wallet_id, 'deposit', 'completed', p_currency::currency_type, p_amount, p_external_id,
-     'Chance wallet funding (Stripe)', NOW());
+  -- Insert the deposit; the UNIQUE(external_id) constraint is the real guard against
+  -- concurrent duplicate webhooks. Treat a collision as the idempotent no-op.
+  BEGIN
+    INSERT INTO transactions
+      (destination_wallet_id, type, status, currency, amount, external_id, description, completed_at)
+    VALUES
+      (p_wallet_id, 'deposit', 'completed', p_currency::currency_type, p_amount, p_external_id,
+       'Chance wallet funding (Stripe)', NOW());
+  EXCEPTION WHEN unique_violation THEN
+    SELECT w.balance_available INTO v_balance FROM wallets w WHERE w.id = p_wallet_id;
+    RETURN QUERY SELECT v_balance, FALSE;
+    RETURN;
+  END;
 
   UPDATE wallets
     SET balance_available = balance_available + p_amount, updated_at = NOW()
