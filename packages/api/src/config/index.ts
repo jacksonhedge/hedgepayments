@@ -75,6 +75,11 @@ export const config = {
     webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || '',
   },
 
+  // Hedge Link
+  hedge: {
+    linkKey: process.env.HEDGE_LINK_KEY || '',
+  },
+
   // Chance wallet
   chance: {
     anonUserId: process.env.CHANCE_ANON_USER_ID || '00000000-0000-0000-0000-0000000000a1',
