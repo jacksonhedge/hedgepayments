@@ -1,0 +1,20 @@
+<!doctype html>
+<html><body style="font-family:system-ui;padding:40px">
+  <h1>Hedge Link — example host</h1>
+  <button id="pay">Pay with Hedge</button>
+  <pre id="log"></pre>
+  <script>window.__HEDGE_LINK_APP_BASE = 'http://localhost:5174'</script>
+  <script src="http://localhost:5173/dist/loader/link.js"></script>
+  <script>
+    const log = (s) => (document.getElementById('log').textContent += s + '\n')
+    const link = Hedge.create({
+      token: 'stub_token',
+      env: 'sandbox',
+      onLoad:  () => log('onLoad'),
+      onEvent: (n, m) => log('event ' + n + ' @ ' + m.timestamp),
+      onSuccess: (r, m) => log('SUCCESS ' + JSON.stringify(r)),
+      onExit:  (e, m) => log('EXIT ' + (e ? e.error_code : 'clean')),
+    })
+    document.getElementById('pay').onclick = () => link.open()
+  </script>
+</body></html>
