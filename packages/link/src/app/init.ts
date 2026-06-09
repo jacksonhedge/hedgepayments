@@ -1,9 +1,10 @@
 import type { LinkSession } from './linkClient'
+import type { FlowCtx } from './flows/flowCtx'
 
 export interface InitDeps {
   exchange:   (token: string) => Promise<LinkSession>
   consumeFn:  (token: string, result: unknown) => Promise<void>
-  mount:      (root: HTMLElement, ctx: any) => void
+  mount:      (root: HTMLElement, ctx: FlowCtx) => void
 }
 export interface InitBridge {
   emit:    (name: string, extra?: Record<string, unknown>) => void
