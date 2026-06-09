@@ -69,4 +69,48 @@ dep=$("${PSQL[@]}" -c "SELECT count(*) FROM transactions WHERE destination_walle
 [ "$bal" = "4000" ] || fail "balance should be 4000 (got '$bal')"
 [ "$dep" = "2" ]    || fail "should be exactly 2 deposit rows (got '$dep')"
 echo "✅ credit_wallet idempotent: first=t  dup=f  balance=4000  deposits=2"
+
+# ---------------------------------------------------------------------------
+# Migration 006: consume_result column + consumeOnSuccess idempotency
+# ---------------------------------------------------------------------------
+"${PSQL[@]}" -f "$HERE/migrations/006_link_consume_result.sql" >/dev/null || fail "006 did not apply"
+echo "✅ migration 006 applies"
+
+# Verify consume_result column exists
+col=$("${PSQL[@]}" -c "SELECT column_name FROM information_schema.columns WHERE table_name='link_sessions' AND column_name='consume_result';")
+[ "$col" = "consume_result" ] || fail "consume_result column missing from link_sessions"
+echo "✅ consume_result column present"
+
+# Round-trip: createSession → consumeOnSuccess × 2 (second must return 0 rows)
+"${PSQL[@]}" -c "
+  INSERT INTO link_sessions (token, product, config, env, status, expires_at)
+  VALUES ('lt_verifytest_006', 'chance', '{\"amount\":50}', 'sandbox', 'opened', now() + interval '30 minutes')
+  ON CONFLICT DO NOTHING;
+" >/dev/null || fail "006 session insert failed"
+
+# First consume — should update 1 row
+rows1=$("${PSQL[@]}" -c "
+  WITH upd AS (
+    UPDATE link_sessions
+      SET status='consumed', consumed_at=now(), consume_result='{\"won\":true}'
+    WHERE token='lt_verifytest_006' AND status <> 'consumed'
+    RETURNING id
+  ) SELECT count(*) FROM upd;
+")
+[ "$rows1" -ge 1 ] && echo "✅ first consumeOnSuccess updated row" || fail "first consume failed (got $rows1 rows)"
+
+# Second consume — should update 0 rows (idempotent)
+rows2=$("${PSQL[@]}" -c "
+  WITH upd AS (
+    UPDATE link_sessions
+      SET status='consumed', consumed_at=now(), consume_result='{\"won\":true}'
+    WHERE token='lt_verifytest_006' AND status <> 'consumed'
+    RETURNING id
+  ) SELECT count(*) FROM upd;
+")
+[ "$rows2" -eq 0 ] && echo "✅ second consumeOnSuccess correctly returns 0 rows" || fail "idempotency failed (got $rows2 rows)"
+
+# Cleanup
+"${PSQL[@]}" -c "DELETE FROM link_sessions WHERE token='lt_verifytest_006';" >/dev/null
+
 echo "✅ ALL MIGRATION CHECKS PASSED"
