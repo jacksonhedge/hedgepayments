@@ -52,3 +52,12 @@ export async function consumeOnSuccess(
   if (error || !data) return null;
   return { id: data.id };
 }
+
+export async function selectStatus(token: string): Promise<string | null> {
+  const { data } = await supabase
+    .from('link_sessions')
+    .select('status')
+    .eq('token', token)
+    .single();
+  return data?.status ?? null;
+}

@@ -37,4 +37,34 @@ describe('link router', () => {
     expect(res.status).toBe(410);
     expect(res.body.error_code).toBe('INVALID_LINK_TOKEN');
   });
+
+  it('POST /sessions/:token/consume returns 200 { ok: true } on success', async () => {
+    (linkStore.consumeOnSuccess as jest.Mock).mockResolvedValue({ id: 'uuid-1' });
+    const res = await request(app())
+      .post('/api/v1/link/sessions/lt_1/consume')
+      .send({ result: { won: true } });
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ ok: true });
+    expect(linkStore.consumeOnSuccess).toHaveBeenCalledWith('lt_1', { won: true });
+  });
+
+  it('POST /sessions/:token/consume returns 409 when already consumed', async () => {
+    (linkStore.consumeOnSuccess as jest.Mock).mockResolvedValue(null);
+    (linkStore.selectStatus as jest.Mock).mockResolvedValue('consumed');
+    const res = await request(app())
+      .post('/api/v1/link/sessions/lt_1/consume')
+      .send({ result: { won: false } });
+    expect(res.status).toBe(409);
+    expect(res.body.error_code).toBe('ALREADY_CONSUMED');
+  });
+
+  it('POST /sessions/:token/consume returns 410 when token invalid/expired', async () => {
+    (linkStore.consumeOnSuccess as jest.Mock).mockResolvedValue(null);
+    (linkStore.selectStatus as jest.Mock).mockResolvedValue(null);
+    const res = await request(app())
+      .post('/api/v1/link/sessions/lt_bad/consume')
+      .send({ result: { won: false } });
+    expect(res.status).toBe(410);
+    expect(res.body.error_code).toBe('INVALID_LINK_TOKEN');
+  });
 });
