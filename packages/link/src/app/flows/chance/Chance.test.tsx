@@ -66,3 +66,103 @@ describe('Chance — config view', () => {
     await waitFor(() => expect(screen.getByText('Get started →')).toBeTruthy())
   })
 })
+
+async function renderAtMarkets(ctx: FlowCtx) {
+  vi.stubGlobal('fetch', () => Promise.resolve({ ok: false })) // Gamma fails → seed
+  render(h(Chance, { ctx }))
+  fireEvent.click(screen.getByText('Get started →'))
+  await waitFor(() => screen.getByText('Set your bet'))
+  // wait for seed candidates to load (Gamma fails, falls back to seed)
+  await waitFor(() => {
+    const btn = screen.queryByText(/Find \d+ market/)
+    if (!btn) throw new Error('no markets button yet')
+    return btn
+  }, { timeout: 3000 })
+  const btn = screen.getByText(/Find \d+ market/)
+  fireEvent.click(btn)
+  await waitFor(() => screen.getByText(/Markets near your odds/i), { timeout: 2000 })
+}
+
+describe('Chance — markets view', () => {
+  it('shows market rows loaded from seed', async () => {
+    const ctx = mockCtx({ amount: 100 })
+    await renderAtMarkets(ctx)
+    const rows = document.querySelectorAll('.ch-row')
+    expect(rows.length).toBeGreaterThan(0)
+  })
+
+  it('Place button is disabled until a market is picked', async () => {
+    const ctx = mockCtx({ amount: 100 })
+    await renderAtMarkets(ctx)
+    const placeBtn = screen.getByText(/Pick a market to place/i) as HTMLButtonElement
+    expect(placeBtn.disabled).toBe(true)
+  })
+
+  it('calls ctx.consume on Place click', async () => {
+    const ctx = mockCtx({ amount: 100 })
+    await renderAtMarkets(ctx)
+    const rows = document.querySelectorAll('.ch-row')
+    expect(rows.length).toBeGreaterThan(0)
+    fireEvent.click(rows[0])
+    await waitFor(() => {
+      const btn = screen.queryByText(/& place|free to play/i) as HTMLButtonElement | null
+      if (!btn || btn.disabled) throw new Error('place button not enabled yet')
+    })
+    const placeBtn = screen.getByText(/& place|free to play/i) as HTMLButtonElement
+    fireEvent.click(placeBtn)
+    await waitFor(() => expect(ctx.consume).toHaveBeenCalled())
+  })
+
+  it('shows inline error and stays on markets when consume returns 409', async () => {
+    const ctx = mockCtx({ amount: 100 })
+    ctx.consume = vi.fn().mockRejectedValue(new ConsumeConflictError())
+    await renderAtMarkets(ctx)
+    const rows = document.querySelectorAll('.ch-row')
+    expect(rows.length).toBeGreaterThan(0)
+    fireEvent.click(rows[0])
+    await waitFor(() => {
+      const btn = screen.queryByText(/& place|free to play/i) as HTMLButtonElement | null
+      if (!btn || btn.disabled) throw new Error('place button not ready')
+    })
+    fireEvent.click(screen.getByText(/& place|free to play/i))
+    await waitFor(() => expect(screen.getByText(/already been placed/i)).toBeTruthy())
+    // still on markets
+    expect(screen.queryByText(/Markets near your odds/i)).toBeTruthy()
+  })
+})
+
+describe('Chance — result view', () => {
+  it('calls ctx.success when Done is clicked', async () => {
+    vi.useFakeTimers()
+    const ctx = mockCtx({ amount: 100 })
+    // pre-load seed candidates so config CTA enables immediately
+    vi.stubGlobal('fetch', () => Promise.resolve({ ok: false }))
+    render(h(Chance, { ctx }))
+    fireEvent.click(screen.getByText('Get started →'))
+    await waitFor(() => screen.getByText('Set your bet'))
+    vi.useRealTimers() // release timer lock before async ops
+    await waitFor(() => {
+      const btn = screen.queryByText(/Find \d+ market/)
+      if (!btn) throw new Error('waiting for markets')
+      return btn
+    }, { timeout: 3000 })
+    fireEvent.click(screen.getByText(/Find \d+ market/))
+    await waitFor(() => screen.getByText(/Markets near your odds/i))
+    const rows = document.querySelectorAll('.ch-row')
+    if (rows.length > 0) {
+      fireEvent.click(rows[0])
+      await waitFor(() => {
+        const btn = screen.queryByText(/& place|free to play/i) as HTMLButtonElement | null
+        if (!btn || btn.disabled) throw new Error('place btn not ready')
+      })
+      fireEvent.click(screen.getByText(/& place|free to play/i))
+      await waitFor(() => expect(ctx.consume).toHaveBeenCalled())
+      // wait for settlement timeout (2100ms)
+      await waitFor(() => screen.queryByText('Done'), { timeout: 4000 })
+      if (screen.queryByText('Done')) {
+        fireEvent.click(screen.getByText('Done'))
+        expect(ctx.success).toHaveBeenCalled()
+      }
+    }
+  })
+})

@@ -315,6 +315,109 @@ export function Chance({ ctx }: { ctx: FlowCtx }) {
     )
   }
 
-  // Markets / Resolving / Result — implemented in Task 8
-  return <div class={wrapClass}><div class="ch-body"><div class="ch-state-box"><div class="ch-spin" /></div></div></div>
+  // ── MARKETS ────────────────────────────────────────────────────────────────
+  if (view === 'markets') {
+    const matched = matchMarkets(candidates, risk, win)
+    const pickedMarket = matched.find(c => c.marketId === picked) ?? null
+    const winAt   = pickedMarket ? Math.min(cfg.amount, round2(risk / pickedMarket.price)) : 0
+    const payToday = flip ? round2(cfg.amount + risk) : cfg.amount
+
+    return (
+      <div class={wrapClass}>
+        <div class="ch-body">
+          <div class="ch-title">Markets near your odds</div>
+          <p class="ch-sub">
+            Risk <b>${fmt(risk)}</b> to win about <b>${fmt(win)}</b> · ~{Math.round(clamp(risk / win, 0.01, 0.97) * 100)}% chance. Pick one.
+          </p>
+          {matched.length === 0
+            ? <div class="ch-empty"><b>No markets</b>Go back and adjust your risk or discount.</div>
+            : <div class="ch-rows">
+                {matched.map(m => (
+                  <button key={m.marketId} class={`ch-row${picked === m.marketId ? ' on' : ''}`} onClick={() => { setPicked(m.marketId); setConsumeError(null) }}>
+                    <div class="ch-vdot">P</div>
+                    <div class="ch-row-mid">
+                      <div class="ch-row-q">{m.question}{m.outcome !== 'Yes' ? ` — ${m.outcome}` : ''}</div>
+                      <div class="ch-row-sub">Polymarket · {m.winProbPct}% chance · {fmtExpiry(m.resolves_at)}</div>
+                    </div>
+                    <div class="ch-row-right">
+                      <div class="ch-row-val">
+                        <b>win ${fmt(Math.min(cfg.amount, round2(risk / m.price)))}</b>
+                        <small>{Math.round(Math.min(cfg.amount, round2(risk / m.price)) / cfg.amount * 100)}% off</small>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+          }
+          {consumeError && <div class="ch-err">{consumeError}</div>}
+        </div>
+        <div class="ch-foot">
+          <button class="ch-ghost" style="width:auto;padding:6px 12px;margin-bottom:8px" onClick={() => { ctx.emit('TRANSITION_VIEW', { view: 'config' }); setView('config') }}>‹</button>
+          {pickedMarket && (
+            <div class="ch-place-bar">
+              <div class="l">Pay today<b>${fmt(payToday)}</b></div>
+              <div class="r">if it hits<b>win ${fmt(winAt)} ({Math.round(winAt / cfg.amount * 100)}% off)</b></div>
+            </div>
+          )}
+          <button class="ch-cta" disabled={!pickedMarket || consuming} onClick={handlePlace}>
+            {consuming ? 'Placing…' : pickedMarket ? (flip ? `Risk $${fmt(risk)} & place` : 'Place — free to play') : 'Pick a market to place'}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // ── RESOLVING ──────────────────────────────────────────────────────────────
+  if (view === 'resolving') {
+    return (
+      <div class={wrapClass}>
+        <div class="ch-body" style="text-align:center;padding:24px 0 8px">
+          <div class="ch-hs">
+            <div class="ch-hs-node">✦</div>
+            <div class="ch-hs-track" />
+            <div class="ch-hs-node" style="background:#2b6ef6;font-size:14px;font-weight:900">P</div>
+          </div>
+          <div class="ch-r-title">Connecting to Polymarket…</div>
+          <p class="ch-sub" style="text-align:center">Placing your position…</p>
+        </div>
+      </div>
+    )
+  }
+
+  // ── RESULT ─────────────────────────────────────────────────────────────────
+  if (view === 'result' && result) {
+    const { won, placed } = result
+    const winAt    = placed.winAt
+    const payToday = placed.payToday
+    const netPaid  = won ? Math.max(0, round2(payToday - winAt)) : payToday
+    const offPct   = Math.round(winAt / cfg.amount * 100)
+    return (
+      <div class={wrapClass}>
+        <div class="ch-body">
+          <div class="ch-result">
+            <div class="ch-emoji">{won ? '🎉' : '🪙'}</div>
+            <div class={`ch-r-title${won ? ' win' : ''}`}>
+              {won ? (winAt >= cfg.amount ? 'Your order\'s free!' : `You won $${fmt(winAt)} off!`) : 'So close!'}
+            </div>
+            <p class="ch-sub" style="text-align:center">
+              "{placed.market.question}" resolved <b>{won ? 'Yes' : 'No'}</b> on Polymarket.
+              {won ? ` ${offPct}% knocked off your order.` : ' Your order still ships.'}
+            </p>
+            <div class="ch-break">
+              <div class="ch-break-row"><span>Order</span><span>${fmt(cfg.amount)}</span></div>
+              {flip && <div class="ch-break-row"><span>Chance stake</span><span>+${fmt(placed.risk)}</span></div>}
+              {won && <div class="ch-break-row"><span>Chance win-back</span><span style="color:var(--accent)">−${fmt(winAt)}</span></div>}
+              <div class={`ch-break-fin${won ? ' win' : ''}`}><span>You paid</span><span>${fmt(netPaid)}</span></div>
+            </div>
+            <p class="ch-note">Powered by <b>Hedge Pay</b> · markets via Polymarket<br /><span style="font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--soft);border:1px dashed var(--line2);border-radius:20px;padding:3px 10px;display:inline-block;margin-top:6px">Demo settlement — real routing coming</span></p>
+          </div>
+        </div>
+        <div class="ch-foot">
+          <button class="ch-cta" onClick={handleDone}>Done</button>
+        </div>
+      </div>
+    )
+  }
+
+  return null
 }
