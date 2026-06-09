@@ -7,15 +7,10 @@ import styles from './Navbar.module.css'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
   const [isDevelopersDropdownOpen, setIsDevelopersDropdownOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const toggleBusinessDropdown = () => {
-    setIsBusinessDropdownOpen(!isBusinessDropdownOpen);
   };
 
   const toggleDevelopersDropdown = () => {
@@ -24,7 +19,6 @@ const Navbar = () => {
 
   const closeAllDropdowns = () => {
     setIsMenuOpen(false);
-    setIsBusinessDropdownOpen(false);
     setIsDevelopersDropdownOpen(false);
   };
 
@@ -52,48 +46,10 @@ const Navbar = () => {
             SideBet
           </Link>
 
-          {/* For Business Dropdown */}
-          <div className={styles.dropdown}>
-            <button 
-              className={`${styles.navLink} ${styles.dropdownToggle}`}
-              onClick={toggleBusinessDropdown}
-              onMouseEnter={() => setIsBusinessDropdownOpen(true)}
-            >
-              For Business
-              <svg className={styles.chevron} width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M4.427 7.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 7H4.604a.25.25 0 00-.177.427z"/>
-              </svg>
-            </button>
-            <div 
-              className={`${styles.dropdownMenu} ${isBusinessDropdownOpen ? styles.show : ''}`}
-              onMouseLeave={() => setIsBusinessDropdownOpen(false)}
-            >
-              <Link href="/business/overview" className={styles.dropdownItem} onClick={closeAllDropdowns}>
-                <div className={styles.dropdownItemContent}>
-                  <span className={styles.dropdownItemTitle}>Business Solutions</span>
-                  <span className={styles.dropdownItemDesc}>Round-up savings for your customers</span>
-                </div>
-              </Link>
-              <Link href="/business/gaming" className={styles.dropdownItem} onClick={closeAllDropdowns}>
-                <div className={styles.dropdownItemContent}>
-                  <span className={styles.dropdownItemTitle}>Gaming & Sports Betting</span>
-                  <span className={styles.dropdownItemDesc}>Boost engagement with micro-savings</span>
-                </div>
-              </Link>
-              <Link href="/business/banking" className={styles.dropdownItem} onClick={closeAllDropdowns}>
-                <div className={styles.dropdownItemContent}>
-                  <span className={styles.dropdownItemTitle}>Banking & Fintech</span>
-                  <span className={styles.dropdownItemDesc}>White-label savings solutions</span>
-                </div>
-              </Link>
-              <Link href="/business/case-studies" className={styles.dropdownItem} onClick={closeAllDropdowns}>
-                <div className={styles.dropdownItemContent}>
-                  <span className={styles.dropdownItemTitle}>Case Studies</span>
-                  <span className={styles.dropdownItemDesc}>See real results from partners</span>
-                </div>
-              </Link>
-            </div>
-          </div>
+          {/* Chance Link */}
+          <Link href="/chance" className={styles.navLink} onClick={closeAllDropdowns}>
+            Chance™
+          </Link>
 
           {/* Developers Dropdown */}
           <div className={styles.dropdown}>
@@ -121,30 +77,6 @@ const Navbar = () => {
                 <div className={styles.dropdownItemContent}>
                   <span className={styles.dropdownItemTitle}>📚 Documentation</span>
                   <span className={styles.dropdownItemDesc}>Complete API reference & guides</span>
-                </div>
-              </Link>
-              <Link href="/developers/playground" className={styles.dropdownItem} onClick={closeAllDropdowns}>
-                <div className={styles.dropdownItemContent}>
-                  <span className={styles.dropdownItemTitle}>🎮 API Playground</span>
-                  <span className={styles.dropdownItemDesc}>Test endpoints in real-time</span>
-                </div>
-              </Link>
-              <Link href="/developers/mcp" className={styles.dropdownItem} onClick={closeAllDropdowns}>
-                <div className={styles.dropdownItemContent}>
-                  <span className={styles.dropdownItemTitle}>🤖 AI Integration</span>
-                  <span className={styles.dropdownItemDesc}>MCP server for AI agents</span>
-                </div>
-              </Link>
-              <Link href="/developers/examples" className={styles.dropdownItem} onClick={closeAllDropdowns}>
-                <div className={styles.dropdownItemContent}>
-                  <span className={styles.dropdownItemTitle}>💻 Code Examples</span>
-                  <span className={styles.dropdownItemDesc}>SDKs & integration samples</span>
-                </div>
-              </Link>
-              <Link href="/developers/pricing" className={styles.dropdownItem} onClick={closeAllDropdowns}>
-                <div className={styles.dropdownItemContent}>
-                  <span className={styles.dropdownItemTitle}>💰 API Pricing</span>
-                  <span className={styles.dropdownItemDesc}>Flexible usage-based plans</span>
                 </div>
               </Link>
             </div>

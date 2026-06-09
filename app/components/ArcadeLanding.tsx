@@ -32,28 +32,28 @@ function Reveal({
 /* ---- Product cabinets ---- */
 const PRODUCTS = [
   {
-    tag: 'P1 · THE RAILS',
-    name: 'HedgePay',
-    accent: 'var(--cyan)',
-    desc: 'B2B payments, wallets & payouts. The money backbone every Hedge product runs on.',
-    href: '/products',
-  },
-  {
-    tag: 'P2 · SPORTSBOOKS',
-    name: 'SideBet',
-    accent: 'var(--magenta)',
-    desc: 'A round-up plugin for sportsbooks. Turn spare change into the next bit of side action.',
-    href: '/sidebet',
-  },
-  {
-    tag: 'P3 · CHECKOUT',
+    tag: 'OUR PRODUCT · CHECKOUT',
     name: 'Chance™',
     accent: 'var(--lime)',
-    desc: 'Let shoppers pay a little more for a real shot at paying $0 — a prediction-market chance, built into checkout.',
+    desc: 'Let shoppers pay a little more for a real shot at paying $0 — a prediction-market chance, built into checkout. Powered by Hedge Payments.',
     href: '/chance',
   },
   {
-    tag: 'P4 · GREEK LIFE',
+    tag: 'OUR PRODUCT · SPORTSBOOKS',
+    name: 'SideBet',
+    accent: 'var(--magenta)',
+    desc: 'A round-up plugin for sportsbooks. Turn spare change into the next bit of side action. Powered by Hedge Payments.',
+    href: '/sidebet',
+  },
+  {
+    tag: 'CLIENT · BNPL',
+    name: 'CoverPay',
+    accent: 'var(--cyan)',
+    desc: 'BNPL aggregation over Klarna, Affirm, Afterpay & more — one of the teams running their checkout on Hedge rails.',
+    href: '/demo/coverpay',
+  },
+  {
+    tag: 'CLIENT · GREEK LIFE',
     name: 'FraternityBase',
     accent: 'var(--gold)',
     desc: 'Group commerce for fraternities — mockups to chapter orders, paid out on Hedge rails.',
@@ -236,7 +236,7 @@ export default function ArcadeLanding() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.22 }}
             >
-              Hedge is the fun, easy money layer behind your favorite products —
+              Hedge is the white-label money layer behind your favorite products —
               <strong> wallets, round-ups, and flip-to-win checkout.</strong> You
               bring the users. We bring the rails.
             </motion.p>
@@ -538,7 +538,7 @@ export default function ArcadeLanding() {
         <div className={styles.tickerTrack}>
           {[0, 1].map((dup) => (
             <span key={dup} style={{ display: 'inline-flex' }}>
-              {['HEDGEPAY', 'SIDEBET', 'CHANCE™', 'FRATERNITYBASE', 'POWERED BY HEDGE'].map(
+              {['HEDGE PAYMENTS', 'SIDEBET', 'CHANCE™', 'COVERPAY', 'POWERED BY HEDGE'].map(
                 (w) => (
                   <span className={styles.tickerItem} key={w + dup}>
                     <em>{w}</em> <span className={styles.tickerStar}>✦</span>
@@ -558,12 +558,13 @@ export default function ArcadeLanding() {
             <h2 className={styles.h2}>
               One backbone.
               <br />
-              Four ways to play.
+              Built on Hedge.
             </h2>
             <p className={styles.sectionLede}>
-              Every product rides the same Hedge rails — accounts, ledger, wallet,
-              payouts. The fun lives up front; the money plumbing is shared and
-              boring (on purpose).
+              Hedge Payments is the white-label money layer — accounts, ledger,
+              wallet, payouts. We build our own products on it, and so do our
+              clients. The fun lives up front; the plumbing is shared and boring
+              (on purpose).
             </p>
           </Reveal>
 
@@ -722,15 +723,16 @@ export default function ArcadeLanding() {
                 HEDGE
               </a>
               <p className={styles.footBlurb}>
-                Fun, easy payments for the people who use them. The money layer behind
-                HedgePay, SideBet, Chance™ &amp; FraternityBase.
+                White-label payments infrastructure. The money layer behind
+                SideBet, Chance™ &amp; the products our clients build.
               </p>
             </div>
             <div className={styles.footCol}>
               <h4>Products</h4>
-              <a href="/products">HedgePay</a>
-              <a href="/sidebet">SideBet</a>
               <a href="/chance">Chance™</a>
+              <a href="/sidebet">SideBet</a>
+              <h4 style={{ marginTop: 14 }}>Clients</h4>
+              <a href="/demo/coverpay">CoverPay</a>
               <a href="https://fraternitybase.com">FraternityBase</a>
             </div>
             <div className={styles.footCol}>

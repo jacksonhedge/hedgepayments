@@ -19,19 +19,19 @@ const Footer: React.FC = () => {
           <h4 className={styles.footerHeading}>Quick Links</h4>
           <ul className={styles.footerLinks}>
             <li><a href="/" className={styles.footerLink}>Home</a></li>
-            <li><a href="#offer" className={styles.footerLink}>What We Offer</a></li>
-            <li><a href="#support" className={styles.footerLink}>Support</a></li>
+            <li><a href="/developers" className={styles.footerLink}>Developers</a></li>
+            <li><a href="/contact" className={styles.footerLink}>Support</a></li>
             <li><a href="/contact" className={styles.footerLink}>Contact</a></li>
           </ul>
         </div>
 
         <div className={styles.footerSection}>
-          <h4 className={styles.footerHeading}>Our Brands</h4>
+          <h4 className={styles.footerHeading}>Our Products</h4>
           <ul className={styles.footerLinks}>
+            <li><a href="/chance" className={styles.footerLink}>Chance™</a></li>
+            <li><a href="/sidebet" className={styles.footerLink}>SideBet</a></li>
             <li><a href="https://bankroll.live" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Bankroll</a></li>
-            <li><a href="https://coinflow.cash" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Coinflow</a></li>
-            <li><span className={styles.footerLink} style={{ cursor: 'default', opacity: 0.7 }}>SideBet</span></li>
-            <li><a href="https://fraternitybase.com" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Fraternitybase</a></li>
+            <li><a href="https://fraternitybase.com" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>FraternityBase</a></li>
           </ul>
         </div>
 
@@ -44,14 +44,6 @@ const Footer: React.FC = () => {
           </ul>
         </div>
 
-        <div className={styles.footerSection}>
-          <h4 className={styles.footerHeading}>Follow Us</h4>
-          <div className={styles.socialIcons}>
-            <a href="#" className={styles.socialIcon}>FB</a>
-            <a href="#" className={styles.socialIcon}>TW</a>
-            <a href="#" className={styles.socialIcon}>IG</a>
-          </div>
-        </div>
       </div>
       <div className={styles.footerBottom}>
         <p>&copy; {new Date().getFullYear()} Hedge Payments. All rights reserved.</p>
