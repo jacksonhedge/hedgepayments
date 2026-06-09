@@ -1,12 +1,6 @@
-export interface FlowCtx {
-  token: string
-  config: Record<string, unknown>
-  emit: (name: string, extra?: Record<string, unknown>) => void
-  success: (result: unknown) => void
-  exit: (error?: any) => void
-}
+import type { FlowCtx } from './flowCtx'
+export type { FlowCtx } from './flowCtx'
 
-/** Each product flow implements mountFlow(root, ctx). Slice 0 ships this stub. */
 export function mountHello(root: HTMLElement, ctx: FlowCtx): void {
   ctx.emit('TRANSITION_VIEW', { view: 'hello' })
   root.innerHTML =
