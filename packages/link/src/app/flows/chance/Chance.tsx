@@ -1,5 +1,5 @@
 import { h } from 'preact'
-import { useState, useEffect, useCallback } from 'preact/hooks'
+import { useState, useEffect, useCallback, useRef } from 'preact/hooks'
 import type { FlowCtx } from '../flowCtx'
 import type { Candidate } from './engine'
 import {
@@ -128,6 +128,8 @@ export function Chance({ ctx }: { ctx: FlowCtx }) {
   const [consumeError, setConsumeError] = useState<string | null>(null)
   const [result, setResult]       = useState<{ won: boolean; placed: PlacedBet } | null>(null)
 
+  const settlementTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   useEffect(() => {
     if (document.getElementById('chance-link-css')) return
     const s = document.createElement('style')
@@ -135,6 +137,12 @@ export function Chance({ ctx }: { ctx: FlowCtx }) {
     s.textContent = CSS
     document.head.appendChild(s)
     return () => s.remove()
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      if (settlementTimer.current) clearTimeout(settlementTimer.current)
+    }
   }, [])
 
   const loadCandidates = useCallback(() => {
@@ -174,7 +182,7 @@ export function Chance({ ctx }: { ctx: FlowCtx }) {
       ctx.emit('chance:PLACED', { marketId: market.marketId, question: market.question, venue: market.venue, risk, winAt, mode: cfg.mode })
       ctx.emit('TRANSITION_VIEW', { view: 'resolving' })
       setView('resolving')
-      setTimeout(() => {
+      settlementTimer.current = setTimeout(() => {
         const won = Math.random() < market.price // demo-only simulation
         setResult({ won, placed: placedBet })
         ctx.emit('chance:RESULT', {
