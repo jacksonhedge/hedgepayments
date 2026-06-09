@@ -33,3 +33,22 @@ export async function exchange(token: string): Promise<{ product: string; config
   }
   return { product: data.product, config: data.config, env: data.env };
 }
+
+export async function consumeOnSuccess(
+  token: string,
+  result: unknown,
+): Promise<{ id: string } | null> {
+  const { data, error } = await supabase
+    .from('link_sessions')
+    .update({
+      status: 'consumed',
+      consumed_at: new Date().toISOString(),
+      consume_result: result,
+    })
+    .eq('token', token)
+    .neq('status', 'consumed')
+    .select('id')
+    .single();
+  if (error || !data) return null;
+  return { id: data.id };
+}

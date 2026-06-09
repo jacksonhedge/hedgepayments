@@ -1,6 +1,6 @@
 jest.mock('../../lib/supabase', () => ({ supabase: { from: jest.fn() } }));
 import { supabase } from '../../lib/supabase';
-import { createSession, exchange } from '../linkStore';
+import { createSession, exchange, consumeOnSuccess } from '../linkStore';
 
 const mocked = supabase as unknown as { from: jest.Mock };
 
@@ -45,5 +45,38 @@ describe('linkStore.exchange', () => {
   it('returns null for an unknown token', async () => {
     mocked.from.mockReturnValueOnce(selectReturning(null));
     expect(await exchange('nope')).toBeNull();
+  });
+});
+
+describe('linkStore.consumeOnSuccess', () => {
+  function updateReturning(data: any) {
+    const single = jest.fn().mockResolvedValue({ data, error: data ? null : { message: 'no rows' } });
+    const select = jest.fn().mockReturnValue({ single });
+    const neq = jest.fn().mockReturnValue({ select });
+    const eq = jest.fn().mockReturnValue({ neq });
+    const update = jest.fn().mockReturnValue({ eq });
+    return { update, eq, neq, select, single };
+  }
+
+  it('returns { id } on a successful first consume', async () => {
+    const chain = updateReturning({ id: 'uuid-1' });
+    mocked.from.mockReturnValue(chain);
+    const result = await consumeOnSuccess('lt_x', { won: true });
+    expect(result).toEqual({ id: 'uuid-1' });
+    expect(chain.neq).toHaveBeenCalledWith('status', 'consumed');
+  });
+
+  it('returns null when 0 rows updated (already consumed)', async () => {
+    const chain = updateReturning(null);
+    mocked.from.mockReturnValue(chain);
+    const result = await consumeOnSuccess('lt_x', { won: false });
+    expect(result).toBeNull();
+  });
+
+  it('returns null for an unknown token', async () => {
+    const chain = updateReturning(null);
+    mocked.from.mockReturnValue(chain);
+    const result = await consumeOnSuccess('lt_unknown', { won: true });
+    expect(result).toBeNull();
   });
 });
