@@ -45,6 +45,10 @@ Replace the anonymous device wallet with Supabase auth (sign in to the extension
 ## LATER
 
 - ⏭️ **Chrome Web Store publish** — package + listing assets + submission (manual, dev account).
+- ⏭️ **Chance Wallet iOS (neo-bank surface)** — the wallet ledger gets a native home; the extension stays the acquisition driver (fund → play → winnings live in the app).
+  - **v1 — wallet companion:** sign in (same Supabase auth as Slice 2), balance, fund (Stripe), activity feed, win notifications. Rides existing custody/KYC gates — no new regulatory surface.
+  - **v2 — spend:** card issuance / ACH out via a BaaS partner. Hard-gated on custody + KYC + counsel (true money-transmission territory).
+  - **Open question:** relationship to Bankroll (bankroll.live is billed as the consumer wallet) — same product, rebrand, or separate? Decide before v1 kickoff.
 - 🔒 **Go-live (real money)** — live Stripe keys, live custody, KYC enforced, counsel sign-off.
 
 ---
