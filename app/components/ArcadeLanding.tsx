@@ -250,7 +250,7 @@ export default function ArcadeLanding() {
               <a className={`${styles.btn} ${styles.btnPrimary}`} href="/get-started">
                 Start Free
               </a>
-              <a className={`${styles.btn} ${styles.btnGhost}`} href="/contact">
+              <a className={`${styles.btn} ${styles.btnGhost}`} href="/book">
                 Talk to Sales
               </a>
             </motion.div>
@@ -744,6 +744,7 @@ export default function ArcadeLanding() {
             </div>
             <div className={styles.footCol}>
               <h4>Company</h4>
+              <a href="/book">Book a demo</a>
               <a href="/partners">Partners</a>
               <a href="/contact">Contact</a>
               <a href="/blog">Blog</a>
