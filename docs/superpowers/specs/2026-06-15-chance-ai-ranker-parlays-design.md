@@ -245,3 +245,4 @@ The plan can sequence within this one spec:
 - Short-TTL ranking cache keyed by `(merchantId, category, mode, risk-bucket, candidate-set-hash)`.
 - Merchant dashboard toggle UI for provider + parlays.
 - Parlay settlement (Payment Slice 3): synthetic = hold against all legs; native = single combo token.
+- **Drop-in visual redesign → Coinbase Wallet-extension aesthetic** (clean fintech wallet: navy/dark surfaces, rounded cards, Coinbase-blue accent, balance-up-top) — its own design track (frontend-design), a deliberate pivot away from the current arcade identity. Backend offer shape here is unaffected.
