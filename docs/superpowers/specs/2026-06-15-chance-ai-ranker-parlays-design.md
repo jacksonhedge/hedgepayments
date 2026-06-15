@@ -7,12 +7,13 @@
 
 ## Summary
 
-Two features built on one shared pipeline:
+Three things built on one shared pipeline:
 
-1. **AI offer-ranker** — an LLM curates/reorders which real markets become Chance offers for a shopper, optimizing for **relevance to the purchase** and **appeal/conversion**. It is a **server-side ranker**, invisible to the shopper. Each merchant configures which provider powers it (Claude / ChatGPT / off) via a stored setting; the platform holds the API keys.
-2. **Parlays** — multi-leg combo offers (2–3 legs, all must resolve YES). Built behind a `ComboSource` abstraction: a **synthetic** implementation ships now (combine the single-leg candidates we already fetch); a **native** Polymarket-combo adapter is a drop-in for when Polymarket's combo (CAOC) API ships publicly.
+1. **Round-ups are the default mechanic.** The drop-in opens in round-up mode: the purchase rounds up to the next whole dollar, and the **change** is the stake wagered toward a **free order**. A win pays the full purchase amount back, so the order is free; the shopper only ever risks the rounded-up cents.
+2. **Parlays are how the round-up reaches "free."** A round-up stake is small (cents), so flipping a whole order free needs **long odds** that single markets rarely offer. Combos manufacture those odds: 2–3 real legs (all must resolve YES) whose combined price is targeted at the free-order price. Built behind a `ComboSource` abstraction — a **synthetic** implementation ships now (combine the single-leg candidates we already fetch); a **native** Polymarket-combo (CAOC) adapter is a drop-in for when that API ships publicly.
+3. **AI offer-ranker.** An LLM curates/reorders which real markets (and combos) become Chance offers, optimizing for **relevance to the purchase** and **appeal/conversion**. Server-side, invisible to the shopper. Each merchant configures the provider (Claude / ChatGPT / off) via a stored setting; the platform holds the API keys.
 
-The deterministic `matchMarkets` engine that exists today remains authoritative and becomes the **always-on fallback**: if the LLM call errors or exceeds its latency budget, the shopper sees the deterministic order. The LLM never blocks a sale.
+The deterministic `matchMarkets` engine that exists today remains authoritative and becomes the **always-on fallback**: if the LLM call errors or exceeds its latency budget, the shopper sees the deterministic order. The LLM never blocks a sale. **Honest framing is load-bearing:** when the free-order target is too long to reach with real liquid legs, the offer is framed as the actual discount it *can* hit — never overstated as "free."
 
 ## Background / current state
 
@@ -27,9 +28,11 @@ Polymarket Combos are a real, CFTC-self-certified product (Combinatorial Athleti
 
 ## Goals
 
+- **Round-ups are the default mechanic**: stake = round-up change to the next whole dollar, win target = full purchase (free order).
+- Build **combos targeted at the free-order price** so a small round-up stake can realistically flip a whole order free; honest framing when the target is unreachable.
 - Let an LLM curate/rank Chance offers server-side, configurable per merchant across providers (Claude, ChatGPT, off).
 - Offer multi-leg parlay Chance offers, synthetic now and native-ready.
-- Never regress the existing demo: deterministic order is the guaranteed fallback; nothing reads as live settlement.
+- Never regress the existing demo: deterministic order is the guaranteed fallback; nothing reads as live settlement; no offer overstates the discount it can actually deliver.
 
 ## Non-goals
 
@@ -37,6 +40,23 @@ Polymarket Combos are a real, CFTC-self-certified product (Combinatorial Athleti
 - A merchant-facing dashboard toggle UI (config is stored + settable now; the dashboard control is a deferred follow-up).
 - A ranking cache (deferred follow-up; see Future work).
 - Merchants supplying their own LLM API keys (platform holds keys; merchants only pick a provider).
+
+## Round-up mechanic (the default)
+
+Round-up is the default configuration of the existing flip-to-free math, with the stake fixed to the round-up change and the win sized to the whole order:
+
+- **Stake** = round-up change to the next whole dollar: `stake = ceil(amount) - amount`, and when `amount` is already whole, `stake = 1.00` (always something to wager).
+- **Win target** = the full purchase `amount`. A win pays `stake / p` ; sizing it to make the order free means the target combined price is:
+
+  ```
+  pFree = stake / amount     // win pays stake/pFree = amount  → order free
+  ```
+
+  Example: a $47.30 order → stake $0.70 → `pFree ≈ 0.0148` (~67:1). Single markets rarely sit that long, which is exactly why combos exist here.
+- **Display** reuses the existing `calc(amount, risk=stake, win=amount, mode='flip-to-free')` → `payToday = amount + stake`, `chancePct`, `odds`, `discountPct`. No new display math.
+- **Feasibility & honest framing:** `pFree` can be longer than any combo of real, liquid legs (≤3 legs) can reach. When the free-order target is unreachable, the engine returns the **closest-reachable** combo and frames the offer as the actual discount it achieves (`win → $X off`), **never** as "free." This honesty rule is asserted in tests.
+- Round-up is the **default**; flip-to-free / win-it-back remain selectable mechanics, but the drop-in opens in round-up.
+- **Demo-tier:** "win → free order" is display + selection only. No settlement, no refund, no balance debit (that is Payment Slice 3).
 
 ## Architecture
 
@@ -97,10 +117,11 @@ export interface ComboSource {
 ```
 
 Synthetic implementation:
-- Forms 2–3-leg combinations from the candidate set.
-- Combined `price = Π(leg.price)` (independence assumption → lower combined price → longer odds → bigger possible discount).
+- **Targets the free-order price.** `build(candidates, { targetPrice: pFree, ... })` assembles 2–3-leg combinations whose combined price `Π(leg.price)` is closest to `pFree` (the round-up free-order target). Combos approaching `pFree` from feasible legs are the headline offers.
+- Combined `price = Π(leg.price)` (independence assumption → lower combined price → longer odds → bigger discount, up to the free order at `pFree`).
 - **Correlation guard:** never combine legs that share the same event/market or overlapping tags (independence is false for correlated legs and would misprice the parlay). Excluded combinations are dropped, not silently mispriced.
-- Caps: max legs = 3, max parlay offers returned = small N (e.g. 4), only parlays whose combined price lands in the usable band.
+- **Closest-reachable, honestly framed:** if no ≤3-leg combo of liquid legs reaches `pFree`, return the combo that gets *closest* (longest reachable odds) and tag it with the real discount it achieves — never "free." If a combo overshoots (combined price below `pFree`, i.e. a win would over-cover), cap the framed payout at a free order (no "more than free").
+- Caps: max legs = 3, max parlay offers returned = small N (e.g. 4), liquidity-filtered legs only.
 - Win condition recorded as **all legs YES** (matches Polymarket CAOC semantics), surfaced in the offer for display.
 
 `nativeComboSource.ts` is a stub implementing the same `ComboSource` interface, to be filled when Polymarket's combo API is available. The orchestrator selects the source; everything downstream is identical.
@@ -128,17 +149,17 @@ export interface RankProvider { rank(input: RankInput): Promise<RankedOffer[]>; 
 - Offers not mentioned by the LLM are appended after the ranked ones in deterministic order (never silently lost), trimmed to `max`.
 - API keys (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`) are `@hedge/api` environment variables. They are never sent to the client and never stored per-merchant.
 
-`PurchaseContext` = `{ itemPrice, productTitle?, category?, mode }` derived from what the drop-in already reads off the page. No PII beyond product context is sent to the LLM.
+`PurchaseContext` = `{ amount, productTitle?, category?, mode }` (mode default `'round_up'`) derived from what the drop-in already reads off the page; the server derives `stake` and `pFree` from `amount`. No PII beyond product context is sent to the LLM.
 
 ### 4. Endpoint orchestration
 
 `packages/api/src/routes/offers.ts` → `POST /offers/rank`.
 
-1. Validate body (`merchantId`, `context`, `mode`, `risk`, `win`, `candidates`).
-2. Load merchant Chance settings; default `{ ai_provider: 'off', parlays_enabled: false }`.
-3. Resolve eligibility (reuse the engine's `resolveEligibility` rules; ineligible → return a clear ineligible response, no offers).
-4. If `parlays_enabled` → `ComboSource.build(...)`.
-5. Assemble `Offer[]` pool (singles from request + parlays) and compute `calc` display fields.
+1. Validate body (`merchantId`, `context` incl. `amount`, `mode` — default `'round_up'`, `candidates`).
+2. Derive round-up `stake = ceil(amount) - amount || 1.00` and `pFree = stake / amount` (when mode is round-up).
+3. Load merchant Chance settings; default `{ ai_provider: 'off', parlays_enabled: false }`.
+4. Resolve eligibility (reuse the engine's `resolveEligibility` rules; ineligible → return a clear ineligible response, no offers).
+5. If `parlays_enabled` → `ComboSource.build(candidates, { targetPrice: pFree, ... })`; assemble `Offer[]` pool (singles + parlays) and compute `calc` display fields. Tag each offer with the real discount it achieves (free only when its price ≤ `pFree`).
 6. `getRankProvider(provider, model).rank({ context, offers, max })`; wrap in a ~1.5s timeout; on throw/timeout → deterministic order.
 7. Return ordered `Offer[]` (top-N) + a flag indicating whether ranking was applied (for observability; not shown to shopper).
 
@@ -154,11 +175,11 @@ Implemented as columns on `business_accounts` **or** a `business_chance_settings
 
 ## Data flow (happy path, AI on, parlays on)
 
-1. Shopper opens the drop-in at checkout; embed has `merchantId`, cart amount, product title/category, country/region.
-2. Embed fetches Gamma candidates and runs local `matchMarkets()` for the chosen risk/win → eligible singles.
-3. Embed `POST /offers/rank` with context + candidates.
-4. Server loads settings → builds parlays → assembles pool → LLM ranks for relevance+appeal → returns top-N ordered offers.
-5. Embed renders offers in returned order. Selection/placement is demo-only (unchanged); **no settlement**.
+1. Shopper opens the drop-in at checkout in **round-up mode**; embed has `merchantId`, cart `amount`, product title/category, country/region.
+2. Embed fetches Gamma candidates and runs local `matchMarkets()` → eligible singles (deterministic fallback set).
+3. Embed `POST /offers/rank` with context (`amount`, `mode: 'round_up'`) + candidates.
+4. Server derives `stake`/`pFree` → builds combos targeted at `pFree` → assembles pool → LLM ranks for relevance+appeal → returns top-N ordered offers, each tagged with its real achievable discount (free only when reached).
+5. Embed renders offers in returned order, leading with the free-order (or closest) combo. Selection/placement is demo-only (unchanged); **no settlement**.
 
 ## Error handling & fallbacks
 
@@ -169,11 +190,14 @@ Implemented as columns on `business_accounts` **or** a `business_chance_settings
 | Provider `off` | No LLM call; deterministic order. |
 | LLM returns unknown offer IDs | Unknown IDs dropped; remaining offers appended in deterministic order; trimmed to `max`. |
 | Ineligible region/country | Clear ineligible response, no offers (reuse existing eligibility copy). |
-| `parlays_enabled=false` | Singles only. |
+| `parlays_enabled=false` | Singles only — framed as the partial discount they reach (a single rarely hits the round-up free target). |
+| Free-order target `pFree` unreachable by any ≤3-leg combo | Closest-reachable combo returned, framed as the real discount it achieves — never "free." |
+| Order amount is a whole dollar | `stake = 1.00` (always a wager). |
 
 ## Testing strategy (mirrors existing `engine.test.ts`; no live LLM calls)
 
-- **ComboSource (pure):** combined-price math; correlation exclusion (same event/overlapping tags never combined); leg-count cap (≤3); band filtering; max-parlays cap.
+- **Round-up math (pure):** `stake = ceil(amount) - amount`; whole-dollar edge → `stake = 1.00`; `pFree = stake / amount`; `calc` reuse produces a free order at `pFree`.
+- **ComboSource (pure):** targets `pFree` (closest-reachable combo selected); correlation exclusion (same event/overlapping tags never combined); leg-count cap (≤3); max-parlays cap; **honesty assertions** — an offer is tagged "free" only when its combined price ≤ `pFree`; an unreachable target yields the closest combo framed as a partial discount, never "free"; an overshoot is capped at free (no "more than free").
 - **RankProvider:** `off` returns deterministic order; provider error → deterministic fallback; **unknown offer IDs dropped**; returned `rank` order respected; `max` cap respected; unmentioned offers appended deterministically. Use a fake provider + mocked SDK responses.
 - **Endpoint:** eligibility gating; `parlays_enabled` toggle; provider switch by merchant config; timeout → deterministic fallback; demo-safety assertion (response carries no settlement/live fields).
 - **Merchant settings service:** defaults (`off`, no parlays) when a merchant has no row.
@@ -184,6 +208,7 @@ Implemented as columns on `business_accounts` **or** a `business_chance_settings
 - LLM input is product context + real offers only — no shopper PII.
 - LLM output is constrained to selecting among server-provided offer IDs; fabricated IDs are dropped (no market injection).
 - Demo-safety: responses are display/selection only; no settlement, balances-debited, or live-money fields.
+- Truth-in-offer: no offer is framed as "free" unless its combined price actually reaches `pFree`; closest-reachable combos are framed as the partial discount they deliver.
 
 ## Module / file boundaries
 
@@ -206,12 +231,12 @@ packages/link/src/app/flows/chance/   # client: call /offers/rank, render return
 ## Build sequencing (single spec, internally modular)
 
 The plan can sequence within this one spec:
-1. `Offer`/`PurchaseContext` types + `calc` reuse.
+1. `Offer`/`PurchaseContext` types + round-up math (`stake`, `pFree`) + `calc` reuse.
 2. Merchant settings migration `007` + `merchantSettings` service (default `off`).
-3. `RankProvider` interface + `off` + factory; `/offers/rank` endpoint with deterministic path end-to-end (singles only).
+3. `RankProvider` interface + `off` + factory; `/offers/rank` endpoint with deterministic path end-to-end (round-up singles).
 4. Anthropic + OpenAI provider impls + timeout/fallback.
-5. `ComboSource` synthetic parlays + `parlays_enabled` wiring + `nativeComboSource` stub.
-6. Drop-in: call `/offers/rank`, render returned order, local fallback.
+5. `ComboSource` synthetic parlays **targeted at `pFree`** + honest-framing tags + `parlays_enabled` wiring + `nativeComboSource` stub.
+6. Drop-in: default to round-up mode, call `/offers/rank`, render returned order (free-or-closest combo first), local fallback.
 7. Update ROADMAP.md.
 
 ## Future work (explicitly out of scope here)
