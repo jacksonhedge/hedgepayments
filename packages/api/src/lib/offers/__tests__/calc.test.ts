@@ -37,12 +37,34 @@ describe('frameOffer (honest framing)', () => {
   it('payToday is amount + stake', () => {
     expect(frameOffer(50, 1, 0.25).payToday).toBe(51);
   });
+
+  it('keeps one decimal of chance for long-shot prices', () => {
+    expect(frameOffer(50, 1, 0.005).chancePct).toBe(0.5);
+  });
 });
 
 describe('helpers', () => {
-  it('formats odds', () => {
+  it('formats even odds', () => {
     expect(oddsLabel(0.5)).toBe('1.0:1');
+  });
+
+  it('formats long-shot odds', () => {
+    expect(oddsLabel(0.0148)).toBe('67:1');
+  });
+
+  it('returns an em-dash for degenerate probabilities', () => {
+    expect(oddsLabel(0)).toBe('—');
+    expect(oddsLabel(1)).toBe('—');
+    expect(oddsLabel(1.5)).toBe('—');
+  });
+
+  it('round2 fixes the half-cent float', () => {
     expect(round2(1.005)).toBe(1.01);
+  });
+
+  it('clamps to both bounds', () => {
     expect(clamp(5, 0, 1)).toBe(1);
+    expect(clamp(-5, 0, 1)).toBe(0);
+    expect(clamp(0.5, 0, 1)).toBe(0.5);
   });
 });

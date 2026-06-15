@@ -26,7 +26,7 @@ export function frameOffer(amount: number, stake: number, price: number): OfferD
   const winPayout = round2(stake / p);
   const coverage = Math.min(winPayout, amount);          // cap at free
   return {
-    chancePct: Math.round(p * 100),
+    chancePct: p < 0.1 ? Math.round(p * 1000) / 10 : Math.round(p * 100),
     odds: oddsLabel(p),
     framedDiscountPct: Math.round((coverage / amount) * 100),
     achievesFree: winPayout >= amount - 1e-9,
