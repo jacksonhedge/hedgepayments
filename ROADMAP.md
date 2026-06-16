@@ -17,6 +17,13 @@ The full **confirmed-payment** pipeline is implemented, tested (12/12 backend + 
 - **Spec:** `docs/superpowers/specs/2026-06-05-chance-wallet-funding-design.md` · **Plan:** `docs/superpowers/plans/2026-06-08-chance-wallet-funding-slice1.md` · **Runbook:** `packages/api/CHANCE_FUNDING.md`
 - 🔒 **Live E2E pending (needs you):** Stripe test keys (`sk_test_…` + `whsec_…`) + a test Supabase with migrations 001 + 004 applied + `@hedge/api` running (local + Stripe CLI is fine).
 
+### ✅ Engine — AI offer-ranker + parlays + round-ups — BUILT (server), demo-tier, UI deferred to redesign
+The full server engine is implemented, tested, and reviewed on branch `feat/chance-ai-ranker-parlays`: `@hedge/api` `POST /offers/rank` builds an offer pool (single-leg candidates + **synthetic parlays** targeted at the **free-order price** via `ComboSource`, native Polymarket-combo adapter stubbed), ranks it via a **per-merchant LLM provider** (Claude / ChatGPT / off — `RankProvider` w/ Anthropic + OpenAI SDKs, platform-held keys, migration `007` `business_chance_settings`), and degrades to the deterministic engine on error/timeout. **Round-ups are the default mechanic** (stake = round-up change → free order); honest framing never overstates an unreachable "free." The drop-in `requestOffers` helper + local fallback are built and tested. **82/82 API tests, demo-tier (no settlement).**
+- **Spec/plan:** `docs/superpowers/specs/2026-06-15-chance-ai-ranker-parlays-design.md` · `docs/superpowers/plans/2026-06-15-chance-ai-ranker-parlays.md`
+- ⏭️ **Drop-in UI wiring deferred:** the live `Chance.tsx` is still the slider flow; surfacing round-up-default + parlay rows + ranked order lands with the **Coinbase-style drop-in redesign** (the engine + `requestOffers` are ready to wire then).
+- 🔒 **Live ranking pending (needs you):** `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` in `@hedge/api` env + a merchant row in `business_chance_settings` with a non-`off` provider. Default `off` keeps every merchant on the deterministic engine.
+- 🔒 **Security follow-up before a real provider goes live:** per-merchant publishable key + origin allowlist + LLM spend budget on the public `/offers/rank` endpoint (today: global rate limiter + default-`off` ⇒ no spend for unknown merchants + bounded inputs).
+
 ### 🔨 Up next — Slice 2: Wallet identity + auth
 Replace the anonymous device wallet with Supabase auth (sign in to the extension); tie wallets to a real user. (See NEXT.)
 
