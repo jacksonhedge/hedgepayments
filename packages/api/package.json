@@ -12,7 +12,9 @@
     "db:reset": "knex migrate:rollback --all && knex migrate:latest && knex seed:run"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.2",
     "@supabase/supabase-js": "^2.108.0",
+    "@tsconfig/node16": "^1.0.4",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -23,11 +25,13 @@
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.2",
     "knex": "^2.5.1",
+    "make-error": "^1.3.6",
     "pg": "^8.11.1",
     "redis": "^4.6.7",
     "stripe": "^16.12.0",
     "uuid": "^9.0.0",
-    "winston": "^3.10.0"
+    "winston": "^3.10.0",
+    "yn": "^3.1.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -41,7 +45,7 @@
     "nodemon": "^3.0.1",
     "supertest": "^6.3.4",
     "ts-jest": "^29.4.11",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.1.6"
   }
 }
