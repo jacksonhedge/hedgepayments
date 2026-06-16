@@ -76,4 +76,35 @@ describe('POST /api/v1/offers/rank', () => {
     expect(res.body.ranked).toBe(false);
     expect(res.body.offers[0].id).toBe('s0');
   });
+
+  it('rejects more than 50 candidates', async () => {
+    const many = Array.from({ length: 51 }, (_, i) => cand('m' + i, 0.25, ['nba']));
+    const res = await request(app).post('/api/v1/offers/rank').send({
+      merchantId: 'biz-1', context: { amount: 47.3, mode: 'round_up' }, candidates: many,
+    });
+    expect(res.status).toBe(400);
+  });
+
+  it('returns an empty pool sanely when there are no candidates', async () => {
+    getChanceSettings.mockResolvedValue({ aiProvider: 'off', aiModel: null, parlaysEnabled: false });
+    getRankProvider.mockReturnValue({ rank: async () => [] });
+    const res = await request(app).post('/api/v1/offers/rank').send({
+      merchantId: 'biz-1', context: { amount: 47.3, mode: 'round_up' }, candidates: [],
+    });
+    expect(res.status).toBe(200);
+    expect(res.body.offers).toEqual([]);
+    expect(res.body.ranked).toBe(false);
+    expect(res.body.demo).toBe(true);
+  });
+
+  it('still returns 200 with deterministic offers when settings load fails', async () => {
+    getChanceSettings.mockRejectedValue(new Error('db down'));
+    getRankProvider.mockReturnValue({ rank: async () => [] });
+    const res = await request(app).post('/api/v1/offers/rank').send({
+      merchantId: 'biz-1', context: { amount: 47.3, mode: 'round_up' }, candidates: [cand('a', 0.25, ['nba'])],
+    });
+    expect(res.status).toBe(200);
+    expect(res.body.ranked).toBe(false);
+    expect(res.body.offers[0].id).toBe('s0');
+  });
 });
