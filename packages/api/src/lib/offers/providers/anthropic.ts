@@ -48,11 +48,14 @@ export class AnthropicRankProvider implements RankProvider {
   async rank({ context, offers, max }: RankInput): Promise<RankedOffer[]> {
     const msg: any = await this.client.messages.parse({
       model: this.model,
-      max_tokens: 1024,
+      max_tokens: 2048,
       system: SYSTEM,
       messages: [{ role: 'user', content: userPrompt(context, offers, max) }],
       output_config: { format: { type: 'json_schema', schema: RANK_SCHEMA } },
     } as any);
-    return (msg.parsed_output?.ranked ?? []) as RankedOffer[];
+    // Schema + mergeRanked's id-filter make full validation redundant, but guard the
+    // array shape so a malformed LLM response can never crash the ranking pipeline.
+    const ranked = msg.parsed_output?.ranked;
+    return (Array.isArray(ranked) ? ranked : []) as RankedOffer[];
   }
 }

@@ -37,4 +37,18 @@ describe('AnthropicRankProvider', () => {
     const out = await provider.rank({ context: { amount: 50, mode: 'round_up' }, offers: [offer('s0')], max: 6 });
     expect(out).toEqual([]);
   });
+
+  it('returns [] when parsed_output.ranked is not an array', async () => {
+    const fakeClient = { messages: { parse: async () => ({ parsed_output: { ranked: 'oops' } }) } };
+    const provider = new AnthropicRankProvider('claude-haiku-4-5', fakeClient as any);
+    const out = await provider.rank({ context: { amount: 50, mode: 'round_up' }, offers: [offer('s0')], max: 6 });
+    expect(out).toEqual([]);
+  });
+
+  it('handles an empty offer pool', async () => {
+    const fakeClient = { messages: { parse: async () => ({ parsed_output: { ranked: [] } }) } };
+    const provider = new AnthropicRankProvider('claude-haiku-4-5', fakeClient as any);
+    const out = await provider.rank({ context: { amount: 50, mode: 'round_up' }, offers: [], max: 6 });
+    expect(out).toEqual([]);
+  });
 });
