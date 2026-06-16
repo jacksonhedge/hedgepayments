@@ -5,6 +5,7 @@ export function mergeRanked(pool: Offer[], ranked: RankedOffer[], max: number): 
   const byId = new Map(pool.map(o => [o.id, o]));
   const seen = new Set<string>();
   const ordered: Offer[] = [];
+  // Contract: ranks are unique and non-negative; ties fall back to pool order (stable sort).
   for (const r of [...ranked].sort((a, b) => a.rank - b.rank)) {
     const o = byId.get(r.offerId);
     if (o && !seen.has(o.id)) { ordered.push(o); seen.add(o.id); }
@@ -21,24 +22,25 @@ export class OffRankProvider implements RankProvider {
 }
 
 export function getRankProvider(provider: 'anthropic' | 'openai' | 'off', model?: string): RankProvider {
+  // Providers are lazy-required so their SDKs aren't loaded unless actually selected.
   if (provider === 'anthropic') {
-    // Lazy require so the SDK isn't loaded unless used.
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { AnthropicRankProvider } = require('./providers/anthropic');
-    return new AnthropicRankProvider(model);
+    return new AnthropicRankProvider(model) as RankProvider;
   }
   if (provider === 'openai') {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { OpenAIRankProvider } = require('./providers/openai');
-    return new OpenAIRankProvider(model);
+    return new OpenAIRankProvider(model) as RankProvider;
   }
   return new OffRankProvider();
 }
 
 export function withTimeout<T>(p: Promise<T>, ms: number, fallback: T): Promise<T> {
-  let timer: NodeJS.Timeout;
+  let timer: ReturnType<typeof setTimeout> | undefined;
   const timeout = new Promise<T>(resolve => { timer = setTimeout(() => resolve(fallback), ms); });
-  return Promise.race([p, timeout]).finally(() => clearTimeout(timer));
+  // Degrade both a slow promise (timeout) and a rejected one to the fallback.
+  return Promise.race([p.catch(() => fallback), timeout]).finally(() => {
+    if (timer !== undefined) clearTimeout(timer);
+  });
 }
 
 /** Run a provider with hard error + timeout guards; both degrade to deterministic order. */

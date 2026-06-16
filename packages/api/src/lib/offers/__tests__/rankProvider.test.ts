@@ -23,6 +23,15 @@ describe('mergeRanked', () => {
     const out = mergeRanked(pool, [], 2);
     expect(out).toHaveLength(2);
   });
+
+  it('returns [] when the pool is empty', () => {
+    expect(mergeRanked([], [{ offerId: 's0', rank: 0 }], 6)).toEqual([]);
+  });
+
+  it('dedupes repeated ids in the ranking', () => {
+    const out = mergeRanked(pool, [{ offerId: 's0', rank: 0 }, { offerId: 's0', rank: 1 }], 6);
+    expect(out.map(o => o.id)).toEqual(['s0', 's1', 's2']);
+  });
 });
 
 describe('OffRankProvider', () => {
@@ -55,6 +64,11 @@ describe('safeRank', () => {
 describe('withTimeout', () => {
   it('resolves the fallback on timeout', async () => {
     const out = await withTimeout(new Promise<number>(r => setTimeout(() => r(1), 50)), 5, 99);
+    expect(out).toBe(99);
+  });
+
+  it('resolves the fallback when the promise rejects', async () => {
+    const out = await withTimeout(Promise.reject(new Error('boom')), 1000, 99);
     expect(out).toBe(99);
   });
 });
