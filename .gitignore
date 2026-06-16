@@ -35,3 +35,6 @@ next-env.d.ts
 tmp_backup/
 .gitignore.bak
 .env.local
+
+# Brainstorm visual-companion artifacts
+.superpowers/
