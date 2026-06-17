@@ -13,6 +13,10 @@ Present **Chance as a first-class payment method** — a peer to the Stripe line
 
 The crux is **one shared artifact** (Approach A): the redesigned `packages/link` drop-in (built `public/embed/chance.js`) is the single Chance flow. The web checkout embeds it; the extension vendors it through its existing `verify-widget` hash gate. The two surfaces therefore match **by construction**, not by eyeballing. A future native Swift iOS checkout is a forward-looking seam — designed for, not built here.
 
+### Distribution / positioning
+
+The end goal is that Hedge **white-labels CoinFlow as the underlying gateway** and **bundles Chance as a built-in payment method in the gateway it sells** — so every merchant who takes the white-labeled Hedge gateway gets Chance as a native checkout option, no per-merchant integration. This demo is the proof of that pitch: the "Stripe-peer method" framing throughout is really "peer method inside the Hedge/CoinFlow gateway lineup." Nothing in the demo work changes based on the underlying gateway (Chance-in-the-method-list is identical); this note just fixes *why* the demo exists. Chance remains a payment method and a route to/through real prediction markets only — Hedge is the router, never the house.
+
 ## Background / current state
 
 - **Site `/store`** (`app/store/{page.tsx,store.module.css,layout.tsx}`): a simulated Shopify storefront → checkout with a payment-method list (Debit/Credit/Venmo/Klarna/Chance) → the Chance flow → result. Today the checkout is custom-styled (not Stripe-Payment-Element-shaped) and the Chance flow is the old arcade slider drop-in.
