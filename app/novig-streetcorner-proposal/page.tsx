@@ -46,7 +46,7 @@ export default function NovigProposalPage() {
             <div className={styles.heroMeta}>
               <div>Street Team Launch Proposal</div>
               <div>
-                Prepared for <b>Novig</b> &nbsp;·&nbsp; June 2026
+                Prepared for <b>Novig</b> &nbsp;·&nbsp; June 18, 2026
               </div>
             </div>
 
@@ -593,7 +593,7 @@ export default function NovigProposalPage() {
           Powered by <b>Street Corner</b>, a Hedge Brand
         </p>
         <p className={styles.disclaimer}>
-          Proposal prepared for Novig, June 2026. Pricing reflects guaranteed media; CPA figures are
+          Proposal prepared for Novig, June 18, 2026. Pricing reflects guaranteed media; CPA figures are
           projections based on stated assumptions and are not guarantees of performance. All capture
           conducted at 21+ venues. Final terms, rates, and the definition of a qualifying funded
           account subject to mutual agreement. Event dates subject to league scheduling and
