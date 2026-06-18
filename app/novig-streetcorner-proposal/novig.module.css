@@ -1,0 +1,491 @@
+/* Street Corner Sports × Novig — proposal page
+   Light theme: white background, black type, brand accents. */
+
+.page {
+  --bg: #ffffff;
+  --ink: #0b0d0c;
+  --body: #2a2f2b;
+  --muted: #6c736d;
+  --gold: #b5730a;
+  --pink: #d11e68;
+  --green: #138a5a;
+  --surface: #f7f8f6;
+  --surface-line: rgba(0, 0, 0, 0.1);
+  --line: rgba(0, 0, 0, 0.08);
+  --panel: #f4f6f3;
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--font-sora), var(--font-inter), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ---------- shared section scaffolding ---------- */
+.section {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 52px 24px;
+  border-top: 1px solid var(--line);
+}
+
+.eyebrow {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin: 0 0 12px;
+}
+
+.h2 {
+  font-family: var(--font-anton), var(--font-sora), sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  font-size: clamp(24px, 3.6vw, 38px);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  margin: 0 0 16px;
+}
+
+.intro {
+  max-width: 720px;
+  font-size: clamp(15px, 1.9vw, 18px);
+  line-height: 1.5;
+  color: var(--body);
+  margin: 0 0 32px;
+}
+
+.intro strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- hero (compact) ---------- */
+.hero {
+  position: relative;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: clamp(40px, 7vh, 72px) 24px clamp(28px, 5vh, 48px);
+}
+
+.heroInner { position: relative; z-index: 1; }
+
+.suits {
+  display: flex;
+  gap: 48px;
+  color: var(--pink);
+  font-size: 13px;
+  margin: 0 0 14px;
+}
+
+.wordmarkWrap { margin: 0; line-height: 0; }
+
+.scsLogo {
+  width: clamp(170px, 30vw, 300px);
+  height: auto;
+  display: block;
+}
+
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 16px 0 0;
+}
+
+.xnovig {
+  font-family: var(--font-mono), monospace;
+  font-size: clamp(22px, 4.2vw, 44px);
+  letter-spacing: 0.3em;
+  color: var(--ink);
+}
+
+.novigLogo {
+  height: clamp(48px, 10vw, 100px);
+  width: auto;
+  display: block;
+  /* black-on-white source → drop the white via multiply on the light page */
+  mix-blend-mode: multiply;
+}
+
+.lede {
+  max-width: 620px;
+  font-size: clamp(17px, 2.3vw, 22px);
+  line-height: 1.42;
+  color: var(--body);
+  margin: 28px 0 0;
+}
+
+.lede b { color: var(--pink); font-weight: 600; }
+
+.rule { width: 56px; height: 3px; background: var(--gold); margin: 28px 0 0; border-radius: 2px; }
+
+.heroMeta {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 32px 0 0;
+}
+.heroMeta div { margin-top: 5px; }
+.heroMeta b { color: var(--ink); font-weight: 700; }
+
+.poweredBy {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 22px 0 0;
+}
+.poweredBy b { color: var(--ink); font-weight: 700; }
+
+/* ---------- top pricing boxes ---------- */
+.priceWrap { max-width: 1040px; margin: 0 auto; padding: 8px 24px 8px; }
+
+.priceBoxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.priceBox {
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.priceBoxAnchor {
+  border-color: rgba(181, 115, 10, 0.5);
+  background: linear-gradient(160deg, rgba(181, 115, 10, 0.07), var(--surface) 60%);
+}
+
+.priceBoxKicker {
+  font-family: var(--font-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+
+.priceBoxName {
+  font-family: var(--font-anton), sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  font-size: 26px;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.priceBoxPrice {
+  font-family: var(--font-anton), sans-serif;
+  color: var(--gold);
+  font-size: 34px;
+  line-height: 1;
+  margin: 10px 0 0;
+}
+
+.priceBoxSub {
+  font-family: var(--font-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+
+.priceBoxDesc { font-size: 13.5px; color: var(--body); margin: 12px 0 0; line-height: 1.45; }
+
+/* ---------- card grids ---------- */
+.cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.cards3 { grid-template-columns: repeat(3, 1fr); }
+.cards2 { grid-template-columns: repeat(2, 1fr); }
+.cards4 { grid-template-columns: repeat(2, 1fr); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.cardFeatured {
+  border-color: rgba(181, 115, 10, 0.5);
+  background: linear-gradient(160deg, rgba(181, 115, 10, 0.08), var(--surface) 55%);
+}
+
+.cardKicker {
+  font-family: var(--font-mono), monospace;
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  margin: 0 0 10px;
+}
+.cardKicker.pink { color: var(--pink); }
+
+.cardTitle { color: var(--ink); font-size: 16px; font-weight: 600; line-height: 1.25; margin: 0 0 8px; }
+.cardBody { font-size: 14px; line-height: 1.5; color: var(--body); margin: 0; }
+
+.cardTag {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 14px 0 0;
+}
+
+/* ---------- callout ---------- */
+.callout {
+  background: var(--panel);
+  border-left: 3px solid var(--pink);
+  border-radius: 0 14px 14px 0;
+  padding: 20px 24px;
+  margin: 28px 0 0;
+}
+
+.calloutLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin: 0 0 9px;
+}
+
+.calloutText { margin: 0; font-size: 15px; line-height: 1.55; color: var(--body); }
+.calloutText em { color: var(--ink); font-style: italic; }
+
+/* ---------- markets ---------- */
+.marketStack { display: grid; gap: 14px; }
+
+.market {
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: 16px;
+  padding: 22px 24px;
+}
+
+.marketHead { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; margin: 0 0 10px; }
+
+.marketName {
+  font-family: var(--font-anton), sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  font-size: 26px;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.marketTag {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+
+/* ---------- packages ---------- */
+.pkgStack { display: grid; gap: 20px; }
+
+.pkg {
+  background: linear-gradient(180deg, rgba(19, 138, 90, 0.03), var(--surface));
+  border: 1px solid var(--surface-line);
+  border-radius: 18px;
+  padding: 26px;
+}
+
+.pkgAnchor { border-color: rgba(181, 115, 10, 0.5); }
+
+.pkgHead { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; flex-wrap: wrap; }
+
+.pkgKicker {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+
+.pkgName {
+  font-family: var(--font-anton), sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  font-size: 32px;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.pkgTagline { font-family: var(--font-mono), monospace; font-size: 13px; color: var(--pink); margin: 8px 0 0; }
+
+.pkgPriceWrap { text-align: right; }
+
+.pkgPrice {
+  font-family: var(--font-anton), sans-serif;
+  color: var(--gold);
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1;
+}
+
+.pkgPriceSub {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+
+.specGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; margin: 20px 0 0; }
+
+.specRow {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.specKey {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.specVal { color: var(--ink); font-size: 14.5px; line-height: 1.4; }
+
+.cpaPill {
+  display: block;
+  text-align: center;
+  margin: 18px 0 0;
+  padding: 11px;
+  border: 1px solid rgba(19, 138, 90, 0.45);
+  border-radius: 12px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  color: var(--green);
+  background: rgba(19, 138, 90, 0.06);
+}
+
+/* ---------- CPA / rate + projections ---------- */
+.rate { display: flex; flex-direction: column; gap: 2px; }
+
+.rateRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.rateName { color: var(--ink); font-size: 15.5px; font-weight: 600; }
+.rateDesc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.ratePrice { font-family: var(--font-mono), monospace; font-weight: 700; color: var(--gold); font-size: 18px; white-space: nowrap; }
+
+.note { font-size: 13px; color: var(--muted); margin: 14px 0 0; line-height: 1.5; }
+
+.projTable { width: 100%; border-collapse: collapse; }
+
+.projTable th {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: right;
+  padding: 0 0 12px;
+  font-weight: 400;
+}
+.projTable th:first-child { text-align: left; }
+
+.projTable td {
+  font-family: var(--font-mono), monospace;
+  font-size: 15px;
+  color: var(--ink);
+  text-align: right;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.projTable td:first-child { text-align: left; }
+.projTable tr.baseRow td { color: var(--gold); }
+
+/* ---------- next steps ---------- */
+.steps { list-style: none; padding: 0; margin: 0; }
+
+.step {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.step::before { content: '\2666'; color: var(--gold); font-size: 13px; line-height: 1.6; }
+
+.stepText { font-size: 15px; color: var(--body); line-height: 1.5; }
+.stepText b { color: var(--ink); font-weight: 700; }
+
+/* ---------- CTA + footer ---------- */
+.cta {
+  background: var(--panel);
+  border: 1px solid var(--surface-line);
+  border-radius: 18px;
+  padding: 36px 28px;
+  text-align: center;
+  margin: 36px 0 0;
+}
+
+.ctaLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 14px;
+}
+
+.ctaEmail {
+  font-family: var(--font-mono), monospace;
+  font-weight: 700;
+  font-size: clamp(19px, 4vw, 32px);
+  color: var(--ink);
+  text-decoration: none;
+}
+.ctaEmail:hover { text-decoration: underline; text-decoration-color: var(--gold); }
+
+.ctaWho { font-size: 14px; color: var(--muted); margin: 14px 0 0; }
+
+.footer { max-width: 1040px; margin: 0 auto; padding: 36px 24px 72px; border-top: 1px solid var(--line); }
+
+.footerLogo {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+.footerLogo b { color: var(--ink); font-weight: 700; }
+
+.disclaimer { font-size: 12.5px; line-height: 1.6; color: var(--muted); max-width: 760px; margin: 0; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 760px) {
+  .priceBoxes, .cards3, .cards2, .cards4 { grid-template-columns: 1fr; }
+  .specGrid { grid-template-columns: 1fr; }
+  .pkgPriceWrap { text-align: left; }
+  .suits { gap: 36px; }
+}

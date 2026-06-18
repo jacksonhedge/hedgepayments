@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Fraunces, Anton, Press_Start_2P, Sora, Pacifico } from 'next/font/google'
+import { Inter, Fraunces, Anton, Press_Start_2P, Sora, Pacifico, Space_Mono } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -44,6 +44,14 @@ const pacifico = Pacifico({
   display: 'swap',
 })
 
+// Monospace for labels, eyebrows, and spec tables (proposal pages)
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-mono',
+  display: 'swap',
+})
+
 const title = 'Hedge — Fun, easy payments for the people who use them'
 const description =
   'Hedge is the fun money layer behind your favorite products: wallets, round-ups, and pay-a-little-more-to-win-it-free checkout. You bring the users — we bring the rails. Powering HedgePay, SideBet, Chance™, and FraternityBase.'
@@ -82,7 +90,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${anton.variable} ${pressStart.variable} ${sora.variable} ${pacifico.variable}`}
+      className={`${inter.variable} ${fraunces.variable} ${anton.variable} ${pressStart.variable} ${sora.variable} ${pacifico.variable} ${spaceMono.variable}`}
     >
       <head>
         <meta name="theme-color" content="#07060e" />
