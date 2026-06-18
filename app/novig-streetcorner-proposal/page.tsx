@@ -17,40 +17,51 @@ export default function NovigProposalPage() {
       {/* ---------------- HERO ---------------- */}
       <header className={styles.hero}>
         <div className={styles.heroInner}>
-          <div className={styles.suits}>
-            <span>♠</span>
-            <span>♥</span>
-            <span>♦</span>
-            <span>♣</span>
-          </div>
-          <h1 className={styles.wordmarkWrap}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={SCS_LOGO} alt="Street Corner Sports" className={styles.scsLogo} />
-          </h1>
-          <div className={styles.lockup}>
-            <span className={styles.xnovig}>SPORTS&nbsp;&nbsp;×</span>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={NOVIG_LOGO} alt="Novig" className={styles.novigLogo} />
-          </div>
-
-          <p className={styles.lede}>
-            Boots-on-the-ground content &amp; conversion for your{' '}
-            <b>July&nbsp;15 launch</b> in New York, New Jersey &amp; California —
-            staged to peak at the <b>World Cup Final at MetLife.</b>
-          </p>
-
-          <div className={styles.rule} />
-
-          <div className={styles.heroMeta}>
-            <div>Street Team Launch Proposal</div>
-            <div>
-              Prepared for <b>Novig</b> &nbsp;·&nbsp; June 2026
+          <div>
+            <div className={styles.suits}>
+              <span>♠</span>
+              <span>♥</span>
+              <span>♦</span>
+              <span>♣</span>
             </div>
+            <h1 className={styles.wordmarkWrap}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={SCS_LOGO} alt="Street Corner Sports" className={styles.scsLogo} />
+            </h1>
+            <div className={styles.lockup}>
+              <span className={styles.sportsMono}>SPORTS</span>
+              <span className={styles.xMark}>×</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={NOVIG_LOGO} alt="Novig" className={styles.novigLogo} />
+            </div>
+
+            <p className={styles.lede}>
+              Boots-on-the-ground content &amp; conversion for your{' '}
+              <b>July&nbsp;15 launch</b> in New York, New Jersey &amp; California —
+              staged to peak at the <b>World Cup Final at MetLife.</b>
+            </p>
+
+            <div className={styles.rule} />
+
+            <div className={styles.heroMeta}>
+              <div>Street Team Launch Proposal</div>
+              <div>
+                Prepared for <b>Novig</b> &nbsp;·&nbsp; June 2026
+              </div>
+            </div>
+
+            <p className={styles.poweredBy}>
+              Powered by <b>Street Corner</b>, a Hedge Brand
+            </p>
           </div>
 
-          <p className={styles.poweredBy}>
-            Powered by <b>Street Corner</b>, a Hedge Brand
-          </p>
+          <div className={styles.dateBlock}>
+            <span className={styles.dateBlockDay}>
+              Jul<br />15
+            </span>
+            <p className={styles.dateBlockLabel}>Goes Live</p>
+            <p className={styles.dateBlockSub}>NY · NJ · CA</p>
+          </div>
         </div>
       </header>
 
@@ -59,7 +70,7 @@ export default function NovigProposalPage() {
         <div className={styles.priceBoxes}>
           <div className={styles.priceBox}>
             <p className={styles.priceBoxKicker}>Entry · Launch SKU</p>
-            <p className={styles.priceBoxName}>The Final</p>
+            <p className={styles.priceBoxName}>Package 1</p>
             <p className={styles.priceBoxPrice}>$8–15K</p>
             <p className={styles.priceBoxSub}>Media only · Target $12K</p>
             <p className={styles.priceBoxDesc}>
@@ -68,7 +79,7 @@ export default function NovigProposalPage() {
           </div>
           <div className={styles.priceBox}>
             <p className={styles.priceBoxKicker}>Growth</p>
-            <p className={styles.priceBoxName}>The Home Stand</p>
+            <p className={styles.priceBoxName}>Package 2</p>
             <p className={styles.priceBoxPrice}>$35–50K</p>
             <p className={styles.priceBoxSub}>Media only · Target $40K</p>
             <p className={styles.priceBoxDesc}>
@@ -77,7 +88,7 @@ export default function NovigProposalPage() {
           </div>
           <div className={`${styles.priceBox} ${styles.priceBoxAnchor}`}>
             <p className={styles.priceBoxKicker}>Flagship · Anchor</p>
-            <p className={styles.priceBoxName}>The Takeover</p>
+            <p className={styles.priceBoxName}>Package 3</p>
             <p className={styles.priceBoxPrice}>$100K+</p>
             <p className={styles.priceBoxSub}>Media only · Target $125–150K</p>
             <p className={styles.priceBoxDesc}>
@@ -88,7 +99,8 @@ export default function NovigProposalPage() {
       </div>
 
       {/* ---------------- THE OPPORTUNITY ---------------- */}
-      <section className={styles.section}>
+      <section className={`${styles.section} ${styles.sectionInvert}`}>
+        <span className={styles.sectionNum}>01</span>
         <p className={styles.eyebrow}>Why now — and why this window can’t be replicated</p>
         <h2 className={styles.h2}>
           You go live July 15.
@@ -128,7 +140,7 @@ export default function NovigProposalPage() {
           </div>
         </div>
 
-        <div className={styles.callout}>
+        <div className={`${styles.callout} ${styles.calloutGold}`}>
           <p className={styles.calloutLabel}>The thesis</p>
           <p className={styles.calloutText}>
             Novig is racing Kalshi, Polymarket, ProphetX, and Betr for the same users. The brand
@@ -141,6 +153,7 @@ export default function NovigProposalPage() {
 
       {/* ---------------- THE MODEL ---------------- */}
       <section className={styles.section}>
+        <span className={styles.sectionNum}>02</span>
         <p className={styles.eyebrow}>One crew, three businesses stacked</p>
         <h2 className={styles.h2}>What a Street Team day delivers</h2>
         <p className={styles.intro}>
@@ -193,6 +206,7 @@ export default function NovigProposalPage() {
 
       {/* ---------------- THE MARKETS ---------------- */}
       <section className={styles.section}>
+        <span className={styles.sectionNum}>03</span>
         <p className={styles.eyebrow}>Three launch states, three distinct plays</p>
         <h2 className={styles.h2}>Where we deploy</h2>
         <p className={styles.intro}>
@@ -217,7 +231,7 @@ export default function NovigProposalPage() {
           <div className={styles.market}>
             <div className={styles.marketHead}>
               <h3 className={styles.marketName}>New Jersey</h3>
-              <span className={styles.marketTag}>Highest-converting · the crown jewel</span>
+              <span className={styles.marketTag}>Highest-converting</span>
             </div>
             <p className={styles.cardBody}>
               The most betting-native audience in America, so conversion — and CPA upside — pops
@@ -244,6 +258,7 @@ export default function NovigProposalPage() {
 
       {/* ---------------- THE PACKAGES ---------------- */}
       <section className={styles.section}>
+        <span className={styles.sectionNum}>04</span>
         <p className={styles.eyebrow}>Three ways in — all CPAs separate &amp; on top</p>
         <h2 className={styles.h2}>The packages</h2>
         <p className={styles.intro}>
@@ -254,12 +269,12 @@ export default function NovigProposalPage() {
         </p>
 
         <div className={styles.pkgStack}>
-          {/* The Final */}
+          {/* Package 1 */}
           <article className={styles.pkg}>
             <div className={styles.pkgHead}>
               <div>
                 <p className={styles.pkgKicker}>Entry · Launch SKU</p>
-                <h3 className={styles.pkgName}>The Final</h3>
+                <h3 className={styles.pkgName}>Package 1</h3>
                 <p className={styles.pkgTagline}>Own the launch moment</p>
               </div>
               <div className={styles.pkgPriceWrap}>
@@ -280,12 +295,12 @@ export default function NovigProposalPage() {
             <span className={styles.cpaPill}>+ CPAs billed separately, on top</span>
           </article>
 
-          {/* The Home Stand */}
+          {/* Package 2 */}
           <article className={styles.pkg}>
             <div className={styles.pkgHead}>
               <div>
                 <p className={styles.pkgKicker}>Growth</p>
-                <h3 className={styles.pkgName}>The Home Stand</h3>
+                <h3 className={styles.pkgName}>Package 2</h3>
                 <p className={styles.pkgTagline}>Launch + a real New York month</p>
               </div>
               <div className={styles.pkgPriceWrap}>
@@ -296,22 +311,22 @@ export default function NovigProposalPage() {
             <div className={styles.specGrid}>
               <Spec k="Regions" v="NJ + New York" />
               <Spec k="Events" v="~8 — Mets, Yankees & Jersey Shore" />
-              <Spec k="Field days" v="5" />
+              <Spec k="Field days" v="8" />
               <Spec k="Interviews" v="75–100" />
               <Spec k="Curated" v="18 clips + 2 heroes" />
               <Spec k="Logo" v="Felt, table skirt, mic flags, QR + merch" />
               <Spec k="Rights" v="Organic + paid" />
-              <Spec k="Exclusivity" v="NY/NJ category lock" />
+              <Spec k="Exclusivity" v="♣ NY/NJ category lock" />
             </div>
             <span className={styles.cpaPill}>+ CPAs billed separately, on top</span>
           </article>
 
-          {/* The Takeover */}
+          {/* Package 3 */}
           <article className={`${styles.pkg} ${styles.pkgAnchor}`}>
             <div className={styles.pkgHead}>
               <div>
                 <p className={styles.pkgKicker}>Flagship · Anchor</p>
-                <h3 className={styles.pkgName}>The Takeover</h3>
+                <h3 className={styles.pkgName}>Package 3</h3>
                 <p className={styles.pkgTagline}>Three-state land-grab</p>
               </div>
               <div className={styles.pkgPriceWrap}>
@@ -327,13 +342,13 @@ export default function NovigProposalPage() {
               <Spec k="Curated" v="20 curated + WC Final flagship film + 4 heroes" />
               <Spec k="Logo" v="Full suite — apparel, mic flags, merch, all markets" />
               <Spec k="Rights" v="Co-owned with Novig — fully sponsored" />
-              <Spec k="Exclusivity" v="3-state category lockout" />
+              <Spec k="Exclusivity" v="♣ 3-state category lockout" />
             </div>
             <span className={styles.cpaPill}>+ CPAs billed separately, on top</span>
           </article>
         </div>
 
-        <div className={styles.callout}>
+        <div className={`${styles.callout} ${styles.calloutGold}`}>
           <p className={styles.calloutLabel}>What you’re really buying</p>
           <p className={styles.calloutText}>
             The category lockout is the line that matters: across NY, NJ &amp; CA during your launch
@@ -345,7 +360,8 @@ export default function NovigProposalPage() {
       </section>
 
       {/* ---------------- CPA UPSIDE ---------------- */}
-      <section className={styles.section}>
+      <section className={`${styles.section} ${styles.cpaSection}`}>
+        <span className={styles.sectionNum}>05</span>
         <p className={styles.eyebrow}>100% of conversion is upside</p>
         <h2 className={styles.h2}>CPA — billed separately, on top of every package</h2>
         <p className={styles.intro}>
@@ -411,13 +427,14 @@ export default function NovigProposalPage() {
               </tbody>
             </table>
             <p className={styles.note}>
-              Plus a one-time launch-week spike of ~$15–40K concentrated in NJ around the World Cup
-              Final.
+              Modeled at a conservative ~$25 blended per funded account; in-person verified signups
+              bill at the $40–50 premium, so realized CPA value typically runs higher. Plus a
+              one-time launch-week spike of ~$15–40K concentrated in NJ around the World Cup Final.
             </p>
           </div>
         </div>
 
-        <div className={styles.callout}>
+        <div className={`${styles.callout} ${styles.calloutGreen}`}>
           <p className={styles.calloutLabel}>The tailwind</p>
           <p className={styles.calloutText}>
             Novig’s $5-for-$50 offer sets a low funding bar — people will absolutely spend $5 to get
@@ -430,6 +447,7 @@ export default function NovigProposalPage() {
 
       {/* ---------------- CURATED VIDEO ---------------- */}
       <section className={styles.section}>
+        <span className={styles.sectionNum}>06</span>
         <p className={styles.eyebrow}>À la carte — add to any package</p>
         <h2 className={styles.h2}>Curated video menu</h2>
         <p className={styles.intro}>
@@ -461,7 +479,7 @@ export default function NovigProposalPage() {
           </div>
         </div>
 
-        <div className={styles.callout}>
+        <div className={`${styles.callout} ${styles.calloutPink}`}>
           <p className={styles.calloutLabel}>Don’t discount this one</p>
           <p className={styles.calloutText}>
             The World Cup Final launch film is the single highest-value asset in the entire campaign
@@ -473,6 +491,7 @@ export default function NovigProposalPage() {
 
       {/* ---------------- THE FRAME ---------------- */}
       <section className={styles.section}>
+        <span className={styles.sectionNum}>07</span>
         <p className={styles.eyebrow}>How we keep it clean</p>
         <h2 className={styles.h2}>The frame</h2>
         <p className={styles.intro}>
@@ -490,7 +509,7 @@ export default function NovigProposalPage() {
           <div className={styles.card}>
             <p className={styles.cardKicker}>Category exclusivity</p>
             <p className={styles.cardBody}>
-              Lock the prediction-market slot. On The Takeover, no competitor stands on a Street
+              Lock the prediction-market slot. On Package 3, no competitor stands on a Street
               Corner Sports table across NY, NJ &amp; CA during your launch window.
             </p>
           </div>
@@ -503,7 +522,7 @@ export default function NovigProposalPage() {
           </div>
         </div>
 
-        <div className={styles.callout}>
+        <div className={`${styles.callout} ${styles.calloutMuted}`}>
           <p className={styles.calloutLabel}>One honest note</p>
           <p className={styles.calloutText}>
             CFTC designation does not fully end the state-level fight — California, New York, and New
@@ -516,6 +535,7 @@ export default function NovigProposalPage() {
 
       {/* ---------------- NEXT STEPS ---------------- */}
       <section className={styles.section}>
+        <span className={styles.sectionNum}>08</span>
         <p className={styles.eyebrow}>The clock is already running</p>
         <h2 className={styles.h2}>From signature to launch week</h2>
         <p className={styles.intro}>
@@ -557,11 +577,13 @@ export default function NovigProposalPage() {
         </ul>
 
         <div className={styles.cta}>
-          <p className={styles.ctaLabel}>Let’s build the deal this week</p>
-          <a className={styles.ctaEmail} href="mailto:jackson@hedgepayments.com">
-            jackson@hedgepayments.com
-          </a>
-          <p className={styles.ctaWho}>Jackson Fitzgerald · Hedge Payments · Street Corner Sports</p>
+          <div className={styles.ctaInner}>
+            <p className={styles.ctaLabel}>Let’s build the deal this week</p>
+            <a className={styles.ctaEmail} href="mailto:jackson@hedgepayments.com">
+              jackson@hedgepayments.com
+            </a>
+            <p className={styles.ctaWho}>Jackson Fitzgerald · Hedge Payments · Street Corner Sports</p>
+          </div>
         </div>
       </section>
 
@@ -583,10 +605,20 @@ export default function NovigProposalPage() {
 }
 
 function Spec({ k, v }: { k: string; v: string }) {
+  const club = v.startsWith('♣ ')
   return (
     <div className={styles.specRow}>
       <span className={styles.specKey}>{k}</span>
-      <span className={styles.specVal}>{v}</span>
+      <span className={styles.specVal}>
+        {club ? (
+          <>
+            <span className={styles.club}>♣</span>
+            {v.slice(1)}
+          </>
+        ) : (
+          v
+        )}
+      </span>
     </div>
   )
 }
