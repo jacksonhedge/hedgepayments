@@ -1,11 +1,28 @@
 import type { Metadata } from 'next'
 import styles from './novig.module.css'
 
+const title = 'Street Corner Sports × Novig — Street Team Launch Proposal'
+const description =
+  'Acquire users and acquire content, all in one — Novig’s July 19 launch in New York, New Jersey & California, the day the World Cup Final lands at MetLife. Powered by Hedge Payments.'
+const ogImage = '/og/novig-streetcorner.png'
+
 export const metadata: Metadata = {
-  title: 'Street Corner Sports × Novig — Street Team Launch Proposal',
-  description:
-    'Acquire users and acquire content, all in one — Novig’s July 19 launch in New York, New Jersey & California, the day the World Cup Final lands at MetLife. Powered by Hedge Payments.',
+  title,
+  description,
   robots: { index: false, follow: false },
+  openGraph: {
+    title,
+    description,
+    url: '/novig-streetcorner-proposal',
+    type: 'website',
+    images: [{ url: ogImage, width: 1200, height: 630, alt: 'Street Corner Sports × Novig' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    images: [ogImage],
+  },
 }
 
 const SCS_LOGO = '/images/street-corner-black.png'
