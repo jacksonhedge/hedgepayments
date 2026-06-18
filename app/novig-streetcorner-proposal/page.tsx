@@ -4,7 +4,7 @@ import styles from './novig.module.css'
 export const metadata: Metadata = {
   title: 'Street Corner Sports × Novig — Street Team Launch Proposal',
   description:
-    'Boots-on-the-ground content & conversion for Novig’s July 19 launch in New York, New Jersey & California — the day the World Cup Final lands at MetLife. Powered by Hedge Payments.',
+    'Acquire users and acquire content, all in one — Novig’s July 19 launch in New York, New Jersey & California, the day the World Cup Final lands at MetLife. Powered by Hedge Payments.',
   robots: { index: false, follow: false },
 }
 
@@ -36,8 +36,8 @@ export default function NovigProposalPage() {
             </div>
 
             <p className={styles.lede}>
-              Boots-on-the-ground content &amp; conversion for your{' '}
-              <b>July&nbsp;19 launch</b> in New York, New Jersey &amp; California —
+              Acquire users and acquire content, all in one — for your{' '}
+              <b>July&nbsp;19 launch</b> in New York, New Jersey &amp; California,
               the day the <b>World Cup Final lands at MetLife.</b>
             </p>
 
@@ -102,11 +102,7 @@ export default function NovigProposalPage() {
       <section className={`${styles.section} ${styles.sectionInvert}`}>
         <span className={styles.sectionNum}>01</span>
         <p className={styles.eyebrow}>Why now — and why this window can’t be replicated</p>
-        <h2 className={styles.h2}>
-          You go live July 19.
-          <br />
-          Same day, the world arrives.
-        </h2>
+        <h2 className={styles.h2}>You go live July 19.</h2>
         <p className={styles.intro}>
           Your CFTC approval flips New York, New Jersey, and California on the same day the single
           biggest sporting event on U.S. soil lands at MetLife. In this category, distribution
@@ -157,8 +153,9 @@ export default function NovigProposalPage() {
         <p className={styles.eyebrow}>One crew, three businesses stacked</p>
         <h2 className={styles.h2}>What a Street Team day delivers</h2>
         <p className={styles.intro}>
-          Each capture day is a host plus a filmer working a single high-density venue. That one day
-          is monetized three ways at once — you’re buying the deliverable, the attention, and the
+          Each capture day is one team — a host plus a filmer — working a single high-density venue
+          for about 3 hours (closer to 6 for a World Cup–scale day), at roughly $4K a team. That one
+          day is monetized three ways at once — you’re buying the deliverable, the attention, and the
           conversion in a single motion.
         </p>
 
@@ -285,7 +282,9 @@ export default function NovigProposalPage() {
             <div className={styles.specGrid}>
               <Spec k="Region" v="New Jersey" />
               <Spec k="Events" v="1 — World Cup Final" />
-              <Spec k="Field days" v="1 Marquee + 1 support" />
+              <Spec k="Teams" v="2 — 1 marquee + 1 support" />
+              <Spec k="Per team" v="~$4K" />
+              <Spec k="Ground work" v="~6 hrs — World Cup (≈3 a normal event)" />
               <Spec k="Interviews" v="20–30" />
               <Spec k="Curated" v="6 clips + 1 hero" />
               <Spec k="Logo" v="Felt, mic flags + content bug" />
