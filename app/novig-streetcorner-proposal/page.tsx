@@ -4,7 +4,7 @@ import styles from './novig.module.css'
 export const metadata: Metadata = {
   title: 'Street Corner Sports × Novig — Street Team Launch Proposal',
   description:
-    'Boots-on-the-ground content & conversion for Novig’s July 15 launch in New York, New Jersey & California — staged to peak at the World Cup Final at MetLife. Powered by Hedge Payments.',
+    'Boots-on-the-ground content & conversion for Novig’s July 19 launch in New York, New Jersey & California — the day the World Cup Final lands at MetLife. Powered by Hedge Payments.',
   robots: { index: false, follow: false },
 }
 
@@ -37,8 +37,8 @@ export default function NovigProposalPage() {
 
             <p className={styles.lede}>
               Boots-on-the-ground content &amp; conversion for your{' '}
-              <b>July&nbsp;15 launch</b> in New York, New Jersey &amp; California —
-              staged to peak at the <b>World Cup Final at MetLife.</b>
+              <b>July&nbsp;19 launch</b> in New York, New Jersey &amp; California —
+              the day the <b>World Cup Final lands at MetLife.</b>
             </p>
 
             <div className={styles.rule} />
@@ -57,7 +57,7 @@ export default function NovigProposalPage() {
 
           <div className={styles.dateBlock}>
             <span className={styles.dateBlockDay}>
-              Jul<br />15
+              Jul<br />19
             </span>
             <p className={styles.dateBlockLabel}>Goes Live</p>
             <p className={styles.dateBlockSub}>NY · NJ · CA</p>
@@ -103,32 +103,32 @@ export default function NovigProposalPage() {
         <span className={styles.sectionNum}>01</span>
         <p className={styles.eyebrow}>Why now — and why this window can’t be replicated</p>
         <h2 className={styles.h2}>
-          You go live July 15.
+          You go live July 19.
           <br />
-          Four days later, the world arrives.
+          Same day, the world arrives.
         </h2>
         <p className={styles.intro}>
-          Your CFTC approval flips New York, New Jersey, and California on the same week the single
-          biggest sporting event on U.S. soil lands in one of them. In this category, distribution
-          is the entire war right now — and this is the most demo-dense launch moment anyone in
+          Your CFTC approval flips New York, New Jersey, and California on the same day the single
+          biggest sporting event on U.S. soil lands at MetLife. In this category, distribution
+          is the entire war right now — and there is no more demo-dense launch moment anyone in
           prediction markets will get this decade.
         </p>
 
         <div className={`${styles.cards} ${styles.cards4}`}>
           <div className={styles.card}>
-            <p className={styles.cardKicker}>Jul 15</p>
-            <p className={styles.cardBody}>Novig goes live across NY · NJ · CA</p>
-            <p className={styles.cardTag}>Go-live</p>
-          </div>
-          <div className={styles.card}>
-            <p className={styles.cardKicker}>Jul 16–17</p>
-            <p className={styles.cardBody}>MLB resumes — Mets &amp; Yankees home dates from day one</p>
-            <p className={styles.cardTag}>Immediate volume</p>
+            <p className={styles.cardKicker}>Jul 15–17</p>
+            <p className={styles.cardBody}>Crews staged; teaser content rolls as MLB resumes — Mets &amp; Yankees</p>
+            <p className={styles.cardTag}>Pre-launch</p>
           </div>
           <div className={styles.card}>
             <p className={styles.cardKicker}>Jul 18</p>
             <p className={styles.cardBody}>World Cup third-place match — the metro fills up</p>
             <p className={styles.cardTag}>Build-up</p>
+          </div>
+          <div className={styles.card}>
+            <p className={styles.cardKicker}>Jul 19</p>
+            <p className={styles.cardBody}>Novig goes live across NY · NJ · CA</p>
+            <p className={styles.cardTag}>Go-live</p>
           </div>
           <div className={`${styles.card} ${styles.cardFeatured}`}>
             <p className={styles.cardKicker}>Jul 19</p>
@@ -136,7 +136,7 @@ export default function NovigProposalPage() {
               <strong style={{ color: 'var(--ink)' }}>World Cup Final</strong> — MetLife, East
               Rutherford, NJ
             </p>
-            <p className={styles.cardTag}>Your debut moment</p>
+            <p className={styles.cardTag}>Launch day = your debut</p>
           </div>
         </div>
 
@@ -564,8 +564,8 @@ export default function NovigProposalPage() {
           </li>
           <li className={styles.step}>
             <span className={styles.stepText}>
-              <b>Jul 15 — Go live.</b> Capture begins the moment Novig can convert. Launch-week
-              content rolls daily into the Final.
+              <b>Jul 19 — Go live.</b> Launch day is the World Cup Final at MetLife — capture begins
+              the moment Novig can convert, in front of the biggest crowd of the year.
             </span>
           </li>
           <li className={styles.step}>
