@@ -302,6 +302,22 @@
   .rowQ { font-size:14px; font-weight:700; letter-spacing:-.01em; line-height:1.25; }
   .rowSub { font-size:11.5px; color:var(--muted); margin-top:3px; }
   .vName { font-weight:700; }
+
+  /* ---------- roulette (tables) ---------- */
+  .rlStage { display:grid; place-items:center; gap:9px; padding:16px 0 18px; }
+  .rlNum { width:86px; height:86px; border-radius:14px; display:grid; place-items:center; font-size:38px; font-weight:800;
+    color:#fff; background:var(--soft); border:1px solid var(--line); }
+  .rlNum.red { background:#d33b3b; border-color:#d33b3b; }
+  .rlNum.black { background:#23262d; border-color:#23262d; color:#fff; }
+  .rlNum.green { background:#1a9e6b; border-color:#1a9e6b; }
+  .rlCap { font-size:12.5px; color:var(--muted); min-height:18px; text-align:center; }
+  .rlCap .rlWon { color:var(--chance); font-weight:800; }
+  .rlBets { display:flex; gap:8px; margin-top:4px; }
+  .rlBet { flex:1; padding:12px 0; border-radius:9px; border:1px solid var(--line); background:var(--bg); color:var(--ink);
+    font-size:14px; font-weight:800; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; transition:border-color .12s, box-shadow .12s, background .12s; }
+  .rlBet small { font-size:10px; font-weight:700; color:var(--muted); }
+  .rlBet.red { color:#d33b3b; } .rlBet.green { color:#1a9e6b; }
+  .rlBet.on { border-color:var(--chance); box-shadow:0 0 0 2px var(--chance); background:var(--chip); }
   .rowRight { display:flex; align-items:center; gap:8px; flex:none; }
   .rowVal { text-align:right; }
   .rowVal b { font-size:13.5px; font-weight:800; display:block; letter-spacing:-.01em; color:var(--chance); }
@@ -472,12 +488,14 @@
       if (a === 'close') return this.close()
       if (a === 'intro-next') return this.renderConfig()
       if (a === 'config-next') return this.renderMarkets()
+      if (a === 'config-tables') return this.renderTables()
       if (a === 'place') return this.place()
       if (a === 'decline') { this.emit('chance:declined', { amount: this.cfg().amount }); return this.close() }
     }
     back() {
       if (this.state.view === 'config') return this.renderIntro()
       if (this.state.view === 'markets') return this.renderConfig()
+      if (this.state.view === 'tables') return this.renderConfig()
     }
 
     // ---------- trigger ----------
@@ -569,7 +587,8 @@
         '<div class="readout"><div class="roMain"><div class="roChance" id="vChance">—<small>chance it hits</small></div><span class="roOdds" id="vOdds">—</span></div>' +
         '<div class="roLine"><span>Pay today</span><b id="vPay">—</b></div>' +
         '<div class="roHint" id="vHint">—</div></div></div>',
-        '<button class="cta" id="findBtn" data-act="config-next">Find markets →</button>',
+        '<button class="cta" id="findBtn" data-act="config-next">See Markets →</button>' +
+        '<button class="ghost" data-act="config-tables">🎲 See Tables</button>',
       function () {
       var sRisk = self.shadowRoot.querySelector('#sRisk'), sWin = self.shadowRoot.querySelector('#sWin')
       var update = function () {
@@ -591,7 +610,7 @@
         }
         if (k.matches.length) {
           hint.innerHTML = '<b>' + k.matches.length + '</b> live market' + (k.matches.length > 1 ? 's' : '') + ' near these odds'
-          btn.disabled = false; btn.textContent = 'Find ' + k.matches.length + ' market' + (k.matches.length > 1 ? 's' : '') + ' →'
+          btn.disabled = false; btn.textContent = 'See ' + k.matches.length + ' market' + (k.matches.length > 1 ? 's' : '') + ' →'
         } else {
           hint.innerHTML = 'No markets at these odds — try a bigger risk or smaller discount'
           btn.disabled = true; btn.textContent = 'No markets at these odds'
@@ -606,6 +625,53 @@
       var pct = ((el.value - min) / (max - min)) * 100
       var accent = el.classList.contains('win') ? 'var(--blue)' : 'var(--chance)'
       el.style.background = 'linear-gradient(90deg,' + accent + ' 0 ' + pct + '%, var(--line2) ' + pct + '% 100%)'
+    }
+
+    // ---------- tables: roulette (demo, single-zero) ----------
+    renderTables() {
+      this.state.view = 'tables'
+      var self = this, c = this.cfg(), b = this.bounds()
+      var stake = clamp(this.state.risk || Math.round(c.amount * 0.06), b.riskMin, b.riskMax)
+      this.state.risk = stake
+      this.state.rbet = this.state.rbet || 'red'
+      this.morph(true,
+        '<div class="step"><div class="title">Roulette</div>' +
+        '<p class="sub">Demo table — put your <b>$' + FMT(stake) + '</b> stake on a color and spin a single-zero wheel. No real money.</p>' +
+        '<div class="rlStage"><div class="rlNum" id="rlNum">–</div><div class="rlCap" id="rlCap">spin to play</div></div>' +
+        '<div class="rlBets" id="rlBets">' +
+        '<button class="rlBet red" data-bet="red">Red<small>2×</small></button>' +
+        '<button class="rlBet black" data-bet="black">Black<small>2×</small></button>' +
+        '<button class="rlBet green" data-bet="green">0<small>14×</small></button>' +
+        '</div></div>',
+        '<button class="cta" id="rlSpin">Spin $' + FMT(stake) + ' →</button>',
+      function () {
+        var RED = { 1:1,3:1,5:1,7:1,9:1,12:1,14:1,16:1,18:1,19:1,21:1,23:1,25:1,27:1,30:1,32:1,34:1,36:1 }
+        var colorOf = function (n) { return n === 0 ? 'green' : (RED[n] ? 'red' : 'black') }
+        var bets = self.shadowRoot.querySelectorAll('.rlBet')
+        var setBet = function (v) { self.state.rbet = v; bets.forEach(function (el) { el.classList.toggle('on', el.getAttribute('data-bet') === v) }) }
+        bets.forEach(function (el) { el.onclick = function () { if (!self._rlSpin) setBet(el.getAttribute('data-bet')) } })
+        setBet(self.state.rbet)
+        var numEl = self.shadowRoot.querySelector('#rlNum'), cap = self.shadowRoot.querySelector('#rlCap')
+        var spin = self.shadowRoot.querySelector('#rlSpin')
+        spin.onclick = function () {
+          if (self._rlSpin) return
+          self._rlSpin = true; spin.disabled = true; cap.textContent = 'spinning…'
+          var ticks = 0
+          var iv = setInterval(function () {
+            var n = Math.floor(Math.random() * 37)
+            numEl.textContent = n; numEl.className = 'rlNum ' + colorOf(n)
+            if (++ticks >= 24) {
+              clearInterval(iv)
+              var win = colorOf(n) === self.state.rbet
+              var mult = self.state.rbet === 'green' ? 14 : 2
+              cap.innerHTML = win
+                ? '<b class="rlWon">You win $' + FMT(stake * mult) + '</b> · ' + n + ' ' + colorOf(n)
+                : 'Landed ' + n + ' (' + colorOf(n) + ') — spin again'
+              self._rlSpin = false; spin.disabled = false
+            }
+          }, 65)
+        }
+      })
     }
 
     // ---------- step 3: markets — morph the frame once, then update rows in place ----------
