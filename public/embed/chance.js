@@ -218,9 +218,9 @@
   @media (min-width:640px){ .overlay{ align-items:center; padding:18px; } }
   @keyframes fade { from{opacity:0} to{opacity:1} }
   .sheet { width:100%; max-width:452px; max-height:92vh; display:flex; flex-direction:column; overflow:hidden;
-    background:var(--bg); color:var(--ink); border-radius:24px 24px 0 0; box-shadow:0 -12px 70px rgba(0,0,0,.45);
+    background:var(--bg); color:var(--ink); border-radius:12px 12px 0 0; border:1px solid var(--line); box-shadow:0 -12px 70px rgba(0,0,0,.45);
     animation:rise .3s cubic-bezier(.18,.84,.27,1); transition:height .34s cubic-bezier(.4,0,.2,1); }
-  @media (min-width:640px){ .sheet{ border-radius:24px; } }
+  @media (min-width:640px){ .sheet{ border-radius:12px; } }
   @keyframes rise { from{transform:translateY(26px); opacity:.5} to{transform:translateY(0); opacity:1} }
 
   .hdr { display:grid; grid-template-columns:34px 1fr 34px; align-items:center; padding:14px 16px 6px; }
@@ -244,14 +244,14 @@
 
   /* ---------- intro (how it works) ---------- */
   .hero { display:grid; place-items:center; gap:0; padding:8px 0 6px; }
-  .heroBadge { width:60px; height:60px; border-radius:18px; display:grid; place-items:center; font-size:28px; color:#fff;
+  .heroBadge { width:60px; height:60px; border-radius:12px; display:grid; place-items:center; font-size:28px; color:#fff;
     background:radial-gradient(120% 120% at 30% 20%, #5b8def, #2c59bb); box-shadow:0 10px 26px rgba(44,89,187,.35); }
   .steps { margin:14px 0 4px; display:flex; flex-direction:column; gap:12px; }
   .stepRow { display:flex; gap:13px; align-items:flex-start; }
   .stepNo { width:26px; height:26px; border-radius:9px; background:var(--chip); color:var(--chance); font-weight:800; font-size:13px; display:grid; place-items:center; flex:none; }
   .stepTx b { font-size:13.5px; font-weight:700; display:block; }
   .stepTx span { font-size:12.5px; color:var(--muted); }
-  .example { margin:16px 0 2px; padding:12px 14px; border-radius:13px; background:var(--soft); border:1px dashed var(--line2);
+  .example { margin:16px 0 2px; padding:12px 14px; border-radius:9px; background:var(--soft); border:1px dashed var(--line2);
     font-size:12.5px; color:var(--ink2); text-align:center; line-height:1.5; }
   .example b { color:var(--ink); }
 
@@ -268,7 +268,7 @@
   .rng.win::-webkit-slider-thumb { background:var(--blue); box-shadow:0 2px 9px rgba(43,110,246,.5); }
   .rng.win::-moz-range-thumb { background:var(--blue); }
 
-  .readout { margin-top:20px; background:var(--soft); border:1px solid var(--line); border-radius:16px; padding:15px 16px; }
+  .readout { margin-top:20px; background:var(--soft); border:1px solid var(--line); border-radius:10px; padding:15px 16px; }
   .roMain { display:flex; align-items:center; justify-content:space-between; }
   .roChance { font-size:30px; font-weight:800; letter-spacing:-.02em; line-height:1; }
   .roChance small { font-size:13px; color:var(--muted); font-weight:600; margin-left:5px; }
@@ -292,7 +292,7 @@
 
   .rows { display:flex; flex-direction:column; gap:8px; padding-bottom:8px; }
   .row { display:flex; align-items:center; gap:13px; width:100%; text-align:left; cursor:pointer;
-    background:var(--bg); border:1px solid var(--line); border-radius:15px; padding:12px 13px; color:var(--ink);
+    background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:12px 13px; color:var(--ink);
     transition:border-color .15s, box-shadow .15s, transform .1s, background .15s; }
   .row:hover { border-color:var(--line2); background:var(--soft); transform:translateY(-1px); box-shadow:0 6px 18px rgba(15,22,32,.06); }
   .row.on { border-color:var(--chance); background:var(--chip); box-shadow:0 0 0 2px var(--chance); }

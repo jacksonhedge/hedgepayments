@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, createElement } from 'react'
 import styles from './store.module.css'
 
 // ---- catalog (keyboard is the default) ----
@@ -76,6 +76,41 @@ export default function StorePage() {
   const [picked, setPicked] = useState<number | null>(null)
   const [resolving, setResolving] = useState(false)
   const [outcome, setOutcome] = useState<'win' | 'lose' | 'card' | null>(null)
+  const [chanceRes, setChanceRes] = useState<{ won: boolean; amountBack: number; finalPrice: number; q: string; venue: string } | null>(null)
+
+  // Load the shared Chance drop-in widget (same artifact as /chance + the extension).
+  const chanceHostRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (customElements.get('chance-checkout')) return
+    if (document.querySelector('script[data-chance-embed]')) return
+    const s = document.createElement('script')
+    s.src = '/embed/chance.js'
+    s.async = true
+    s.setAttribute('data-chance-embed', '')
+    document.body.appendChild(s)
+  }, [])
+  // Reflect the widget's result in the store's own result screen.
+  useEffect(() => {
+    const host = chanceHostRef.current
+    if (!host) return
+    const onResult = (e: Event) => {
+      const d = (e as CustomEvent).detail || {}
+      const offer = d.offer || {}
+      setChanceRes({
+        won: !!d.won,
+        amountBack: Math.round(d.amountBack || 0),
+        finalPrice: Math.round(d.finalPrice ?? d.finalPriceTotal ?? 0),
+        q: offer.question || offer.q || 'your market',
+        venue: offer.venue || 'polymarket',
+      })
+      setOutcome(d.won ? 'win' : 'lose')
+      setResolving(false)
+      setView('result')
+    }
+    host.addEventListener('chance:result', onResult)
+    return () => host.removeEventListener('chance:result', onResult)
+  }, [])
 
   // When returning to checkout from Chance, land on the Payment section (not the address form).
   const paymentRef = useRef<HTMLDivElement>(null)
@@ -102,15 +137,24 @@ export default function StorePage() {
     { id: 'klarna', meta: '4 interest-free payments', color: '#ffb3c7', darkText: true, btn: 'Klarna' },
     { id: 'chance', meta: `win up to $${order} back`, color: '#0e9f6e', btn: '✦ Chance' },
   ]
-  const mkt = picked != null ? MARKETS[picked] : null
-  const winBack = mkt ? Math.round(order * mkt.frac) : 0
-  const finalPrice = outcome === 'win' ? order - winBack : order
+  const liveMkt = picked != null ? MARKETS[picked] : null
+  const winBack = chanceRes ? chanceRes.amountBack : liveMkt ? Math.round(order * liveMkt.frac) : 0
+  const finalPrice = chanceRes ? chanceRes.finalPrice : outcome === 'win' ? order - winBack : order
+  const mkt = chanceRes ? { q: chanceRes.q, venue: chanceRes.venue, chance: 0, frac: 0 } : liveMkt
+
+  // Open the shared Chance widget (headless) instead of the old bespoke market-pick view.
+  function openChance() {
+    setPay('chance')
+    const el = chanceHostRef.current?.querySelector('chance-checkout') as HTMLElement | null
+    if (el) el.dispatchEvent(new CustomEvent('chance:open'))
+  }
 
   function reset() {
     setView('product')
     setPicked(null)
     setOutcome(null)
     setResolving(false)
+    setChanceRes(null)
     setPay('chance')
   }
 
@@ -193,7 +237,8 @@ export default function StorePage() {
                     style={{ background: m.color, color: m.darkText ? '#0a0a0a' : '#fff' }}
                     onClick={() => {
                       setPay(m.id)
-                      setView(m.id === 'chance' ? 'chance' : 'checkout')
+                      if (m.id === 'chance') openChance()
+                      else setView('checkout')
                     }}
                   >
                     {m.id === 'chance' ? (
@@ -326,7 +371,7 @@ export default function StorePage() {
                   {pay === 'chance' ? (
                     <button
                       className={`${styles.pay} ${styles.payChance}`}
-                      onClick={() => setView('chance')}
+                      onClick={openChance}
                     >
                       Continue with <span className={styles.script}>Chance</span> →
                     </button>
@@ -368,7 +413,7 @@ export default function StorePage() {
                 </div>
 
                 {pay === 'chance' ? (
-                  <button className={`${styles.pay} ${styles.payChance}`} onClick={() => setView('chance')}>
+                  <button className={`${styles.pay} ${styles.payChance}`} onClick={openChance}>
                     Continue with <span className={styles.script}>Chance</span> →
                   </button>
                 ) : (
@@ -525,6 +570,18 @@ export default function StorePage() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Shared Chance drop-in widget — headless, opened via the chance:open event. */}
+      <div ref={chanceHostRef} aria-hidden>
+        {createElement('chance-checkout', {
+          key: order,
+          amount: String(order),
+          currency: 'USD',
+          mode: 'win-it-back',
+          theme: 'light',
+          trigger: 'none',
+        })}
       </div>
     </div>
   )
