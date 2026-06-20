@@ -246,6 +246,26 @@
   .hero { display:grid; place-items:center; gap:0; padding:8px 0 6px; }
   .heroBadge { width:60px; height:60px; border-radius:12px; display:grid; place-items:center; font-size:28px; color:#fff;
     background:radial-gradient(120% 120% at 30% 20%, #5b8def, #2c59bb); box-shadow:0 10px 26px rgba(44,89,187,.35); }
+
+  /* ---------- CSS 3D rolling die (brand mark) ---------- */
+  .dieWrap { perspective:340px; width:62px; height:62px; display:grid; place-items:center; }
+  .die { width:44px; height:44px; position:relative; transform-style:preserve-3d; animation:dieRoll 7s cubic-bezier(.62,.04,.2,1) infinite; }
+  .dieFace { position:absolute; inset:0; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); padding:6px; border-radius:11px;
+    background:linear-gradient(150deg,#5b8def,#2c59bb); box-shadow:inset 0 0 0 1px rgba(255,255,255,.2), inset 0 -7px 11px rgba(0,0,0,.22); }
+  .pip { width:7px; height:7px; border-radius:50%; background:#fff; align-self:center; justify-self:center; box-shadow:0 1px 1px rgba(0,0,0,.25); }
+  .p1{grid-area:1/1}.p3{grid-area:1/3}.p4{grid-area:2/1}.p5{grid-area:2/2}.p6{grid-area:2/3}.p7{grid-area:3/1}.p9{grid-area:3/3}
+  .f1{transform:rotateY(0deg) translateZ(22px)} .f6{transform:rotateY(180deg) translateZ(22px)}
+  .f2{transform:rotateY(90deg) translateZ(22px)} .f5{transform:rotateY(-90deg) translateZ(22px)}
+  .f3{transform:rotateX(90deg) translateZ(22px)} .f4{transform:rotateX(-90deg) translateZ(22px)}
+  @keyframes dieRoll {
+    0%,11%    { transform:rotateX(-18deg) rotateY(16deg) }
+    19%,30%   { transform:rotateX(-108deg) rotateY(16deg) }
+    38%,49%   { transform:rotateX(-108deg) rotateY(106deg) }
+    57%,68%   { transform:rotateX(-198deg) rotateY(106deg) }
+    76%,87%   { transform:rotateX(-198deg) rotateY(286deg) }
+    100%      { transform:rotateX(-378deg) rotateY(376deg) }
+  }
+  @media (prefers-reduced-motion:reduce){ .die{ animation:none; transform:rotateX(-18deg) rotateY(16deg) } }
   .steps { margin:14px 0 4px; display:flex; flex-direction:column; gap:12px; }
   .stepRow { display:flex; gap:13px; align-items:flex-start; }
   .stepNo { width:26px; height:26px; border-radius:9px; background:var(--chip); color:var(--chance); font-weight:800; font-size:13px; display:grid; place-items:center; flex:none; }
@@ -552,7 +572,14 @@
         ? ['Set your risk &amp; reward', 'Choose how much to stake and the discount you want to win.']
         : ['Pick your reward', 'Choose the discount you want a shot at — free to play.']
       this.morph(false,
-        '<div class="step"><div class="hero"><span class="heroBadge">✦</span></div>' +
+        '<div class="step"><div class="hero"><div class="dieWrap"><div class="die">' +
+        '<div class="dieFace f1"><i class="pip p5"></i></div>' +
+        '<div class="dieFace f2"><i class="pip p1"></i><i class="pip p9"></i></div>' +
+        '<div class="dieFace f3"><i class="pip p1"></i><i class="pip p5"></i><i class="pip p9"></i></div>' +
+        '<div class="dieFace f4"><i class="pip p1"></i><i class="pip p3"></i><i class="pip p7"></i><i class="pip p9"></i></div>' +
+        '<div class="dieFace f5"><i class="pip p1"></i><i class="pip p3"></i><i class="pip p5"></i><i class="pip p7"></i><i class="pip p9"></i></div>' +
+        '<div class="dieFace f6"><i class="pip p1"></i><i class="pip p4"></i><i class="pip p7"></i><i class="pip p3"></i><i class="pip p6"></i><i class="pip p9"></i></div>' +
+        '</div></div></div>' +
         '<div class="title" style="text-align:center">Turn your order into a <span class="rWin">win</span></div>' +
         '<p class="sub" style="text-align:center">Back a real market at checkout. If it hits, you ' + (this.flip ? 'knock money off — up to a free order' : 'win money off your order') + '. Either way, it ships.</p>' +
         '<div class="steps">' +
