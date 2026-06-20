@@ -145,6 +145,7 @@ export default function StorePage() {
             <span>Sale</span>
           </div>
           <div className={styles.cart}>🛒 1</div>
+          <a href="/chance" style={{ marginLeft: 16, fontSize: 12, color: '#9aa0aa', textDecoration: 'none', fontWeight: 600, whiteSpace: 'nowrap' }}>Developer demo →</a>
         </div>
       </div>
 

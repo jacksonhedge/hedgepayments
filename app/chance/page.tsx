@@ -70,6 +70,7 @@ export default function ChanceEmbedDemo() {
             <span className="coinMini" /> powered by{' '}
             <b style={{ fontFamily: 'var(--font-script), cursive', color: '#b8ff3a', fontSize: '1.25em', margin: '0 2px' }}>Chance</b>
           </span>
+          <a href="/store" style={S.shopperLink}>See the shopper demo →</a>
           <a href={EXTENSION_URL} target="_blank" rel="noopener noreferrer" style={S.extBtn}>
             🧩 Add Chrome Extension
           </a>
@@ -231,6 +232,7 @@ const S: Record<string, React.CSSProperties> = {
   poweredPill: { fontSize: 12, color: '#aab6d6', display: 'flex', alignItems: 'center' },
   topRight: { display: 'flex', alignItems: 'center', gap: 16 },
   extBtn: { display: 'inline-flex', alignItems: 'center', gap: 7, padding: '9px 16px', borderRadius: 11, fontSize: 13, fontWeight: 800, textDecoration: 'none', color: '#04130a', background: 'linear-gradient(135deg,#b8ff3a,#2fe08a)', border: '1px solid #cdff84', boxShadow: '0 0 20px rgba(184,255,58,.45)', whiteSpace: 'nowrap', letterSpacing: '-0.01em' },
+  shopperLink: { display: 'inline-flex', alignItems: 'center', gap: 5, padding: '9px 14px', borderRadius: 11, fontSize: 13, fontWeight: 700, textDecoration: 'none', color: '#aab6d6', border: '1px solid rgba(234,243,255,0.18)', whiteSpace: 'nowrap', letterSpacing: '-0.01em' },
   grid2: { position: 'relative', zIndex: 1, maxWidth: 1080, margin: '0 auto', padding: '40px 24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 34, alignItems: 'start' },
   checkout: { background: '#fff', color: '#1a1a1f', borderRadius: 20, padding: 26, boxShadow: '0 24px 70px rgba(0,0,0,.5), 0 0 0 1px rgba(0,234,255,0.25), 0 0 40px rgba(0,234,255,0.12)' },
   h2: { fontSize: 20, fontWeight: 800, margin: '0 0 18px', fontFamily: 'var(--font-anton), sans-serif', letterSpacing: '0.01em' },
