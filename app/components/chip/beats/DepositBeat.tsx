@@ -15,9 +15,9 @@ export default function DepositBeat({ progress, count, reduced }: BeatProps) {
   return (
     <section className={styles.beat} aria-label="Deposit">
       <div className={styles.beatInner}>
-        <div className={styles.slot} aria-hidden>
+        <div className={styles.slot}>
           <span className={styles.slotLabel}>DEPOSIT QUARTER</span>
-          <span className={styles.slotMouth} />
+          <span className={styles.slotMouth} aria-hidden />
         </div>
         <p className={styles.sub}>Insert coin to begin.</p>
       </div>

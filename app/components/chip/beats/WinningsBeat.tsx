@@ -1,5 +1,5 @@
 'use client'
-import { useTransform, useMotionValueEvent, type MotionValue } from 'framer-motion'
+import { useTransform, useMotionValueEvent } from 'framer-motion'
 import { useState } from 'react'
 import { useBeatProgress } from '../useBeatProgress'
 import styles from '../chip.module.css'

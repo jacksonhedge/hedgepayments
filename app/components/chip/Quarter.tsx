@@ -41,7 +41,7 @@ export default function Quarter({ scale, rotate, x, y, morph, variant = 'silver'
     <motion.div
       data-testid="quarter"
       data-morph-state={morphState(morph)}
-      className={`${styles.quarter} ${variant === 'sun' ? styles.quarterSun : ''}`}
+      className={[styles.quarter, variant === 'sun' ? styles.quarterSun : ''].filter(Boolean).join(' ')}
       style={{ scale, rotate, x, y }}
       aria-label="A US quarter"
       role="img"

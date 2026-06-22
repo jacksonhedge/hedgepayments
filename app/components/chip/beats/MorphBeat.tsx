@@ -1,5 +1,5 @@
 'use client'
-import { useTransform, type MotionValue } from 'framer-motion'
+import { useTransform } from 'framer-motion'
 import Quarter from '../Quarter'
 import { useBeatProgress } from '../useBeatProgress'
 import styles from '../chip.module.css'

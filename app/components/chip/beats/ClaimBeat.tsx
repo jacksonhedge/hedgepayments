@@ -6,7 +6,7 @@ import type { ClaimBeatProps } from './types'
 
 type Phase = 'play' | 'capture' | 'done'
 
-export default function ClaimBeat({ reduced }: ClaimBeatProps) {
+export default function ClaimBeat(_props: ClaimBeatProps) {
   const hostRef = useRef<HTMLDivElement>(null)
   const [phase, setPhase] = useState<Phase>('play')
   const [email, setEmail] = useState('')
@@ -37,19 +37,17 @@ export default function ClaimBeat({ reduced }: ClaimBeatProps) {
     if (!email) return
     setSubmitting(true)
     try {
-      await fetch('/api/subscribe', {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         // /api/subscribe requires a name; derive one from the email local-part.
         body: JSON.stringify({ name: email.split('@')[0] || 'Quarter Claim', email }),
       })
-      setPhase('done')
+      if (response.ok) setPhase('done')
     } finally {
       setSubmitting(false)
     }
   }
-
-  void reduced // consumed by parent scroll orchestration; not used locally
 
   return (
     <section id="claim" className={styles.beat} aria-label="Take your free quarter">

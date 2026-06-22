@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
-export const alt = 'Hedge Payments — White-label payments infrastructure';
+export const alt = 'A Chip and a Chair — It only takes a quarter.';
 export const size = {
   width: 1200,
   height: 630,
@@ -44,14 +44,14 @@ export default async function Image() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: 16,
-              background: 'linear-gradient(135deg, #394734 0%, #182215 100%)',
-              color: '#f6f1e7',
-              fontSize: 16,
-              letterSpacing: 4,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #c8a96e 0%, #a07840 100%)',
+              color: '#1f241d',
+              fontSize: 28,
+              fontWeight: 700,
             }}
           >
-            HP
+            25¢
           </div>
           Hedge Payments
         </div>
@@ -67,21 +67,20 @@ export default async function Image() {
             maxWidth: '95%',
           }}
         >
-          White-label payments infrastructure for modern products.
+          A Chip and a Chair.
         </div>
 
         <div
           style={{
             display: 'flex',
             marginTop: 32,
-            fontSize: 28,
+            fontSize: 36,
             lineHeight: 1.4,
             color: '#5d6259',
             maxWidth: '88%',
           }}
         >
-          Shared rails. Separate products. Branded money movement, wallet flows,
-          and provider-flexible banking tools.
+          It only takes a quarter.
         </div>
 
         <div
@@ -94,11 +93,11 @@ export default async function Image() {
             letterSpacing: 1,
           }}
         >
-          <div style={{ display: 'flex' }}>Payments core</div>
+          <div style={{ display: 'flex' }}>25¢ to start</div>
           <div style={{ display: 'flex', color: '#bf6b42' }}>·</div>
-          <div style={{ display: 'flex' }}>Wallet infrastructure</div>
+          <div style={{ display: 'flex' }}>Real venues</div>
           <div style={{ display: 'flex', color: '#bf6b42' }}>·</div>
-          <div style={{ display: 'flex' }}>Control layer</div>
+          <div style={{ display: 'flex' }}>Powered by Hedge Payments</div>
         </div>
       </div>
     ),
