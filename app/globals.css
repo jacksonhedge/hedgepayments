@@ -144,3 +144,30 @@ input, select, textarea {
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+/* ── Flip-grid loading screen (FlipLoader.tsx) — scoped to #flip-loader ── */
+#flip-loader{
+  --flip-bg:#0b0712; --flip-glow:#1a1030;
+  --flip-hi:#cdb9ec; --flip-lo:#6f5b97; --flip-edge:#4a3a6e;
+  --flip-tile:78px; --flip-ms:420ms;
+  position:fixed; inset:0; z-index:9999; overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 8%, var(--flip-glow) 0%, var(--flip-bg) 60%);
+  font-family:ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  transition:opacity .65s ease, visibility .65s ease;
+}
+#flip-loader[data-fading]{ opacity:0; visibility:hidden; pointer-events:none; }
+#flip-loader [data-scene]{ position:absolute; inset:0; display:grid; gap:0; perspective:1500px; perspective-origin:50% 45%; }
+#flip-loader .cell{ display:flex; align-items:center; justify-content:center; padding:7px; }
+#flip-loader .tile{ position:relative; width:100%; aspect-ratio:1/1; transform-style:preserve-3d; transition:transform var(--flip-ms) cubic-bezier(.5,0,.25,1); will-change:transform; }
+#flip-loader .tile.flipped{ transform:rotateX(180deg); }
+#flip-loader .face{ position:absolute; inset:0; border-radius:22%; backface-visibility:hidden; -webkit-backface-visibility:hidden; display:flex; align-items:center; justify-content:center; }
+#flip-loader .front{ background:linear-gradient(160deg, var(--flip-hi) 0%, #9d86c6 46%, var(--flip-lo) 100%); box-shadow:inset 0 2px 1px rgba(255,255,255,.55), inset 0 -6px 10px rgba(40,22,70,.55), 0 6px 12px rgba(0,0,0,.45), 0 1px 0 var(--flip-edge); }
+#flip-loader .front svg{ width:42%; height:42%; opacity:.85; }
+#flip-loader .back{ transform:rotateX(180deg); line-height:1; filter:drop-shadow(0 4px 6px rgba(0,0,0,.5)); user-select:none; }
+#flip-loader .back .coin{ width:74%; height:74%; filter:drop-shadow(0 3px 4px rgba(0,0,0,.45)); }
+#flip-loader .cc-lib{ font:700 8px ui-sans-serif, system-ui, sans-serif; letter-spacing:1.5px; }
+#flip-loader .cc-val{ font:800 25px Georgia, "Times New Roman", serif; }
+#flip-loader .cc-date{ font:700 7px ui-sans-serif, system-ui, sans-serif; letter-spacing:1px; }
+#flip-loader .cc-star{ font:9px sans-serif; }
+#flip-loader [data-tag]{ position:absolute; left:0; right:0; bottom:26px; text-align:center; color:#b9a7e0; letter-spacing:.32em; font-size:12px; text-transform:uppercase; opacity:.6; mix-blend-mode:screen; pointer-events:none; transition:color .5s ease, opacity .5s ease; }
+#flip-loader [data-tag].ready{ color:#9be8c0; opacity:.85; }
+@media (prefers-reduced-motion: reduce){ #flip-loader .tile{ transition:none; } }

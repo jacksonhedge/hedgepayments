@@ -1,9 +1,10 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useScroll } from 'framer-motion'
 import styles from './chip.module.css'
 import { usePrefersReducedMotion } from './usePrefersReducedMotion'
+import FlipLoader from './loader/FlipLoader'
 import GlassDefs from './glass/GlassDefs'
 import GlassNav from './glass/GlassNav'
 import TubeJourney from './tube/TubeJourney'
@@ -16,9 +17,11 @@ export default function ChipAndAChair() {
   const ref = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
   const { scrollYProgress } = useScroll({ target: ref })
+  const [loading, setLoading] = useState(true)
 
   return (
     <main className={reduced ? styles.staticRoot : styles.cinemaRoot}>
+      {loading && <FlipLoader onDone={() => setLoading(false)} />}
       <GlassDefs />
       <a href="#claim" className={styles.skip}>Skip to free quarter →</a>
       <GlassNav />
