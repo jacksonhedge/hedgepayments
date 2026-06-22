@@ -1,6 +1,7 @@
 'use client'
 
-import { motion, type MotionValue } from 'framer-motion'
+import { useEffect } from 'react'
+import { motion, useMotionValue, useTransform, type MotionValue } from 'framer-motion'
 import styles from './chip.module.css'
 
 type Num = number | MotionValue<number>
@@ -22,6 +23,20 @@ function morphState(morph: Num): 'coin' | 'logo' {
 }
 
 export default function Quarter({ scale, rotate, x, y, morph, variant = 'silver' }: QuarterProps) {
+  // Always create a fallback MotionValue (rules-of-hooks: unconditional).
+  const fallback = useMotionValue(typeof morph === 'number' ? morph : 0)
+
+  // Keep fallback synced when morph is a plain number (static / reduced-motion).
+  useEffect(() => {
+    if (typeof morph === 'number') fallback.set(morph)
+  }, [morph, fallback])
+
+  // Select which MotionValue drives the crossfade — not a conditional hook call.
+  const morphMV = typeof morph === 'number' ? fallback : morph
+
+  // Coin face fades OUT as morph goes 0→1; logo fades IN.
+  const coinOpacity = useTransform(morphMV, (v) => 1 - v)
+
   return (
     <motion.div
       data-testid="quarter"
@@ -32,11 +47,11 @@ export default function Quarter({ scale, rotate, x, y, morph, variant = 'silver'
       role="img"
     >
       {/* Coin face — reuses the /chance silver-coin look; ridged edge via CSS. */}
-      <motion.div className={styles.coinFace} style={{ opacity: typeof morph === 'number' ? 1 - morph : undefined }}>
+      <motion.div className={styles.coinFace} style={{ opacity: coinOpacity }}>
         <span className={styles.coinDenom}>25¢</span>
       </motion.div>
       {/* Venue logo crossfade (Polymarket → Kalshi handled by parent swapping children later). */}
-      <motion.div className={styles.coinLogo} style={{ opacity: morph }} aria-hidden>
+      <motion.div className={styles.coinLogo} style={{ opacity: morphMV }} aria-hidden>
         <span className={styles.coinLogoText}>position</span>
       </motion.div>
     </motion.div>
