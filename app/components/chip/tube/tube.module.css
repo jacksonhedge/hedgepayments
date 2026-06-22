@@ -1,0 +1,59 @@
+/* Tall scroll section; the machine stays pinned while the coin rides the tube. */
+.section {
+  position: relative;
+  height: 460vh;
+  z-index: 2;
+}
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.stage {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+.svg {
+  height: 94vh;
+  width: auto;
+  max-width: 96vw;
+  overflow: visible;
+}
+
+/* The glass/metal pipe: a light outer wall, a dark channel, a bright inner rim. */
+.tubeWall,
+.tubeChannel,
+.tubeRim {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tubeWall { stroke: rgba(255, 255, 255, 0.10); stroke-width: 132; }
+.tubeRim { stroke: rgba(255, 255, 255, 0.16); stroke-width: 116; }
+.tubeChannel { stroke: rgba(8, 9, 16, 0.55); stroke-width: 104; }
+
+/* Glass info cards along the way. */
+.card {
+  position: absolute;
+  width: min(330px, 78vw);
+  z-index: 5;
+}
+.cardBody { padding: 18px 20px; text-align: left; }
+.cardTitle { font-size: clamp(18px, 2.2vw, 26px); font-weight: 800; line-height: 1.05; color: #fff; }
+.cardBodyText { margin-top: 8px; font-size: 15px; color: rgba(255, 255, 255, 0.82); }
+
+.topRight { top: 12vh; right: 6vw; }
+.left { top: 38vh; left: 6vw; }
+.right { top: 50vh; right: 6vw; }
+.bottomLeft { bottom: 12vh; left: 6vw; }
+
+@media (max-width: 720px) {
+  .topRight, .left, .right, .bottomLeft {
+    left: 50%; right: auto; transform: translateX(-50%);
+    top: auto; bottom: 8vh;
+  }
+}

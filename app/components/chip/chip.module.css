@@ -56,8 +56,9 @@
 }
 .skip:focus { transform: translate(-50%, 0); outline: 2px solid #f7b733; }
 .scrollContainer { display: block; }
+/* Hero + claim are normal full-height sections (the tube section does its own pinning). */
 .beat {
-  position: sticky; top: 0; height: 100vh; z-index: 2;
+  position: relative; height: 100vh; z-index: 2;
   display: grid; place-items: center; overflow: hidden;
 }
 /* Reduced-motion: sections stack normally, no pinning. */
@@ -91,6 +92,23 @@
   max-width: min(600px, 58vw);
 }
 .heroTitle { font-size: clamp(40px, 8vw, 104px); font-weight: 800; line-height: 0.98; letter-spacing: -0.02em; }
+/* Big hero quarter bleeding off the bottom-right, slow idle spin. */
+.heroCoin {
+  position: absolute;
+  z-index: 0;
+  right: -10vw;
+  bottom: -24vh;
+  width: 70vh;
+  height: 70vh;
+  background: url(/images/chip/quarter.png) center / cover no-repeat;
+  border-radius: 50%;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55));
+  animation: heroSpin 16s linear infinite;
+}
+@keyframes heroSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .heroCoin { animation: none; }
+}
 .scrollCue { margin-top: 40px; opacity: 0.6; font-size: 14px; letter-spacing: 0.2em; }
 .slot { width: 340px; max-width: 80vw; margin: 0 auto 24px; border-radius: 18px; }
 .slotBody { padding: 28px; }
