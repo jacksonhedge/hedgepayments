@@ -20,16 +20,21 @@ describe('ChipAndAChair', () => {
   })
   it('renders the static stacked layout under reduced motion', () => {
     // Force reduced-motion preference.
-    window.matchMedia = ((q: string) => ({
-      matches: q.includes('reduce'),
-      media: q, onchange: null,
-      addEventListener: () => {}, removeEventListener: () => {},
-      addListener: () => {}, removeListener: () => {}, dispatchEvent: () => false,
-    })) as unknown as typeof window.matchMedia
+    const original = window.matchMedia
+    try {
+      window.matchMedia = ((q: string) => ({
+        matches: q.includes('reduce'),
+        media: q, onchange: null,
+        addEventListener: () => {}, removeEventListener: () => {},
+        addListener: () => {}, removeListener: () => {}, dispatchEvent: () => false,
+      })) as unknown as typeof window.matchMedia
 
-    render(<ChipAndAChair />)
-    // Same content is present; the cinematic coin layers are not required.
-    expect(screen.getByText(/Take your free quarter/i)).toBeInTheDocument()
-    expect(screen.getByText(/how far a quarter can go/i)).toBeInTheDocument()
+      render(<ChipAndAChair />)
+      // Same content is present; the cinematic coin layers are not required.
+      expect(screen.getByText(/Take your free quarter/i)).toBeInTheDocument()
+      expect(screen.getByText(/how far a quarter can go/i)).toBeInTheDocument()
+    } finally {
+      window.matchMedia = original
+    }
   })
 })
