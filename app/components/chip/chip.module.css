@@ -110,8 +110,10 @@
 /* Big hero quarter: the wrap is scroll-positioned (rolls to centre + deposits into
    the tube); the inner coin spins counter-clockwise. */
 .heroCoinWrap {
-  position: absolute;
-  z-index: 0;
+  /* Fixed to the viewport so it rolls to screen-centre regardless of the hero
+     section scrolling away — then hands off to the tube coin at centre. */
+  position: fixed;
+  z-index: 1;
   left: 50%;
   top: 50%;
   width: 88vh;
@@ -126,7 +128,7 @@
   background: url(/images/chip/quarter.png) center / cover no-repeat;
   border-radius: 50%;
   filter: drop-shadow(0 26px 60px rgba(0, 0, 0, 0.35));
-  animation: heroSpinCcw 15s linear infinite;
+  animation: heroSpinCcw 80s linear infinite;
 }
 @keyframes heroSpinCcw { to { transform: rotate(-360deg); } }
 @media (prefers-reduced-motion: reduce) {

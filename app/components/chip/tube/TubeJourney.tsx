@@ -15,6 +15,7 @@ const TUBE =
 
 const VIEW_W = 1000
 const VIEW_H = 1360
+const CENTER_Y = VIEW_H / 2 // the coin stays on this centre line
 const COIN = 124 // coin diameter in viewBox units
 
 type Station = { key: string; at: number; pos: string; title: string; body: string }
@@ -31,19 +32,24 @@ export default function TubeJourney() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const pathRef = useRef<SVGPathElement>(null)
   const coinRef = useRef<SVGGElement>(null)
+  const tubeGroupRef = useRef<SVGGElement>(null)
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] })
 
-  // Move the coin along the tube as you scroll the section.
+  // The coin stays in the MIDDLE of the screen; the tube flows up past it (so the
+  // quarter starts in the middle of the tube and rides down through it).
   const place = (p: number) => {
     const path = pathRef.current
     const coin = coinRef.current
-    if (!path || !coin || typeof path.getTotalLength !== 'function') return
+    const group = tubeGroupRef.current
+    if (!path || !coin || !group || typeof path.getTotalLength !== 'function') return
     const len = path.getTotalLength()
     const t = Math.min(1, Math.max(0, (p - 0.04) / 0.9))
     const pt = path.getPointAtLength(t * len)
-    // counter-clockwise roll as it travels down the tube
-    coin.setAttribute('transform', `translate(${pt.x} ${pt.y}) rotate(${-t * 900})`)
+    // Pan the tube vertically so the coin's point sits at the centre line.
+    group.setAttribute('transform', `translate(0 ${CENTER_Y - pt.y})`)
+    // Coin pinned at centre-y, x follows the tube; very slow counter-clockwise roll.
+    coin.setAttribute('transform', `translate(${pt.x} ${CENTER_Y}) rotate(${-t * 150})`)
   }
   useEffect(() => { place(scrollYProgress.get()) }, []) // eslint-disable-line react-hooks/exhaustive-deps
   useMotionValueEvent(scrollYProgress, 'change', place)
@@ -53,11 +59,14 @@ export default function TubeJourney() {
       <div className={styles.sticky}>
         <div className={styles.stage}>
           <svg className={styles.svg} viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} aria-hidden>
-            <path d={TUBE} className={styles.tubeWall} />
-            <path d={TUBE} className={styles.tubeChannel} />
-            <path d={TUBE} className={styles.tubeRim} />
-            {/* invisible measuring path == the visible one */}
-            <path ref={pathRef} d={TUBE} fill="none" stroke="none" />
+            {/* The tube group pans vertically so the coin stays centred. */}
+            <g ref={tubeGroupRef}>
+              <path d={TUBE} className={styles.tubeWall} />
+              <path d={TUBE} className={styles.tubeChannel} />
+              <path d={TUBE} className={styles.tubeRim} />
+              {/* invisible measuring path == the visible one */}
+              <path ref={pathRef} d={TUBE} fill="none" stroke="none" />
+            </g>
             <g ref={coinRef}>
               <image
                 href="/images/chip/quarter.png"
