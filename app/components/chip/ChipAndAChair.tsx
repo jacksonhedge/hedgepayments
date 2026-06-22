@@ -5,6 +5,8 @@ import { useScroll } from 'framer-motion'
 import styles from './chip.module.css'
 import { usePrefersReducedMotion } from './usePrefersReducedMotion'
 import TravelingQuarter from './TravelingQuarter'
+import GlassDefs from './glass/GlassDefs'
+import GlassNav from './glass/GlassNav'
 import SunBeat from './beats/SunBeat'
 import DepositBeat from './beats/DepositBeat'
 import MorphBeat from './beats/MorphBeat'
@@ -21,7 +23,9 @@ export default function ChipAndAChair() {
 
   return (
     <main className={reduced ? styles.staticRoot : styles.cinemaRoot}>
+      <GlassDefs />
       <a href="#claim" className={styles.skip}>Skip to free quarter →</a>
+      <GlassNav />
 
       {/* Backdrop (z0) sits behind the coin (z1) which sits behind the beats + copy (z2). */}
       {!reduced && <div className={styles.pageBackdrop} aria-hidden />}

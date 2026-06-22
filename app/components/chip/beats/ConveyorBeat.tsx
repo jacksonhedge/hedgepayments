@@ -2,6 +2,7 @@
 import { useTransform } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { useBeatProgress } from '../useBeatProgress'
+import GlassPanel from '../glass/GlassPanel'
 import styles from '../chip.module.css'
 import type { BeatProps } from './types'
 
@@ -29,11 +30,15 @@ export default function ConveyorBeat({ progress, count, reduced }: BeatProps) {
       <div className={styles.beltViewport} aria-hidden={reduced ? undefined : true}>
         <motion.div className={styles.belt} style={reduced ? undefined : { x }}>
           {STATIONS.map((s, i) => (
-            <div key={i} className={`${styles.station} ${s.kind === 'table' ? styles.stationTable : styles.stationMarket}`}>
+            <GlassPanel
+              key={i}
+              className={`${styles.station} ${s.kind === 'table' ? styles.stationTable : styles.stationMarket}`}
+              contentClassName={styles.stationBody}
+            >
               <span className={styles.stationKind}>{s.kind === 'table' ? 'TABLE' : 'MARKET'}</span>
               <span className={styles.stationLabel}>{s.label}</span>
               <span className={styles.stationResult}>{s.result} · +${s.gain.toFixed(2)}</span>
-            </div>
+            </GlassPanel>
           ))}
         </motion.div>
       </div>

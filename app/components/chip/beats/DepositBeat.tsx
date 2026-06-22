@@ -1,4 +1,5 @@
 'use client'
+import GlassPanel from '../glass/GlassPanel'
 import styles from '../chip.module.css'
 import type { BeatProps } from './types'
 
@@ -8,10 +9,10 @@ export default function DepositBeat(_props: BeatProps) {
   return (
     <section className={styles.beat} aria-label="Deposit">
       <div className={styles.beatInner}>
-        <div className={styles.slot}>
+        <GlassPanel className={styles.slot} contentClassName={styles.slotBody}>
           <span className={styles.slotLabel}>DEPOSIT QUARTER</span>
           <span className={styles.slotMouth} aria-hidden />
-        </div>
+        </GlassPanel>
         <p className={styles.sub}>Insert coin to begin.</p>
       </div>
     </section>

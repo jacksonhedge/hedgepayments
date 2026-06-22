@@ -55,14 +55,19 @@ export default function TravelingQuarter({ progress }: TravelingQuarterProps) {
   })
 
   useEffect(() => {
-    if (!idle) return
-    // Slow, ambient full turn; loops seamlessly because 360° ≡ 0°.
-    const controls = animate(idleSpin, idleSpin.get() + 360, {
-      duration: 12,
-      ease: 'linear',
-      repeat: Infinity,
-      repeatType: 'loop',
-    })
+    if (idle) {
+      // Slow, ambient full turn; loops seamlessly because 360° ≡ 0°.
+      const controls = animate(idleSpin, idleSpin.get() + 360, {
+        duration: 12,
+        ease: 'linear',
+        repeat: Infinity,
+        repeatType: 'loop',
+      })
+      return () => controls.stop()
+    }
+    // Scrolling: unwind the idle offset so the journey rotation stays exact
+    // (upright at the hero + fill frames).
+    const controls = animate(idleSpin, 0, { duration: 0.45, ease: 'easeOut' })
     return () => controls.stop()
   }, [idle, idleSpin])
 

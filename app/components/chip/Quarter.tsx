@@ -48,10 +48,8 @@ export default function Quarter({ scale, rotate, x, y, morph, variant = 'silver'
       aria-label="A US quarter"
       role="img"
     >
-      {/* Coin face — reuses the /chance silver-coin look; ridged edge via CSS. */}
-      <motion.div className={styles.coinFace} style={{ opacity: coinOpacity }}>
-        <span className={styles.coinDenom}>25¢</span>
-      </motion.div>
+      {/* Coin face — photoreal quarter asset clipped to a circle. */}
+      <motion.div className={styles.coinFace} style={{ opacity: coinOpacity }} />
       {/* Venue logo crossfade (Polymarket → Kalshi handled by parent swapping children later). */}
       <motion.div className={styles.coinLogo} style={{ opacity: morphMV }} aria-hidden>
         <span className={styles.coinLogoText}>position</span>
