@@ -54,9 +54,11 @@
 /* ── Beat 0–2: sun backdrop, coin overlay, scroll cue, deposit slot ── */
 .sunBackdrop {
   position: absolute; inset: 0; background-size: cover; background-position: center;
-  opacity: 0.55;
+  opacity: 0.9;
 }
 .coinLayer { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+/* Beat 0: lift the headline to the upper third so the coin (the "sun") sits clear below it. */
+.sunInner { align-self: start; padding-top: 11vh; }
 .scrollCue { margin-top: 40px; opacity: 0.6; font-size: 14px; letter-spacing: 0.2em; }
 .slot {
   position: relative; width: 320px; max-width: 80vw; margin: 0 auto 24px;
