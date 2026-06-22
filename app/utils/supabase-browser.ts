@@ -15,8 +15,7 @@ export function getSupabaseBrowser() {
 }
 
 // Convenience alias for components that reference this directly.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const supabaseBrowser: any = new Proxy({} as ReturnType<typeof createClient>, {
+export const supabaseBrowser: ReturnType<typeof createClient> = new Proxy({} as ReturnType<typeof createClient>, {
   get(_target, prop) {
     return (getSupabaseBrowser() as any)[prop]
   },
