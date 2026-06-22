@@ -15,6 +15,18 @@
   --border: #dde1e5;
   --shadow: rgba(0, 0, 0, 0.1);
 
+  /* Old-Vegas palette — mirrors app/design/tokens.ts */
+  --cream: #fbf3db;
+  --ink: #1b1c22;
+  --red: #fa1007;
+  --cyan: #05abd0;
+  --orange: #f99a0b;
+  --sky: #b1edf9;
+  /* Liquid-glass defaults */
+  --glass-radius: 22px;
+  --glass-blur: 14px;
+  --glass-saturate: 180%;
+
   /* Dashboard Design System - Stripe-inspired with Hedge Green */
   --dashboard-primary-500: #2e7d32;
   --dashboard-primary-600: #1b5e20;

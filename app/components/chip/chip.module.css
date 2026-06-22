@@ -41,12 +41,12 @@
 /* "Old Vegas" palette: cream canvas + vintage-sign red / cyan / orange / sky. */
 .cinemaRoot, .staticRoot {
   position: relative;
-  --cream: #fbf3db;
-  --ink: #1b1c22;
-  --red: #fa1007;
-  --cyan: #05abd0;
-  --orange: #f99a0b;
-  --sky: #b1edf9;
+  --cream: var(--cream, #fbf3db);
+  --ink: var(--ink, #1b1c22);
+  --red: var(--red, #fa1007);
+  --cyan: var(--cyan, #05abd0);
+  --orange: var(--orange, #f99a0b);
+  --sky: var(--sky, #b1edf9);
   color: var(--ink);
   background: var(--cream);
 }
