@@ -39,6 +39,8 @@
     "packages/**/*",
     "docs/**/*",
     "supabase/**/*",
-    "mcp-server/**/*"
+    "mcp-server/**/*",
+    "vitest.config.ts",
+    "vitest.setup.ts"
   ]
 }
