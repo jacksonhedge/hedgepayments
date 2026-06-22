@@ -21,24 +21,26 @@ export interface TravelingQuarterProps {
  * Winnings ~.67–.83 · Claim ~.83–1.
  */
 export default function TravelingQuarter({ progress }: TravelingQuarterProps) {
-  const STOPS = [0, 0.05, 0.12, 0.16, 0.22, 0.3, 0.42, 0.62, 0.8, 1]
+  const STOPS = [0, 0.06, 0.12, 0.16, 0.22, 0.3, 0.42, 0.62, 0.8, 1]
 
-  // Settle as hero (scale 1) → fill the screen (3.2) → shrink to roll/deposit →
-  // small while riding above the later beats → present near full size at the end.
-  const scale = useTransform(progress, STOPS, [0.85, 1, 1, 3.2, 1, 0.8, 0.55, 0.55, 0.8, 0.8])
+  // Hero: a HUGE quarter bleeding off the bottom-right (Robinhood "globe" proportion).
+  // Then it sweeps to centre and scales up to fill the screen, shrinks to roll into the
+  // deposit slot, rides small above the later beats, and is presented at the end.
+  const scale = useTransform(progress, STOPS, [2.6, 2.8, 2.9, 3.4, 1, 0.8, 0.55, 0.55, 0.8, 0.8])
 
-  // Starts well below the fold (54vh), settles low-centre under the headline (9vh),
-  // centres to fill (0), then lifts into the upper-mid to ride above later content.
-  const y = useTransform(progress, STOPS, [
-    '54vh', '9vh', '9vh', '0vh', '4vh', '0vh', '-20vh', '-20vh', '-30vh', '-30vh',
+  // Off the right edge for the hero, swings to centre for the fill, rolls left to the slot.
+  const x = useTransform(progress, STOPS, [
+    '34vw', '30vw', '22vw', '0vw', '-10vw', '0vw', '0vw', '0vw', '0vw', '0vw',
   ])
 
-  // A small lateral roll toward the deposit slot, then back to centre.
-  const x = useTransform(progress, [0, 0.16, 0.22, 0.3, 1], ['0px', '0px', '-150px', '0px', '0px'])
+  // Off the bottom for the hero, centres to fill, then lifts to ride above later copy.
+  const y = useTransform(progress, STOPS, [
+    '44vh', '30vh', '18vh', '0vh', '6vh', '0vh', '-20vh', '-20vh', '-30vh', '-30vh',
+  ])
 
-  // A vigorous roll into the deposit slot, then it settles near-upright for the rest
-  // of the journey (so it doesn't read as spinning upside-down while it rides along).
-  const rotate = useTransform(progress, [0, 0.05, 0.22, 0.3, 1], [-30, 0, 320, 360, 372])
+  // Stays upright at the hero + fill-screen frames (face-up), spins once while rolling
+  // into the slot, then settles upright for the rest of the ride.
+  const rotate = useTransform(progress, [0, 0.06, 0.16, 0.22, 0.3, 1], [0, 0, 0, 200, 360, 360])
 
   // Stays a coin throughout — the copy carries "becomes a real position", not a logo swap.
   const morph = useTransform(progress, [0, 1], [0, 0])

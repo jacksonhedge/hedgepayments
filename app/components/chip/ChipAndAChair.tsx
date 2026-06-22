@@ -23,6 +23,9 @@ export default function ChipAndAChair() {
     <main className={reduced ? styles.staticRoot : styles.cinemaRoot}>
       <a href="#claim" className={styles.skip}>Skip to free quarter →</a>
 
+      {/* Backdrop (z0) sits behind the coin (z1) which sits behind the beats + copy (z2). */}
+      {!reduced && <div className={styles.pageBackdrop} aria-hidden />}
+
       {/* One quarter the visitor follows the whole way (cinema mode only). */}
       {!reduced && <TravelingQuarter progress={scrollYProgress} />}
 
