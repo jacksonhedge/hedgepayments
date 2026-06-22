@@ -32,9 +32,10 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.tubeWall { stroke: rgba(255, 255, 255, 0.10); stroke-width: 132; }
-.tubeRim { stroke: rgba(255, 255, 255, 0.16); stroke-width: 116; }
-.tubeChannel { stroke: rgba(8, 9, 16, 0.55); stroke-width: 104; }
+/* Vegas cyan glass pipe: light outer wall, translucent cyan channel, bright rim. */
+.tubeWall { stroke: rgba(5, 171, 208, 0.22); stroke-width: 168; }
+.tubeChannel { stroke: rgba(177, 237, 249, 0.5); stroke-width: 140; }
+.tubeRim { stroke: rgba(255, 255, 255, 0.7); stroke-width: 140; stroke-dasharray: 0; opacity: 0.0; }
 
 /* Glass info cards along the way. */
 .card {
@@ -43,8 +44,8 @@
   z-index: 5;
 }
 .cardBody { padding: 18px 20px; text-align: left; }
-.cardTitle { font-size: clamp(18px, 2.2vw, 26px); font-weight: 800; line-height: 1.05; color: #fff; }
-.cardBodyText { margin-top: 8px; font-size: 15px; color: rgba(255, 255, 255, 0.82); }
+.cardTitle { font-size: clamp(18px, 2.2vw, 26px); font-weight: 800; line-height: 1.05; color: #16171c; }
+.cardBodyText { margin-top: 8px; font-size: 15px; color: rgba(22, 23, 28, 0.72); }
 
 .topRight { top: 12vh; right: 6vw; }
 .left { top: 38vh; left: 6vw; }

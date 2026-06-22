@@ -38,14 +38,29 @@
 .coinLogoText { color: #e7e7ea; font-weight: 700; letter-spacing: 0.04em; }
 
 /* ── Layout: cinema scroll container + reduced-motion stacked layout ── */
-.cinemaRoot, .staticRoot { position: relative; color: #f4f4f5; background: #07070b; }
+/* "Old Vegas" palette: cream canvas + vintage-sign red / cyan / orange / sky. */
+.cinemaRoot, .staticRoot {
+  position: relative;
+  --cream: #fbf3db;
+  --ink: #1b1c22;
+  --red: #fa1007;
+  --cyan: #05abd0;
+  --orange: #f99a0b;
+  --sky: #b1edf9;
+  color: var(--ink);
+  background: var(--cream);
+}
 /* Fixed page backdrop sits BEHIND the travelling coin (which sits behind the copy):
    backdrop (z0) < coin (z1) < beats + text (z2). */
 .pageBackdrop {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  /* Cream canvas with soft Vegas-color light blooms in the corners. */
   background:
-    radial-gradient(70% 60% at 78% 82%, rgba(247, 183, 51, 0.14) 0%, rgba(124, 58, 6, 0.05) 34%, rgba(7, 7, 11, 0) 64%),
-    linear-gradient(180deg, #05060a 0%, #0a0b12 58%, #0d0e16 100%);
+    radial-gradient(46% 40% at 84% 16%, rgba(250, 16, 7, 0.16) 0%, rgba(250, 16, 7, 0) 60%),
+    radial-gradient(48% 42% at 12% 30%, rgba(5, 171, 208, 0.16) 0%, rgba(5, 171, 208, 0) 60%),
+    radial-gradient(54% 46% at 78% 84%, rgba(249, 154, 11, 0.18) 0%, rgba(249, 154, 11, 0) 62%),
+    radial-gradient(50% 44% at 22% 88%, rgba(177, 237, 249, 0.30) 0%, rgba(177, 237, 249, 0) 60%),
+    var(--cream);
 }
 /* Proper skip link: visually hidden until focused (no longer a persistent pill over the copy). */
 .skip {
@@ -92,20 +107,28 @@
   max-width: min(600px, 58vw);
 }
 .heroTitle { font-size: clamp(40px, 8vw, 104px); font-weight: 800; line-height: 0.98; letter-spacing: -0.02em; }
-/* Big hero quarter bleeding off the bottom-right, slow idle spin. */
-.heroCoin {
+/* Big hero quarter: the wrap is scroll-positioned (rolls to centre + deposits into
+   the tube); the inner coin spins counter-clockwise. */
+.heroCoinWrap {
   position: absolute;
   z-index: 0;
-  right: -10vw;
-  bottom: -24vh;
-  width: 70vh;
-  height: 70vh;
+  left: 50%;
+  top: 50%;
+  width: 88vh;
+  height: 88vh;
+  margin-left: -44vh;
+  margin-top: -44vh;
+  will-change: transform;
+}
+.heroCoin {
+  width: 100%;
+  height: 100%;
   background: url(/images/chip/quarter.png) center / cover no-repeat;
   border-radius: 50%;
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55));
-  animation: heroSpin 16s linear infinite;
+  filter: drop-shadow(0 26px 60px rgba(0, 0, 0, 0.35));
+  animation: heroSpinCcw 15s linear infinite;
 }
-@keyframes heroSpin { to { transform: rotate(360deg); } }
+@keyframes heroSpinCcw { to { transform: rotate(-360deg); } }
 @media (prefers-reduced-motion: reduce) {
   .heroCoin { animation: none; }
 }

@@ -15,7 +15,7 @@ const TUBE =
 
 const VIEW_W = 1000
 const VIEW_H = 1360
-const COIN = 96 // coin diameter in viewBox units
+const COIN = 124 // coin diameter in viewBox units
 
 type Station = { key: string; at: number; pos: string; title: string; body: string }
 
@@ -42,7 +42,8 @@ export default function TubeJourney() {
     const len = path.getTotalLength()
     const t = Math.min(1, Math.max(0, (p - 0.04) / 0.9))
     const pt = path.getPointAtLength(t * len)
-    coin.setAttribute('transform', `translate(${pt.x} ${pt.y}) rotate(${t * 900})`)
+    // counter-clockwise roll as it travels down the tube
+    coin.setAttribute('transform', `translate(${pt.x} ${pt.y}) rotate(${-t * 900})`)
   }
   useEffect(() => { place(scrollYProgress.get()) }, []) // eslint-disable-line react-hooks/exhaustive-deps
   useMotionValueEvent(scrollYProgress, 'change', place)
