@@ -29,7 +29,7 @@ export default function ChipAndAChair() {
         <MorphBeat progress={scrollYProgress} count={BEAT_COUNT} reduced={reduced} />
         <ConveyorBeat progress={scrollYProgress} count={BEAT_COUNT} reduced={reduced} />
         <WinningsBeat progress={scrollYProgress} count={BEAT_COUNT} reduced={reduced} />
-        <ClaimBeat reduced={reduced} />
+        <ClaimBeat />
       </div>
     </main>
   )

@@ -88,3 +88,4 @@
 .captureBtn { padding: 14px 16px; border-radius: 10px; border: 0; font-weight: 800; background: #f7b733; color: #1a1205; cursor: pointer; }
 .captureBtn:disabled { opacity: 0.6; cursor: default; }
 .reserved { margin-top: 24px; color: #4ade80; font-weight: 700; }
+.captureError { color: #f87171; font-size: 13px; margin-top: 4px; }

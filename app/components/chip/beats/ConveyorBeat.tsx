@@ -24,6 +24,8 @@ export default function ConveyorBeat({ progress, count, reduced }: BeatProps) {
       <div className={styles.beatInner}>
         <h2 className={styles.title}>A floor full of opportunities.</h2>
       </div>
+      {/* Cinema mode: belt is decorative (hidden from AT). Reduced-motion: belt is the only place
+          the seeded opportunities are shown, so it must be exposed to assistive technology. */}
       <div className={styles.beltViewport} aria-hidden={reduced ? undefined : true}>
         <motion.div className={styles.belt} style={reduced ? undefined : { x }}>
           {STATIONS.map((s, i) => (

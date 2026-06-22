@@ -2,15 +2,15 @@
 
 import { createElement, useEffect, useRef, useState } from 'react'
 import styles from '../chip.module.css'
-import type { ClaimBeatProps } from './types'
 
 type Phase = 'play' | 'capture' | 'done'
 
-export default function ClaimBeat(_props: ClaimBeatProps) {
+export default function ClaimBeat() {
   const hostRef = useRef<HTMLDivElement>(null)
   const [phase, setPhase] = useState<Phase>('play')
   const [email, setEmail] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(false)
 
   // Load the embed exactly as a merchant would — a single <script src>. (Mirrors app/chance/page.tsx.)
   useEffect(() => {
@@ -43,7 +43,14 @@ export default function ClaimBeat(_props: ClaimBeatProps) {
         // /api/subscribe requires a name; derive one from the email local-part.
         body: JSON.stringify({ name: email.split('@')[0] || 'Quarter Claim', email }),
       })
-      if (response.ok) setPhase('done')
+      if (response.ok) {
+        setError(false)
+        setPhase('done')
+      } else {
+        setError(true)
+      }
+    } catch {
+      setError(true)
     } finally {
       setSubmitting(false)
     }
@@ -74,6 +81,7 @@ export default function ClaimBeat(_props: ClaimBeatProps) {
             <button type="submit" disabled={submitting} className={styles.captureBtn}>
               {submitting ? 'Reserving…' : 'Reserve my quarter'}
             </button>
+            {error && <p className={styles.captureError}>Something went wrong — try again.</p>}
           </form>
         )}
 

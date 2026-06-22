@@ -8,7 +8,7 @@ describe('ClaimBeat', () => {
   })
 
   it('reveals the email-capture card after a chance:result', async () => {
-    const { container } = render(<ClaimBeat reduced={false} />)
+    const { container } = render(<ClaimBeat />)
     const host = container.querySelector('chance-checkout')!
     expect(host).toBeTruthy()
     // capture card hidden until a result fires
@@ -18,13 +18,19 @@ describe('ClaimBeat', () => {
   })
 
   it('posts to /api/subscribe and shows the reserved state on submit', async () => {
-    const { container } = render(<ClaimBeat reduced={false} />)
+    const { container } = render(<ClaimBeat />)
     const host = container.querySelector('chance-checkout')!
     host.dispatchEvent(new CustomEvent('chance:result', { detail: { won: true }, bubbles: true }))
     const input = await screen.findByPlaceholderText(/email/i)
     fireEvent.change(input, { target: { value: 'player@example.com' } })
     fireEvent.click(screen.getByRole('button', { name: /reserve|save|keep/i }))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('/api/subscribe', expect.objectContaining({ method: 'POST' })))
+    await waitFor(() => {
+      const [url, init] = (global.fetch as ReturnType<typeof vi.fn>).mock.calls[0]
+      expect(url).toBe('/api/subscribe')
+      expect(init).toMatchObject({ method: 'POST' })
+      const body = JSON.parse(init.body as string)
+      expect(body).toMatchObject({ email: 'player@example.com', name: expect.any(String) })
+    })
     expect(await screen.findByText(/reserved/i)).toBeInTheDocument()
   })
 })

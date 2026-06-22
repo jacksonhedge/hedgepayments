@@ -6,6 +6,3 @@ export interface BeatProps {
   reduced: boolean
 }
 
-export interface ClaimBeatProps {
-  reduced: boolean
-}
