@@ -20,7 +20,17 @@ export default function FlipLoader({ onDone }: { onDone?: () => void }) {
     const tag = root.querySelector<HTMLDivElement>('[data-tag]')!
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    const EMOJI = ['😀', '🙂', '😎', '😄', '🌸', '🌼', '🌺', '🌷', '✨', '💫', '⭐', '🌀', '💞', '❤️', '🧡', '💛', '💚', '💙', '💜', '🍀', '🔆', '🌈']
+    // Loading flicker = a mix of US coins (penny / nickel / dime / quarter). Built
+    // without SVG gradient IDs so the same markup can be reused across tiles freely.
+    const DENOMS = [
+      { v: '1¢', rim: '#7a4a1e', field: '#c0792e', hi: '#e6a85c', eng: '#5a3414' },  // penny (copper)
+      { v: '5¢', rim: '#5f6470', field: '#b9bdc8', hi: '#eef0f5', eng: '#474b55' },  // nickel
+      { v: '10¢', rim: '#5f6470', field: '#c3c7d2', hi: '#f2f4f8', eng: '#474b55' }, // dime
+      { v: '25¢', rim: '#565b6b', field: '#c3c7d2', hi: '#f3f4f8', eng: '#565b6b' }, // quarter
+    ]
+    const denomCoin = (d: (typeof DENOMS)[number]) =>
+      `<svg class="coin" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="48.5" fill="${d.rim}"/><circle cx="50" cy="50" r="47" fill="none" stroke="${d.hi}" stroke-width="3" stroke-dasharray="0.7 1.25" opacity="0.7"/><circle cx="50" cy="50" r="44" fill="${d.field}"/><circle cx="42" cy="38" r="22" fill="${d.hi}" opacity="0.32"/><text class="cc-val" x="50" y="59" text-anchor="middle" fill="${d.eng}">${d.v}</text></svg>`
+    const COINS = DENOMS.map(denomCoin)
     const AFREMOV = [188, 210, 232, 258, 284, 312, 340, 18, 38, 52, 98, 150]
     const SILVER = { hi: '#f3f4f8', mid: '#c3c7d2', lo: '#7e8290', eng: '#565b6b' }
     const hsl = (h: number, s: number, l: number) => `hsl(${h} ${s}% ${l}%)`
@@ -42,7 +52,7 @@ export default function FlipLoader({ onDone }: { onDone?: () => void }) {
     }
 
     type Tile = { tile: HTMLDivElement; back: HTMLDivElement; r: number; c: number; flipped: boolean; nextAt: number; dist: number }
-    let tiles: Tile[] = [], cols = 0, rows = 0, iconPx = 28, raf = 0
+    let tiles: Tile[] = [], cols = 0, rows = 0, raf = 0
     let state: 'idle' | 'loading' | 'resolving' | 'done' = 'idle'
     const rand = (a: number, b: number) => a + Math.random() * (b - a)
 
@@ -55,7 +65,6 @@ export default function FlipLoader({ onDone }: { onDone?: () => void }) {
       scene.style.gridTemplateRows = `repeat(${rows},1fr)`
       scene.innerHTML = ''
       tiles = []
-      iconPx = Math.round(Math.min(w / cols, h / rows) * 0.52)
       for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
         const cell = document.createElement('div'); cell.className = 'cell'
         const tile = document.createElement('div'); tile.className = 'tile'
@@ -79,8 +88,7 @@ export default function FlipLoader({ onDone }: { onDone?: () => void }) {
             if (t.flipped) { t.flipped = false; t.tile.classList.remove('flipped') }
             else {
               t.flipped = true; t.tile.classList.add('flipped')
-              t.back.style.fontSize = iconPx + 'px'
-              t.back.textContent = EMOJI[(Math.random() * EMOJI.length) | 0]
+              t.back.innerHTML = COINS[(Math.random() * COINS.length) | 0]
             }
             scheduleTile(t, now)
           }
