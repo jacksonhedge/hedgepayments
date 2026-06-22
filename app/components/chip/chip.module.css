@@ -50,3 +50,18 @@
 .beatInner { text-align: center; max-width: 880px; padding: 0 24px; }
 .title { font-size: clamp(28px, 6vw, 72px); font-weight: 800; line-height: 1.02; }
 .sub { font-size: clamp(16px, 2.4vw, 24px); opacity: 0.8; margin-top: 16px; }
+
+/* ── Beat 0–2: sun backdrop, coin overlay, scroll cue, deposit slot ── */
+.sunBackdrop {
+  position: absolute; inset: 0; background-size: cover; background-position: center;
+  opacity: 0.55;
+}
+.coinLayer { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.scrollCue { margin-top: 40px; opacity: 0.6; font-size: 14px; letter-spacing: 0.2em; }
+.slot {
+  position: relative; width: 320px; max-width: 80vw; margin: 0 auto 24px;
+  padding: 28px; border-radius: 16px; background: #14141c;
+  box-shadow: inset 0 0 0 2px #2a2a3a, 0 20px 60px rgba(0,0,0,0.6);
+}
+.slotLabel { display: block; font-weight: 800; letter-spacing: 0.12em; color: #f7b733; }
+.slotMouth { display: block; height: 14px; margin-top: 16px; border-radius: 8px; background: #050508; box-shadow: inset 0 2px 6px rgba(0,0,0,0.8); }
