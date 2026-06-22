@@ -5,12 +5,14 @@ import { motion, useMotionValue, useTransform, type MotionValue } from 'framer-m
 import styles from './chip.module.css'
 
 type Num = number | MotionValue<number>
+// Translate props may carry CSS units (px/vh), so they also accept string motion values.
+type Len = number | string | MotionValue<number> | MotionValue<string>
 
 export interface QuarterProps {
   scale: Num
   rotate: Num
-  x: Num
-  y: Num
+  x: Len
+  y: Len
   /** 0 = silver coin, 1 = venue logo. */
   morph: Num
   variant?: 'sun' | 'silver'

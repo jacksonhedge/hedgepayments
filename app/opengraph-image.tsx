@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
-export const alt = 'A Chip and a Chair — It only takes a quarter.';
+export const alt = 'Fun Payments — It only takes a quarter.';
 export const size = {
   width: 1200,
   height: 630,
@@ -67,7 +67,7 @@ export default async function Image() {
             maxWidth: '95%',
           }}
         >
-          A Chip and a Chair.
+          Fun Payments.
         </div>
 
         <div

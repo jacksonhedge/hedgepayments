@@ -49,17 +49,27 @@
 }
 /* Reduced-motion: sections stack normally, no pinning. */
 .scrollContainer[data-reduced] .beat { position: relative; height: auto; min-height: 60vh; padding: 80px 0; }
-.beatInner { text-align: center; max-width: 880px; padding: 0 24px; }
+.beatInner { text-align: center; max-width: 880px; padding: 0 24px; position: relative; z-index: 1; }
 .title { font-size: clamp(28px, 6vw, 72px); font-weight: 800; line-height: 1.02; }
 .sub { font-size: clamp(16px, 2.4vw, 24px); opacity: 0.8; margin-top: 16px; }
 
-/* ── Beat 0–2: sun backdrop, coin overlay, scroll cue, deposit slot ── */
-.sunBackdrop {
-  position: absolute; inset: 0; background-size: cover; background-position: center;
-  opacity: 0.9;
+/* ── Hero backdrop (no photo) + the single traveling quarter ── */
+/* Clean dark fintech gradient with a soft warm glow low-centre, behind where the
+   coin settles. Replaces the old ocean/sunset photo. */
+.heroBackdrop {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(120% 85% at 50% 74%, rgba(247, 183, 51, 0.20) 0%, rgba(124, 58, 6, 0.07) 32%, rgba(7, 7, 11, 0) 62%),
+    linear-gradient(180deg, #05060a 0%, #0a0b12 55%, #0e0f18 100%);
+}
+/* The one quarter the visitor follows — fixed to the viewport, driven by scroll,
+   floating above the beat backdrops while the beats scroll underneath. */
+.travelLayer {
+  position: fixed; inset: 0; display: grid; place-items: center;
+  pointer-events: none; z-index: 4;
 }
 .coinLayer { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
-/* Beat 0: lift the headline to the upper third so the coin (the "sun") sits clear below it. */
+/* Hero: lift the headline to the upper third so the settled coin sits clear below it. */
 .sunInner { align-self: start; padding-top: 11vh; }
 .scrollCue { margin-top: 40px; opacity: 0.6; font-size: 14px; letter-spacing: 0.2em; }
 .slot {
@@ -71,7 +81,8 @@
 .slotMouth { display: block; height: 14px; margin-top: 16px; border-radius: 8px; background: #050508; box-shadow: inset 0 2px 6px rgba(0,0,0,0.8); }
 
 /* ── Beat 3–5: morph, conveyor belt, winnings tally ── */
-.beltViewport { position: absolute; inset: 0; display: grid; align-content: center; overflow: hidden; }
+/* Belt rides low so it clears the centred heading and the coin riding above them. */
+.beltViewport { position: absolute; inset: 0; display: grid; align-content: end; padding-bottom: 10vh; overflow: hidden; }
 .belt { display: flex; gap: 24px; padding: 0 24px; will-change: transform; }
 .station {
   flex: 0 0 280px; padding: 20px; border-radius: 14px; text-align: left;

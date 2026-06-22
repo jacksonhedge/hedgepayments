@@ -4,7 +4,7 @@ import ChipAndAChair from '../ChipAndAChair'
 describe('ChipAndAChair', () => {
   it('renders the hero headline and sub server-side', () => {
     render(<ChipAndAChair />)
-    expect(screen.getByText(/A Chip and a Chair/i)).toBeInTheDocument()
+    expect(screen.getByText(/Fun Payments/i)).toBeInTheDocument()
     expect(screen.getByText(/It only takes a quarter/i)).toBeInTheDocument()
   })
   it('renders a skip link to the claim beat', () => {

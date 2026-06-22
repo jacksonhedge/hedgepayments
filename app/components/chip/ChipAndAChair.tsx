@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { useScroll } from 'framer-motion'
 import styles from './chip.module.css'
 import { usePrefersReducedMotion } from './usePrefersReducedMotion'
+import TravelingQuarter from './TravelingQuarter'
 import SunBeat from './beats/SunBeat'
 import DepositBeat from './beats/DepositBeat'
 import MorphBeat from './beats/MorphBeat'
@@ -21,6 +22,9 @@ export default function ChipAndAChair() {
   return (
     <main className={reduced ? styles.staticRoot : styles.cinemaRoot}>
       <a href="#claim" className={styles.skip}>Skip to free quarter →</a>
+
+      {/* One quarter the visitor follows the whole way (cinema mode only). */}
+      {!reduced && <TravelingQuarter progress={scrollYProgress} />}
 
       {/* Tall scroll container; beats are sticky in cinema mode, stacked in reduced mode. */}
       <div ref={ref} className={styles.scrollContainer} data-reduced={reduced || undefined}>
