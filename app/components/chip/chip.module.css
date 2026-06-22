@@ -79,3 +79,12 @@
 .stationLabel { display: block; margin: 8px 0; font-weight: 700; }
 .stationResult { color: #4ade80; font-weight: 700; }
 .payout { font-size: clamp(48px, 12vw, 140px); font-weight: 900; color: #f7b733; margin-top: 8px; }
+
+/* ── Beat 6: ClaimBeat — widget + email capture ── */
+.widgetHost { margin: 32px auto 0; max-width: 480px; }
+.captureCard { margin: 28px auto 0; max-width: 420px; display: grid; gap: 12px; }
+.captureLead { font-weight: 700; }
+.captureInput { padding: 14px 16px; border-radius: 10px; border: 1px solid #2a2a3a; background: #11111a; color: #fff; }
+.captureBtn { padding: 14px 16px; border-radius: 10px; border: 0; font-weight: 800; background: #f7b733; color: #1a1205; cursor: pointer; }
+.captureBtn:disabled { opacity: 0.6; cursor: default; }
+.reserved { margin-top: 24px; color: #4ade80; font-weight: 700; }
