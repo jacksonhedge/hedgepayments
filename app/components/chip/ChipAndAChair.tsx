@@ -11,6 +11,7 @@ import TubeJourney from './tube/TubeJourney'
 import SunBeat from './beats/SunBeat'
 import ClaimBeat from './beats/ClaimBeat'
 import UsersSection from './sections/UsersSection'
+import BusinessesSection from './sections/BusinessesSection'
 
 export const BEAT_COUNT = 7
 
@@ -35,6 +36,7 @@ export default function ChipAndAChair() {
         <SunBeat progress={scrollYProgress} count={BEAT_COUNT} reduced={reduced} />
         <TubeJourney />
         <UsersSection />
+        <BusinessesSection />
         <ClaimBeat />
       </div>
     </main>
