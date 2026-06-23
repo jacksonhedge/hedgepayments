@@ -71,6 +71,9 @@
   color: #16171c;
   text-decoration: none;
   padding-right: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 .navLinks {
   display: flex;
