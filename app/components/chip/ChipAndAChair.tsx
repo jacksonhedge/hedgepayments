@@ -10,6 +10,7 @@ import GlassNav from './glass/GlassNav'
 import TubeJourney from './tube/TubeJourney'
 import SunBeat from './beats/SunBeat'
 import ClaimBeat from './beats/ClaimBeat'
+import UsersSection from './sections/UsersSection'
 
 export const BEAT_COUNT = 7
 
@@ -33,6 +34,7 @@ export default function ChipAndAChair() {
       <div ref={ref} className={styles.scrollContainer} data-reduced={reduced || undefined}>
         <SunBeat progress={scrollYProgress} count={BEAT_COUNT} reduced={reduced} />
         <TubeJourney />
+        <UsersSection />
         <ClaimBeat />
       </div>
     </main>
