@@ -11,12 +11,12 @@ export default function GlassDefs() {
     <svg aria-hidden width="0" height="0" style={{ position: 'absolute', pointerEvents: 'none' }}>
       <defs>
         <filter id="liquid-glass" x="-35%" y="-35%" width="170%" height="170%" colorInterpolationFilters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.005 0.008" numOctaves="2" seed="17" result="noise" />
-          <feGaussianBlur in="noise" stdDeviation="2.5" result="softNoise" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="2" seed="17" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="2" result="softNoise" />
           <feDisplacementMap
             in="SourceGraphic"
             in2="softNoise"
-            scale="14"
+            scale="22"
             xChannelSelector="R"
             yChannelSelector="G"
           />
