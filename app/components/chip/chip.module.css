@@ -131,6 +131,15 @@
 @media (prefers-reduced-motion: reduce) {
   .heroCoin { animation: none; }
 }
+@media (max-width: 720px) {
+  .heroCoinWrap {
+    width: 58vh;
+    height: 58vh;
+    margin-left: -29vh;
+    margin-top: -29vh;
+    top: 64%;
+  }
+}
 .scrollCue { margin-top: 40px; opacity: 0.6; font-size: 14px; letter-spacing: 0.2em; }
 .slot { width: 340px; max-width: 80vw; margin: 0 auto 24px; border-radius: 18px; }
 .slotBody { padding: 28px; }

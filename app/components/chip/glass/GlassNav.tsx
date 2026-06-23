@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import GlassPanel from './GlassPanel'
 import styles from './glass.module.css'
 import CoinLogo from '../brand/CoinLogo'
@@ -25,7 +26,16 @@ const TRAIL_LINKS = [
   { label: 'Company', href: '/contact' },
 ]
 
+// Flat list of all nav destinations for the mobile menu
+const MOBILE_LINKS = [
+  ...TOP_LINKS,
+  ...GROUPS.flatMap((g) => g.items),
+  ...TRAIL_LINKS,
+]
+
 export default function GlassNav() {
+  const [open, setOpen] = useState(false)
+
   return (
     <nav className={styles.nav} aria-label="Primary">
       <GlassPanel className={styles.navShell} contentClassName={styles.navBar} reactive>
@@ -50,8 +60,39 @@ export default function GlassNav() {
             <a key={l.label} className={styles.navTrigger} href={l.href}>{l.label}</a>
           ))}
         </div>
+        <button
+          type="button"
+          className={styles.navToggle}
+          aria-label="Menu"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          onClick={() => setOpen((v) => !v)}
+        >
+          {open ? '✕' : '☰'}
+        </button>
         <a className={styles.navCta} href="#claim">Get a free quarter</a>
       </GlassPanel>
+      {open && (
+        <GlassPanel id="mobile-menu" className={styles.mobileMenu} as="div">
+          {MOBILE_LINKS.map((l) => (
+            <a
+              key={l.label}
+              className={styles.mobileMenuLink}
+              href={l.href}
+              onClick={() => setOpen(false)}
+            >
+              {l.label}
+            </a>
+          ))}
+          <a
+            className={styles.mobileMenuCta}
+            href="#claim"
+            onClick={() => setOpen(false)}
+          >
+            Get a free quarter
+          </a>
+        </GlassPanel>
+      )}
     </nav>
   )
 }
