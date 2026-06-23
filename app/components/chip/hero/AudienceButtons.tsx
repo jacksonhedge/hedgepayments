@@ -1,5 +1,4 @@
 'use client'
-import { useRef } from 'react'
 import styles from '../chip.module.css'
 import { usePrefersReducedMotion } from '../usePrefersReducedMotion'
 
