@@ -28,7 +28,7 @@ export default function BusinessesSection() {
             <a className={styles.devLink} href="/docs">Read the docs →</a>
           </div>
           <GlassPanel className={styles.code} reactive contentClassName={styles.codeBody}>
-            <pre className={styles.pre}><code>{SNIPPET}</code></pre>
+            <pre className={styles.pre} aria-label="Chance embed snippet"><code>{SNIPPET}</code></pre>
           </GlassPanel>
         </div>
 
