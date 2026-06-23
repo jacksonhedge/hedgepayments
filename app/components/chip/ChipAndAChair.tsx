@@ -5,7 +5,6 @@ import { useScroll } from 'framer-motion'
 import styles from './chip.module.css'
 import { usePrefersReducedMotion } from './usePrefersReducedMotion'
 import FlipLoader from './loader/FlipLoader'
-import GlassDefs from './glass/GlassDefs'
 import GlassNav from './glass/GlassNav'
 import TubeJourney from './tube/TubeJourney'
 import SunBeat from './beats/SunBeat'
@@ -24,7 +23,6 @@ export default function ChipAndAChair() {
   return (
     <main className={reduced ? styles.staticRoot : styles.cinemaRoot}>
       {loading && <FlipLoader onDone={() => setLoading(false)} />}
-      <GlassDefs />
       <a href="#claim" className={styles.skip}>Skip to free quarter →</a>
       <GlassNav />
 
