@@ -1,7 +1,9 @@
 'use client'
 
+import { useRef } from 'react'
 import type { ElementType, ReactNode } from 'react'
 import styles from './glass.module.css'
+import { useGlassPointer } from './useGlassPointer'
 
 interface GlassPanelProps {
   children: ReactNode
@@ -10,6 +12,8 @@ interface GlassPanelProps {
   contentClassName?: string
   /** Render as a different element (e.g. 'nav', 'button', 'li'). */
   as?: ElementType
+  /** Enable cursor-reactive specular sheen (writes --gx/--gy on pointermove). */
+  reactive?: boolean
   [key: string]: unknown
 }
 
@@ -25,10 +29,13 @@ export default function GlassPanel({
   className = '',
   contentClassName = '',
   as: Tag = 'div',
+  reactive = false,
   ...rest
 }: GlassPanelProps) {
+  const ref = useRef<HTMLElement>(null)
+  useGlassPointer(reactive ? ref : { current: null })
   return (
-    <Tag className={`${styles.glass} ${className}`} {...rest}>
+    <Tag ref={ref} className={`${styles.glass} ${className}`} {...rest}>
       <span className={styles.glassFilter} aria-hidden />
       <span className={styles.glassTint} aria-hidden />
       <span className={styles.glassEdge} aria-hidden />

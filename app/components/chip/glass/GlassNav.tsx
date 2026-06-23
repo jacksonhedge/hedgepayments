@@ -33,7 +33,7 @@ const GROUPS: NavGroup[] = [
 export default function GlassNav() {
   return (
     <nav className={styles.nav} aria-label="Primary">
-      <GlassPanel className={styles.navShell} contentClassName={styles.navBar}>
+      <GlassPanel className={styles.navShell} contentClassName={styles.navBar} reactive>
         <a className={styles.brand} href="/">Hedge</a>
         <div className={styles.navLinks}>
           {GROUPS.map((g) => (
