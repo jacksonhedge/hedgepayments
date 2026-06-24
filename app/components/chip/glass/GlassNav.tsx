@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import GlassPanel from './GlassPanel'
 import styles from './glass.module.css'
 import CoinLogo from '../brand/CoinLogo'
@@ -35,21 +35,48 @@ const MOBILE_LINKS = [
 
 export default function GlassNav() {
   const [open, setOpen] = useState(false)
+  // Which desktop dropdown group is open. JS-controlled (not pure CSS :hover) so a
+  // small close-delay forgives the cursor crossing the gap to the menu items.
+  const [openGroup, setOpenGroup] = useState<string | null>(null)
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const openNow = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    setOpenGroup(label)
+  }
+  const closeSoon = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    closeTimer.current = setTimeout(() => setOpenGroup(null), 180)
+  }
 
   return (
     <nav className={styles.nav} aria-label="Primary">
-      <GlassPanel className={styles.navShell} contentClassName={styles.navBar} reactive>
+      <GlassPanel className={styles.navShell} contentClassName={styles.navBar}>
         <a className={styles.brand} href="/"><CoinLogo /> Hedge</a>
         <div className={styles.navLinks}>
           {TOP_LINKS.map((l) => (
             <a key={l.label} className={styles.navTrigger} href={l.href}>{l.label}</a>
           ))}
           {GROUPS.map((g) => (
-            <div key={g.label} className={styles.navItem}>
-              <button type="button" className={styles.navTrigger} aria-haspopup="true">
+            <div
+              key={g.label}
+              className={styles.navItem}
+              onMouseEnter={() => openNow(g.label)}
+              onMouseLeave={closeSoon}
+            >
+              <button
+                type="button"
+                className={styles.navTrigger}
+                aria-haspopup="true"
+                aria-expanded={openGroup === g.label}
+                onClick={() => setOpenGroup((o) => (o === g.label ? null : g.label))}
+              >
                 {g.label} <span className={styles.chev} aria-hidden>▾</span>
               </button>
-              <GlassPanel className={styles.navMenu} as="div">
+              <GlassPanel
+                className={`${styles.navMenu} ${openGroup === g.label ? styles.navMenuOpen : ''}`}
+                as="div"
+              >
                 {g.items.map((it) => (
                   <a key={it.label} className={styles.navMenuLink} href={it.href}>{it.label}</a>
                 ))}

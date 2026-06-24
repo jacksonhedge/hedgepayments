@@ -88,7 +88,18 @@
   visibility: hidden;
   transition: opacity 0.16s ease, transform 0.16s ease;
 }
-.navItem:hover .navMenu,
+/* Invisible hover bridge spanning the 12px gap between the trigger and the menu,
+   so moving the cursor down onto the items keeps .navItem:hover true (the menu is
+   a descendant of .navItem) instead of closing in the dead zone. */
+.navMenu::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 0;
+  right: 0;
+  height: 18px;
+}
+.navMenuOpen,
 .navItem:focus-within .navMenu {
   opacity: 1;
   visibility: visible;
