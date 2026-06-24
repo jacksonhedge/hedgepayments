@@ -2,6 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  // ESM-only liquid-glass engine — let Next transpile it.
+  transpilePackages: ['@samasante/liquid-glass'],
   images: {
     unoptimized: true
   },

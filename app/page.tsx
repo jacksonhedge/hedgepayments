@@ -1,6 +1,6 @@
-import ArcadeLanding from './components/ArcadeLanding'
+import ChipAndAChair from './components/chip/ChipAndAChair'
 
-// Previous landing kept at ./components/NewLandingPage for fallback.
+// Previous arcade landing retired to /classic.
 export default function Home() {
-  return <ArcadeLanding />
+  return <ChipAndAChair />
 }

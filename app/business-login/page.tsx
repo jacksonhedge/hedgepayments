@@ -3,9 +3,9 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { createClientComponentClient } from '@/app/utils/supabase-client'
-import styles from './page.module.css'
+import AuthShell from '../components/auth/AuthShell'
+import styles from '../components/auth/auth.module.css'
 
 export default function BusinessLogin() {
   const router = useRouter()
@@ -74,98 +74,36 @@ export default function BusinessLogin() {
   }
 
   return (
-    <div className={styles.root}>
-      <div className={styles.grid} aria-hidden />
-      <div className={styles.scanlines} aria-hidden />
-
-      <nav className={styles.nav}>
-        <Link href="/" className={styles.logo}>
-          HEDGE
-        </Link>
-        <Link href="/get-started" className={styles.navCta}>
-          Insert Coin ▸
-        </Link>
-      </nav>
-
-      <div className={styles.cardWrap}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          style={{ width: '100%', maxWidth: 420 }}
-        >
-          <div className={styles.card}>
-            <div className={styles.eyebrow}>● Merchant login</div>
-            <h1 className={styles.title}>Welcome back</h1>
-            <p className={styles.sub}>Log in to your Hedge Payments dashboard.</p>
-
-            {loginError && <div className={styles.error}>{loginError}</div>}
-
-            <form onSubmit={handleSubmit} className={styles.form}>
-              <div>
-                <label className={styles.label}>Email address</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`${styles.input} ${errors.email ? styles.inputErr : ''}`}
-                  placeholder="you@company.com"
-                />
-                {errors.email && <span className={styles.fieldErr}>{errors.email}</span>}
-              </div>
-
-              <div>
-                <label className={styles.label}>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className={`${styles.input} ${errors.password ? styles.inputErr : ''}`}
-                  placeholder="••••••••"
-                />
-                {errors.password && <span className={styles.fieldErr}>{errors.password}</span>}
-              </div>
-
-              <div className={styles.row}>
-                <label className={styles.remember}>
-                  <input
-                    type="checkbox"
-                    name="rememberMe"
-                    checked={formData.rememberMe}
-                    onChange={handleChange}
-                  />
-                  Remember me
-                </label>
-                <Link href="/forgot-password" className={styles.link}>
-                  Forgot password?
-                </Link>
-              </div>
-
-              <motion.button
-                type="submit"
-                disabled={isLoading}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-                className={styles.submit}
-              >
-                {isLoading ? 'Logging in…' : 'Log in →'}
-              </motion.button>
-            </form>
-
-            <div className={styles.foot}>
-              New here?{' '}
-              <Link href="/get-started" className={styles.link}>
-                Start free
-              </Link>
-            </div>
-            <Link href="/" className={styles.back}>
-              ← Back to home
-            </Link>
-          </div>
-        </motion.div>
-      </div>
-    </div>
+    <AuthShell
+      eyebrow="● Merchant login"
+      title="Welcome back"
+      subtitle="Log in to your Hedge Payments dashboard."
+      footer={<>New here? <Link href="/get-started" className={styles.link}>Start free</Link></>}
+    >
+      {loginError && <div className={styles.error}>{loginError}</div>}
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.field}>
+          <label className={styles.label}>Email address</label>
+          <input type="email" name="email" value={formData.email} onChange={handleChange}
+            className={`${styles.input} ${errors.email ? styles.inputErr : ''}`} placeholder="you@company.com" />
+          {errors.email && <span className={styles.fieldErr}>{errors.email}</span>}
+        </div>
+        <div className={styles.field}>
+          <label className={styles.label}>Password</label>
+          <input type="password" name="password" value={formData.password} onChange={handleChange}
+            className={`${styles.input} ${errors.password ? styles.inputErr : ''}`} placeholder="••••••••" />
+          {errors.password && <span className={styles.fieldErr}>{errors.password}</span>}
+        </div>
+        <div className={styles.row}>
+          <label className={styles.remember}>
+            <input type="checkbox" name="rememberMe" checked={formData.rememberMe} onChange={handleChange} /> Remember me
+          </label>
+          <Link href="/forgot-password" className={styles.link}>Forgot password?</Link>
+        </div>
+        <button type="submit" disabled={isLoading} className={styles.submit}>
+          {isLoading ? 'Logging in…' : 'Log in →'}
+        </button>
+      </form>
+    </AuthShell>
   )
 }

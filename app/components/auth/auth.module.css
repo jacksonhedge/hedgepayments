@@ -1,0 +1,53 @@
+/* app/components/auth/auth.module.css */
+.root {
+  position: relative; min-height: 100vh; background: var(--cream, #fbf3db); color: var(--ink, #1b1c22);
+  display: grid; place-items: center; padding: 88px 20px 48px; overflow: hidden;
+}
+.blooms {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(42% 38% at 84% 14%, rgba(5, 171, 208, 0.16) 0%, rgba(5, 171, 208, 0) 60%),
+    radial-gradient(46% 40% at 14% 86%, rgba(249, 154, 11, 0.18) 0%, rgba(249, 154, 11, 0) 62%);
+}
+.brand {
+  position: fixed; top: 26px; left: 28px; z-index: 3; display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 800; font-size: 18px; color: var(--ink); text-decoration: none;
+}
+.cardWrap { position: relative; z-index: 1; width: 100%; max-width: 420px; }
+.card {
+  position: relative; border-radius: 22px; padding: 36px 32px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,1), inset 0 0 0 1px rgba(255,255,255,0.5), 0 30px 60px rgba(20,20,30,0.14);
+}
+.eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cyan, #05abd0); }
+.title { font-size: 28px; font-weight: 800; letter-spacing: -0.01em; margin-top: 6px; }
+.subtitle { font-size: 15px; opacity: 0.7; margin-top: 8px; }
+.form { display: grid; gap: 16px; margin-top: 26px; }
+.field { display: grid; gap: 7px; }
+.label { font-size: 13px; font-weight: 600; opacity: 0.85; }
+.input {
+  width: 100%; padding: 12px 14px; border-radius: 10px; font-size: 15px; color: var(--ink);
+  background: rgba(255,255,255,0.85); border: 1px solid rgba(27,28,34,0.16); transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+.input::placeholder { color: rgba(27,28,34,0.4); }
+.input:focus { outline: none; border-color: var(--cyan, #05abd0); box-shadow: 0 0 0 3px rgba(5,171,208,0.18); }
+.inputErr { border-color: var(--red, #fa1007); }
+.fieldErr { color: var(--red, #fa1007); font-size: 12px; }
+.row { display: flex; align-items: center; justify-content: space-between; font-size: 14px; }
+.remember { display: inline-flex; align-items: center; gap: 8px; opacity: 0.85; }
+.link { color: var(--cyan, #05abd0); text-decoration: none; font-weight: 600; }
+.link:hover { text-decoration: underline; }
+.submit {
+  margin-top: 4px; width: 100%; padding: 13px 16px; border: 0; border-radius: 10px; cursor: pointer;
+  font-weight: 800; font-size: 15px; color: #2a1500; background: var(--orange, #f99a0b);
+  box-shadow: 0 8px 22px rgba(249,154,11,0.4); transition: background 0.15s ease, transform 0.12s ease;
+}
+.submit:hover { background: #ffae2e; }
+.submit:active { transform: scale(0.99); }
+.submit:disabled { opacity: 0.6; cursor: default; }
+.error { margin-top: 18px; padding: 11px 14px; border-radius: 10px; font-size: 14px; color: var(--red, #fa1007); background: rgba(250,16,7,0.08); border: 1px solid rgba(250,16,7,0.2); }
+.belowCard { text-align: center; margin-top: 18px; font-size: 14px; opacity: 0.85; }
+.back { display: block; text-align: center; margin-top: 14px; font-size: 13px; opacity: 0.6; color: var(--ink); text-decoration: none; }
+.back:hover { opacity: 0.9; }
