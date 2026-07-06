@@ -61,7 +61,7 @@ function FlipCoin() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-5 select-none">
+    <div className="flex w-36 md:w-44 flex-col items-center gap-5 select-none">
       <div className="relative" style={{ perspective: '900px' }}>
         {/* glow lives on a sibling — a filter on the coin itself would flatten preserve-3d */}
         <div
@@ -75,25 +75,26 @@ function FlipCoin() {
         <button
           onClick={flip}
           aria-label="Flip the coin"
-          className="relative block h-36 w-36 md:h-44 md:w-44 rounded-full focus:outline-none focus-visible:ring-2"
+          className="relative block h-32 w-32 md:h-36 md:w-36 rounded-full focus:outline-none focus-visible:ring-2"
           style={{
             transformStyle: 'preserve-3d',
             transition: 'transform 1.25s cubic-bezier(0.2, 0.7, 0.25, 1)',
             transform: `rotateY(${spins * 180}deg)`,
           }}
         >
-          {/* front — HEDGE */}
+          {/* front — Chance */}
           <span
-            className="absolute inset-0 flex items-center justify-center rounded-full font-serif text-xl md:text-2xl"
+            className="absolute inset-0 flex items-center justify-center rounded-full text-xl md:text-2xl"
             style={{
               backfaceVisibility: 'hidden',
               background: `radial-gradient(circle at 35% 30%, #f6e9c5, ${CREAM} 45%, #d8cba2)`,
               color: INK,
               border: '3px solid rgba(11,13,16,0.25)',
               boxShadow: 'inset 0 -6px 14px rgba(0,0,0,0.18)',
+              fontFamily: 'var(--font-script), cursive',
             }}
           >
-            HEDGE
+            Chance
           </span>
           {/* back — FREE */}
           <span
@@ -111,7 +112,7 @@ function FlipCoin() {
           </span>
         </button>
       </div>
-      <div className="font-mono text-xs tracking-[0.2em] uppercase" style={{ color: landed ? GREEN : MUTED }}>
+      <div className="font-mono text-xs tracking-[0.2em] uppercase text-center leading-relaxed" style={{ color: landed ? GREEN : MUTED }}>
         {landed ? 'Order: free. Customer: hooked.' : flipping ? 'Flipping…' : '↑ Click the coin'}
       </div>
     </div>
@@ -240,32 +241,86 @@ function SlideWhat() {
 }
 
 function SlideExperiences() {
-  const mechanics = [
-    { k: 'Flip to free', body: 'Customers flip a coin at checkout for a shot at a free order. Chance turns paying into playing.' },
-    { k: 'Win it back', body: 'Paid full price? One tap for a chance to win the purchase back — after the sale.' },
-    { k: 'Round-ups', body: 'Spare change stacks toward a free order. Every payment builds toward the next win.' },
+  const chanceMechanics = [
+    { k: 'Flip to free', body: 'Flip a coin at checkout for a shot at a free order.' },
+    { k: 'Win it back', body: 'Paid full price? One tap to try to win the purchase back.' },
+    { k: 'Round-ups', body: 'Spare change stacks toward the next free order.' },
+  ]
+  const sidebetMechanics = [
+    { k: 'Challenge', body: 'Friends bet each other on the game, right in the product.' },
+    { k: 'Escrow', body: 'Both stakes lock in a Hedge-held escrow until the result.' },
+    { k: 'Instant payout', body: 'The winner is paid the moment the outcome is official.' },
   ]
   return (
     <div className="flex h-full flex-col justify-center px-8 md:px-24 max-w-6xl mx-auto w-full">
-      <div className="grid gap-12 md:grid-cols-[1.2fr_1fr] items-center">
-        <div>
-          <Eyebrow>The difference</Eyebrow>
-          <Headline>Native experiences users love.</Headline>
-          <div className="space-y-5">
-            {mechanics.map(m => (
-              <div key={m.k} className="flex gap-4 items-baseline">
-                <div className="font-mono text-xs tracking-[0.15em] uppercase whitespace-nowrap w-28 shrink-0" style={{ color: CREAM }}>
+      <Eyebrow>The difference</Eyebrow>
+      <Headline>Native experiences users love.</Headline>
+      <div className="grid gap-6 md:grid-cols-2 mt-2">
+        {/* Chance */}
+        <div className="border p-6 md:p-8" style={{ borderColor: FAINT }}>
+          <div className="flex items-center justify-between mb-1">
+            <div
+              className="text-3xl md:text-4xl"
+              style={{ fontFamily: 'var(--font-script), cursive', color: GREEN }}
+            >
+              Chance
+            </div>
+            <div className="font-mono text-[10px] tracking-[0.2em] uppercase" style={{ color: MUTED }}>
+              The checkout game
+            </div>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-[1fr_auto] items-center mt-4">
+            <div className="space-y-3">
+              {chanceMechanics.map(m => (
+                <div key={m.k}>
+                  <div className="font-mono text-xs tracking-[0.15em] uppercase mb-0.5" style={{ color: CREAM }}>
+                    {m.k}
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: MUTED }}>
+                    {m.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <FlipCoin />
+          </div>
+        </div>
+
+        {/* SideBet */}
+        <div className="border p-6 md:p-8" style={{ borderColor: FAINT }}>
+          <div className="flex items-center justify-between mb-1">
+            <div className="font-serif text-3xl md:text-4xl italic" style={{ color: GREEN }}>
+              SideBet
+            </div>
+            <div className="font-mono text-[10px] tracking-[0.2em] uppercase" style={{ color: MUTED }}>
+              Bet your friends
+            </div>
+          </div>
+          <div className="space-y-3 mt-4">
+            {sidebetMechanics.map(m => (
+              <div key={m.k}>
+                <div className="font-mono text-xs tracking-[0.15em] uppercase mb-0.5" style={{ color: CREAM }}>
                   {m.k}
                 </div>
-                <p className="text-sm md:text-base leading-relaxed" style={{ color: MUTED }}>
+                <p className="text-sm leading-relaxed" style={{ color: MUTED }}>
                   {m.body}
                 </p>
               </div>
             ))}
           </div>
+          <div
+            className="mt-5 flex items-center justify-between border px-4 py-3 font-mono text-xs"
+            style={{ borderColor: FAINT, color: MUTED }}
+          >
+            <span>$50 + $50 in escrow</span>
+            <span style={{ color: GREEN }}>→</span>
+            <span style={{ color: CREAM }}>winner paid instantly</span>
+          </div>
         </div>
-        <FlipCoin />
       </div>
+      <p className="mt-6 font-mono text-xs tracking-[0.2em] uppercase" style={{ color: MUTED }}>
+        Both first-party, both powered by Hedge — and both available under your brand
+      </p>
     </div>
   )
 }
