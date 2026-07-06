@@ -193,27 +193,48 @@ function SlideWhat() {
   ]
   return (
     <div className="flex h-full flex-col justify-center px-8 md:px-24 max-w-6xl mx-auto w-full">
-      <Eyebrow>What Hedge is</Eyebrow>
-      <Headline>
-        One gateway.
-        <br />
-        Your brand on every screen.
-      </Headline>
-      <div className="grid gap-px sm:grid-cols-2 lg:grid-cols-4 mt-2" style={{ background: FAINT }}>
-        {pillars.map(p => (
-          <div key={p.k} className="p-6" style={{ background: INK }}>
-            <div className="font-serif text-xl md:text-2xl mb-3" style={{ color: GREEN }}>
-              {p.k}
-            </div>
-            <p className="text-sm leading-relaxed" style={{ color: MUTED }}>
-              {p.body}
-            </p>
+      <div className="grid gap-12 md:grid-cols-[1.35fr_1fr] items-center">
+        <div>
+          <Eyebrow>What Hedge is</Eyebrow>
+          <Headline>
+            One gateway.
+            <br />
+            Your brand on every screen.
+          </Headline>
+          <div className="grid gap-px sm:grid-cols-2 mt-2" style={{ background: FAINT }}>
+            {pillars.map(p => (
+              <div key={p.k} className="p-5" style={{ background: INK }}>
+                <div className="font-serif text-lg md:text-xl mb-2" style={{ color: GREEN }}>
+                  {p.k}
+                </div>
+                <p className="text-sm leading-relaxed" style={{ color: MUTED }}>
+                  {p.body}
+                </p>
+              </div>
+            ))}
           </div>
-        ))}
+          <p className="mt-6 text-sm md:text-base" style={{ color: MUTED }}>
+            One integration. White-label end to end — your customers never leave your world.
+          </p>
+        </div>
+        <div className="hidden md:flex flex-col items-center gap-4">
+          <div
+            className="overflow-hidden rounded-2xl"
+            style={{ border: `1px solid ${FAINT}`, boxShadow: '0 24px 60px rgba(0,0,0,0.45)' }}
+          >
+            <Image
+              src="/images/pitch/payment-methods.png"
+              alt="Express checkout with debit, credit, Venmo, Klarna and Chance payment methods"
+              width={492}
+              height={580}
+              className="block w-full max-w-[360px] h-auto"
+            />
+          </div>
+          <div className="font-mono text-xs tracking-[0.2em] uppercase" style={{ color: MUTED }}>
+            Every method — plus yours
+          </div>
+        </div>
       </div>
-      <p className="mt-8 text-sm md:text-base" style={{ color: MUTED }}>
-        One integration. White-label end to end — your customers never leave your world.
-      </p>
     </div>
   )
 }
@@ -255,16 +276,22 @@ function SlideLive() {
       k: 'Chance drop-in',
       body: 'The embeddable checkout game, live on our site. One script tag.',
       href: '/chance',
+      img: '/images/pitch/chance-checkout.png',
+      alt: 'Checkout card with the Chance win-it-back option',
     },
     {
       k: 'Storefront checkout',
       body: 'A full e-commerce checkout with Chance built into the payment step.',
       href: '/store',
+      img: '/images/pitch/store-page.png',
+      alt: 'Storefront product page with express checkout payment methods',
     },
     {
-      k: 'Sportsbook deposits',
-      body: 'A DraftKings-style deposit flow, white-labeled end to end.',
+      k: 'Payment screens',
+      body: 'A DraftKings-style pay-with-card flow, white-labeled end to end.',
       href: '/draftkings-demo',
+      img: '/images/pitch/pay-card.png',
+      alt: 'Payment screen with pay-with-card button and Chance upsell',
     },
   ]
   return (
@@ -278,25 +305,35 @@ function SlideLive() {
             href={d.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group border p-6 transition-colors duration-200"
+            className="group border transition-colors duration-200 overflow-hidden"
             style={{ borderColor: FAINT }}
           >
-            <div className="flex items-start justify-between mb-4">
-              <div className="font-serif text-xl md:text-2xl" style={{ color: CREAM }}>
-                {d.k}
-              </div>
-              <span
-                className="font-mono text-sm transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
-                style={{ color: GREEN }}
-              >
-                ↗
-              </span>
+            <div className="h-44 md:h-52 overflow-hidden" style={{ borderBottom: `1px solid ${FAINT}` }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={d.img}
+                alt={d.alt}
+                className="block w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
+              />
             </div>
-            <p className="text-sm leading-relaxed" style={{ color: MUTED }}>
-              {d.body}
-            </p>
-            <div className="mt-5 font-mono text-xs tracking-[0.15em] uppercase" style={{ color: GREEN }}>
-              Open live demo
+            <div className="p-5">
+              <div className="flex items-start justify-between mb-3">
+                <div className="font-serif text-xl md:text-2xl" style={{ color: CREAM }}>
+                  {d.k}
+                </div>
+                <span
+                  className="font-mono text-sm transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  style={{ color: GREEN }}
+                >
+                  ↗
+                </span>
+              </div>
+              <p className="text-sm leading-relaxed" style={{ color: MUTED }}>
+                {d.body}
+              </p>
+              <div className="mt-4 font-mono text-xs tracking-[0.15em] uppercase" style={{ color: GREEN }}>
+                Open live demo
+              </div>
             </div>
           </a>
         ))}
