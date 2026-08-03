@@ -59,6 +59,13 @@ const PRODUCTS = [
     desc: 'Group commerce for fraternities — mockups to chapter orders, paid out on Hedge rails.',
     href: 'https://fraternitybase.com',
   },
+  {
+    tag: 'OUR PRODUCT · FANTASY DATA',
+    name: 'FantasyLink',
+    accent: 'var(--violet)',
+    desc: 'Plaid, but for fantasy football. One connect flow for Sleeper, ESPN & Yahoo — leagues, rosters, and members, dropped into any product. Powered by Hedge Payments.',
+    href: '/fantasylink',
+  },
 ]
 
 // The hero checkout demo: a $50 order, pay +$5 for a ~10-to-1 shot at $0.
@@ -731,6 +738,7 @@ export default function ArcadeLanding() {
               <h4>Products</h4>
               <a href="/chance">Chance™</a>
               <a href="/sidebet">SideBet</a>
+              <a href="/fantasylink">FantasyLink</a>
               <h4 style={{ marginTop: 14 }}>Clients</h4>
               <a href="/demo/coverpay">CoverPay</a>
               <a href="https://fraternitybase.com">FraternityBase</a>
