@@ -51,6 +51,11 @@ const Navbar = () => {
             Chance™
           </Link>
 
+          {/* FantasyLink Link */}
+          <Link href="/fantasylink" className={styles.navLink} onClick={closeAllDropdowns}>
+            FantasyLink
+          </Link>
+
           {/* Developers Dropdown */}
           <div className={styles.dropdown}>
             <button 
