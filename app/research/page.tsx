@@ -1,60 +1,47 @@
 'use client'
 
 import { useState } from 'react'
-import arcade from '../components/ArcadeLanding.module.css'
 import s from './research.module.css'
 
 // Hedge Research — sportsbook, casino & payments product research, run on a
 // network of 20,000+ real users across the products and communities Hedge
-// already operates. Same arcade-neon theme as the homepage; the header is just
-// the HEDGE mark linking home.
+// already operates. Deliberately simple & monochrome (unlike the arcade homepage);
+// the header is just the HEDGE mark linking home.
 
 const SOURCES = [
   {
     name: 'FraternityBase network',
-    accent: 'var(--gold)',
     desc: 'Chapter members across hundreds of fraternities and universities nationwide — the 21+ college cohort every sportsbook is fighting to acquire. Recruited chapter-by-chapter, verified by roster.',
   },
   {
     name: 'SideBet & Chance™ users',
-    accent: 'var(--violet)',
     desc: 'Live users of the products built on Hedge rails: people who already deposit, wager, cash out and win-it-back on real money, every week.',
   },
   {
     name: 'Street Corner Casino',
-    accent: 'var(--magenta)',
     desc: 'Participants and hosts from our on-campus casino-night events — opted in, ID-verified and located in licensed states.',
   },
   {
     name: 'FantasyLink connectors',
-    accent: 'var(--cyan)',
     desc: 'Fantasy players who have linked Sleeper, ESPN and Yahoo leagues through FantasyLink — engaged, multi-app sports users.',
   },
 ]
 
 const SERVICES = [
   {
-    tag: 'QA · END TO END',
     name: 'Product Testing',
-    accent: 'var(--cyan)',
     desc: 'Scripted tests of your app against industry benchmarks across the whole journey — registration, KYC, deposit, bet placement, cash-out, withdrawal.',
   },
   {
-    tag: 'PAYMENTS · RAILS',
     name: 'Wallet Benchmarks',
-    accent: 'var(--lime)',
     desc: 'Deposit/withdrawal speed, approval rates, fees and rail coverage measured side-by-side with competitors. We run payments rails — we know where money gets stuck.',
   },
   {
-    tag: 'MARKET · CONSUMER',
     name: 'Competitive Analysis',
-    accent: 'var(--magenta)',
     desc: 'Surveys, interviews and journey evaluations from the network that show where you sit in the market and why users pick someone else.',
   },
   {
-    tag: 'MONTHLY · REPORTS',
     name: 'Subscription Research',
-    accent: 'var(--gold)',
     desc: 'Recurring reports on online performance, promo effectiveness and payments UX, sourced directly from sports betting and iGaming customer behavior.',
   },
 ]
@@ -94,124 +81,88 @@ export default function ResearchPage() {
   }
 
   return (
-    <div className={arcade.root}>
-      <div className={arcade.scanlines} aria-hidden />
-      <div className={arcade.vignette} aria-hidden />
-
-      {/* Header: logo only, links home */}
-      <nav className={arcade.nav}>
-        <div className={arcade.navInner}>
-          <a href="/" className={arcade.logo}>HEDGE</a>
-          <a href="/" className={arcade.navLink}>← Back to Hedge</a>
+    <div className={s.root}>
+      <nav className={s.nav}>
+        <div className={s.navInner}>
+          <a href="/" className={s.logo}>HEDGE</a>
+          <a href="/" className={s.back}>← Back to Hedge</a>
         </div>
       </nav>
 
-      {/* Hero */}
-      <header className={`${arcade.shell} ${s.heroCenter}`}>
-        <span className={arcade.eyebrow}>
-          <span className={arcade.dot} /> Hedge Research
-        </span>
-        <h1 className={arcade.h1}>
-          Sportsbook &amp; Casino <span className={arcade.neonMag}>research</span>
-          <br />
-          from <span className={arcade.neonLime}>20,000+</span> real testers.
-        </h1>
+      <header className={`${s.shell} ${s.hero}`}>
+        <span className={s.eyebrow}>Hedge Research</span>
+        <h1 className={s.h1}>Sportsbook &amp; casino research from 20,000+ real testers.</h1>
         <p className={s.lede}>
           Market research, consumer insights and competitive benchmarks — run on real products, with real money,
           by real users drawn from the communities Hedge already operates.
         </p>
-        <div className={s.heroRow}>
-          <a className={`${arcade.btn} ${arcade.btnPrimary}`} href="#contact">Request a proposal</a>
-          <a className={`${arcade.btn} ${arcade.btnGhost}`} href="#network">See the network</a>
+        <div className={s.row}>
+          <a className={`${s.btn} ${s.btnPrimary}`} href="#contact">Request a proposal</a>
+          <a className={s.btn} href="#network">See the network</a>
         </div>
       </header>
 
-      {/* The network */}
-      <section id="network" className={arcade.section}>
-        <div className={arcade.shell}>
-          <div className={s.bigStat}>
-            <div>
-              <span className={arcade.kicker}>The tester network</span>
-              <p className={s.bigNum}>20,000+</p>
-              <div className={s.bigLabel}>Verified, 21+, opted-in testers</div>
-              <p className={s.bigSub}>
-                We don&apos;t rent a panel. The testers are the users of the products and communities we
-                already run — so they&apos;re already depositing, betting and cashing out on live operators.
-              </p>
-            </div>
-            <ul className={s.sources}>
-              {SOURCES.map((src) => (
-                <li key={src.name} className={s.source} style={{ ['--accent' as string]: src.accent }}>
-                  <span className={s.sourceDot} />
-                  <div>
-                    <p className={s.sourceName}>{src.name}</p>
-                    <p className={s.sourceDesc}>{src.desc}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+      <section id="network" className={s.section}>
+        <div className={`${s.shell} ${s.network}`}>
+          <div>
+            <span className={s.eyebrow}>The tester network</span>
+            <p className={s.bigNum}>20,000+</p>
+            <p className={s.bigLabel}>Verified, 21+, opted-in testers</p>
+            <p className={s.sub}>
+              We don&apos;t rent a panel. The testers are the users of the products and communities we already
+              run — so they&apos;re already depositing, betting and cashing out on live operators.
+            </p>
           </div>
+          <ul className={s.list}>
+            {SOURCES.map((src) => (
+              <li key={src.name} className={s.item}>
+                <p className={s.itemName}>{src.name}</p>
+                <p className={s.itemDesc}>{src.desc}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* Services */}
-      <section className={arcade.section}>
-        <div className={arcade.shell}>
-          <div className={arcade.sectionHead}>
-            <span className={arcade.kicker}>Select a game</span>
-            <h2 className={arcade.h2}>What Hedge Research does for you</h2>
-            <p className={arcade.sectionLede}>
-              Four engagements, every one run on the network above and delivered with benchmarks you can act on.
-            </p>
-          </div>
-          <div className={arcade.cabGrid}>
+      <section className={s.section}>
+        <div className={s.shell}>
+          <h2 className={s.h2}>What Hedge Research does for you</h2>
+          <p className={s.sub} style={{ marginBottom: 32 }}>
+            Four engagements, every one run on the network above and delivered with benchmarks you can act on.
+          </p>
+          <div className={s.grid}>
             {SERVICES.map((svc) => (
-              <div key={svc.name} className={arcade.cab} style={{ ['--accent' as string]: svc.accent }}>
-                <div className={arcade.cabTag}>{svc.tag}</div>
-                <h3 className={arcade.cabName}>{svc.name}</h3>
-                <p className={arcade.cabDesc}>{svc.desc}</p>
-                <a className={arcade.cabLink} href="#contact">Get a quote →</a>
+              <div key={svc.name} className={s.card}>
+                <h3 className={s.cardTitle}>{svc.name}</h3>
+                <p className={s.cardDesc}>{svc.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Process */}
-      <section className={arcade.section}>
-        <div className={arcade.shell}>
-          <div className={arcade.sectionHead}>
-            <span className={arcade.kicker}>How to play</span>
-            <h2 className={arcade.h2}>How an engagement works</h2>
-          </div>
+      <section className={s.section}>
+        <div className={s.shell}>
+          <h2 className={s.h2} style={{ marginBottom: 32 }}>How an engagement works</h2>
           <div className={s.steps}>
             {STEPS.map((st) => (
               <div key={st.n}>
                 <div className={s.stepNum}>{st.n}</div>
                 <h3 className={s.stepTitle}>{st.title}</h3>
-                <p className={s.stepDesc}>{st.desc}</p>
+                <p className={s.cardDesc}>{st.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact" className={arcade.section}>
-        <div className={arcade.shell}>
-          <div className={arcade.sectionHead} style={{ textAlign: 'center' }}>
-            <span className={arcade.kicker}>Insert coin</span>
-            <h2 className={arcade.h2}>Talk to the research team</h2>
-            <p className={arcade.sectionLede} style={{ margin: '16px auto 0' }}>
-              Tell us what you want to learn and we&apos;ll come back with a scope and a quote.
-            </p>
-          </div>
+      <section id="contact" className={s.section}>
+        <div className={s.shell}>
+          <h2 className={s.h2}>Talk to the research team</h2>
+          <p className={s.sub}>Tell us what you want to learn and we&apos;ll come back with a scope and a quote.</p>
 
           {status === 'sent' ? (
-            <div className={s.sent}>
-              <span className={arcade.kicker} style={{ color: 'var(--lime)' }}>High score</span>
-              <p style={{ margin: 0 }}>Thanks — we&apos;ll be in touch within one business day.</p>
-            </div>
+            <div className={s.sent}>Thanks — we&apos;ll be in touch within one business day.</div>
           ) : (
             <form onSubmit={submit} className={s.form}>
               <div className={s.formRow}>
@@ -237,7 +188,7 @@ export default function ResearchPage() {
                 <p className={s.err}>Something went wrong — email research@hedgepayments.com instead.</p>
               )}
               <div>
-                <button type="submit" disabled={status === 'sending'} className={`${arcade.btn} ${arcade.btnPrimary}`}>
+                <button type="submit" disabled={status === 'sending'} className={`${s.btn} ${s.btnPrimary}`}>
                   {status === 'sending' ? 'Sending…' : 'Submit'}
                 </button>
               </div>
@@ -246,8 +197,10 @@ export default function ResearchPage() {
         </div>
       </section>
 
-      <footer className={s.miniFooter}>
-        © {new Date().getFullYear()} Hedge · <a href="/">hedgepayments.com</a>
+      <footer className={s.footer}>
+        <div className={s.shell}>
+          © {new Date().getFullYear()} Hedge · <a href="/">hedgepayments.com</a>
+        </div>
       </footer>
     </div>
   )
