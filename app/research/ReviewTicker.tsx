@@ -1,5 +1,5 @@
 import s from './research.module.css'
-import { TESTIMONIALS } from './testimonials'
+import { TESTIMONIALS, ILLUSTRATIVE } from './testimonials'
 
 // Infinite horizontal marquee of tester reviews. CSS-only animation; the track
 // is duplicated so the loop is seamless. Pauses on hover, static when the user
@@ -9,8 +9,11 @@ export function ReviewTicker() {
   const items = [...TESTIMONIALS, ...TESTIMONIALS]
 
   return (
-    <section className={s.ticker} aria-label="Tester reviews">
-      <div className={s.tickerTrack}>
+    <section className={s.ticker} aria-label="Tester notes">
+      <div className={s.tickerLabel}>
+        {ILLUSTRATIVE ? 'Sample tester notes · illustrative' : 'What testers report'}
+      </div>
+      <div className={s.tickerTrack} style={{ animationDuration: `${TESTIMONIALS.length * 6}s` }}>
         {items.map((t, i) => (
           <figure key={`${t.name}-${i}`} className={s.review} aria-hidden={i >= TESTIMONIALS.length}>
             <div className={s.reviewHead}>

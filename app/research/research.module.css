@@ -105,7 +105,8 @@
 .tag { font-size: 13px; color: var(--ink); padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; }
 
 /* Review ticker */
-.ticker { border-top: 1px solid var(--line); padding: 28px 0; overflow: hidden; }
+.ticker { border-top: 1px solid var(--line); padding: 24px 0 28px; overflow: hidden; }
+.tickerLabel { max-width: 1040px; margin: 0 auto 16px; padding: 0 24px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .tickerTrack { display: flex; gap: 16px; width: max-content; animation: scroll 60s linear infinite; }
 .ticker:hover .tickerTrack { animation-play-state: paused; }
 @keyframes scroll { to { transform: translateX(-50%); } }
