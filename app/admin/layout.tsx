@@ -37,6 +37,11 @@ export default function AdminLayout({
       icon: '💳',
     },
     {
+      name: 'Billing',
+      href: '/admin/billing',
+      icon: '🧾',
+    },
+    {
       name: 'Analytics',
       href: '/admin/analytics',
       icon: '📈',

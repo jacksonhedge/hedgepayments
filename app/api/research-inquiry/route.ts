@@ -26,8 +26,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
   }
 
+  // Escape Slack mrkdwn control chars so user input can't inject links/mentions.
+  const esc = (s: string) =>
+    s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').slice(0, 2000)
   await notifySlack(
-    `🔬 *Hedge Research inquiry*\n*${name}*${title ? ` (${title})` : ''} — ${company}\n${email}\n> ${message}`
+    `🔬 *Hedge Research inquiry*\n*${esc(name)}*${title ? ` (${esc(title)})` : ''} — ${esc(company)}\n${esc(email)}\n> ${esc(message).replace(/\n/g, '\n> ')}`
   )
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
