@@ -38,3 +38,4 @@ tmp_backup/
 
 # Brainstorm visual-companion artifacts
 .superpowers/
+.env*

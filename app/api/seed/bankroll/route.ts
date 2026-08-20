@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-// Use service role for admin operations
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || '',
-  { auth: { autoRefreshToken: false, persistSession: false } }
-)
+// Use service role for admin operations. Created lazily — a top-level
+// createClient('', '') throws at build time on Vercel when env is unset,
+// which fails the whole `next build` ("Failed to collect page data").
+function getSupabaseAdmin() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  )
+}
 
 // Bankroll test credentials
 const BANKROLL_TEST_USER = {
@@ -23,6 +27,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Not available in production' }, { status: 403 })
   }
 
+  const supabaseAdmin = getSupabaseAdmin()
   try {
     // Check if user already exists
     const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers()
