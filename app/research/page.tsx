@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import s from './research.module.css'
+import { ReviewTicker } from './ReviewTicker'
 
 // Hedge Research — sportsbook, casino & payments product research, run on a
 // network of 20,000+ real users across the products and communities Hedge
@@ -27,6 +28,14 @@ const SOURCES = [
   },
 ]
 
+const VERTICALS = ['Prediction markets', 'Sports betting', 'Fantasy sports', 'Crypto', 'Investing', 'Payments']
+
+const BUCKETS = [
+  { n: '20,000+', label: 'Total testers', note: 'Opted-in, identity-verified users across the Hedge network.' },
+  { n: '10,000+', label: 'Age 21+', note: 'Eligible for real-money sportsbook, casino and prediction-market testing in licensed states.' },
+  { n: '18+', label: 'Remaining cohort', note: 'Fantasy, crypto, investing and payments testing where 18+ is the threshold.' },
+]
+
 const SERVICES = [
   {
     name: 'Product Testing',
@@ -48,7 +57,7 @@ const SERVICES = [
 
 const STEPS = [
   { n: '01', title: 'Scope', desc: 'Journeys, operators, states and the tester segments you want.' },
-  { n: '02', title: 'Recruit', desc: 'Matched from the 20,000+ network and verified for age, location and eligibility.' },
+  { n: '02', title: 'Recruit', desc: 'Matched from the network by vertical and age bucket; verified for location and eligibility.' },
   { n: '03', title: 'Test', desc: 'Real accounts, real money. Screen-recorded, timestamped, scored.' },
   { n: '04', title: 'Report', desc: 'Benchmarks, findings and a prioritized fix list.' },
 ]
@@ -91,10 +100,11 @@ export default function ResearchPage() {
 
       <header className={`${s.shell} ${s.hero}`}>
         <span className={s.eyebrow}>Hedge Research</span>
-        <h1 className={s.h1}>Sportsbook &amp; casino research from 20,000+ real testers.</h1>
+        <h1 className={s.h1}>Consumer research from 20,000+ real testers.</h1>
         <p className={s.lede}>
-          Market research, consumer insights and competitive benchmarks — run on real products, with real money,
-          by real users drawn from the communities Hedge already operates.
+          Product testing, consumer insights and competitive benchmarks across prediction markets, sports betting,
+          fantasy sports, crypto, investing and payments — run with real money by real users drawn from the
+          communities Hedge already operates.
         </p>
         <div className={s.row}>
           <a className={`${s.btn} ${s.btnPrimary}`} href="#contact">Request a proposal</a>
@@ -102,25 +112,42 @@ export default function ResearchPage() {
         </div>
       </header>
 
+      <ReviewTicker />
+
       <section id="network" className={s.section}>
-        <div className={`${s.shell} ${s.network}`}>
-          <div>
-            <span className={s.eyebrow}>The tester network</span>
-            <p className={s.bigNum}>20,000+</p>
-            <p className={s.bigLabel}>Verified, 21+, opted-in testers</p>
-            <p className={s.sub}>
-              We don&apos;t rent a panel. The testers are the users of the products and communities we already
-              run — so they&apos;re already depositing, betting and cashing out on live operators.
-            </p>
-          </div>
-          <ul className={s.list}>
-            {SOURCES.map((src) => (
-              <li key={src.name} className={s.item}>
-                <p className={s.itemName}>{src.name}</p>
-                <p className={s.itemDesc}>{src.desc}</p>
-              </li>
+        <div className={s.shell}>
+          <span className={s.eyebrow}>The tester network</span>
+          <div className={s.buckets}>
+            {BUCKETS.map((b) => (
+              <div key={b.label} className={s.bucket}>
+                <p className={s.bucketNum}>{b.n}</p>
+                <p className={s.bucketLabel}>{b.label}</p>
+                <p className={s.itemDesc}>{b.note}</p>
+              </div>
             ))}
-          </ul>
+          </div>
+          <div className={s.network}>
+            <div>
+              <p className={s.sub}>
+                We don&apos;t rent a panel. The testers are the users of the products and communities we already
+                run — so they&apos;re already depositing, trading, betting and cashing out on live platforms.
+              </p>
+              <p className={s.bucketLabel} style={{ marginTop: 28 }}>Verticals covered</p>
+              <ul className={s.tags}>
+                {VERTICALS.map((v) => (
+                  <li key={v} className={s.tag}>{v}</li>
+                ))}
+              </ul>
+            </div>
+            <ul className={s.list}>
+              {SOURCES.map((src) => (
+                <li key={src.name} className={s.item}>
+                  <p className={s.itemName}>{src.name}</p>
+                  <p className={s.itemDesc}>{src.desc}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
