@@ -739,6 +739,7 @@ export default function ArcadeLanding() {
               <a href="/chance">Chance™</a>
               <a href="/sidebet">SideBet</a>
               <a href="/fantasylink">FantasyLink</a>
+              <a href="/research">Research</a>
               <h4 style={{ marginTop: 14 }}>Clients</h4>
               <a href="/demo/coverpay">CoverPay</a>
               <a href="https://fraternitybase.com">FraternityBase</a>

@@ -56,6 +56,11 @@ const Navbar = () => {
             FantasyLink
           </Link>
 
+          {/* Research Link */}
+          <Link href="/research" className={styles.navLink} onClick={closeAllDropdowns}>
+            Research
+          </Link>
+
           {/* Developers Dropdown */}
           <div className={styles.dropdown}>
             <button 
