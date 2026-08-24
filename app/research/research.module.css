@@ -21,7 +21,9 @@
   max-width: 1040px; margin: 0 auto; padding: 18px 24px;
   display: flex; align-items: center; justify-content: space-between;
 }
-.logo { font-weight: 700; letter-spacing: 0.12em; font-size: 14px; color: var(--ink); text-decoration: none; }
+.logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.12em; font-size: 14px; color: var(--ink); text-decoration: none; }
+.logoMark { width: 28px; height: 28px; }
+.logoSub { font-weight: 500; letter-spacing: 0.06em; color: #1EB05A; }
 .back { color: var(--muted); font-size: 14px; text-decoration: none; }
 .back:hover { color: var(--ink); }
 

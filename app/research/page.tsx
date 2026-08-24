@@ -111,7 +111,11 @@ export default function ResearchPage() {
     <div className={s.root}>
       <nav className={s.nav}>
         <div className={s.navInner}>
-          <a href="/" className={s.logo}>HEDGE</a>
+          <a href="/" className={s.logo}>
+            <img src="/favicon/hedge-logo.svg" alt="" className={s.logoMark} />
+            <span>HEDGE</span>
+            <span className={s.logoSub}>Research</span>
+          </a>
           <div className={s.toggle} role="tablist" aria-label="Audience">
             <button
               role="tab"
