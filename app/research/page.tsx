@@ -62,12 +62,30 @@ const STEPS = [
   { n: '04', title: 'Report', desc: 'Benchmarks, findings and a prioritized fix list.' },
 ]
 
+const PLATFORMS = [
+  { name: 'Polymarket', logo: '/logos/polymarket.png', kind: 'Prediction markets' },
+  { name: 'Kalshi', logo: '/logos/kalshi.png', kind: 'Prediction markets' },
+  { name: 'DraftKings', logo: '/logos/draftkings.png', kind: 'Sportsbook' },
+  { name: 'FanDuel', logo: '/logos/fanduel.avif', kind: 'Sportsbook' },
+  { name: 'Evolution', logo: null, kind: 'Live casino' },
+]
+
+const USER_STEPS = [
+  { n: '01', title: 'Apply', desc: 'Tell us your age, state and which apps you already use. Must be 21+ for sportsbook, casino and prediction-market tests.' },
+  { n: '02', title: 'Get matched', desc: 'We match you to paid tests by platform and location, then verify eligibility.' },
+  { n: '03', title: 'Test', desc: 'Complete a scripted session — sign up, deposit, place bets, cash out — with a screen recording and a short survey.' },
+  { n: '04', title: 'Get paid', desc: 'Payout for every completed test, plus you keep what you win.' },
+]
+
+type Audience = 'businesses' | 'users'
+
 type FormState = { name: string; email: string; company: string; title: string; message: string }
 const EMPTY: FormState = { name: '', email: '', company: '', title: '', message: '' }
 
 export default function ResearchPage() {
   const [form, setForm] = useState<FormState>(EMPTY)
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [audience, setAudience] = useState<Audience>('businesses')
 
   const update = (k: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }))
@@ -94,10 +112,32 @@ export default function ResearchPage() {
       <nav className={s.nav}>
         <div className={s.navInner}>
           <a href="/" className={s.logo}>HEDGE</a>
+          <div className={s.toggle} role="tablist" aria-label="Audience">
+            <button
+              role="tab"
+              aria-selected={audience === 'businesses'}
+              className={`${s.toggleBtn} ${audience === 'businesses' ? s.toggleActive : ''}`}
+              onClick={() => setAudience('businesses')}
+            >
+              For Businesses
+            </button>
+            <button
+              role="tab"
+              aria-selected={audience === 'users'}
+              className={`${s.toggleBtn} ${audience === 'users' ? s.toggleActive : ''}`}
+              onClick={() => setAudience('users')}
+            >
+              For Users
+            </button>
+          </div>
           <a href="/" className={s.back}>← Back to Hedge</a>
         </div>
       </nav>
 
+      {audience === 'users' ? (
+        <UsersView />
+      ) : (
+      <>
       <header className={`${s.shell} ${s.hero}`}>
         <span className={s.eyebrow}>Hedge Research</span>
         <h1 className={s.h1}>Consumer research from 20,000+ real testers.</h1>
@@ -223,6 +263,8 @@ export default function ResearchPage() {
           )}
         </div>
       </section>
+      </>
+      )}
 
       <footer className={s.footer}>
         <div className={s.shell}>
@@ -230,6 +272,76 @@ export default function ResearchPage() {
         </div>
       </footer>
     </div>
+  )
+}
+
+function UsersView() {
+  return (
+    <>
+      <header className={`${s.shell} ${s.hero}`}>
+        <span className={s.eyebrow}>Hedge Research · For Users</span>
+        <h1 className={s.h1}>Get paid to test the apps you already use.</h1>
+        <p className={s.lede}>
+          Join 20,000+ testers running real-money sessions on sportsbooks, prediction markets and casino games.
+          Every test pays, and you keep your winnings.
+        </p>
+        <div className={s.row}>
+          <a className={`${s.btn} ${s.btnPrimary}`} href="/signup">Apply to test</a>
+          <a className={s.btn} href="#platforms">Where you&apos;ll test</a>
+        </div>
+      </header>
+
+      <section id="platforms" className={s.section}>
+        <div className={s.shell}>
+          <span className={s.eyebrow}>Where you&apos;ll be testing</span>
+          <h2 className={s.h2}>Real accounts on real platforms.</h2>
+          <p className={s.sub} style={{ marginBottom: 32 }}>
+            Tests run on the live apps below — not sandboxes. You&apos;ll sign up, deposit, play and cash out just
+            like any other customer, and we pay you for the session.
+          </p>
+          <ul className={s.platforms}>
+            {PLATFORMS.map((p) => (
+              <li key={p.name} className={s.platform}>
+                <div className={s.platformLogo}>
+                  {p.logo ? (
+                    <img src={p.logo} alt={p.name} />
+                  ) : (
+                    <span className={s.platformWordmark}>{p.name}</span>
+                  )}
+                </div>
+                <p className={s.itemName}>{p.name}</p>
+                <p className={s.itemDesc}>{p.kind}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className={s.section}>
+        <div className={s.shell}>
+          <h2 className={s.h2} style={{ marginBottom: 32 }}>How it works</h2>
+          <div className={s.steps}>
+            {USER_STEPS.map((st) => (
+              <div key={st.n}>
+                <div className={s.stepNum}>{st.n}</div>
+                <h3 className={s.stepTitle}>{st.title}</h3>
+                <p className={s.cardDesc}>{st.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={s.section}>
+        <div className={s.shell}>
+          <h2 className={s.h2}>Ready to start?</h2>
+          <p className={s.sub} style={{ marginBottom: 24 }}>
+            Must be 18+ (21+ for sportsbook, casino and prediction-market tests) and located in a licensed state.
+          </p>
+          <a className={`${s.btn} ${s.btnPrimary}`} href="/signup">Apply to test</a>
+        </div>
+      </section>
+    </>
   )
 }
 

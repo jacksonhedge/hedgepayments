@@ -25,6 +25,27 @@
 .back { color: var(--muted); font-size: 14px; text-decoration: none; }
 .back:hover { color: var(--ink); }
 
+/* Audience toggle */
+.toggle { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); }
+.toggleBtn {
+  font: inherit; font-size: 13px; font-weight: 600; color: var(--muted);
+  padding: 7px 16px; border-radius: 999px; border: 0; background: transparent; cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+.toggleBtn:hover { color: var(--ink); }
+.toggleActive { background: var(--ink); color: var(--bg); }
+.toggleActive:hover { color: var(--bg); }
+@media (max-width: 600px) { .navInner { flex-wrap: wrap; gap: 12px; } .back { display: none; } }
+
+/* Platforms (For Users) */
+.platforms { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+@media (max-width: 900px) { .platforms { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 560px) { .platforms { grid-template-columns: repeat(2, 1fr); } }
+.platform { padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); text-align: center; }
+.platformLogo { height: 64px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.platformLogo img { max-height: 48px; max-width: 100%; object-fit: contain; border-radius: 8px; }
+.platformWordmark { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+
 /* Type */
 .eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 16px; }
 .h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
