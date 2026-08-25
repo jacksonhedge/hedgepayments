@@ -70,11 +70,11 @@ export default function RollcardProposalPage() {
           <span className={s.x}>×</span>
           <span className={s.lockupRollcard}>Rollcard</span>
         </div>
-        <h1 className={s.h1}>Faster funding inside Rollcard. New cardholders from the networks we run.</h1>
+        <h1 className={s.h1}>Distribution and content, wrapped into one.</h1>
         <p className={s.lede}>
-          A two-sided partnership: Rollcard adds Hedge payment solutions to how cardholders fund and cash out, and
-          Hedge promotes Rollcard across <b>FraternityBase</b> and <b>Street Corner Casino</b> — paid on a revenue
-          share, not a flat fee.
+          Rollcard adds Hedge payment solutions to how cardholders fund and cash out. In return, Hedge puts Rollcard
+          in front of the 21+ college bettor through <b>FraternityBase</b> and <b>Street Corner Casino</b> — chapter
+          promos, campus events and the content that comes out of them — paid on a revenue share, not a flat fee.
         </p>
         <div className={s.row}>
           <a className={`${s.btn} ${s.btnPrimary}`} href="mailto:jackson@hedgepayments.com?subject=Rollcard%20x%20Hedge">Book a call</a>
