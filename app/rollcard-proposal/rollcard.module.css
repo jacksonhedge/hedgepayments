@@ -147,9 +147,9 @@
 .lockupHedge { color: #1EB05A; }
 .x { color: var(--muted); font-weight: 400; }
 .lockupRollcard { color: #f5c542; }
-.channels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 700px) { .channels { grid-template-columns: 1fr; } }
-.channel { padding: 28px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+.channels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .channels { grid-template-columns: 1fr; } }
+.channel { padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
 .channelStat { font-size: clamp(32px, 4vw, 44px); font-weight: 600; letter-spacing: -0.03em; line-height: 1; margin: 0; color: #1EB05A; }
 .channelStatLabel { font-size: 13px; color: var(--muted); margin: 6px 0 18px; }
 .terms { margin: 24px 0 0; padding: 0; border-top: 1px solid var(--line); }

@@ -21,16 +21,25 @@ const RAILS = [
 
 const CHANNELS = [
   {
-    name: 'FraternityBase',
+    phase: 'Phase 1',
+    name: 'Testing group',
     stat: '20,000+',
-    statLabel: 'verified members',
-    desc: 'The largest network of fraternity chapters in the US — the 21+ college cohort that bets the most and banks the least loyally. Rollcard in the Deals tab, chapter-level signup drives, and ambassador referral codes.',
+    statLabel: 'verified members · growing through Q1',
+    desc: 'FraternityBase members become the Rollcard testing group: real cardholders funding, betting and cashing out, with structured feedback on the card and the Hedge rails. The group keeps growing chapter by chapter through Q1.',
   },
   {
-    name: 'Street Corner Casino',
+    phase: 'Phase 2',
+    name: 'Ongoing user acquisition',
+    stat: 'Always-on',
+    statLabel: 'across the network',
+    desc: 'Rollcard in the FraternityBase Deals tab, chapter-level signup drives and ambassador referral codes — a steady stream of new cardholders from the 21+ college cohort, tracked by code.',
+  },
+  {
+    phase: 'Phase 3',
+    name: 'Live events & tournaments',
     stat: 'On-campus',
-    statLabel: 'live events',
-    desc: 'Casino-night events and host network across college towns. Opted-in, ID-verified players who already bet — Rollcard as the official card at every event, with signup at the door.',
+    statLabel: 'Street Corner Casino',
+    desc: 'Casino nights, host-run tournaments and content shot on site across college towns. Rollcard as the official card at every event, signup at the door, and clips that run back through the network.',
   },
 ]
 
@@ -105,7 +114,7 @@ export default function RollcardProposalPage() {
       <section className={s.section}>
         <div className={s.shell}>
           <span className={s.eyebrow}>Part two · Distribution</span>
-          <h2 className={s.h2}>Where we promote Rollcard</h2>
+          <h2 className={s.h2}>How we grow Rollcard</h2>
           <p className={s.sub} style={{ marginBottom: 32 }}>
             We don&apos;t buy ads. We own the communities. Rollcard gets placement in front of the 21+ college
             bettor — the demographic that opens the most gaming accounts and hasn&apos;t picked a card yet.
@@ -113,6 +122,7 @@ export default function RollcardProposalPage() {
           <div className={s.channels}>
             {CHANNELS.map((c) => (
               <div key={c.name} className={s.channel}>
+                <span className={s.eyebrow}>{c.phase}</span>
                 <p className={s.channelStat}>{c.stat}</p>
                 <p className={s.channelStatLabel}>{c.statLabel}</p>
                 <h3 className={s.cardTitle}>{c.name}</h3>
