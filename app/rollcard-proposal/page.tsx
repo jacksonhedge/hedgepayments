@@ -201,6 +201,11 @@ export default function RollcardProposalPage() {
               ))}
             </ul>
           </div>
+          <div className={s.row} style={{ marginTop: 24 }}>
+            <a className={`${s.btn} ${s.btnGreen}`} href="/rollcard-proposal/street-corner">
+              How Street Corner onboards users &amp; pays winnings to Rollcard →
+            </a>
+          </div>
         </div>
       </section>
 

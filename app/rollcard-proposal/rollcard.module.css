@@ -209,3 +209,4 @@
 .table thead th { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 .table tbody th { color: var(--muted); font-weight: 500; width: 180px; }
 .tdGreen { color: #56e08b; }
+.sccRollcard { height: 34px; width: auto; border-radius: 6px; }
