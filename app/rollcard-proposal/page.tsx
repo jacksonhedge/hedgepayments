@@ -92,7 +92,6 @@ const SCC_STATS = [
 const CLIPS = [
   { src: '/scc/featured.mp4', poster: '/scc/featured.jpg', views: '2.4M', caption: 'Grandma doubles down.' },
   { src: '/scc/clip-02.mp4', poster: '/scc/clip-02.jpg', views: '1.1M', caption: 'The 19 dilemma.' },
-  { src: '/scc/featured.mp4', poster: '/scc/featured.jpg', views: '3.8M', caption: 'Crowd vs. the player.' },
 ]
 
 const SCC_TEAM = [
