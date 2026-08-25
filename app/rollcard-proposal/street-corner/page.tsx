@@ -208,7 +208,6 @@ export default function RollcardStreetCornerPage() {
             <a className={`${s.btn} ${s.btnPrimary}`} href="mailto:jackson@hedgepayments.com?subject=Street%20Corner%20x%20Rollcard">
               jackson@hedgepayments.com
             </a>
-            <a className={s.btn} href="/rollcard-proposal/payments">Payment options &amp; perks →</a>
           </div>
         </div>
       </section>
