@@ -55,17 +55,17 @@ const CHANNELS = [
 const DEAL = [
   { n: '01', title: 'Integrate', desc: 'Rollcard adds Hedge rails (RTP ACH-in, T+1 ACH, OAuth bank linking, stablecoin ramp, push-to-card) to its funding and withdrawal flows. Drop-in API; ~2 weeks to first live transaction.' },
   { n: '02', title: 'Distribute', desc: 'Rollcard is listed as a preferred deposit method on every Hedge-powered operator, and Hedge runs Rollcard placements across FraternityBase and Street Corner Casino.' },
-  { n: '03', title: 'Share', desc: 'Revenue share on interchange and cashback-program economics from Hedge-referred cardholders, tracked by referral code. Rails processed at standard Hedge rates.' },
+  { n: '03', title: 'Share', desc: 'Two streams: an affiliate revenue share on interchange from every Hedge-referred cardholder, plus marketing revenue for the testing group, campus campaigns, events and content that drive those signups.' },
   { n: '04', title: 'Scale', desc: 'Monthly reporting on referred cardholders, funded accounts and card spend. Expand campus by campus as the numbers prove out.' },
 ]
 
 const TERMS = [
   ['Payments', 'Hedge rails added to Rollcard funding + withdrawals; Rollcard listed on all Hedge operators'],
-  ['Distribution', 'Rollcard promoted across FraternityBase + Street Corner Casino'],
-  ['Economics', 'Revenue share on net interchange from Hedge-referred cardholders (proposed 25–30%) + per-funded-account bounty'],
-  ['Attribution', 'Referral codes + links; monthly reconciliation'],
+  ['Affiliate', 'Revenue share on net interchange from every Hedge-referred cardholder, for the life of the account'],
+  ['Marketing', 'Separate marketing budget for the testing group, campus campaigns, live events, tournaments and content'],
+  ['Attribution', 'Referral codes + links per chapter, ambassador and event; monthly reconciliation'],
   ['Term', '12 months, renewable; 60-day out for either side'],
-  ['Timeline', 'Integration in 2 weeks · first campus campaign the following month'],
+  ['Timeline', 'Integration in 2 weeks · testing group live the following month'],
 ]
 
 export default function RollcardProposalPage() {
@@ -170,7 +170,7 @@ export default function RollcardProposalPage() {
       <section id="terms" className={s.section}>
         <div className={s.shell}>
           <span className={s.eyebrow}>Proposed terms</span>
-          <h2 className={s.h2}>Simple, performance-based</h2>
+          <h2 className={s.h2}>Affiliate + marketing, two streams</h2>
           <dl className={s.terms}>
             {TERMS.map(([k, v]) => (
               <div key={k} className={s.term}>
@@ -180,9 +180,9 @@ export default function RollcardProposalPage() {
             ))}
           </dl>
           <p className={s.sub} style={{ marginTop: 24 }}>
-            Why it works for Rollcard: zero upfront marketing spend, faster funding from day one, more acceptance
-            points across Hedge operators, and a cardholder acquisition channel that only costs money when it
-            produces spend.
+            Why it works for Rollcard: the affiliate side only pays when a referred cardholder spends, and the
+            marketing side buys what you can&apos;t get elsewhere — a 20,000+ member testing group, on-campus events and
+            the content that comes out of them — all pointed at one card.
           </p>
         </div>
       </section>
