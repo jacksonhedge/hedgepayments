@@ -4,7 +4,7 @@ import { FootprintMap } from './FootprintMap'
 
 const title = 'Street Corner Casino × Rollcard — Onboarding & Winnings'
 const description =
-  'How Street Corner Casino gets strangers on the street to open a Rollcard on their phone, play, and withdraw their winnings to it — on camera.'
+  'How Street Corner Casino gets strangers on the street to open a Rollcard on their phone, play on FanDuel, and withdraw their FanDuel winnings to it — on camera.'
 
 export const metadata: Metadata = {
   title,
@@ -26,10 +26,10 @@ const CLIPS = [
 ]
 
 const ONBOARD = [
-  { n: '01', title: 'Stop a stranger, hand them the game', desc: 'A Street Corner host stops someone on a busy corner. The game is on their own phone — a sportsbook, casino or prediction-market app on Hedge rails. To play, they need money in it.' },
+  { n: '01', title: 'Stop a stranger, hand them the game', desc: 'A Street Corner host stops someone on a busy corner. The game is on their own phone — FanDuel, or another sportsbook, casino or prediction-market app. To play, they need money in it.' },
   { n: '02', title: 'Open Rollcard on the phone', desc: 'They scan the host’s QR, open a Rollcard in ~90 seconds (OAuth bank link, instant virtual card), and fund it over RTP. The card is in their Apple Wallet before the host finishes explaining the rules.' },
-  { n: '03', title: 'Play, on camera', desc: 'They deposit into the app with the Rollcard and play the hand, the prop, the market — right there on the sidewalk, phone in hand, crowd watching. Zero scripted lines.' },
-  { n: '04', title: 'Withdraw to Rollcard, on the spot', desc: 'They win, they hit withdraw, and the winnings push to their Rollcard in minutes — while the camera is still rolling. That balance is spendable anywhere Visa is before they walk away.' },
+  { n: '03', title: 'Play, on camera', desc: 'They deposit into FanDuel with the Rollcard and play the prop, the parlay, the hand — right there on the sidewalk, phone in hand, crowd watching. Zero scripted lines.' },
+  { n: '04', title: 'Withdraw from FanDuel to Rollcard, on the spot', desc: 'They win, they hit withdraw in FanDuel, and the winnings push to their Rollcard in minutes — while the camera is still rolling. That balance is spendable anywhere Visa is before they walk away.' },
 ]
 
 const FLOWS = [
@@ -44,20 +44,20 @@ const FLOWS = [
     ],
   },
   {
-    name: 'Withdrawal: winnings to Rollcard from the phone',
+    name: 'Withdrawal: FanDuel winnings to Rollcard, from the phone',
     items: [
-      'Player taps withdraw in the app; push-to-card lands on the Rollcard in minutes',
-      'Filmed in one take: bet → win → withdraw → balance on the card',
+      'Player taps withdraw in FanDuel; push-to-card lands on the Rollcard in minutes',
+      'Filmed in one take: FanDuel bet → win → withdraw → balance on the Rollcard',
       'No cash handled by the crew, no Venmo, no 1–3 day ACH wait',
       'Balance is instantly spendable at any sportsbook or anywhere Visa is accepted',
-      'Every withdrawal becomes a clip: “just cashed out to my Rollcard”',
+      'Every withdrawal becomes a clip: “just cashed out of FanDuel to my Rollcard”',
     ],
   },
 ]
 
 const FORMATS = [
   { name: 'Street corner shoots', desc: 'The core format: busy corner, real strangers, a game on their phone. They open a Rollcard to play and withdraw the win to it before the clip ends.' },
-  { name: 'Sportsbook props', desc: 'Host offers a live prop on tonight’s game. Player funds the sportsbook with a freshly opened Rollcard, the crowd sweats it, the payout comes back to the card.' },
+  { name: 'FanDuel props', desc: 'Host offers a live FanDuel prop on tonight’s game. Player funds FanDuel with a freshly opened Rollcard, the crowd sweats it, the payout is withdrawn from FanDuel back to the card.' },
   { name: 'Prediction markets', desc: 'Kalshi / Polymarket-style “will it happen?” markets settled fast on camera, winnings withdrawn to Rollcard in the same take.' },
   { name: 'Campus + watch parties', desc: 'Same phone-first flow at chapter events and game-day parties — dozens of Rollcards opened and funded in one night, on one hotspot.' },
 ]
@@ -65,7 +65,7 @@ const FORMATS = [
 const METRICS = [
   ['Cards opened', 'Rollcards opened on the street, by host, city and clip'],
   ['Funded accounts', 'Cards that completed an RTP deposit before playing'],
-  ['Withdrawals to card', 'Push-to-card payouts and total $ landed on Rollcards'],
+  ['FanDuel withdrawals to card', 'Push-to-card payouts from FanDuel and total $ landed on Rollcards'],
   ['Retained spend', '30/60/90-day card spend from street-acquired cardholders'],
   ['Content', 'Clips shipped, views, and signups attributed to each clip’s code'],
 ]
@@ -93,14 +93,14 @@ export default function RollcardStreetCornerPage() {
           </div>
           <span className={s.sccEyebrow}>How Street Corner Casino benefits Rollcard</span>
           <h2 className={s.sccH2}>
-            <span>Open Rollcard</span>
-            <span>on their phone.</span>
-            <span className={s.sccGreen}>Withdraw the win to it.</span>
+            <span>Open Rollcard.</span>
+            <span>Bet on FanDuel.</span>
+            <span className={s.sccGreen}>Withdraw the win to Rollcard.</span>
           </h2>
           <p className={s.sccLead}>
-            Street Corner Casino is strangers on the street playing real apps on their own phones, on camera. Plug
-            Rollcard in and every player opens a card to play, and every win is withdrawn to that card before the
-            clip ends — funding and withdrawal, both on the phone, both in frame.
+            Street Corner Casino is strangers on the street betting on FanDuel on their own phones, on camera. Plug
+            Rollcard in and every player opens a card to fund FanDuel, and every win is withdrawn from FanDuel to
+            that card before the clip ends — deposit and withdrawal, both on the phone, both in frame.
           </p>
           <div className={s.row} style={{ marginBottom: 36 }}>
             <a className={`${s.btn} ${s.btnGreen}`} href="#onboard">Onboarding</a>
@@ -135,7 +135,7 @@ export default function RollcardStreetCornerPage() {
       <section id="onboard" className={s.section}>
         <div className={s.shell}>
           <span className={s.eyebrow}>The loop</span>
-          <h2 className={s.h2} style={{ marginBottom: 32 }}>Fund from the phone. Withdraw to the phone.</h2>
+          <h2 className={s.h2} style={{ marginBottom: 32 }}>Fund FanDuel from the Rollcard. Withdraw FanDuel winnings to it.</h2>
           <div className={s.steps}>
             {ONBOARD.map((st) => (
               <div key={st.n}>
@@ -201,7 +201,7 @@ export default function RollcardStreetCornerPage() {
         <div className={s.shell}>
           <h2 className={s.h2}>Next step</h2>
           <p className={s.sub} style={{ marginBottom: 24 }}>
-            Pick the first city and shoot date. Rollcard signup + withdraw-to-card live in the first clip.
+            Pick the first city and shoot date. Rollcard signup + FanDuel withdraw-to-card live in the first clip.
           </p>
           <div className={s.row}>
             <a className={`${s.btn} ${s.btnPrimary}`} href="mailto:jackson@hedgepayments.com?subject=Street%20Corner%20x%20Rollcard">

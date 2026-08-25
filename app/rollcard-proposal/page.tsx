@@ -85,7 +85,7 @@ const SCC_TEAM = [
   'Rollcard opened and funded on the player’s phone mid-clip',
   'Vertical edits for Reels, Shorts and TikTok within 48h',
   'Clips co-owned by Rollcard, cleared for paid use',
-  'Winnings withdrawn to Rollcard in the same take',
+  'FanDuel winnings withdrawn to Rollcard in the same take',
 ]
 
 export default function RollcardProposalPage() {
@@ -203,7 +203,7 @@ export default function RollcardProposalPage() {
           </div>
           <div className={s.row} style={{ marginTop: 24 }}>
             <a className={`${s.btn} ${s.btnGreen}`} href="/rollcard-proposal/street-corner">
-              How Street Corner gets users onto Rollcard &amp; withdrawing to it →
+              How Street Corner gets users onto Rollcard &amp; withdrawing from FanDuel to it →
             </a>
           </div>
         </div>
