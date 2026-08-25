@@ -88,7 +88,7 @@ export default function RollcardProposalPage() {
           <span className={s.x}>×</span>
           <img src="/logos/rollcard.webp" alt="Rollcard" className={s.lockupLogo} />
         </div>
-        <h1 className={s.h1}>Distribution and content, wrapped into one.</h1>
+        <h1 className={s.h1}>Distribution, Content, and Payment Tools — wrapped into one.</h1>
         <p className={s.lede}>
           Rollcard adds Hedge payment solutions to how cardholders fund and cash out. In return, Hedge puts Rollcard
           in front of the 21+ college bettor through <b>FraternityBase</b> and <b>Street Corner Casino</b> — chapter
