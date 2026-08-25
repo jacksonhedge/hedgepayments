@@ -59,11 +59,11 @@ const FORMATS = [
   { name: 'Street corner shoots', desc: 'The core format: busy corner, real strangers, a game on their phone. They open a Rollcard to play and withdraw the win to it before the clip ends.' },
   { name: 'FanDuel props', desc: 'Host offers a live FanDuel prop on tonight’s game. Player funds FanDuel with a freshly opened Rollcard, the crowd sweats it, the payout is withdrawn from FanDuel back to the card.' },
   { name: 'Prediction markets', desc: 'Kalshi / Polymarket-style “will it happen?” markets settled fast on camera, winnings withdrawn to Rollcard in the same take.' },
-  { name: 'Campus + watch parties', desc: 'Same phone-first flow at chapter events and game-day parties — dozens of Rollcards opened and funded in one night, on one hotspot.' },
+  { name: 'Bar tournaments (next)', desc: 'Phase two: bracketed FanDuel prop and parlay tournaments hosted at bars in the same cities — dozens of Rollcards opened, funded and paid out in one night, filmed for the feed.' },
 ]
 
 const METRICS = [
-  ['Cards opened', 'Rollcards opened on the street, by host, city and clip'],
+  ['Cards opened', 'Rollcards opened on the street, by city, host and clip'],
   ['Funded accounts', 'Cards that completed an RTP deposit before playing'],
   ['FanDuel withdrawals to card', 'Push-to-card payouts from FanDuel and total $ landed on Rollcards'],
   ['Retained spend', '30/60/90-day card spend from street-acquired cardholders'],
@@ -98,9 +98,10 @@ export default function RollcardStreetCornerPage() {
             <span className={s.sccGreen}>Withdraw the win to Rollcard.</span>
           </h2>
           <p className={s.sccLead}>
-            Street Corner Casino is strangers on the street betting on FanDuel on their own phones, on camera. Plug
-            Rollcard in and every player opens a card to fund FanDuel, and every win is withdrawn from FanDuel to
-            that card before the clip ends — deposit and withdrawal, both on the phone, both in frame.
+            Street Corner Casino is strangers on the street in Philly, Detroit, Chicago, Pittsburgh, Cleveland,
+            Cincinnati and northern New Jersey, betting on FanDuel on their own phones, on camera. Plug Rollcard in
+            and every player opens a card to fund FanDuel, and every win is withdrawn from FanDuel to that card
+            before the clip ends — deposit and withdrawal, both on the phone, both in frame.
           </p>
           <div className={s.row} style={{ marginBottom: 36 }}>
             <a className={`${s.btn} ${s.btnGreen}`} href="#onboard">Onboarding</a>
