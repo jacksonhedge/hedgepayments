@@ -3,7 +3,7 @@ import s from '../rollcard.module.css'
 
 const title = 'Street Corner Casino × Rollcard — Onboarding & Winnings'
 const description =
-  'How Street Corner Casino events onboard players to Rollcard at the table and pay their winnings straight to the card.'
+  'How Street Corner Casino gets strangers on the street to open a Rollcard on their phone, play, and withdraw their winnings to it — on camera.'
 
 export const metadata: Metadata = {
   title,
@@ -15,52 +15,52 @@ export const metadata: Metadata = {
 const STATS = [
   { n: '1.3B+', l: 'views across platforms' },
   { n: '11', l: 'cities filmed' },
-  { n: 'ID-verified', l: 'every player at the table' },
-  { n: '21+', l: 'licensed states only' },
+  { n: 'On their phone', l: 'every player, every game' },
+  { n: '21+', l: 'ID-verified, licensed states' },
 ]
 
 const ONBOARD = [
-  { n: '01', title: 'Buy-in with Rollcard', desc: 'Every table has a Rollcard QR. Players open a Rollcard at the door (instant virtual card), fund it over RTP in seconds, and buy in with the card. First Rollcard buy-in is boosted.' },
-  { n: '02', title: 'Play on camera', desc: 'The street game runs as usual — blackjack, hold’em, trivia, sports props — with the Rollcard in frame at the buy-in and the cash-out. Zero scripted lines.' },
-  { n: '03', title: 'Winnings paid to the card', desc: 'Winners get paid out to their Rollcard on the spot via push-to-card. No cash, no Venmo, no 1–3 day wait — the balance is spendable at any sportsbook before they leave the event.' },
-  { n: '04', title: 'Keep them on the card', desc: 'The clip goes up within 48h with the player’s referral code. Rollcard cashback and winnings-to-card streaks give them a reason to fund the next buy-in from the same card.' },
+  { n: '01', title: 'Stop a stranger, hand them the game', desc: 'A Street Corner host stops someone on a busy corner. The game is on their own phone — a sportsbook, casino or prediction-market app on Hedge rails. To play, they need money in it.' },
+  { n: '02', title: 'Open Rollcard on the phone', desc: 'They scan the host’s QR, open a Rollcard in ~90 seconds (OAuth bank link, instant virtual card), and fund it over RTP. The card is in their Apple Wallet before the host finishes explaining the rules.' },
+  { n: '03', title: 'Play, on camera', desc: 'They deposit into the app with the Rollcard and play the hand, the prop, the market — right there on the sidewalk, phone in hand, crowd watching. Zero scripted lines.' },
+  { n: '04', title: 'Withdraw to Rollcard, on the spot', desc: 'They win, they hit withdraw, and the winnings push to their Rollcard in minutes — while the camera is still rolling. That balance is spendable anywhere Visa is before they walk away.' },
 ]
 
 const FLOWS = [
   {
-    name: 'Onboarding: signup at the table',
+    name: 'Onboarding: open Rollcard on the street',
     items: [
-      'Rollcard QR on every table, banner and dealer tee',
-      'Hosts walk players through signup — ~90 seconds with OAuth bank link',
-      'Instant virtual card usable for the buy-in immediately',
-      'First-buy-in boost funded from the marketing budget',
-      'Chapter + event referral codes tracked per signup',
+      'Host QR → Rollcard signup on the player’s own phone',
+      '~90 seconds: OAuth bank link, instant virtual card, Apple / Google Wallet',
+      'First deposit over RTP lands in seconds, so the game starts immediately',
+      'First-deposit boost funded from the marketing budget',
+      'Host + city referral codes tracked on every signup',
     ],
   },
   {
-    name: 'Withdrawals: winnings to Rollcard',
+    name: 'Withdrawal: winnings to Rollcard from the phone',
     items: [
-      'Push-to-card payout at the table in minutes',
-      'No withdrawal cap; RTP out to the bank if they want cash',
-      'Winnings land as a Rollcard balance → immediately spendable at any sportsbook',
-      'Payout streak perks for three events running',
-      'Every payout is a clip: “paid out to my Rollcard” in frame',
+      'Player taps withdraw in the app; push-to-card lands on the Rollcard in minutes',
+      'Filmed in one take: bet → win → withdraw → balance on the card',
+      'No cash handled by the crew, no Venmo, no 1–3 day ACH wait',
+      'Balance is instantly spendable at any sportsbook or anywhere Visa is accepted',
+      'Every withdrawal becomes a clip: “just cashed out to my Rollcard”',
     ],
   },
 ]
 
 const FORMATS = [
-  { name: 'Casino nights', desc: 'On-campus blackjack and hold’em nights hosted with the chapter. Rollcard is the buy-in and the payout.' },
-  { name: 'Tournaments', desc: 'Bracketed poker and trivia tournaments across campuses. Prize pools paid to the winners’ Rollcards, leaderboard on the clips.' },
-  { name: 'Street corner shoots', desc: 'The core format: a busy corner, real strangers, a game, a prize. The prize is paid to a Rollcard opened on the spot.' },
-  { name: 'Sportsbook watch parties', desc: 'Game-day parties where the Rollcard funds the sportsbook deposit live and the winnings come back to the card the same night.' },
+  { name: 'Street corner shoots', desc: 'The core format: busy corner, real strangers, a game on their phone. They open a Rollcard to play and withdraw the win to it before the clip ends.' },
+  { name: 'Sportsbook props', desc: 'Host offers a live prop on tonight’s game. Player funds the sportsbook with a freshly opened Rollcard, the crowd sweats it, the payout comes back to the card.' },
+  { name: 'Prediction markets', desc: 'Kalshi / Polymarket-style “will it happen?” markets settled fast on camera, winnings withdrawn to Rollcard in the same take.' },
+  { name: 'Campus + watch parties', desc: 'Same phone-first flow at chapter events and game-day parties — dozens of Rollcards opened and funded in one night, on one hotspot.' },
 ]
 
 const METRICS = [
-  ['Cards opened', 'Signups at the door per event, by chapter and campus'],
-  ['Funded accounts', 'Cards that completed an RTP deposit at the event'],
-  ['Winnings paid', 'Push-to-card payouts and total $ landed on Rollcards'],
-  ['Retained spend', '30/60/90-day card spend from event-acquired cardholders'],
+  ['Cards opened', 'Rollcards opened on the street, by host, city and clip'],
+  ['Funded accounts', 'Cards that completed an RTP deposit before playing'],
+  ['Withdrawals to card', 'Push-to-card payouts and total $ landed on Rollcards'],
+  ['Retained spend', '30/60/90-day card spend from street-acquired cardholders'],
   ['Content', 'Clips shipped, views, and signups attributed to each clip’s code'],
 ]
 
@@ -87,14 +87,14 @@ export default function RollcardStreetCornerPage() {
           </div>
           <span className={s.sccEyebrow}>How Street Corner Casino benefits Rollcard</span>
           <h2 className={s.sccH2}>
-            <span>Open the card</span>
-            <span>at the table.</span>
-            <span className={s.sccGreen}>Pay the winnings to it.</span>
+            <span>Open Rollcard</span>
+            <span>on their phone.</span>
+            <span className={s.sccGreen}>Withdraw the win to it.</span>
           </h2>
           <p className={s.sccLead}>
-            Street Corner Casino is a live event and content engine already running on campuses. Plugging Rollcard
-            into it does two things: every player who sits down becomes a cardholder, and every payout lands on
-            that card — on camera.
+            Street Corner Casino is strangers on the street playing real apps on their own phones, on camera. Plug
+            Rollcard in and every player opens a card to play, and every win is withdrawn to that card before the
+            clip ends — funding and withdrawal, both on the phone, both in frame.
           </p>
           <div className={s.row} style={{ marginBottom: 36 }}>
             <a className={`${s.btn} ${s.btnGreen}`} href="#onboard">Onboarding</a>
@@ -115,7 +115,7 @@ export default function RollcardStreetCornerPage() {
       <section id="onboard" className={s.section}>
         <div className={s.shell}>
           <span className={s.eyebrow}>The loop</span>
-          <h2 className={s.h2} style={{ marginBottom: 32 }}>Buy in with Rollcard. Get paid to Rollcard.</h2>
+          <h2 className={s.h2} style={{ marginBottom: 32 }}>Fund from the phone. Withdraw to the phone.</h2>
           <div className={s.steps}>
             {ONBOARD.map((st) => (
               <div key={st.n}>
@@ -181,7 +181,7 @@ export default function RollcardStreetCornerPage() {
         <div className={s.shell}>
           <h2 className={s.h2}>Next step</h2>
           <p className={s.sub} style={{ marginBottom: 24 }}>
-            Pick the first campus and event date. Rollcard signup + push-to-card payout live at the first table.
+            Pick the first city and shoot date. Rollcard signup + withdraw-to-card live in the first clip.
           </p>
           <div className={s.row}>
             <a className={`${s.btn} ${s.btnPrimary}`} href="mailto:jackson@hedgepayments.com?subject=Street%20Corner%20x%20Rollcard">

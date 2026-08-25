@@ -34,7 +34,7 @@ const CHANNELS = [
     name: 'Live events & tournaments',
     stat: 'On-campus',
     statLabel: 'Street Corner Casino',
-    desc: 'Casino nights, host-run tournaments and content shot on site across college towns. Rollcard as the official card at every event, signup at the door, and clips that run back through the network.',
+    desc: 'Street shoots and tournaments where strangers play real apps on their phones on camera. Each one opens a Rollcard to fund the game and withdraws the win to it mid-clip — then the clips run back through the network.',
   },
 ]
 
@@ -81,11 +81,11 @@ const CLIPS = [
 ]
 
 const SCC_TEAM = [
-  'Weekly campus shoots with Rollcard as the prize',
-  'Casino nights + tournaments, signup at the door',
+  'Weekly street shoots — real apps, real money, on their phone',
+  'Rollcard opened and funded on the player’s phone mid-clip',
   'Vertical edits for Reels, Shorts and TikTok within 48h',
   'Clips co-owned by Rollcard, cleared for paid use',
-  'Referral codes on every clip and every table',
+  'Winnings withdrawn to Rollcard in the same take',
 ]
 
 export default function RollcardProposalPage() {
@@ -190,9 +190,9 @@ export default function RollcardProposalPage() {
             <div>
               <p className={s.sccTeamTitle}>Your embedded street marketing team</p>
               <p className={s.cardDesc}>
-                Hosts, dealers, camera and editors — a Hedge crew that lives on campus and at the events, shooting
-                Rollcard content weekly and running signups at the door. Rollcard gets the clips, the accounts and
-                the co-ownership of everything we shoot.
+                Hosts, camera and editors — a Hedge crew on the street every week getting strangers to play real
+                apps on their own phones. Players open a Rollcard to fund the game and withdraw the win to it,
+                on camera. Rollcard gets the clips, the accounts and co-ownership of everything we shoot.
               </p>
             </div>
             <ul className={s.sccList}>
@@ -203,7 +203,7 @@ export default function RollcardProposalPage() {
           </div>
           <div className={s.row} style={{ marginTop: 24 }}>
             <a className={`${s.btn} ${s.btnGreen}`} href="/rollcard-proposal/street-corner">
-              How Street Corner onboards users &amp; pays winnings to Rollcard →
+              How Street Corner gets users onto Rollcard &amp; withdrawing to it →
             </a>
           </div>
         </div>
