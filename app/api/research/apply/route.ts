@@ -24,18 +24,20 @@ export async function POST(req: NextRequest) {
   const db = researchAdminClient()
   if (!db) return noDb()
 
-  const { data: existing } = await db.from('research_testers').select('id,status').eq('email', email).maybeSingle()
+  // Unauthenticated endpoint: never modify an existing profile (anyone could
+  // overwrite another tester's phone/name by resubmitting their email). Existing
+  // testers just get the magic link from the client and edit in the dashboard.
+  // Response is identical either way so emails can't be enumerated.
+  const { data: existing } = await db.from('research_testers').select('id').eq('email', email).maybeSingle()
+  if (existing) return NextResponse.json({ success: true })
+
   const row = { email, first_name, last_name, state, age_bucket, phone, platforms, verticals,
     sms_opt_in: !!phone && b.sms_opt_in !== false, referral_source: b.referral_source ? String(b.referral_source).slice(0, 200) : null }
-  const { error } = existing
-    ? await db.from('research_testers').update(row).eq('id', existing.id)
-    : await db.from('research_testers').insert(row)
+  const { error } = await db.from('research_testers').insert(row)
   if (error) {
-    console.error('research_testers upsert failed:', error.message)
+    console.error('research_testers insert failed:', error.message)
     return NextResponse.json({ error: 'Could not save application' }, { status: 500 })
   }
-  if (!existing) {
-    await notifySlack(`🧪 *New research tester*: ${first_name}${last_name ? ' ' + last_name : ''} · ${state} · ${age_bucket} · ${email}${phone ? ' · ' + phone : ''}\nPlatforms: ${platforms.join(', ') || '—'}`)
-  }
-  return NextResponse.json({ success: true, returning: !!existing })
+  await notifySlack(`🧪 *New research tester*: ${first_name}${last_name ? ' ' + last_name : ''} · ${state} · ${age_bucket} · ${email}${phone ? ' · ' + phone : ''}\nPlatforms: ${platforms.join(', ') || '—'}`)
+  return NextResponse.json({ success: true })
 }

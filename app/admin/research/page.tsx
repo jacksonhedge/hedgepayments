@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 // Hedge Research admin: testers, tests, assignments, and outbound SMS/email.
-// Auth = ADMIN_SECRET bearer (same as /api/admin/send-email), kept in localStorage.
+// Auth = ADMIN_SECRET bearer (same as /api/admin/send-email), kept in sessionStorage (cleared when the tab closes).
 
 type Tester = { id: string; email: string; phone: string | null; first_name: string; last_name: string | null; age_bucket: string; state: string; platforms: string[]; verticals: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; notes: string | null; created_at: string; research_assignments: { id: string; status: string; test_id: string }[]; research_messages: { id: string; channel: string; sent_at: string }[] }
 type Test = { id: string; title: string; platform_id: string | null; description: string | null; instructions: string | null; payout_cents: number; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string } | null; research_assignments: { id: string; status: string; tester_id: string }[] }
@@ -30,8 +30,8 @@ export default function ResearchAdmin() {
   const [toast, setToast] = useState('')
   const [err, setErr] = useState('')
 
-  useEffect(() => { try { setSecret(localStorage.getItem('hedge_admin_secret') || '') } catch {} }, [])
-  const saveSecret = (v: string) => { setSecret(v); try { localStorage.setItem('hedge_admin_secret', v) } catch {} }
+  useEffect(() => { try { setSecret(sessionStorage.getItem('hedge_admin_secret') || '') } catch {} }, [])
+  const saveSecret = (v: string) => { setSecret(v); try { sessionStorage.setItem('hedge_admin_secret', v) } catch {} }
 
   const api = useCallback(async (path: string, init?: RequestInit) => {
     const res = await fetch(`/api/admin/research/${path}`, { ...init, headers: { 'content-type': 'application/json', authorization: `Bearer ${secret}`, ...(init?.headers || {}) } })
