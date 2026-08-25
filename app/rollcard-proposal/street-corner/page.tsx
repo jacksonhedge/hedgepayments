@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import s from '../rollcard.module.css'
+import { FootprintMap } from './FootprintMap'
 
 const title = 'Street Corner Casino × Rollcard — Onboarding & Winnings'
 const description =
@@ -114,6 +115,7 @@ export default function RollcardStreetCornerPage() {
               </li>
             ))}
           </ul>
+          <div className={s.clipsMap}>
           <ul className={s.clips}>
             {CLIPS.map((c) => (
               <li key={c.caption} className={s.clip}>
@@ -125,6 +127,8 @@ export default function RollcardStreetCornerPage() {
               </li>
             ))}
           </ul>
+          <FootprintMap />
+          </div>
         </div>
       </section>
 
