@@ -158,3 +158,47 @@
 @media (max-width: 520px) { .term { grid-template-columns: 1fr; gap: 4px; } }
 .term dt { color: var(--muted); margin: 0; }
 .term dd { margin: 0; }
+
+/* Hero button variants */
+.btnGreen { background: #1EB05A; color: #04140a; border-color: #1EB05A; }
+.btnGreen:hover { background: #2fd06e; }
+.btnOutline { border-color: rgba(255,255,255,0.35); }
+
+/* Database */
+.dbStats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+@media (max-width: 760px) { .dbStats { grid-template-columns: 1fr 1fr; } }
+.dbStat { padding: 20px 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+
+/* Street Corner Casino section — mirrors streetcornercasino.com */
+.scc {
+  border-top: 1px solid var(--line);
+  padding: 80px 0;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(22, 163, 74, 0.14), transparent 60%),
+    linear-gradient(135deg, rgba(20, 83, 45, 0.28), rgba(120, 20, 30, 0.18)),
+    #07090b;
+}
+.sccHead { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.sccLogo { height: 34px; width: auto; }
+.sccEyebrow { font-family: ui-monospace, "Space Mono", Menlo, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8fe0b0; }
+.sccH2 { display: grid; margin: 0 0 18px; font-size: clamp(36px, 5.4vw, 64px); font-weight: 800; line-height: 0.98; letter-spacing: -0.03em; color: #fff; }
+.sccGreen { color: #56e08b; }
+.sccLead { color: #b6bcc4; font-size: 17px; line-height: 1.6; max-width: 58ch; margin: 0 0 32px; }
+.sccStats { list-style: none; margin: 0 0 36px; padding: 24px 0; border-block: 1px solid rgba(255,255,255,0.1); display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; background: linear-gradient(180deg, rgba(22,163,74,0.06), transparent); }
+@media (max-width: 680px) { .sccStats { grid-template-columns: 1fr 1fr; } }
+.sccStat { display: grid; gap: 4px; border-left: 2px solid #56e08b; padding-left: 16px; }
+.sccStatN { font-size: clamp(26px, 3vw, 38px); font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.02em; }
+.sccStatL { font-family: ui-monospace, "Space Mono", Menlo, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: #9aa3ad; }
+.clips { list-style: none; margin: 0 0 36px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+@media (max-width: 920px) { .clips { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .clips { grid-template-columns: 1fr; max-width: 340px; } }
+.clip { position: relative; aspect-ratio: 9 / 16; border-radius: 22px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); background: #111; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.clipVideo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.clipMeta { position: absolute; inset: auto 0 0 0; padding: 40px 16px 16px; display: grid; gap: 4px; background: linear-gradient(180deg, transparent, rgba(0,0,0,0.85)); }
+.clipViews { font-family: ui-monospace, "Space Mono", Menlo, monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8fe0b0; }
+.clipCaption { font-size: 15px; font-weight: 700; color: #fff; }
+.sccTeam { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; padding: 28px; border: 1px solid rgba(86,224,139,0.35); border-radius: 16px; background: rgba(14, 63, 44, 0.35); }
+@media (max-width: 760px) { .sccTeam { grid-template-columns: 1fr; } }
+.sccTeamTitle { font-size: 20px; font-weight: 800; color: #fff; margin: 0 0 10px; letter-spacing: -0.01em; }
+.sccList { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14px; color: #dfe5ea; }
+.sccList li::before { content: '♠ '; color: #56e08b; }

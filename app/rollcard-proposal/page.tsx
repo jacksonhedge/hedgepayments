@@ -68,6 +68,41 @@ const TERMS = [
   ['Timeline', 'Integration in 2 weeks · testing group live the following month'],
 ]
 
+const DB_STATS = [
+  { n: '20,000+', label: 'verified members' },
+  { n: '1,000+', label: 'chapters' },
+  { n: '150+', label: 'universities' },
+  { n: '21+', label: 'age-gated cohort' },
+]
+
+const DB_FEATURES = [
+  { name: 'Officer-level contacts', desc: 'Presidents, social chairs and treasurers per chapter — the people who decide what the house signs up for.' },
+  { name: 'Deals tab placement', desc: 'Rollcard listed in the FraternityBase Deals tab every member sees, with chapter-specific referral codes.' },
+  { name: 'Ambassador program', desc: 'One paid ambassador per chapter driving signups, tracked by code and paid on funded accounts.' },
+  { name: 'Testing group', desc: 'The same members become the Rollcard testing group — real cardholders, structured feedback, growing through Q1.' },
+]
+
+const SCC_STATS = [
+  { n: '1.3B+', l: 'views across platforms' },
+  { n: '11', l: 'cities filmed' },
+  { n: 'Daily', l: 'new drops' },
+  { n: '0', l: 'scripted lines' },
+]
+
+const CLIPS = [
+  { src: '/scc/featured.mp4', poster: '/scc/featured.jpg', views: '2.4M', caption: 'Grandma doubles down.' },
+  { src: '/scc/clip-02.mp4', poster: '/scc/clip-02.jpg', views: '1.1M', caption: 'The 19 dilemma.' },
+  { src: '/scc/featured.mp4', poster: '/scc/featured.jpg', views: '3.8M', caption: 'Crowd vs. the player.' },
+]
+
+const SCC_TEAM = [
+  'Weekly campus shoots with Rollcard as the prize',
+  'Casino nights + tournaments, signup at the door',
+  'Vertical edits for Reels, Shorts and TikTok within 48h',
+  'Clips co-owned by Rollcard, cleared for paid use',
+  'Referral codes on every clip and every table',
+]
+
 export default function RollcardProposalPage() {
   return (
     <main className={s.root}>
@@ -95,14 +130,98 @@ export default function RollcardProposalPage() {
           promos, campus events and the content that comes out of them — paid on a revenue share, not a flat fee.
         </p>
         <div className={s.row}>
-          <a className={`${s.btn} ${s.btnPrimary}`} href="mailto:jackson@hedgepayments.com?subject=Rollcard%20x%20Hedge">Book a call</a>
-          <a className={s.btn} href="#terms">See proposed terms</a>
+          <a className={`${s.btn} ${s.btnPrimary}`} href="#database">Our group database</a>
+          <a className={`${s.btn} ${s.btnGreen}`} href="#content">Our content</a>
+          <a className={`${s.btn} ${s.btnOutline}`} href="#rails">Payment rails</a>
         </div>
       </header>
 
-      <section className={s.section}>
+      {/* ---------- DATABASE ---------- */}
+      <section id="database" className={s.section}>
         <div className={s.shell}>
-          <span className={s.eyebrow}>Part one · Payments</span>
+          <span className={s.eyebrow}>01 · Our group database</span>
+          <h2 className={s.h2}>The 21+ college bettor, chapter by chapter.</h2>
+          <p className={s.sub} style={{ marginBottom: 32 }}>
+            FraternityBase is a verified database of fraternity chapters, officers and members across the US —
+            the cohort that opens the most gaming accounts and hasn&apos;t picked a card yet. Every member is
+            reachable by chapter, campus and role.
+          </p>
+          <div className={s.dbStats}>
+            {DB_STATS.map((d) => (
+              <div key={d.label} className={s.dbStat}>
+                <p className={s.channelStat}>{d.n}</p>
+                <p className={s.channelStatLabel}>{d.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className={s.grid}>
+            {DB_FEATURES.map((f) => (
+              <div key={f.name} className={s.card}>
+                <h3 className={s.cardTitle}>{f.name}</h3>
+                <p className={s.cardDesc}>{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- CONTENT (Street Corner Casino) ---------- */}
+      <section id="content" className={s.scc}>
+        <div className={s.shell}>
+          <div className={s.sccHead}>
+            <img src="/scc/logo-white.png" alt="Street Corner Casino" className={s.sccLogo} />
+            <span className={s.sccEyebrow}>02 · Our content · Street-corner user acquisition</span>
+          </div>
+          <h2 className={s.sccH2}>
+            <span>Acquire users</span>
+            <span>with gamified</span>
+            <span className={s.sccGreen}>product usage.</span>
+          </h2>
+          <p className={s.sccLead}>
+            We put Rollcard on a busy corner, get real strangers competing on it on camera, then cut the moment
+            into vertical clips built to convert. The street game is the hook — the card is the prize, and the
+            internet does the sign-ups.
+          </p>
+          <ul className={s.sccStats}>
+            {SCC_STATS.map((st) => (
+              <li key={st.l} className={s.sccStat}>
+                <span className={s.sccStatN}>{st.n}</span>
+                <span className={s.sccStatL}>{st.l}</span>
+              </li>
+            ))}
+          </ul>
+          <ul className={s.clips}>
+            {CLIPS.map((c) => (
+              <li key={c.caption} className={s.clip}>
+                <video src={c.src} poster={c.poster} muted loop playsInline autoPlay className={s.clipVideo} />
+                <div className={s.clipMeta}>
+                  <span className={s.clipViews}>{c.views} views</span>
+                  <span className={s.clipCaption}>{c.caption}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className={s.sccTeam}>
+            <div>
+              <p className={s.sccTeamTitle}>Your embedded street marketing team</p>
+              <p className={s.cardDesc}>
+                Hosts, dealers, camera and editors — a Hedge crew that lives on campus and at the events, shooting
+                Rollcard content weekly and running signups at the door. Rollcard gets the clips, the accounts and
+                the co-ownership of everything we shoot.
+              </p>
+            </div>
+            <ul className={s.sccList}>
+              {SCC_TEAM.map((x) => (
+                <li key={x}>{x}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="rails" className={s.section}>
+        <div className={s.shell}>
+          <span className={s.eyebrow}>03 · Payment rails</span>
           <h2 className={s.h2}>Edge Boost-grade on-ramp, inside Rollcard</h2>
           <p className={s.sub} style={{ marginBottom: 32 }}>
             Edge Boost set the bar for a bettor&apos;s card: instant funding, every bank linkable, withdrawals in
@@ -132,7 +251,7 @@ export default function RollcardProposalPage() {
 
       <section className={s.section}>
         <div className={s.shell}>
-          <span className={s.eyebrow}>Part two · Distribution</span>
+          <span className={s.eyebrow}>How it rolls out</span>
           <h2 className={s.h2}>How we grow Rollcard</h2>
           <p className={s.sub} style={{ marginBottom: 32 }}>
             We don&apos;t buy ads. We own the communities. Rollcard gets placement in front of the 21+ college
