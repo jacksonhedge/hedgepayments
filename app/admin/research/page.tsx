@@ -1,12 +1,13 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { PAYOUT_TIERS } from '../../research/testerConfig'
 
 // Hedge Research admin: testers, tests, assignments, and outbound SMS/email.
 // Auth = ADMIN_SECRET bearer (same as /api/admin/send-email), kept in sessionStorage (cleared when the tab closes).
 
-type Tester = { id: string; email: string; phone: string | null; first_name: string; last_name: string | null; age_bucket: string; state: string; platforms: string[]; verticals: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; notes: string | null; created_at: string; research_assignments: { id: string; status: string; test_id: string }[]; research_messages: { id: string; channel: string; sent_at: string }[] }
-type Test = { id: string; title: string; platform_id: string | null; description: string | null; instructions: string | null; payout_cents: number; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string } | null; research_assignments: { id: string; status: string; tester_id: string }[] }
+type Tester = { id: string; email: string; phone: string | null; first_name: string; last_name: string | null; age_bucket: string; state: string; platforms: string[]; verticals: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; payout_method: string | null; payout_handle: string | null; notes: string | null; created_at: string; research_assignments: { id: string; status: string; test_id: string }[]; research_messages: { id: string; channel: string; sent_at: string }[] }
+type Test = { id: string; title: string; platform_id: string | null; description: string | null; instructions: string | null; payout_cents: number; payout_max_cents: number | null; tier: string; est_minutes: number | null; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string } | null; research_assignments: { id: string; status: string; tester_id: string; paid_cents: number | null }[] }
 type Platform = { id: string; slug: string; name: string; kind: string }
 type Msg = { id: string; channel: string; subject: string | null; body: string; status: string; error: string | null; sent_at: string; research_testers: { first_name: string; email: string } | null }
 
@@ -115,7 +116,7 @@ export default function ResearchAdmin() {
               <thead className="bg-[#FAF8F5] text-left">
                 <tr>
                   <th className="p-2"><input type="checkbox" checked={visible.length > 0 && selected.size === visible.length} onChange={toggleAll} /></th>
-                  <th className="p-2">Tester</th><th className="p-2">Contact</th><th className="p-2">State / Age</th><th className="p-2">Platforms</th><th className="p-2">Tests</th><th className="p-2">Status</th><th className="p-2">Joined</th>
+                  <th className="p-2">Tester</th><th className="p-2">Contact</th><th className="p-2">State / Age</th><th className="p-2">Platforms</th><th className="p-2">Payout to</th><th className="p-2">Tests</th><th className="p-2">Status</th><th className="p-2">Joined</th>
                 </tr>
               </thead>
               <tbody>
@@ -126,6 +127,7 @@ export default function ResearchAdmin() {
                     <td className="p-2 text-xs"><div>{t.email}{!t.email_opt_in && ' 🚫'}</div><div>{t.phone || <span className="text-[#9a8b7a]">no phone</span>}{t.phone && !t.sms_opt_in && ' 🚫'}</div></td>
                     <td className="p-2">{t.state} · {t.age_bucket}</td>
                     <td className="p-2 text-xs max-w-[200px]">{t.platforms.join(', ') || '—'}</td>
+                    <td className="p-2 text-xs">{t.payout_method ? `${t.payout_method}: ${t.payout_handle}` : <span className="text-red-700">not set</span>}</td>
                     <td className="p-2 text-xs">{t.research_assignments.length ? ASSIGN_STATUSES.map((s) => { const n = t.research_assignments.filter((a) => a.status === s).length; return n ? `${n} ${s}` : null }).filter(Boolean).join(', ') : '—'}<div className="text-[#9a8b7a]">{t.research_messages.length} msgs</div></td>
                     <td className="p-2">
                       <select className="border border-[#D4C5B0] rounded px-1 py-0.5 text-xs" value={t.status} onChange={async (e) => { try { await api('testers', { method: 'PATCH', body: JSON.stringify({ id: t.id, status: e.target.value }) }); reload() } catch (x: any) { setErr(x.message) } }}>
@@ -135,7 +137,7 @@ export default function ResearchAdmin() {
                     <td className="p-2 text-xs">{new Date(t.created_at).toLocaleDateString()}</td>
                   </tr>
                 ))}
-                {visible.length === 0 && <tr><td colSpan={8} className="p-6 text-center text-[#6B5D4F]">No testers match.</td></tr>}
+                {visible.length === 0 && <tr><td colSpan={9} className="p-6 text-center text-[#6B5D4F]">No testers match.</td></tr>}
               </tbody>
             </table>
           </div>
@@ -206,7 +208,8 @@ function Composer({ selected, tests, api, onDone }: { selected: string[]; tests:
 }
 
 function TestsTab({ tests, testers, platforms, api, onChange, onError }: { tests: Test[]; testers: Tester[]; platforms: Platform[]; api: (p: string, i?: RequestInit) => Promise<any>; onChange: (m: string) => void; onError: (m: string) => void }) {
-  const [form, setForm] = useState({ title: '', platform_id: '', payout_dollars: '25', description: '', instructions: '', status: 'recruiting', ends_at: '' })
+  const [form, setForm] = useState({ title: '', platform_id: '', tier: 'standard', payout_dollars: '25', payout_max_dollars: '40', est_minutes: '25', description: '', instructions: '', status: 'recruiting', ends_at: '' })
+  const applyTier = (key: string) => { const t = PAYOUT_TIERS.find((x) => x.key === key); if (t) setForm((f) => ({ ...f, tier: key, payout_dollars: String(t.pay), payout_max_dollars: String(t.max), est_minutes: String(t.minutes) })) }
   const [open, setOpen] = useState<string | null>(null)
   const byId = useMemo(() => Object.fromEntries(testers.map((t) => [t.id, t])), [testers])
 
@@ -215,7 +218,16 @@ function TestsTab({ tests, testers, platforms, api, onChange, onError }: { tests
     try { await api('tests', { method: 'POST', body: JSON.stringify({ ...form, ends_at: form.ends_at || null, platform_id: form.platform_id || null }) }); setForm({ ...form, title: '', description: '', instructions: '' }); onChange('Test created') } catch (e: any) { onError(e.message) }
   }
   const patchTest = async (id: string, patch: any) => { try { await api('tests', { method: 'PATCH', body: JSON.stringify({ id, ...patch }) }); onChange('Updated') } catch (e: any) { onError(e.message) } }
-  const patchAssign = async (id: string, status: string) => { try { await api('assignments', { method: 'PATCH', body: JSON.stringify({ id, status }) }); onChange('Assignment updated') } catch (e: any) { onError(e.message) } }
+  const patchAssign = async (id: string, status: string, test?: Test) => {
+    const body: any = { id, status }
+    if (status === 'paid' && test) {
+      const def = (test.payout_cents / 100).toFixed(0)
+      const v = window.prompt(`Amount paid ($${def}${test.payout_max_cents ? `–$${(test.payout_max_cents / 100).toFixed(0)}` : ''})`, def)
+      if (v === null) return
+      body.paid_cents = Math.round(Number(v) * 100)
+    }
+    try { await api('assignments', { method: 'PATCH', body: JSON.stringify(body) }); onChange('Assignment updated') } catch (e: any) { onError(e.message) }
+  }
 
   return (
     <div className="grid md:grid-cols-3 gap-6">
@@ -223,8 +235,15 @@ function TestsTab({ tests, testers, platforms, api, onChange, onError }: { tests
         <h2 className="font-semibold">New test</h2>
         <input className={inp} placeholder="Title (e.g. FanDuel deposit + cash-out, NJ)" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
         <select className={inp} value={form.platform_id} onChange={(e) => setForm({ ...form, platform_id: e.target.value })}><option value="">Platform…</option>{platforms.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</select>
+        <div className="flex flex-wrap gap-1">
+          {PAYOUT_TIERS.map((t) => <button key={t.key} type="button" onClick={() => applyTier(t.key)} className={`px-2 py-1 rounded text-xs border ${form.tier === t.key ? 'bg-[#2C2416] text-white border-[#2C2416]' : 'border-[#D4C5B0]'}`}>{t.label} ${t.pay}{t.max > t.pay ? `–${t.max}` : ''}</button>)}
+        </div>
         <div className="flex gap-2">
-          <input className={inp} type="number" placeholder="Payout $" value={form.payout_dollars} onChange={(e) => setForm({ ...form, payout_dollars: e.target.value })} />
+          <input className={inp} type="number" min={10} max={100} placeholder="Min $" value={form.payout_dollars} onChange={(e) => setForm({ ...form, payout_dollars: e.target.value })} />
+          <input className={inp} type="number" min={10} max={100} placeholder="Max $" value={form.payout_max_dollars} onChange={(e) => setForm({ ...form, payout_max_dollars: e.target.value })} />
+          <input className={inp} type="number" placeholder="Min" title="Estimated minutes" value={form.est_minutes} onChange={(e) => setForm({ ...form, est_minutes: e.target.value })} />
+        </div>
+        <div className="flex gap-2">
           <select className={inp} value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>{TEST_STATUSES.map((s) => <option key={s}>{s}</option>)}</select>
         </div>
         <input className={inp} type="date" value={form.ends_at} onChange={(e) => setForm({ ...form, ends_at: e.target.value })} />
@@ -243,7 +262,7 @@ function TestsTab({ tests, testers, platforms, api, onChange, onError }: { tests
               <div className="flex justify-between items-start gap-3">
                 <div>
                   <div className="font-semibold">{t.title}</div>
-                  <div className="text-xs text-[#6B5D4F]">{t.research_platforms?.name || 'No platform'} · ${(t.payout_cents / 100).toFixed(0)} · {a.length} assigned · {n('submitted')} to review · {n('paid')} paid{t.ends_at ? ` · due ${new Date(t.ends_at).toLocaleDateString()}` : ''}</div>
+                  <div className="text-xs text-[#6B5D4F]">{t.research_platforms?.name || 'No platform'} · {t.tier} · ${(t.payout_cents / 100).toFixed(0)}{t.payout_max_cents && t.payout_max_cents > t.payout_cents ? `–$${(t.payout_max_cents / 100).toFixed(0)}` : ''}{t.est_minutes ? ` · ~${t.est_minutes} min` : ''} · {a.length} assigned · {n('submitted')} to review · {n('paid')} paid{t.ends_at ? ` · due ${new Date(t.ends_at).toLocaleDateString()}` : ''}</div>
                 </div>
                 <div className="flex gap-2 items-center">
                   <select className="border border-[#D4C5B0] rounded px-1 py-0.5 text-xs" value={t.status} onChange={(e) => patchTest(t.id, { status: e.target.value })}>{TEST_STATUSES.map((s) => <option key={s}>{s}</option>)}</select>
@@ -257,8 +276,8 @@ function TestsTab({ tests, testers, platforms, api, onChange, onError }: { tests
                     const tt = byId[x.tester_id]
                     return (
                       <div key={x.id} className="flex justify-between items-center text-sm">
-                        <span>{tt ? `${tt.first_name} ${tt.last_name || ''} · ${tt.state} · ${tt.email}` : x.tester_id}</span>
-                        <select className="border border-[#D4C5B0] rounded px-1 py-0.5 text-xs" value={x.status} onChange={(e) => patchAssign(x.id, e.target.value)}>{ASSIGN_STATUSES.map((s) => <option key={s}>{s}</option>)}</select>
+                        <span>{tt ? `${tt.first_name} ${tt.last_name || ''} · ${tt.state} · ${tt.email}` : x.tester_id}{tt?.payout_method ? <span className="text-xs text-[#6B5D4F]"> · {tt.payout_method} {tt.payout_handle}</span> : <span className="text-xs text-red-700"> · no payout method</span>}{x.status === 'paid' && x.paid_cents != null && <span className="text-xs text-green-700"> · paid ${(x.paid_cents / 100).toFixed(0)}</span>}</span>
+                        <select className="border border-[#D4C5B0] rounded px-1 py-0.5 text-xs" value={x.status} onChange={(e) => patchAssign(x.id, e.target.value, t)}>{ASSIGN_STATUSES.map((s) => <option key={s}>{s}</option>)}</select>
                       </div>
                     )
                   })}

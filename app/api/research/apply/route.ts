@@ -15,6 +15,8 @@ export async function POST(req: NextRequest) {
   const age_bucket = b.age_bucket === '21+' ? '21+' : b.age_bucket === '18-20' ? '18-20' : ''
   const phone = normalizePhone(b.phone)
   const platforms: string[] = Array.isArray(b.platforms) ? b.platforms.map(String).slice(0, 30) : []
+  const payout_method = ['venmo','paypal','cashapp','zelle'].includes(b.payout_method) ? b.payout_method : null
+  const payout_handle = payout_method && b.payout_handle ? String(b.payout_handle).trim().slice(0, 120) : null
   const verticals: string[] = Array.isArray(b.verticals) ? b.verticals.map(String).slice(0, 10) : []
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
@@ -31,7 +33,7 @@ export async function POST(req: NextRequest) {
   const { data: existing } = await db.from('research_testers').select('id').eq('email', email).maybeSingle()
   if (existing) return NextResponse.json({ success: true })
 
-  const row = { email, first_name, last_name, state, age_bucket, phone, platforms, verticals,
+  const row = { email, first_name, last_name, state, age_bucket, phone, platforms, verticals, payout_method, payout_handle,
     sms_opt_in: !!phone && b.sms_opt_in !== false, referral_source: b.referral_source ? String(b.referral_source).slice(0, 200) : null }
   const { error } = await db.from('research_testers').insert(row)
   if (error) {

@@ -23,6 +23,7 @@ export async function PATCH(req: NextRequest) {
   if (!b.id) return NextResponse.json({ error: 'id required' }, { status: 400 })
   const patch: Record<string, any> = {}
   if (b.status) { patch.status = b.status; if (b.status === 'paid') patch.paid_at = new Date().toISOString() }
+  if ('paid_cents' in b) patch.paid_cents = b.paid_cents == null ? null : Math.round(Number(b.paid_cents))
   if (typeof b.admin_notes === 'string') patch.admin_notes = b.admin_notes
   const { error } = await db.from('research_assignments').update(patch).eq('id', b.id)
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })

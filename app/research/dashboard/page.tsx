@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import s from '../research.module.css'
 import { supabaseBrowser } from '../../utils/supabase-browser'
-import { ASSIGNMENT_LABEL, TESTER_STATUS_LABEL } from '../testerConfig'
+import { ASSIGNMENT_LABEL, TESTER_STATUS_LABEL, PAYOUT_METHODS } from '../testerConfig'
 
-type Tester = { id: string; first_name: string; email: string; phone: string | null; state: string; age_bucket: string; platforms: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean }
-type Assignment = { id: string; status: string; submission_url: string | null; tester_notes: string | null; paid_at: string | null; research_tests: { id: string; title: string; description: string | null; instructions: string | null; payout_cents: number; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string; kind: string } | null } }
+type Tester = { id: string; first_name: string; email: string; phone: string | null; state: string; age_bucket: string; platforms: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; payout_method: string | null; payout_handle: string | null }
+type Assignment = { id: string; status: string; paid_cents: number | null; submission_url: string | null; tester_notes: string | null; paid_at: string | null; research_tests: { id: string; title: string; description: string | null; instructions: string | null; payout_cents: number; payout_max_cents: number | null; est_minutes: number | null; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string; kind: string } | null } }
 type Platform = { slug: string; name: string; kind: string }
 type Msg = { id: string; channel: string; subject: string | null; body: string; sent_at: string }
 
@@ -114,7 +114,8 @@ export default function TesterDashboard() {
   }
 
   const active = assignments.filter((a) => !['paid', 'declined'].includes(a.status))
-  const paidCents = assignments.filter((a) => a.status === 'paid').reduce((n, a) => n + (a.research_tests?.payout_cents || 0), 0)
+  const paidCents = assignments.filter((a) => a.status === 'paid').reduce((n, a) => n + (a.paid_cents ?? a.research_tests?.payout_cents ?? 0), 0)
+  const range = (t: Assignment['research_tests']) => t.payout_max_cents && t.payout_max_cents > t.payout_cents ? `${money(t.payout_cents)}–${money(t.payout_max_cents)}` : money(t.payout_cents)
   const money = (c: number) => `$${(c / 100).toFixed(0)}`
 
   return (
@@ -139,7 +140,7 @@ export default function TesterDashboard() {
               <div className={s.testHead}>
                 <div>
                   <div className={s.itemName}>{t.title}</div>
-                  <div className={s.small}>{t.research_platforms?.name || 'Platform TBD'} · {money(t.payout_cents)} payout{t.ends_at ? ` · due ${new Date(t.ends_at).toLocaleDateString()}` : ''}</div>
+                  <div className={s.small}>{t.research_platforms?.name || 'Platform TBD'} · {range(t)} payout{t.est_minutes ? ` · ~${t.est_minutes} min` : ''}{t.ends_at ? ` · due ${new Date(t.ends_at).toLocaleDateString()}` : ''}</div>
                 </div>
                 <span className={`${s.pill} ${a.status === 'paid' ? s.pillPaid : ['accepted', 'in_progress'].includes(a.status) ? s.pillLive : ''}`}>{ASSIGNMENT_LABEL[a.status] || a.status}</span>
               </div>
@@ -155,7 +156,7 @@ export default function TesterDashboard() {
                 {a.status === 'accepted' && <button className={`${s.btnSm} ${s.btnSmPrimary}`} disabled={busy === a.id} onClick={() => setAssignment(a.id, { status: 'in_progress' })}>Start test</button>}
                 {a.status === 'in_progress' && <SubmitForm busy={busy === a.id} onSubmit={(url, notes) => setAssignment(a.id, { status: 'submitted', submission_url: url, tester_notes: notes })} />}
                 {a.status === 'submitted' && <span className={s.small}>Under review — we&apos;ll approve and pay within a few days.</span>}
-                {a.status === 'paid' && a.paid_at && <span className={s.small}>Paid {new Date(a.paid_at).toLocaleDateString()}</span>}
+                {a.status === 'paid' && a.paid_at && <span className={s.small}>Paid {a.paid_cents != null ? money(a.paid_cents) + ' on ' : ''}{new Date(a.paid_at).toLocaleDateString()}</span>}
               </div>
             </div>
           )
@@ -168,6 +169,10 @@ export default function TesterDashboard() {
             <button key={p.slug} className={`${s.chip} ${tester.platforms.includes(p.slug) ? s.chipOn : ''}`} onClick={() => togglePlatform(p.slug)}>{p.name} <span style={{ opacity: 0.6 }}>· {p.kind}</span></button>
           ))}
         </div>
+
+        <h2 className={s.h2} style={{ fontSize: 20, marginTop: 40 }}>Payout method</h2>
+        <p className={s.small} style={{ marginBottom: 8 }}>Tests pay $10–$100. We send payouts here after a test is approved.</p>
+        <PayoutForm tester={tester} onSave={async (payout_method, payout_handle) => { await supabaseBrowser.from('research_testers').update({ payout_method, payout_handle }).eq('id', tester.id); setTester({ ...tester, payout_method, payout_handle }) }} />
 
         <h2 className={s.h2} style={{ fontSize: 20, marginTop: 40 }}>Notifications</h2>
         <label className={s.check}><input type="checkbox" checked={tester.email_opt_in} onChange={() => toggleOpt('email_opt_in')} /><span>Email me about new tests</span></label>
@@ -184,6 +189,20 @@ export default function TesterDashboard() {
           ))}
         </>}
       </div>
+    </div>
+  )
+}
+
+function PayoutForm({ tester, onSave }: { tester: Tester; onSave: (m: string | null, h: string | null) => Promise<void> }) {
+  const [m, setM] = useState(tester.payout_method || ''); const [h, setH] = useState(tester.payout_handle || ''); const [saved, setSaved] = useState(false)
+  const dirty = m !== (tester.payout_method || '') || h !== (tester.payout_handle || '')
+  return (
+    <div className={s.formRow} style={{ alignItems: 'end' }}>
+      <div><label className={s.label}>Method</label>
+        <select className={s.select} value={m} onChange={(e) => { setM(e.target.value); setSaved(false) }}><option value="">Choose…</option>{PAYOUT_METHODS.map((x) => <option key={x.key} value={x.key}>{x.label}</option>)}</select></div>
+      <div><label className={s.label}>Handle</label>
+        <input className={s.input} value={h} onChange={(e) => { setH(e.target.value); setSaved(false) }} placeholder={PAYOUT_METHODS.find((x) => x.key === m)?.hint || 'Handle'} disabled={!m} /></div>
+      <div><button className={`${s.btnSm} ${s.btnSmPrimary}`} disabled={!dirty || (!!m && !h)} onClick={async () => { await onSave(m || null, m ? h : null); setSaved(true) }}>{saved ? 'Saved' : 'Save'}</button></div>
     </div>
   )
 }

@@ -3,13 +3,13 @@
 import { useEffect, useState } from 'react'
 import s from '../research.module.css'
 import { supabaseBrowser } from '../../utils/supabase-browser'
-import { US_STATES, VERTICALS } from '../testerConfig'
+import { US_STATES, VERTICALS, PAYOUT_TIERS, PAYOUT_METHODS } from '../testerConfig'
 
 type Platform = { slug: string; name: string; kind: string; min_age: number }
 
 export default function ResearchSignup() {
   const [platforms, setPlatforms] = useState<Platform[]>([])
-  const [f, setF] = useState({ first_name: '', last_name: '', email: '', phone: '', state: '', age_bucket: '', sms_opt_in: true, referral_source: '' })
+  const [f, setF] = useState({ first_name: '', last_name: '', email: '', phone: '', state: '', age_bucket: '', sms_opt_in: true, referral_source: '', payout_method: '', payout_handle: '' })
   const [picked, setPicked] = useState<string[]>([])
   const [verts, setVerts] = useState<string[]>([])
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
@@ -70,8 +70,17 @@ export default function ResearchSignup() {
         ) : (
           <>
             <span className={s.eyebrow}>Apply to test</span>
-            <h1 className={s.h2}>Get paid to test the apps you already use.</h1>
-            <p className={s.lede} style={{ marginBottom: 28 }}>Two minutes. We match you to paid tests by platform, age and state, then text or email you when one is ready.</p>
+            <h1 className={s.h2}>Get paid $10–$100 per test.</h1>
+            <p className={s.lede} style={{ marginBottom: 20 }}>Two minutes to apply. We match you to paid tests by platform, age and state, then text or email you when one is ready. Payout depends on how long the test takes and what it requires:</p>
+            <div className={s.tiers}>
+              {PAYOUT_TIERS.map((t) => (
+                <div key={t.key} className={s.tier}>
+                  <div className={s.tierPay}>${t.pay}{t.max > t.pay ? `–$${t.max}` : ''}</div>
+                  <div className={s.itemName}>{t.label}</div>
+                  <div className={s.small}>~{t.minutes} min · {t.desc}</div>
+                </div>
+              ))}
+            </div>
 
             <form className={s.form} onSubmit={submit}>
               <div className={s.formRow}>
@@ -118,6 +127,16 @@ export default function ResearchSignup() {
                 </div>
               </div>
 
+              <div>
+                <label className={s.label}>How should we pay you? (can add later)</label>
+                <div className={s.formRow}>
+                  <select className={s.select} value={f.payout_method} onChange={up('payout_method')}>
+                    <option value="">Choose…</option>
+                    {PAYOUT_METHODS.map((m) => <option key={m.key} value={m.key}>{m.label}</option>)}
+                  </select>
+                  <input className={s.input} value={f.payout_handle} onChange={up('payout_handle')} placeholder={PAYOUT_METHODS.find((m) => m.key === f.payout_method)?.hint || 'Handle'} disabled={!f.payout_method} />
+                </div>
+              </div>
               <Field label="How did you hear about us? (optional)" value={f.referral_source} onChange={up('referral_source')} />
 
               <label className={s.check}>

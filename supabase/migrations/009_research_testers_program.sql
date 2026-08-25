@@ -1,3 +1,5 @@
 -- Applied to wsphgxqgtusmtzepfvuo on 2026-08-25 via Supabase MCP (name: research_testers_program).
 -- Tester program for Hedge Research: platforms, testers, tests, assignments, message log.
 -- See the live migration in the Supabase dashboard for the authoritative SQL.
+-- 2026-08-25 (research_payout_tiers_and_methods): testers.payout_method/payout_handle,
+-- tests.payout_max_cents/tier/est_minutes with $10–$100 check, assignments.paid_cents.

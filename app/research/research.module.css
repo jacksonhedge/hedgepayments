@@ -169,3 +169,7 @@
 .btnSmPrimary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .btnSmPrimary:hover { background: #fff; }
 .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+.tiers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 32px; }
+@media (max-width: 520px) { .tiers { grid-template-columns: 1fr; } }
+.tier { padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); display: grid; gap: 4px; }
+.tierPay { font-size: 22px; font-weight: 600; color: #1EB05A; letter-spacing: -0.02em; }

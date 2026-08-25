@@ -74,7 +74,7 @@ const USER_STEPS = [
   { n: '01', title: 'Apply', desc: 'Tell us your age, state and which apps you already use. Must be 21+ for sportsbook, casino and prediction-market tests.' },
   { n: '02', title: 'Get matched', desc: 'We match you to paid tests by platform and location, then verify eligibility.' },
   { n: '03', title: 'Test', desc: 'Complete a scripted session — sign up, deposit, place bets, cash out — with a screen recording and a short survey.' },
-  { n: '04', title: 'Get paid', desc: 'Payout for every completed test, plus you keep what you win.' },
+  { n: '04', title: 'Get paid', desc: '$10–$100 per completed test depending on length and requirements, paid to Venmo, Cash App, PayPal or Zelle — plus you keep what you win.' },
 ]
 
 type Audience = 'businesses' | 'users'
@@ -287,7 +287,7 @@ function UsersView() {
         <h1 className={s.h1}>Get paid to test the apps you already use.</h1>
         <p className={s.lede}>
           Join 20,000+ testers running real-money sessions on sportsbooks, prediction markets and casino games.
-          Every test pays, and you keep your winnings.
+          Every test pays $10–$100, and you keep your winnings.
         </p>
         <div className={s.row}>
           <a className={`${s.btn} ${s.btnPrimary}`} href="/research/signup">Apply to test</a>
