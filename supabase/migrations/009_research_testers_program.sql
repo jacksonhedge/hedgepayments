@@ -1,0 +1,3 @@
+-- Applied to wsphgxqgtusmtzepfvuo on 2026-08-25 via Supabase MCP (name: research_testers_program).
+-- Tester program for Hedge Research: platforms, testers, tests, assignments, message log.
+-- See the live migration in the Supabase dashboard for the authoritative SQL.

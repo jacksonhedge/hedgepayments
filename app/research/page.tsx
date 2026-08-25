@@ -290,7 +290,7 @@ function UsersView() {
           Every test pays, and you keep your winnings.
         </p>
         <div className={s.row}>
-          <a className={`${s.btn} ${s.btnPrimary}`} href="/signup">Apply to test</a>
+          <a className={`${s.btn} ${s.btnPrimary}`} href="/research/signup">Apply to test</a>
           <a className={s.btn} href="#platforms">Where you&apos;ll test</a>
         </div>
       </header>
@@ -342,7 +342,7 @@ function UsersView() {
           <p className={s.sub} style={{ marginBottom: 24 }}>
             Must be 18+ (21+ for sportsbook, casino and prediction-market tests) and located in a licensed state.
           </p>
-          <a className={`${s.btn} ${s.btnPrimary}`} href="/signup">Apply to test</a>
+          <a className={`${s.btn} ${s.btnPrimary}`} href="/research/signup">Apply to test</a>
         </div>
       </section>
     </>

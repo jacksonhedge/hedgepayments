@@ -27,6 +27,11 @@ export default function AdminLayout({
       icon: '👥',
     },
     {
+      name: 'Research',
+      href: '/admin/research',
+      icon: '🧪',
+    },
+    {
       name: 'API Logs',
       href: '/admin/api-logs',
       icon: '📝',

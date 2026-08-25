@@ -22,6 +22,7 @@ export interface EmailOptions {
   html?: string;
   templateId?: string;
   dynamicTemplateData?: Record<string, any>;
+  fromName?: string;
 }
 
 export interface SMSOptions {
@@ -38,7 +39,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       to: options.to,
       from: {
         email: FROM_EMAIL,
-        name: FROM_NAME
+        name: options.fromName || FROM_NAME
       },
       subject: options.subject,
       ...(options.text && { text: options.text }),
