@@ -12,11 +12,20 @@ export const metadata: Metadata = {
   openGraph: { title, description, url: '/rollcard-proposal', type: 'website' },
 }
 
-const RAILS = [
-  { name: 'Instant account funding', desc: 'RTP/FedNow-backed bank transfers that land in the Rollcard account in seconds instead of the 1–3 business days ACH takes today. Faster funding = more spend on the card.' },
-  { name: 'Stablecoin on/off-ramp', desc: 'USDC in, USDC out. Let cardholders fund from crypto and cash out to stablecoin — the fastest-growing balance source among younger bettors.' },
-  { name: 'Push-to-card payouts', desc: 'Operators on Hedge rails pay winnings straight to the Rollcard in the same session. Rollcard becomes the default place winnings live.' },
-  { name: 'Rollcard as a Hedge method', desc: 'Every operator on Hedge (SideBet, Chance™, partner sportsbooks and casinos) lists Rollcard as a preferred deposit method — more acceptance points, more interchange.' },
+const ONRAMP = [
+  { name: 'ACH in via RTP', desc: 'Bank pulls settled over RTP / FedNow — money lands on the Rollcard in seconds, 24/7, not 1–3 business days.' },
+  { name: 'T+1 ACH fallback', desc: 'Same-day / next-day ACH for banks not yet on instant rails, with funds made available on the card the moment the pull is authorized.' },
+  { name: 'OAuth bank linking, all bank sizes', desc: 'Plaid / MX / Finicity coverage with true OAuth for the big banks and credential-based fallback for the long tail of community banks and credit unions. No bank left out.' },
+  { name: 'Instant virtual card', desc: 'Card issued at signup and usable at sportsbooks immediately — the same-session activation Edge Boost is known for.' },
+  { name: 'High-volume, gaming-tuned limits', desc: 'Deposit limits sized for high rollers ($250k+/day) with risk rules built for sportsbook cashier traffic, so real players aren&apos;t declined.' },
+  { name: 'Stablecoin on-ramp', desc: 'USDC in from any wallet, auto-converted to USD on the card — the funding source younger bettors increasingly start from.' },
+]
+
+const OFFRAMP = [
+  { name: 'Withdrawals in minutes', desc: 'Operator payouts push to the Rollcard and out to the bank over RTP / push-to-debit — minutes, not days, no withdrawal cap.' },
+  { name: 'Push-to-card from every Hedge operator', desc: 'SideBet, Chance™ and partner books pay winnings straight to the Rollcard in-session, so the card becomes where winnings live.' },
+  { name: 'Rollcard as a preferred method', desc: 'Every operator on Hedge lists Rollcard as a featured deposit option — more acceptance points, more interchange, more spend.' },
+  { name: 'Deposit cashback engine', desc: 'Ledger + reporting to run tiered cashback on card spend and deposits (Edge Boost runs 0.25–0.50%), funded partly by the interchange Hedge routes to Rollcard.' },
 ]
 
 const CHANNELS = [
@@ -44,7 +53,7 @@ const CHANNELS = [
 ]
 
 const DEAL = [
-  { n: '01', title: 'Integrate', desc: 'Rollcard adds Hedge rails (instant funding, stablecoin ramp, push-to-card) to its funding and withdrawal flows. Drop-in API; ~2 weeks to first live transaction.' },
+  { n: '01', title: 'Integrate', desc: 'Rollcard adds Hedge rails (RTP ACH-in, T+1 ACH, OAuth bank linking, stablecoin ramp, push-to-card) to its funding and withdrawal flows. Drop-in API; ~2 weeks to first live transaction.' },
   { n: '02', title: 'Distribute', desc: 'Rollcard is listed as a preferred deposit method on every Hedge-powered operator, and Hedge runs Rollcard placements across FraternityBase and Street Corner Casino.' },
   { n: '03', title: 'Share', desc: 'Revenue share on interchange and cashback-program economics from Hedge-referred cardholders, tracked by referral code. Rails processed at standard Hedge rates.' },
   { n: '04', title: 'Scale', desc: 'Monthly reporting on referred cardholders, funded accounts and card spend. Expand campus by campus as the numbers prove out.' },
@@ -94,14 +103,24 @@ export default function RollcardProposalPage() {
       <section className={s.section}>
         <div className={s.shell}>
           <span className={s.eyebrow}>Part one · Payments</span>
-          <h2 className={s.h2}>What Hedge adds to Rollcard</h2>
+          <h2 className={s.h2}>Edge Boost-grade on-ramp, inside Rollcard</h2>
           <p className={s.sub} style={{ marginBottom: 32 }}>
-            Hedge builds payment infrastructure for sportsbooks, casinos and prediction markets. Rollcard already
-            solved the bank side (Cross River, FDIC, $1M daily limits) — Hedge makes money move into and out of the
-            account faster, and puts the card in front of every operator we power.
+            Edge Boost set the bar for a bettor&apos;s card: instant funding, every bank linkable, withdrawals in
+            minutes. Rollcard already has the bank side (Cross River, FDIC, $1M daily limits). Hedge supplies the
+            rails to match Edge Boost feature-for-feature on funding — and then goes past it on distribution.
           </p>
+          <p className={s.bucketLabel}>On-ramp · funding the card</p>
+          <div className={s.grid} style={{ marginBottom: 40 }}>
+            {ONRAMP.map((r) => (
+              <div key={r.name} className={s.card}>
+                <h3 className={s.cardTitle}>{r.name}</h3>
+                <p className={s.cardDesc} dangerouslySetInnerHTML={{ __html: r.desc }} />
+              </div>
+            ))}
+          </div>
+          <p className={s.bucketLabel}>Off-ramp · getting paid and spending</p>
           <div className={s.grid}>
-            {RAILS.map((r) => (
+            {OFFRAMP.map((r) => (
               <div key={r.name} className={s.card}>
                 <h3 className={s.cardTitle}>{r.name}</h3>
                 <p className={s.cardDesc}>{r.desc}</p>
