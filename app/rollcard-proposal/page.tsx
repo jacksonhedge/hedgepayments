@@ -74,7 +74,7 @@ export default function RollcardProposalPage() {
       <nav className={s.nav}>
         <div className={s.navInner}>
           <a href="/" className={s.logo}>
-            <img src="/favicon/hedge-logo.svg" alt="" className={s.logoMark} />
+            <img src="/logos/hedge-hedgehog.png" alt="" className={s.logoMark} />
             <span>HEDGE</span>
             <span className={s.logoSub}>Payments</span>
           </a>
@@ -84,9 +84,9 @@ export default function RollcardProposalPage() {
 
       <header className={`${s.shell} ${s.hero}`}>
         <div className={s.lockup}>
-          <span className={s.lockupHedge}>Hedge</span>
+          <img src="/logos/hedge-hedgehog.png" alt="Hedge Payments" className={s.lockupLogo} />
           <span className={s.x}>×</span>
-          <img src="/logos/rollcard.webp" alt="Rollcard" className={s.rollcardLogo} />
+          <img src="/logos/rollcard.webp" alt="Rollcard" className={s.lockupLogo} />
         </div>
         <h1 className={s.h1}>Distribution and content, wrapped into one.</h1>
         <p className={s.lede}>
