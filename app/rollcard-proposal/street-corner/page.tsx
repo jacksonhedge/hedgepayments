@@ -19,6 +19,11 @@ const STATS = [
   { n: '21+', l: 'ID-verified, licensed states' },
 ]
 
+const CLIPS = [
+  { src: '/scc/featured.mp4', poster: '/scc/featured.jpg', views: '2.4M', caption: 'Grandma doubles down.' },
+  { src: '/scc/clip-02.mp4', poster: '/scc/clip-02.jpg', views: '1.1M', caption: 'The 19 dilemma.' },
+]
+
 const ONBOARD = [
   { n: '01', title: 'Stop a stranger, hand them the game', desc: 'A Street Corner host stops someone on a busy corner. The game is on their own phone — a sportsbook, casino or prediction-market app on Hedge rails. To play, they need money in it.' },
   { n: '02', title: 'Open Rollcard on the phone', desc: 'They scan the host’s QR, open a Rollcard in ~90 seconds (OAuth bank link, instant virtual card), and fund it over RTP. The card is in their Apple Wallet before the host finishes explaining the rules.' },
@@ -106,6 +111,17 @@ export default function RollcardStreetCornerPage() {
               <li key={st.l} className={s.sccStat}>
                 <span className={s.sccStatN}>{st.n}</span>
                 <span className={s.sccStatL}>{st.l}</span>
+              </li>
+            ))}
+          </ul>
+          <ul className={s.clips}>
+            {CLIPS.map((c) => (
+              <li key={c.caption} className={s.clip}>
+                <video src={c.src} poster={c.poster} muted loop playsInline autoPlay className={s.clipVideo} />
+                <div className={s.clipMeta}>
+                  <span className={s.clipViews}>{c.views} views</span>
+                  <span className={s.clipCaption}>{c.caption}</span>
+                </div>
               </li>
             ))}
           </ul>
