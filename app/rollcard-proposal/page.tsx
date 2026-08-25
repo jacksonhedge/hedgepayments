@@ -86,7 +86,7 @@ export default function RollcardProposalPage() {
         <div className={s.lockup}>
           <span className={s.lockupHedge}>Hedge</span>
           <span className={s.x}>×</span>
-          <span className={s.lockupRollcard}>Rollcard</span>
+          <img src="/logos/rollcard.webp" alt="Rollcard" className={s.rollcardLogo} />
         </div>
         <h1 className={s.h1}>Distribution and content, wrapped into one.</h1>
         <p className={s.lede}>
