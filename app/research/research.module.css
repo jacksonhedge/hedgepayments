@@ -42,7 +42,7 @@
 @media (max-width: 600px) { .navInner { flex-wrap: wrap; gap: 12px; } .back { display: none; } }
 
 /* Platforms (For Users) */
-.platforms { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.platforms { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 @media (max-width: 900px) { .platforms { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 560px) { .platforms { grid-template-columns: repeat(2, 1fr); } }
 .platform { padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); text-align: center; }
@@ -228,3 +228,8 @@
 .referral .label { margin-bottom: 6px; }
 .optional { font-weight: 400; opacity: 0.7; }
 @media (max-width: 600px) { .referral { max-width: none; } }
+
+/* Share your code */
+.share { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.shareTitle { font-size: 14px; font-weight: 600; margin: 0 0 4px; }
+.shareCode { font-family: ui-monospace, Menlo, monospace; font-size: 14px; padding: 2px 8px; border-radius: 6px; background: var(--bg); color: var(--accent); border: 1px solid rgba(240, 98, 26, 0.35); }

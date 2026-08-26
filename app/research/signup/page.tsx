@@ -9,7 +9,7 @@ type Platform = { slug: string; name: string; kind: string; min_age: number }
 
 export default function ResearchSignup() {
   const [platforms, setPlatforms] = useState<Platform[]>([])
-  const [f, setF] = useState({ first_name: '', last_name: '', email: '', phone: '', state: '', age_bucket: '', sms_opt_in: true, referral_source: '', payout_method: '', payout_handle: '' })
+  const [f, setF] = useState({ first_name: '', last_name: '', email: '', phone: '', state: '', age_bucket: '', sms_opt_in: true, referral_source: '', referral_code: '', payout_method: '', payout_handle: '' })
   const [picked, setPicked] = useState<string[]>([])
   const [verts, setVerts] = useState<string[]>([])
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
@@ -18,6 +18,10 @@ export default function ResearchSignup() {
   useEffect(() => {
     supabaseBrowser.from('research_platforms').select('slug,name,kind,min_age').eq('active', true).order('name')
       .then(({ data }) => setPlatforms(data || []))
+    try {
+      const ref = new URLSearchParams(window.location.search).get('ref')
+      if (ref) setF((x) => ({ ...x, referral_code: ref.toUpperCase() }))
+    } catch {}
   }, [])
 
   const toggle = (list: string[], set: (v: string[]) => void, v: string) =>
@@ -138,6 +142,7 @@ export default function ResearchSignup() {
                 </div>
               </div>
               <Field label="How did you hear about us? (optional)" value={f.referral_source} onChange={up('referral_source')} />
+              <Field label="Referral code (optional)" value={f.referral_code} onChange={up('referral_code')} placeholder="e.g. SIGMACHI-PSU" />
 
               <label className={s.check}>
                 <input type="checkbox" checked={f.sms_opt_in} onChange={up('sms_opt_in')} />

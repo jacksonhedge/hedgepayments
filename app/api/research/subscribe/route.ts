@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { researchAdminClient, noDb, normalizePhone } from '@/lib/research/server'
 import { notifySlack } from '@/lib/slack'
+import { cleanCode, assignOwnCode, recordReferral } from '@/lib/research/referrals'
 
 // Quick tester subscribe from /research (name, email, phone, text-or-email).
 // Insert-only into research_subscribers. Full applications go through /api/research/apply.
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest) {
   const email = String(b.email || '').trim().toLowerCase()
   const phone = normalizePhone(b.phone)
   const channel = ['text', 'email', 'both'].includes(b.channel) ? (b.channel as string) : 'email'
-  const referral_code = String(b.referral_code || '').trim().toUpperCase().replace(/[^A-Z0-9_-]/g, '').slice(0, 32) || null
+  const referral_code = cleanCode(b.referral_code)
 
   if (!name) return NextResponse.json({ error: 'Name required' }, { status: 400 })
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
@@ -25,18 +26,24 @@ export async function POST(req: NextRequest) {
   // Unauthenticated: never modify an existing row (anyone could re-point another
   // subscriber's phone/channel by resubmitting their email). Duplicate emails get
   // the same success response so addresses can't be enumerated.
-  const { error } = await db
+  const { data: row, error } = await db
     .from('research_subscribers')
     .insert({ name, email, phone, notify_channel: channel, source: 'research-page', referral_code })
-  if (error) {
-    if (error.code === '23505') return NextResponse.json({ success: true })
-    console.error('research_subscribers insert failed:', error.message)
+    .select('id')
+    .single()
+  if (error || !row) {
+    if (error?.code === '23505') return NextResponse.json({ success: true })
+    console.error('research_subscribers insert failed:', error?.message)
     return NextResponse.json({ error: 'Could not save' }, { status: 500 })
   }
+
+  // Referral tracking: attribute this signup, then give them a code of their own.
+  await recordReferral(db, referral_code, 'subscribe', { subscriberId: row.id, email })
+  const own_code = await assignOwnCode(db, row.id, name, email)
 
   // Not awaited: keeps response timing identical to the duplicate-email path so
   // the endpoint can't be used to probe which addresses are already subscribed.
   const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   void notifySlack(`🔔 *Research subscriber* (${channel}): ${esc(name)} · ${esc(email)}${phone ? ' · ' + phone : ''}${referral_code ? ' · ref ' + referral_code : ''}`).catch(() => {})
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ success: true, referral_code: own_code })
 }

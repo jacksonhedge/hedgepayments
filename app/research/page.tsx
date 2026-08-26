@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import s from './research.module.css'
 import { ReviewTicker } from './ReviewTicker'
 
@@ -67,6 +67,8 @@ const PLATFORMS = [
   { name: 'Kalshi', logo: '/logos/kalshi.png', kind: 'Prediction markets' },
   { name: 'DraftKings', logo: '/logos/draftkings.png', kind: 'Sportsbook' },
   { name: 'FanDuel', logo: '/logos/fanduel.avif', kind: 'Sportsbook' },
+  { name: 'FanDuel Predicts', logo: '/logos/fanduel-predicts.png', kind: 'Prediction markets' },
+  { name: 'DraftKings Predictions', logo: '/logos/draftkings-predictions.png', kind: 'Prediction markets' },
   { name: 'Evolution', logo: null, kind: 'Live casino' },
 ]
 
@@ -80,6 +82,8 @@ const USER_STEPS = [
 const LOGOS = [
   { name: 'DraftKings', src: '/logos/draftkings.png' },
   { name: 'FanDuel', src: '/logos/fanduel.avif' },
+  { name: 'FanDuel Predicts', src: '/logos/fanduel-predicts.png' },
+  { name: 'DraftKings Predictions', src: '/logos/draftkings-predictions.png' },
   { name: 'Polymarket', src: '/logos/polymarket.png' },
   { name: 'Kalshi', src: '/logos/kalshi.png' },
   { name: 'ProphetX', src: '/logos/prophetx.png' },
@@ -148,6 +152,16 @@ function Subscribe() {
   const [f, setF] = useState({ name: '', email: '', phone: '', referral_code: '', channel: 'text' as 'text' | 'email' | 'both' })
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
   const [err, setErr] = useState('')
+  const [ownCode, setOwnCode] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
+  useEffect(() => {
+    try {
+      const ref = new URLSearchParams(window.location.search).get('ref')
+      if (ref) setF((x) => ({ ...x, referral_code: ref.toUpperCase() }))
+    } catch {}
+  }, [])
+  const shareUrl = ownCode ? `https://hedgepayments.com/research?ref=${ownCode}` : ''
+  const copy = async () => { try { await navigator.clipboard.writeText(shareUrl); setCopied(true); setTimeout(() => setCopied(false), 2000) } catch {} }
   const up = (k: 'name' | 'email' | 'phone' | 'referral_code') => (e: React.ChangeEvent<HTMLInputElement>) => setF((x) => ({ ...x, [k]: e.target.value }))
   const go = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -161,6 +175,7 @@ function Subscribe() {
       })
       const j = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(j.error || 'bad')
+      setOwnCode(j.referral_code || null)
       setState('done')
     } catch (e) {
       setErr(e instanceof Error && e.message !== 'bad' ? e.message : '')
@@ -173,7 +188,19 @@ function Subscribe() {
       <p className={s.subscribeTitle}>Get notified about paid tests</p>
       <p className={s.subscribeSub}>We&apos;ll text or email you when a paid test opens in your state. No spam.</p>
       {state === 'done' ? (
-        <p className={s.subscribeDone}>You&apos;re on the list — we&apos;ll reach out when the next paid test opens.</p>
+        <div>
+          <p className={s.subscribeDone}>You&apos;re on the list — we&apos;ll reach out when the next paid test opens.</p>
+          {ownCode && (
+            <div className={s.share}>
+              <p className={s.shareTitle}>Your referral code: <code className={s.shareCode}>{ownCode}</code></p>
+              <p className={s.subscribeSub}>Friends who sign up with it get matched to the same tests as you.</p>
+              <div className={s.subscribeRow}>
+                <input readOnly value={shareUrl} className={s.input} aria-label="Share link" onFocus={(e) => e.currentTarget.select()} />
+                <button type="button" onClick={copy} className={s.btn}>{copied ? 'Copied!' : 'Copy link'}</button>
+              </div>
+            </div>
+          )}
+        </div>
       ) : (
         <form onSubmit={go} className={s.subscribeForm}>
           <div className={s.subscribeRow}>

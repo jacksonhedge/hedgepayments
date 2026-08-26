@@ -10,6 +10,8 @@ type Tester = { id: string; email: string; phone: string | null; first_name: str
 type Test = { id: string; title: string; platform_id: string | null; description: string | null; instructions: string | null; payout_cents: number; payout_max_cents: number | null; tier: string; est_minutes: number | null; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string } | null; research_assignments: { id: string; status: string; tester_id: string; paid_cents: number | null }[] }
 type Platform = { id: string; slug: string; name: string; kind: string }
 type Screener = { id: string; slug: string; title: string; intro: string | null; test_id: string | null; questions: any[]; status: string; created_at: string; research_tests: { title: string } | null; research_screener_responses: { id: string; tester_id: string | null; email: string; full_name: string | null; answers: Record<string, any>; qualified: boolean; disqualified_by: string | null; created_at: string }[] }
+type RefStat = { code: string; owner_name: string; owner_email: string | null; owner_type: string; active: boolean; created_at: string; subscribes: number; applies: number; total: number; last_referral_at: string | null }
+type RefEvent = { id: string; code: string; code_known: boolean; event: string; referred_email: string | null; created_at: string }
 type Msg = { id: string; channel: string; subject: string | null; body: string; status: string; error: string | null; sent_at: string; research_testers: { first_name: string; email: string } | null }
 
 const TESTER_STATUSES = ['applied', 'approved', 'active', 'paused', 'rejected']
@@ -22,12 +24,13 @@ const btn2 = 'px-3 py-1.5 rounded text-sm border border-[#D4C5B0] text-[#2C2416]
 
 export default function ResearchAdmin() {
   const [secret, setSecret] = useState('')
-  const [tab, setTab] = useState<'testers' | 'tests' | 'screeners' | 'messages'>('testers')
+  const [tab, setTab] = useState<'testers' | 'tests' | 'screeners' | 'messages' | 'referrals'>('testers')
   const [screeners, setScreeners] = useState<Screener[]>([])
   const [testers, setTesters] = useState<Tester[]>([])
   const [tests, setTests] = useState<Test[]>([])
   const [platforms, setPlatforms] = useState<Platform[]>([])
   const [msgs, setMsgs] = useState<Msg[]>([])
+  const [refs, setRefs] = useState<{ stats: RefStat[]; recent: RefEvent[]; unknown: { code: string; n: number }[] }>({ stats: [], recent: [], unknown: [] })
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [filter, setFilter] = useState({ q: '', status: '', state: '', platform: '', age: '' })
   const [toast, setToast] = useState('')
@@ -47,8 +50,8 @@ export default function ResearchAdmin() {
     if (!secret) return
     setErr('')
     try {
-      const [t, x, m, sc] = await Promise.all([api('testers'), api('tests'), api('messages'), api('screeners')])
-      setTesters(t.testers); setTests(x.tests); setPlatforms(x.platforms); setMsgs(m.messages); setScreeners(sc.screeners)
+      const [t, x, m, sc, rf] = await Promise.all([api('testers'), api('tests'), api('messages'), api('screeners'), api('referrals')])
+      setTesters(t.testers); setTests(x.tests); setPlatforms(x.platforms); setMsgs(m.messages); setScreeners(sc.screeners); setRefs(rf)
     } catch (e: any) { setErr(e.message) }
   }, [api, secret])
   useEffect(() => { reload() }, [reload])
@@ -96,7 +99,7 @@ export default function ResearchAdmin() {
       {toast && <div className="mb-4 p-3 rounded bg-green-50 text-green-800 text-sm">{toast}</div>}
 
       <div className="flex gap-2 mb-6 border-b border-[#D4C5B0]">
-        {(['testers', 'tests', 'screeners', 'messages'] as const).map((k) => (
+        {(['testers', 'tests', 'screeners', 'messages', 'referrals'] as const).map((k) => (
           <button key={k} onClick={() => setTab(k)} className={`px-4 py-2 text-sm capitalize ${tab === k ? 'border-b-2 border-[#2C2416] font-semibold' : 'text-[#6B5D4F]'}`}>{k}</button>
         ))}
       </div>
@@ -150,6 +153,7 @@ export default function ResearchAdmin() {
 
       {tab === 'screeners' && <ScreenersTab screeners={screeners} tests={tests} api={api} onChange={(m) => { flash(m); reload() }} onError={setErr} onInvite={(ids) => { setSelected(new Set(ids)); setTab('testers') }} />}
 
+      {tab === 'referrals' && <ReferralsTab data={refs} api={api} onChange={(m) => { flash(m); reload() }} onError={setErr} />}
       {tab === 'messages' && (
         <div className="bg-white border border-[#D4C5B0] rounded divide-y divide-[#F0E8DD]">
           {msgs.length === 0 && <div className="p-6 text-center text-[#6B5D4F] text-sm">No messages sent yet.</div>}
@@ -369,6 +373,68 @@ function ScreenersTab({ screeners, tests, api, onChange, onError, onInvite }: { 
           </div>
         )
       })}
+    </div>
+  )
+}
+
+function ReferralsTab({ data, api, onChange, onError }: { data: { stats: RefStat[]; recent: RefEvent[]; unknown: { code: string; n: number }[] }; api: (p: string, i?: RequestInit) => Promise<any>; onChange: (m: string) => void; onError: (m: string) => void }) {
+  const [f, setF] = useState({ code: '', owner_name: '', owner_email: '', owner_type: 'chapter', notes: '' })
+  const inp = 'border border-[#D4C5B0] rounded px-2 py-1.5 text-sm bg-white'
+  const btn = 'px-3 py-1.5 rounded bg-[#2C2416] text-white text-sm'
+  const create = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try { await api('referrals', { method: 'POST', body: JSON.stringify(f) }); setF({ code: '', owner_name: '', owner_email: '', owner_type: 'chapter', notes: '' }); onChange(`Code ${f.code.toUpperCase()} registered`) } catch (e: any) { onError(e.message) }
+  }
+  const toggle = async (code: string, active: boolean) => { try { await api('referrals', { method: 'PATCH', body: JSON.stringify({ code, active }) }); onChange(active ? 'Activated' : 'Deactivated') } catch (e: any) { onError(e.message) } }
+  const link = (code: string) => `https://hedgepayments.com/research?ref=${code}`
+  return (
+    <div className="space-y-8">
+      <form onSubmit={create} className="grid grid-cols-2 md:grid-cols-6 gap-2 items-end">
+        <label className="text-xs">Code<input className={`${inp} w-full`} required value={f.code} onChange={(e) => setF({ ...f, code: e.target.value.toUpperCase() })} placeholder="SIGMACHI-PSU" /></label>
+        <label className="text-xs">Owner<input className={`${inp} w-full`} required value={f.owner_name} onChange={(e) => setF({ ...f, owner_name: e.target.value })} placeholder="Sigma Chi · Penn State" /></label>
+        <label className="text-xs">Owner email<input className={`${inp} w-full`} type="email" value={f.owner_email} onChange={(e) => setF({ ...f, owner_email: e.target.value })} /></label>
+        <label className="text-xs">Type<select className={`${inp} w-full`} value={f.owner_type} onChange={(e) => setF({ ...f, owner_type: e.target.value })}>{['chapter', 'ambassador', 'partner', 'campaign', 'tester'].map((x) => <option key={x}>{x}</option>)}</select></label>
+        <label className="text-xs">Notes<input className={`${inp} w-full`} value={f.notes} onChange={(e) => setF({ ...f, notes: e.target.value })} /></label>
+        <button className={btn}>Register code</button>
+      </form>
+
+      {data.unknown.length > 0 && (
+        <div className="p-3 rounded bg-amber-50 text-amber-900 text-sm">
+          <b>Unregistered codes used recently:</b> {data.unknown.map((u) => `${u.code} (${u.n})`).join(', ')} — register them above to start attributing.
+        </div>
+      )}
+
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="text-left text-[#6B5D4F]"><tr><th className="py-2">Code</th><th>Owner</th><th>Type</th><th className="text-right">Subscribes</th><th className="text-right">Applies</th><th className="text-right">Total</th><th>Last</th><th>Link</th><th></th></tr></thead>
+          <tbody>
+            {data.stats.map((r) => (
+              <tr key={r.code} className={`border-t border-[#EADFCB] ${r.active ? '' : 'opacity-50'}`}>
+                <td className="py-2 font-mono">{r.code}</td>
+                <td>{r.owner_name}{r.owner_email ? <div className="text-xs text-[#6B5D4F]">{r.owner_email}</div> : null}</td>
+                <td>{r.owner_type}</td>
+                <td className="text-right">{r.subscribes}</td>
+                <td className="text-right">{r.applies}</td>
+                <td className="text-right font-semibold">{r.total}</td>
+                <td className="text-xs">{r.last_referral_at ? new Date(r.last_referral_at).toLocaleDateString() : '—'}</td>
+                <td><button type="button" className="text-xs underline" onClick={() => navigator.clipboard.writeText(link(r.code))}>copy</button></td>
+                <td><button type="button" className="text-xs underline" onClick={() => toggle(r.code, !r.active)}>{r.active ? 'deactivate' : 'activate'}</button></td>
+              </tr>
+            ))}
+            {data.stats.length === 0 && <tr><td colSpan={9} className="py-6 text-center text-[#6B5D4F]">No referral codes yet.</td></tr>}
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <h3 className="font-semibold mb-2">Recent referrals</h3>
+        <ul className="text-sm space-y-1">
+          {data.recent.slice(0, 30).map((e) => (
+            <li key={e.id} className="flex gap-3"><span className="text-xs text-[#6B5D4F] w-28">{new Date(e.created_at).toLocaleString()}</span><span className="font-mono">{e.code}</span><span>{e.event}</span><span className="text-[#6B5D4F]">{e.referred_email}</span>{!e.code_known && <span className="text-amber-700 text-xs">unregistered</span>}</li>
+          ))}
+          {data.recent.length === 0 && <li className="text-[#6B5D4F]">None yet.</li>}
+        </ul>
+      </div>
     </div>
   )
 }
