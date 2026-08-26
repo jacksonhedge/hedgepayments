@@ -15,6 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/marketing-partners',
     '/blog',
     '/contact',
+    '/privacy',
+    '/terms',
     '/get-started',
   ];
 

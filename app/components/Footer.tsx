@@ -38,8 +38,8 @@ const Footer: React.FC = () => {
         <div className={styles.footerSection}>
           <h4 className={styles.footerHeading}>Legal</h4>
           <ul className={styles.footerLinks}>
-            <li><a href="#" className={styles.footerLink}>Privacy Policy</a></li>
-            <li><a href="#" className={styles.footerLink}>Terms of Service</a></li>
+            <li><a href="/privacy" className={styles.footerLink}>Privacy Policy</a></li>
+            <li><a href="/terms" className={styles.footerLink}>Terms of Service</a></li>
             <li><a href="#" className={styles.footerLink}>Responsible Gaming</a></li>
           </ul>
         </div>
