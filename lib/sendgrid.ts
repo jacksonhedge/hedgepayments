@@ -14,6 +14,21 @@ const FROM_NAME = process.env.SENDGRID_FROM_NAME || 'SideBet';
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID || '';
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN || '';
 const TWILIO_FROM_NUMBER = process.env.TWILIO_FROM_NUMBER || '';
+// Optional: authenticate with an API Key (SK sid + secret) instead of the account auth token.
+const TWILIO_API_KEY_SID = process.env.TWILIO_API_KEY_SID || '';
+const TWILIO_API_KEY_SECRET = process.env.TWILIO_API_KEY_SECRET || '';
+
+export function twilioAuthHeader(): { header: string; mode: 'api_key' | 'auth_token' } | null {
+  const sid = TWILIO_ACCOUNT_SID.trim();
+  if (!sid) return null;
+  if (TWILIO_API_KEY_SID.trim() && TWILIO_API_KEY_SECRET.trim()) {
+    return { header: 'Basic ' + Buffer.from(`${TWILIO_API_KEY_SID.trim()}:${TWILIO_API_KEY_SECRET.trim()}`).toString('base64'), mode: 'api_key' };
+  }
+  if (TWILIO_AUTH_TOKEN.trim()) {
+    return { header: 'Basic ' + Buffer.from(`${sid}:${TWILIO_AUTH_TOKEN.trim()}`).toString('base64'), mode: 'auth_token' };
+  }
+  return null;
+}
 
 export interface EmailOptions {
   to: string | string[];
@@ -105,9 +120,9 @@ export async function sendSMS(options: SMSOptions): Promise<boolean> {
 
 // Like sendSMS but returns Twilio's error code/message so callers can log a real reason.
 export async function sendSMSDetailed(options: SMSOptions): Promise<{ ok: boolean; sid?: string; error?: string }> {
-  if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_FROM_NUMBER) {
-    const missing = [!TWILIO_ACCOUNT_SID && 'TWILIO_ACCOUNT_SID', !TWILIO_AUTH_TOKEN && 'TWILIO_AUTH_TOKEN', !TWILIO_FROM_NUMBER && 'TWILIO_FROM_NUMBER'].filter(Boolean).join(', ');
-    return { ok: false, error: `missing env: ${missing}` };
+  const auth = twilioAuthHeader();
+  if (!auth || !TWILIO_FROM_NUMBER) {
+    return { ok: false, error: 'missing env: need TWILIO_ACCOUNT_SID + TWILIO_FROM_NUMBER and either TWILIO_AUTH_TOKEN or TWILIO_API_KEY_SID+TWILIO_API_KEY_SECRET' };
   }
   try {
     const response = await fetch(
@@ -115,7 +130,7 @@ export async function sendSMSDetailed(options: SMSOptions): Promise<{ ok: boolea
       {
         method: 'POST',
         headers: {
-          'Authorization': 'Basic ' + Buffer.from(`${TWILIO_ACCOUNT_SID.trim()}:${TWILIO_AUTH_TOKEN.trim()}`).toString('base64'),
+          'Authorization': auth.header,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: new URLSearchParams({ To: options.to, From: TWILIO_FROM_NUMBER.trim(), Body: options.body })
