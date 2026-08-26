@@ -156,6 +156,10 @@ export default function ResearchAdmin() {
       {tab === 'referrals' && <ReferralsTab data={refs} api={api} onChange={(m) => { flash(m); reload() }} onError={setErr} />}
       {tab === 'messages' && (
         <div className="bg-white border border-[#D4C5B0] rounded divide-y divide-[#F0E8DD]">
+          <div className="p-3 text-sm flex items-center gap-3">
+            <button className={btn2} onClick={async () => { try { const r = await api('twilio-check'); setToast('Twilio check: ' + JSON.stringify(r)) } catch (e: any) { setErr(e.message) } }}>Diagnose Twilio</button>
+            <span className="text-xs text-[#6B5D4F]">Asks Twilio to authenticate with the server's env values; shows env shape + account status, never secrets.</span>
+          </div>
           {msgs.length === 0 && <div className="p-6 text-center text-[#6B5D4F] text-sm">No messages sent yet.</div>}
           {msgs.map((m) => (
             <div key={m.id} className="p-3 text-sm">
