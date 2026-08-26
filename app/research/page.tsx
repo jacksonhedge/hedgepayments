@@ -145,10 +145,10 @@ export default function ResearchPage() {
 }
 
 function Subscribe() {
-  const [f, setF] = useState({ name: '', email: '', phone: '', channel: 'text' as 'text' | 'email' | 'both' })
+  const [f, setF] = useState({ name: '', email: '', phone: '', referral_code: '', channel: 'text' as 'text' | 'email' | 'both' })
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
   const [err, setErr] = useState('')
-  const up = (k: 'name' | 'email' | 'phone') => (e: React.ChangeEvent<HTMLInputElement>) => setF((x) => ({ ...x, [k]: e.target.value }))
+  const up = (k: 'name' | 'email' | 'phone' | 'referral_code') => (e: React.ChangeEvent<HTMLInputElement>) => setF((x) => ({ ...x, [k]: e.target.value }))
   const go = async (e: React.FormEvent) => {
     e.preventDefault()
     setState('sending')
@@ -199,6 +199,10 @@ function Subscribe() {
             <button type="submit" disabled={state === 'sending'} className={`${s.btn} ${s.btnPrimary}`}>
               {state === 'sending' ? 'Subscribing…' : 'Subscribe'}
             </button>
+          </div>
+          <div className={s.referral}>
+            <label className={s.label} htmlFor="ref">Referral code <span className={s.optional}>(optional)</span></label>
+            <input id="ref" type="text" value={f.referral_code} onChange={up('referral_code')} placeholder="e.g. SIGMACHI-PSU" className={s.input} autoCapitalize="characters" maxLength={32} />
           </div>
           {state === 'error' && <p className={s.err}>{err || 'Couldn\u2019t subscribe — try again or email research@hedgepayments.com.'}</p>}
         </form>

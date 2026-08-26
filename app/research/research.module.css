@@ -222,3 +222,9 @@
 @media (prefers-reduced-motion: reduce) { .tapeTrack { animation: none; flex-wrap: wrap; width: auto; padding: 0 24px; } }
 .tapeItem { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; }
 .tapeItem img { height: 26px; width: auto; max-width: 90px; object-fit: contain; border-radius: 5px; }
+
+/* Referral code */
+.referral { max-width: 320px; }
+.referral .label { margin-bottom: 6px; }
+.optional { font-weight: 400; opacity: 0.7; }
+@media (max-width: 600px) { .referral { max-width: none; } }

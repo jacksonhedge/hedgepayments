@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
   const email = String(b.email || '').trim().toLowerCase()
   const phone = normalizePhone(b.phone)
   const channel = ['text', 'email', 'both'].includes(b.channel) ? (b.channel as string) : 'email'
+  const referral_code = String(b.referral_code || '').trim().toUpperCase().replace(/[^A-Z0-9_-]/g, '').slice(0, 32) || null
 
   if (!name) return NextResponse.json({ error: 'Name required' }, { status: 400 })
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
@@ -26,7 +27,7 @@ export async function POST(req: NextRequest) {
   // the same success response so addresses can't be enumerated.
   const { error } = await db
     .from('research_subscribers')
-    .insert({ name, email, phone, notify_channel: channel, source: 'research-page' })
+    .insert({ name, email, phone, notify_channel: channel, source: 'research-page', referral_code })
   if (error) {
     if (error.code === '23505') return NextResponse.json({ success: true })
     console.error('research_subscribers insert failed:', error.message)
@@ -36,6 +37,6 @@ export async function POST(req: NextRequest) {
   // Not awaited: keeps response timing identical to the duplicate-email path so
   // the endpoint can't be used to probe which addresses are already subscribed.
   const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  void notifySlack(`🔔 *Research subscriber* (${channel}): ${esc(name)} · ${esc(email)}${phone ? ' · ' + phone : ''}`).catch(() => {})
+  void notifySlack(`🔔 *Research subscriber* (${channel}): ${esc(name)} · ${esc(email)}${phone ? ' · ' + phone : ''}${referral_code ? ' · ref ' + referral_code : ''}`).catch(() => {})
   return NextResponse.json({ success: true })
 }
