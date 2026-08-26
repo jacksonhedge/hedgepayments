@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   try {
     const { name, email, referralCode, source: rawSource } = await req.json();
     // Only a known tag may reach the Slack message — never raw client input.
-    const source = ['research', 'homepage', 'sidebet'].includes(rawSource) ? rawSource : '';
+    const source = ['research', 'research-testers', 'homepage', 'sidebet'].includes(rawSource) ? rawSource : '';
 
     if (!email || !name) {
       return NextResponse.json(

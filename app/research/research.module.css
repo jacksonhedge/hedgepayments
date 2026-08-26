@@ -1,11 +1,13 @@
 /* Hedge Research — simple, monochrome. Deliberately plainer than the rest of the site. */
 
 .root {
-  --bg: #0b0b0c;
-  --panel: #121214;
-  --line: rgba(255, 255, 255, 0.1);
-  --ink: #f2f2f2;
-  --muted: #9a9a9f;
+  background-image: radial-gradient(90% 60% at 50% -10%, rgba(255, 170, 80, 0.35), transparent 70%);
+  --bg: #fff3e6;
+  --panel: #ffffff;
+  --line: rgba(120, 50, 0, 0.14);
+  --ink: #1c1208;
+  --muted: #7a5a3c;
+  --accent: #f0621a;
   min-height: 100vh;
   background: var(--bg);
   color: var(--ink);
@@ -23,7 +25,7 @@
 }
 .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.12em; font-size: 14px; color: var(--ink); text-decoration: none; }
 .logoMark { width: 28px; height: 28px; }
-.logoSub { font-weight: 500; letter-spacing: 0.06em; color: #1EB05A; }
+.logoSub { font-weight: 500; letter-spacing: 0.06em; color: var(--accent); }
 .back { color: var(--muted); font-size: 14px; text-decoration: none; }
 .back:hover { color: var(--ink); }
 
@@ -35,8 +37,8 @@
   transition: color 0.15s, background 0.15s;
 }
 .toggleBtn:hover { color: var(--ink); }
-.toggleActive { background: var(--ink); color: var(--bg); }
-.toggleActive:hover { color: var(--bg); }
+.toggleActive { background: var(--accent); color: #fff; }
+.toggleActive:hover { color: #fff; }
 @media (max-width: 600px) { .navInner { flex-wrap: wrap; gap: 12px; } .back { display: none; } }
 
 /* Platforms (For Users) */
@@ -63,9 +65,9 @@
   transition: background 0.15s, border-color 0.15s;
   font-family: inherit;
 }
-.btn:hover { border-color: rgba(255, 255, 255, 0.3); }
-.btnPrimary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.btnPrimary:hover { background: #fff; }
+.btn:hover { border-color: rgba(120, 50, 0, 0.4); }
+.btnPrimary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btnPrimary:hover { background: #d9520f; border-color: #d9520f; }
 .btnPrimary:disabled { opacity: 0.6; cursor: default; }
 .row { display: flex; gap: 12px; flex-wrap: wrap; }
 
@@ -108,9 +110,9 @@
   color: var(--ink); padding: 12px 14px; font: inherit; font-size: 15px; outline: none;
   transition: border-color 0.15s;
 }
-.input:focus { border-color: rgba(255, 255, 255, 0.45); }
+.input:focus { border-color: var(--accent); }
 .sent { max-width: 640px; margin-top: 32px; padding: 28px; border: 1px solid var(--line); border-radius: 12px; }
-.err { color: #e0a0a0; font-size: 14px; margin: 0; }
+.err { color: #b3261e; font-size: 14px; margin: 0; }
 
 .footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 13px; }
 .footer a { color: var(--muted); text-decoration: none; }
@@ -136,7 +138,7 @@
 @media (prefers-reduced-motion: reduce) { .tickerTrack { animation: none; flex-wrap: wrap; width: auto; } }
 .review { width: 320px; flex: none; margin: 0; padding: 18px 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
 .reviewHead { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: #26262a; color: var(--ink); font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: #ffd9b8; color: var(--ink); font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; flex: none; }
 .reviewName { font-size: 14px; font-weight: 600; }
 .reviewMeta { font-size: 12px; color: var(--muted); }
 .reviewQuote { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink); }
@@ -186,19 +188,19 @@
 .optEx { margin-top: 8px; border-style: dashed; }
 
 /* Subscribe */
-.subscribe { margin-top: 40px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); max-width: 560px; }
+.subscribe { margin-top: 40px; padding: 22px 24px; border: 1px solid rgba(240, 98, 26, 0.35); border-radius: 12px; background: var(--panel); max-width: 560px; box-shadow: 0 8px 30px rgba(240, 98, 26, 0.08); }
 .subscribeTitle { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
 .subscribeSub { font-size: 13px; color: var(--muted); margin: 0 0 14px; }
 .subscribeForm { display: flex; gap: 10px; }
 .subscribeForm .input { flex: 1; min-width: 0; }
 .subscribeForm .btn { flex: none; justify-content: center; }
 @media (max-width: 520px) { .subscribeForm { flex-direction: column; } .subscribeForm .btn { width: 100%; } }
-.subscribeDone { font-size: 14px; margin: 0; color: #8fe0b0; }
+.subscribeDone { font-size: 14px; margin: 0; color: #1a7f3c; }
 
 /* Logo strip */
 .logos { border-top: 1px solid var(--line); padding: 28px 0 24px; }
 .logoRow { list-style: none; margin: 0 auto; padding: 0 24px; max-width: 1040px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; }
 .logoItem { height: 36px; display: flex; align-items: center; }
-.logoItem img { height: 100%; width: auto; max-width: 120px; object-fit: contain; border-radius: 6px; opacity: 0.9; }
+.logoItem img { height: 100%; width: auto; max-width: 120px; object-fit: contain; border-radius: 6px; opacity: 0.95; background: #fff; padding: 3px; }
 .logoItem:hover img { opacity: 1; }
 @media (max-width: 600px) { .logoItem { height: 28px; } .logoItem img { max-width: 92px; } }

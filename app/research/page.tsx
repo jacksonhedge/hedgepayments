@@ -99,7 +99,7 @@ const EMPTY: FormState = { name: '', email: '', company: '', title: '', message:
 export default function ResearchPage() {
   const [form, setForm] = useState<FormState>(EMPTY)
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
-  const [audience, setAudience] = useState<Audience>('businesses')
+  const [audience, setAudience] = useState<Audience>('users')
 
   const update = (k: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }))
@@ -126,7 +126,7 @@ export default function ResearchPage() {
       <nav className={s.nav}>
         <div className={s.navInner}>
           <a href="/" className={s.logo}>
-            <img src="/favicon/hedge-logo.svg" alt="" className={s.logoMark} />
+            <img src="/logos/hedge-hedgehog.png" alt="" className={s.logoMark} />
             <span>HEDGE</span>
             <span className={s.logoSub}>Research</span>
           </a>
@@ -168,21 +168,7 @@ export default function ResearchPage() {
           <a className={`${s.btn} ${s.btnPrimary}`} href="#contact">Request a proposal</a>
           <a className={s.btn} href="#network">See the network</a>
         </div>
-        <Subscribe />
       </header>
-
-      <section className={s.logos} aria-label="Platforms we test on">
-        <p className={s.tickerLabel}>Tested on the platforms that matter</p>
-        <ul className={s.logoRow}>
-          {LOGOS.map((l) => (
-            <li key={l.name} className={s.logoItem}>
-              <img src={l.src} alt={l.name} title={l.name} />
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <ReviewTicker />
 
       <section id="network" className={s.section}>
         <div className={s.shell}>
@@ -296,6 +282,19 @@ export default function ResearchPage() {
       </>
       )}
 
+      <section className={s.logos} aria-label="Platforms we test on">
+        <p className={s.tickerLabel}>Tested on the platforms that matter</p>
+        <ul className={s.logoRow}>
+          {LOGOS.map((l) => (
+            <li key={l.name} className={s.logoItem}>
+              <img src={l.src} alt={l.name} title={l.name} />
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <ReviewTicker />
+
       <footer className={s.footer}>
         <div className={s.shell}>
           © {new Date().getFullYear()} Hedge · <a href="/">hedgepayments.com</a>
@@ -315,7 +314,7 @@ function Subscribe() {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email, name: email.split('@')[0], source: 'research' }),
+        body: JSON.stringify({ email, name: email.split('@')[0], source: 'research-testers' }),
       })
       if (!res.ok) throw new Error('bad')
       setState('done')
@@ -326,10 +325,10 @@ function Subscribe() {
   }
   return (
     <div className={s.subscribe}>
-      <p className={s.subscribeTitle}>Subscribe to Hedge Research</p>
-      <p className={s.subscribeSub}>Monthly benchmarks and findings from the network. No spam.</p>
+      <p className={s.subscribeTitle}>Get notified about paid tests</p>
+      <p className={s.subscribeSub}>Drop your email and we&apos;ll text/email you when a paid test opens in your state. No spam.</p>
       {state === 'done' ? (
-        <p className={s.subscribeDone}>You&apos;re in — first report lands in your inbox soon.</p>
+        <p className={s.subscribeDone}>You&apos;re on the list — we&apos;ll reach out when the next paid test opens.</p>
       ) : (
         <form onSubmit={go} className={s.subscribeForm}>
           <input
@@ -365,6 +364,7 @@ function UsersView() {
           <a className={`${s.btn} ${s.btnPrimary}`} href="/research/signup">Apply to test</a>
           <a className={s.btn} href="#platforms">Where you&apos;ll test</a>
         </div>
+        <Subscribe />
       </header>
 
       <section id="platforms" className={s.section}>
