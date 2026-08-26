@@ -3,7 +3,7 @@ import { researchAdminClient, noDb, normalizePhone } from '@/lib/research/server
 import { notifySlack } from '@/lib/slack'
 
 // Quick tester subscribe from /research (name, email, phone, text-or-email).
-// Upserts by email into research_subscribers. Full applications go through /api/research/apply.
+// Insert-only into research_subscribers. Full applications go through /api/research/apply.
 export async function POST(req: NextRequest) {
   let b: Record<string, any>
   try { b = await req.json() } catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
@@ -21,11 +21,15 @@ export async function POST(req: NextRequest) {
   const db = researchAdminClient()
   if (!db) return noDb()
 
+  // Unauthenticated: never modify an existing row (anyone could re-point another
+  // subscriber's phone/channel by resubmitting their email). Duplicate emails get
+  // the same success response so addresses can't be enumerated.
   const { error } = await db
     .from('research_subscribers')
-    .upsert({ name, email, phone, notify_channel: channel, source: 'research-page' }, { onConflict: 'email' })
+    .insert({ name, email, phone, notify_channel: channel, source: 'research-page' })
   if (error) {
-    console.error('research_subscribers upsert failed:', error.message)
+    if (error.code === '23505') return NextResponse.json({ success: true })
+    console.error('research_subscribers insert failed:', error.message)
     return NextResponse.json({ error: 'Could not save' }, { status: 500 })
   }
 
