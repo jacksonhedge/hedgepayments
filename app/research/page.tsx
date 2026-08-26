@@ -91,15 +91,12 @@ const LOGOS = [
   { name: 'Fanatics', src: '/logos/fanatics.png' },
 ]
 
-type Audience = 'businesses' | 'users'
-
 type FormState = { name: string; email: string; company: string; title: string; message: string }
 const EMPTY: FormState = { name: '', email: '', company: '', title: '', message: '' }
 
 export default function ResearchPage() {
   const [form, setForm] = useState<FormState>(EMPTY)
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
-  const [audience, setAudience] = useState<Audience>('users')
 
   const update = (k: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }))
@@ -130,168 +127,11 @@ export default function ResearchPage() {
             <span>HEDGE</span>
             <span className={s.logoSub}>Research</span>
           </a>
-          <div className={s.toggle} role="tablist" aria-label="Audience">
-            <button
-              role="tab"
-              aria-selected={audience === 'businesses'}
-              className={`${s.toggleBtn} ${audience === 'businesses' ? s.toggleActive : ''}`}
-              onClick={() => setAudience('businesses')}
-            >
-              For Businesses
-            </button>
-            <button
-              role="tab"
-              aria-selected={audience === 'users'}
-              className={`${s.toggleBtn} ${audience === 'users' ? s.toggleActive : ''}`}
-              onClick={() => setAudience('users')}
-            >
-              For Users
-            </button>
-          </div>
           <a href="/" className={s.back}>← Back to Hedge</a>
         </div>
       </nav>
 
-      {audience === 'users' ? (
-        <UsersView />
-      ) : (
-      <>
-      <header className={`${s.shell} ${s.hero}`}>
-        <span className={s.eyebrow}>Hedge Research</span>
-        <h1 className={s.h1}>Consumer research from 20,000+ real testers.</h1>
-        <p className={s.lede}>
-          Product testing, consumer insights and competitive benchmarks across prediction markets, sports betting,
-          fantasy sports, crypto, investing and payments — run with real money by real users drawn from the
-          communities Hedge already operates.
-        </p>
-        <div className={s.row}>
-          <a className={`${s.btn} ${s.btnPrimary}`} href="#contact">Request a proposal</a>
-          <a className={s.btn} href="#network">See the network</a>
-        </div>
-      </header>
-
-      <section id="network" className={s.section}>
-        <div className={s.shell}>
-          <span className={s.eyebrow}>The tester network</span>
-          <div className={s.buckets}>
-            {BUCKETS.map((b) => (
-              <div key={b.label} className={s.bucket}>
-                <p className={s.bucketNum}>{b.n}</p>
-                <p className={s.bucketLabel}>{b.label}</p>
-                <p className={s.itemDesc}>{b.note}</p>
-              </div>
-            ))}
-          </div>
-          <div className={s.network}>
-            <div>
-              <p className={s.sub}>
-                We don&apos;t rent a panel. The testers are the users of the products and communities we already
-                run — so they&apos;re already depositing, trading, betting and cashing out on live platforms.
-              </p>
-              <p className={s.bucketLabel} style={{ marginTop: 28 }}>Verticals covered</p>
-              <ul className={s.tags}>
-                {VERTICALS.map((v) => (
-                  <li key={v} className={s.tag}>{v}</li>
-                ))}
-              </ul>
-            </div>
-            <ul className={s.list}>
-              {SOURCES.map((src) => (
-                <li key={src.name} className={s.item}>
-                  <p className={s.itemName}>{src.name}</p>
-                  <p className={s.itemDesc}>{src.desc}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className={s.section}>
-        <div className={s.shell}>
-          <h2 className={s.h2}>What Hedge Research does for you</h2>
-          <p className={s.sub} style={{ marginBottom: 32 }}>
-            Four engagements, every one run on the network above and delivered with benchmarks you can act on.
-          </p>
-          <div className={s.grid}>
-            {SERVICES.map((svc) => (
-              <div key={svc.name} className={s.card}>
-                <h3 className={s.cardTitle}>{svc.name}</h3>
-                <p className={s.cardDesc}>{svc.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={s.section}>
-        <div className={s.shell}>
-          <h2 className={s.h2} style={{ marginBottom: 32 }}>How an engagement works</h2>
-          <div className={s.steps}>
-            {STEPS.map((st) => (
-              <div key={st.n}>
-                <div className={s.stepNum}>{st.n}</div>
-                <h3 className={s.stepTitle}>{st.title}</h3>
-                <p className={s.cardDesc}>{st.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className={s.section}>
-        <div className={s.shell}>
-          <h2 className={s.h2}>Talk to the research team</h2>
-          <p className={s.sub}>Tell us what you want to learn and we&apos;ll come back with a scope and a quote.</p>
-
-          {status === 'sent' ? (
-            <div className={s.sent}>Thanks — we&apos;ll be in touch within one business day.</div>
-          ) : (
-            <form onSubmit={submit} className={s.form}>
-              <div className={s.formRow}>
-                <Field label="Name*" value={form.name} onChange={update('name')} required />
-                <Field label="Work email*" type="email" value={form.email} onChange={update('email')} required />
-              </div>
-              <div className={s.formRow}>
-                <Field label="Company*" value={form.company} onChange={update('company')} required />
-                <Field label="Title" value={form.title} onChange={update('title')} />
-              </div>
-              <div>
-                <label className={s.label}>Message*</label>
-                <textarea
-                  rows={5}
-                  required
-                  value={form.message}
-                  onChange={update('message')}
-                  className={s.input}
-                  placeholder="What product, markets and journeys do you want tested?"
-                />
-              </div>
-              {status === 'error' && (
-                <p className={s.err}>Something went wrong — email research@hedgepayments.com instead.</p>
-              )}
-              <div>
-                <button type="submit" disabled={status === 'sending'} className={`${s.btn} ${s.btnPrimary}`}>
-                  {status === 'sending' ? 'Sending…' : 'Submit'}
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-      </section>
-      </>
-      )}
-
-      <section className={s.logos} aria-label="Platforms we test on">
-        <p className={s.tickerLabel}>Tested on the platforms that matter</p>
-        <ul className={s.logoRow}>
-          {LOGOS.map((l) => (
-            <li key={l.name} className={s.logoItem}>
-              <img src={l.src} alt={l.name} title={l.name} />
-            </li>
-          ))}
-        </ul>
-      </section>
+      <UsersView />
 
       <ReviewTicker />
 
@@ -367,9 +207,26 @@ function Subscribe() {
   )
 }
 
+function LogoTape() {
+  const items = [...LOGOS, ...LOGOS]
+  return (
+    <div className={s.tape} aria-label="Platforms we test on">
+      <div className={s.tapeTrack}>
+        {items.map((l, i) => (
+          <span key={`${l.name}-${i}`} className={s.tapeItem}>
+            <img src={l.src} alt={l.name} />
+            <span>{l.name}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function UsersView() {
   return (
     <>
+      <LogoTape />
       <header className={`${s.shell} ${s.hero}`}>
         <span className={s.eyebrow}>Hedge Research · For Users</span>
         <h1 className={s.h1}>Get paid to test the apps you already use.</h1>

@@ -213,3 +213,12 @@
 .logoItem img { height: 100%; width: auto; max-width: 120px; object-fit: contain; border-radius: 6px; opacity: 0.95; background: #fff; padding: 3px; }
 .logoItem:hover img { opacity: 1; }
 @media (max-width: 600px) { .logoItem { height: 28px; } .logoItem img { max-width: 92px; } }
+
+/* Logo ticker tape (top of page) */
+.tape { border-bottom: 1px solid var(--line); background: #fff; padding: 12px 0; overflow: hidden; }
+.tapeTrack { display: flex; gap: 40px; width: max-content; animation: tape 45s linear infinite; }
+.tape:hover .tapeTrack { animation-play-state: paused; }
+@keyframes tape { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .tapeTrack { animation: none; flex-wrap: wrap; width: auto; padding: 0 24px; } }
+.tapeItem { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.tapeItem img { height: 26px; width: auto; max-width: 90px; object-fit: contain; border-radius: 5px; }
