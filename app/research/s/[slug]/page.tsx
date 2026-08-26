@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
 import s from '../../research.module.css'
 import { evaluate, type Screener, type Question, type Answers } from '@/lib/research/screeners'
+import { captureAttribution } from '@/lib/research/attribution'
 
 // One-question-at-a-time screener (Great Question style): earlier answers stay
 // visible above, greyed out; "X of N" counter; details + consent on the last step.
@@ -63,7 +64,7 @@ export default function ScreenerPage() {
     setState('sending'); setErr('')
     try {
       const r = await fetch(`/api/research/screener/${slug}`, { method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ eid, email, full_name: fullName, answers, consent }) })
+        body: JSON.stringify({ eid, email, full_name: fullName, answers, consent, attribution: captureAttribution() }) })
       const j = await r.json()
       if (!r.ok) throw new Error(j.error || 'Could not submit')
       setResult({ qualified: j.qualified }); setState('done')

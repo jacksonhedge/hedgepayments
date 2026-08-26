@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { researchAdminClient, noDb, normalizePhone } from '@/lib/research/server'
 import { evaluate, stateAbbr, platformSlug, type Question, type Answers } from '@/lib/research/screeners'
 import { notifySlack } from '@/lib/slack'
+import { cleanAttribution, sourceLabel } from '@/lib/research/attribution'
 
 // GET /api/research/screener/:slug?eid=<invite_token>
 // Returns the screener; when eid resolves to a tester the email is locked to them.
@@ -69,7 +70,8 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
     const [fn, ...rest] = full_name.split(' ')
     const row = { email, first_name: mapped.first_name || fn || 'Tester', last_name: mapped.last_name || rest.join(' ') || null,
       state: mapped.state || '??', age_bucket: '21+', platforms: mapped.platforms || [], phone: mapped.phone || null,
-      referral_source: `screener:${sc.slug}`, consent_storage: true, consent_future_studies: consent.future }
+      referral_source: `screener:${sc.slug}`, consent_storage: true, consent_future_studies: consent.future,
+      attribution: cleanAttribution(b.attribution), signup_source: sourceLabel(cleanAttribution(b.attribution)), signup_path: `/research/s/${sc.slug}` }
     const { data, error } = await db.from('research_testers').insert(row).select().single()
     if (error) return NextResponse.json({ error: 'Could not save' }, { status: 500 })
     tester = data

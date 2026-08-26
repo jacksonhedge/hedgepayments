@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import s from '../research.module.css'
 import { supabaseBrowser } from '../../utils/supabase-browser'
 import { US_STATES, VERTICALS, PAYOUT_TIERS, PAYOUT_METHODS } from '../testerConfig'
+import { captureAttribution } from '@/lib/research/attribution'
 
 type Platform = { slug: string; name: string; kind: string; min_age: number }
 
@@ -35,7 +36,7 @@ export default function ResearchSignup() {
     try {
       const res = await fetch('/api/research/apply', {
         method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ ...f, platforms: picked, verticals: verts }),
+        body: JSON.stringify({ ...f, platforms: picked, verticals: verts, attribution: captureAttribution() }),
       })
       const j = await res.json()
       if (!res.ok) throw new Error(j.error || 'Something went wrong')

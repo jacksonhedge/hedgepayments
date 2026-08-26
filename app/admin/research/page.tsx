@@ -6,7 +6,7 @@ import { PAYOUT_TIERS } from '../../research/testerConfig'
 // Hedge Research admin: testers, tests, assignments, and outbound SMS/email.
 // Auth = ADMIN_SECRET bearer (same as /api/admin/send-email), kept in sessionStorage (cleared when the tab closes).
 
-type Tester = { id: string; email: string; phone: string | null; first_name: string; last_name: string | null; age_bucket: string; state: string; platforms: string[]; verticals: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; payout_method: string | null; payout_handle: string | null; notes: string | null; created_at: string; research_assignments: { id: string; status: string; test_id: string }[]; research_messages: { id: string; channel: string; sent_at: string }[] }
+type Tester = { id: string; email: string; phone: string | null; first_name: string; last_name: string | null; age_bucket: string; state: string; platforms: string[]; verticals: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; signup_source: string | null; signup_path: string | null; attribution: Record<string, any> | null; payout_method: string | null; payout_handle: string | null; notes: string | null; created_at: string; research_assignments: { id: string; status: string; test_id: string }[]; research_messages: { id: string; channel: string; sent_at: string }[] }
 type Test = { id: string; title: string; platform_id: string | null; description: string | null; instructions: string | null; payout_cents: number; payout_max_cents: number | null; tier: string; est_minutes: number | null; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string } | null; research_assignments: { id: string; status: string; tester_id: string; paid_cents: number | null }[] }
 type Platform = { id: string; slug: string; name: string; kind: string }
 type Screener = { id: string; slug: string; title: string; intro: string | null; test_id: string | null; questions: any[]; status: string; created_at: string; research_tests: { title: string } | null; research_screener_responses: { id: string; tester_id: string | null; email: string; full_name: string | null; answers: Record<string, any>; qualified: boolean; disqualified_by: string | null; created_at: string }[] }
@@ -32,7 +32,7 @@ export default function ResearchAdmin() {
   const [msgs, setMsgs] = useState<Msg[]>([])
   const [refs, setRefs] = useState<{ stats: RefStat[]; recent: RefEvent[]; unknown: { code: string; n: number }[] }>({ stats: [], recent: [], unknown: [] })
   const [selected, setSelected] = useState<Set<string>>(new Set())
-  const [filter, setFilter] = useState({ q: '', status: '', state: '', platform: '', age: '' })
+  const [filter, setFilter] = useState({ q: '', status: '', state: '', platform: '', age: '', source: '' })
   const [toast, setToast] = useState('')
   const [err, setErr] = useState('')
 
@@ -65,6 +65,7 @@ export default function ResearchAdmin() {
     if (filter.state && t.state !== filter.state) return false
     if (filter.age && t.age_bucket !== filter.age) return false
     if (filter.platform && !t.platforms.includes(filter.platform)) return false
+    if (filter.source && (t.signup_source || 'direct') !== filter.source) return false
     return true
   }), [testers, filter])
 
@@ -112,7 +113,9 @@ export default function ResearchAdmin() {
             <select className={inp} value={filter.age} onChange={(e) => setFilter({ ...filter, age: e.target.value })}><option value="">Any age</option><option>21+</option><option>18-20</option></select>
             <select className={inp} value={filter.state} onChange={(e) => setFilter({ ...filter, state: e.target.value })}><option value="">Any state</option>{Array.from(new Set(testers.map((t) => t.state))).sort().map((s) => <option key={s}>{s}</option>)}</select>
             <select className={inp} value={filter.platform} onChange={(e) => setFilter({ ...filter, platform: e.target.value })}><option value="">Any platform</option>{platforms.map((p) => <option key={p.slug} value={p.slug}>{p.name}</option>)}</select>
+            <select className={inp} value={filter.source} onChange={(e) => setFilter({ ...filter, source: e.target.value })}><option value="">Any source</option>{Array.from(new Set(testers.map((t) => t.signup_source || 'direct'))).sort().map((x) => <option key={x}>{x}</option>)}</select>
           </div>
+          <div className="mb-3 text-xs text-[#6B5D4F]">Sources: {Object.entries(testers.reduce<Record<string, number>>((m, t) => { const k = t.signup_source || 'direct'; m[k] = (m[k] || 0) + 1; return m }, {})).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} (${n})`).join(' · ') || '—'} &nbsp;·&nbsp; Track links with <span className="font-mono">?utm_source=instagram&utm_campaign=rush-week</span> or <span className="font-mono">?src=ig_story</span> on any /research URL.</div>
 
           {selected.size > 0 && <Composer selected={Array.from(selected)} tests={tests} screeners={screeners} api={api} onDone={(m) => { flash(m); setSelected(new Set()); reload() }} />}
 
@@ -121,7 +124,7 @@ export default function ResearchAdmin() {
               <thead className="bg-[#FAF8F5] text-left">
                 <tr>
                   <th className="p-2"><input type="checkbox" checked={visible.length > 0 && selected.size === visible.length} onChange={toggleAll} /></th>
-                  <th className="p-2">Tester</th><th className="p-2">Contact</th><th className="p-2">State / Age</th><th className="p-2">Platforms</th><th className="p-2">Payout to</th><th className="p-2">Tests</th><th className="p-2">Status</th><th className="p-2">Joined</th>
+                  <th className="p-2">Tester</th><th className="p-2">Contact</th><th className="p-2">State / Age</th><th className="p-2">Platforms</th><th className="p-2">Payout to</th><th className="p-2">Source</th><th className="p-2">Tests</th><th className="p-2">Status</th><th className="p-2">Joined</th>
                 </tr>
               </thead>
               <tbody>
@@ -133,6 +136,7 @@ export default function ResearchAdmin() {
                     <td className="p-2">{t.state} · {t.age_bucket}</td>
                     <td className="p-2 text-xs max-w-[200px]">{t.platforms.join(', ') || '—'}</td>
                     <td className="p-2 text-xs">{t.payout_method ? `${t.payout_method}: ${t.payout_handle}` : <span className="text-red-700">not set</span>}</td>
+                    <td className="p-2 text-xs" title={JSON.stringify(t.attribution || {}, null, 1)}>{t.signup_source || 'direct'}<div className="text-[#9a8b7a]">{t.signup_path || ''}{t.attribution?.device ? ` · ${t.attribution.device}` : ''}{t.attribution?.referrer ? ` · via ${t.attribution.referrer}` : ''}</div></td>
                     <td className="p-2 text-xs">{t.research_assignments.length ? ASSIGN_STATUSES.map((s) => { const n = t.research_assignments.filter((a) => a.status === s).length; return n ? `${n} ${s}` : null }).filter(Boolean).join(', ') : '—'}<div className="text-[#9a8b7a]">{t.research_messages.length} msgs</div></td>
                     <td className="p-2">
                       <select className="border border-[#D4C5B0] rounded px-1 py-0.5 text-xs" value={t.status} onChange={async (e) => { try { await api('testers', { method: 'PATCH', body: JSON.stringify({ id: t.id, status: e.target.value }) }); reload() } catch (x: any) { setErr(x.message) } }}>
@@ -142,7 +146,7 @@ export default function ResearchAdmin() {
                     <td className="p-2 text-xs">{new Date(t.created_at).toLocaleDateString()}</td>
                   </tr>
                 ))}
-                {visible.length === 0 && <tr><td colSpan={9} className="p-6 text-center text-[#6B5D4F]">No testers match.</td></tr>}
+                {visible.length === 0 && <tr><td colSpan={10} className="p-6 text-center text-[#6B5D4F]">No testers match.</td></tr>}
               </tbody>
             </table>
           </div>

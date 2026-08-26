@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { researchAdminClient, noDb, normalizePhone } from '@/lib/research/server'
 import { notifySlack } from '@/lib/slack'
 import { cleanCode, recordReferral } from '@/lib/research/referrals'
+import { cleanAttribution, sourceLabel } from '@/lib/research/attribution'
 
 // Tester application from /research/signup. Upserts by email; the client then
 // sends a Supabase magic link so the tester can reach /research/dashboard.
@@ -19,7 +20,8 @@ export async function POST(req: NextRequest) {
   const payout_method = ['venmo','paypal','cashapp','zelle'].includes(b.payout_method) ? b.payout_method : null
   const payout_handle = payout_method && b.payout_handle ? String(b.payout_handle).trim().slice(0, 120) : null
   const verticals: string[] = Array.isArray(b.verticals) ? b.verticals.map(String).slice(0, 10) : []
-  const referral_code = cleanCode(b.referral_code)
+  const attribution = cleanAttribution(b.attribution)
+  const referral_code = cleanCode(b.referral_code) || cleanCode(attribution.ref)
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
   if (!first_name || !state || !age_bucket) return NextResponse.json({ error: 'first_name, state and age_bucket are required' }, { status: 400 })
@@ -36,7 +38,8 @@ export async function POST(req: NextRequest) {
   if (existing) return NextResponse.json({ success: true })
 
   const row = { email, first_name, last_name, state, age_bucket, phone, platforms, verticals, payout_method, payout_handle,
-    sms_opt_in: !!phone && b.sms_opt_in !== false, referral_source: b.referral_source ? String(b.referral_source).slice(0, 200) : null, referral_code }
+    sms_opt_in: !!phone && b.sms_opt_in !== false, referral_source: b.referral_source ? String(b.referral_source).slice(0, 200) : null, referral_code,
+    attribution, signup_source: sourceLabel(attribution), signup_path: '/research/signup' }
   const { data: inserted, error } = await db.from('research_testers').insert(row).select('id').single()
   if (error) {
     console.error('research_testers insert failed:', error.message)
