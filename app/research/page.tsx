@@ -305,47 +305,64 @@ export default function ResearchPage() {
 }
 
 function Subscribe() {
-  const [email, setEmail] = useState('')
+  const [f, setF] = useState({ name: '', email: '', phone: '', channel: 'text' as 'text' | 'email' | 'both' })
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
+  const [err, setErr] = useState('')
+  const up = (k: 'name' | 'email' | 'phone') => (e: React.ChangeEvent<HTMLInputElement>) => setF((x) => ({ ...x, [k]: e.target.value }))
   const go = async (e: React.FormEvent) => {
     e.preventDefault()
     setState('sending')
+    setErr('')
     try {
-      const res = await fetch('/api/subscribe', {
+      const res = await fetch('/api/research/subscribe', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email, name: email.split('@')[0], source: 'research-testers' }),
+        body: JSON.stringify(f),
       })
-      if (!res.ok) throw new Error('bad')
+      const j = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(j.error || 'bad')
       setState('done')
-      setEmail('')
-    } catch {
+    } catch (e) {
+      setErr(e instanceof Error && e.message !== 'bad' ? e.message : '')
       setState('error')
     }
   }
+  const needsPhone = f.channel !== 'email'
   return (
     <div className={s.subscribe}>
       <p className={s.subscribeTitle}>Get notified about paid tests</p>
-      <p className={s.subscribeSub}>Drop your email and we&apos;ll text/email you when a paid test opens in your state. No spam.</p>
+      <p className={s.subscribeSub}>We&apos;ll text or email you when a paid test opens in your state. No spam.</p>
       {state === 'done' ? (
         <p className={s.subscribeDone}>You&apos;re on the list — we&apos;ll reach out when the next paid test opens.</p>
       ) : (
         <form onSubmit={go} className={s.subscribeForm}>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@company.com"
-            className={s.input}
-            aria-label="Email"
-          />
-          <button type="submit" disabled={state === 'sending'} className={`${s.btn} ${s.btnPrimary}`}>
-            {state === 'sending' ? 'Subscribing…' : 'Subscribe'}
-          </button>
+          <div className={s.subscribeRow}>
+            <input type="text" required value={f.name} onChange={up('name')} placeholder="Name" className={s.input} aria-label="Name" />
+            <input type="email" required value={f.email} onChange={up('email')} placeholder="Email" className={s.input} aria-label="Email" />
+            <input type="tel" required={needsPhone} value={f.phone} onChange={up('phone')} placeholder="Mobile number" className={s.input} aria-label="Mobile number" />
+          </div>
+          <div className={s.subscribeRow}>
+            <div className={s.channel} role="radiogroup" aria-label="Notify me by">
+              {(['text', 'email', 'both'] as const).map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  role="radio"
+                  aria-checked={f.channel === c}
+                  className={`${s.channelBtn} ${f.channel === c ? s.channelActive : ''}`}
+                  onClick={() => setF((x) => ({ ...x, channel: c }))}
+                >
+                  {c === 'text' ? 'Text me' : c === 'email' ? 'Email me' : 'Both'}
+                </button>
+              ))}
+            </div>
+            <button type="submit" disabled={state === 'sending'} className={`${s.btn} ${s.btnPrimary}`}>
+              {state === 'sending' ? 'Subscribing…' : 'Subscribe'}
+            </button>
+          </div>
+          {state === 'error' && <p className={s.err}>{err || 'Couldn\u2019t subscribe — try again or email research@hedgepayments.com.'}</p>}
         </form>
       )}
-      {state === 'error' && <p className={s.err}>Couldn&apos;t subscribe — try again or email research@hedgepayments.com.</p>}
     </div>
   )
 }

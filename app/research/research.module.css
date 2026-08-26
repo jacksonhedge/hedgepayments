@@ -188,13 +188,22 @@
 .optEx { margin-top: 8px; border-style: dashed; }
 
 /* Subscribe */
-.subscribe { margin-top: 40px; padding: 22px 24px; border: 1px solid rgba(240, 98, 26, 0.35); border-radius: 12px; background: var(--panel); max-width: 560px; box-shadow: 0 8px 30px rgba(240, 98, 26, 0.08); }
+.subscribe { margin-top: 40px; padding: 22px 24px; border: 1px solid rgba(240, 98, 26, 0.35); border-radius: 12px; background: var(--panel); max-width: 720px; box-shadow: 0 8px 30px rgba(240, 98, 26, 0.08); }
 .subscribeTitle { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
 .subscribeSub { font-size: 13px; color: var(--muted); margin: 0 0 14px; }
-.subscribeForm { display: flex; gap: 10px; }
-.subscribeForm .input { flex: 1; min-width: 0; }
-.subscribeForm .btn { flex: none; justify-content: center; }
-@media (max-width: 520px) { .subscribeForm { flex-direction: column; } .subscribeForm .btn { width: 100%; } }
+.subscribeForm { display: grid; gap: 10px; }
+.subscribeRow { display: flex; gap: 10px; align-items: center; }
+.subscribeRow .input { flex: 1; min-width: 0; }
+.subscribeRow .btn { flex: none; justify-content: center; margin-left: auto; }
+.channel { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); }
+.channelBtn { font: inherit; font-size: 13px; font-weight: 600; color: var(--muted); padding: 7px 14px; border-radius: 999px; border: 0; background: transparent; cursor: pointer; }
+.channelActive { background: var(--accent); color: #fff; }
+@media (max-width: 600px) {
+  .subscribeRow { flex-direction: column; align-items: stretch; }
+  .subscribeRow .btn { width: 100%; margin-left: 0; }
+  .channel { justify-content: center; }
+  .channelBtn { flex: 1; }
+}
 .subscribeDone { font-size: 14px; margin: 0; color: #1a7f3c; }
 
 /* Logo strip */
