@@ -180,13 +180,17 @@ function Composer({ selected, tests, screeners, api, onDone }: { selected: strin
   const [body, setBody] = useState('')
   const [testId, setTestId] = useState('')
   const [screenerId, setScreenerId] = useState('')
+  const [eyebrow, setEyebrow] = useState('')
+  const [ctaLabel, setCtaLabel] = useState('')
+  const [ctaUrl, setCtaUrl] = useState('')
+  const [preview, setPreview] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
 
   const send = async () => {
     setBusy(true); setErr('')
     try {
-      const r = await api('messages', { method: 'POST', body: JSON.stringify({ tester_ids: selected, channel, subject, body, test_id: testId || null, screener_id: screenerId || null }) })
+      const r = await api('messages', { method: 'POST', body: JSON.stringify({ tester_ids: selected, channel, subject, body, test_id: testId || null, screener_id: screenerId || null, eyebrow: eyebrow || null, cta_label: ctaLabel || null, cta_url: ctaUrl || null }) })
       onDone(`${channel.toUpperCase()} sent to ${r.sent}${r.failed.length ? `, ${r.failed.length} failed (${r.failed.map((f: any) => f.reason).join('; ')})` : ''}`)
       setBody('')
     } catch (e: any) { setErr(e.message) } finally { setBusy(false) }
@@ -212,8 +216,19 @@ function Composer({ selected, tests, screeners, api, onDone }: { selected: strin
           <option value="">No screener link</option>{screeners.filter((x) => x.status === 'open').map((x) => <option key={x.id} value={x.id}>Screener: {x.title}</option>)}
         </select>
       </div>
-      {channel === 'email' && <input className={`${inp} mb-2`} placeholder="Subject" value={subject} onChange={(e) => setSubject(e.target.value)} />}
+      {channel === 'email' && <>
+        <div className="flex gap-2 mb-2">
+          <input className={inp} placeholder="Subject" value={subject} onChange={(e) => setSubject(e.target.value)} />
+          <input className={inp} placeholder="Eyebrow (optional) e.g. Paid study · $100" value={eyebrow} onChange={(e) => setEyebrow(e.target.value)} />
+        </div>
+      </>}
       <textarea className={`${inp} mb-2`} rows={channel === 'sms' ? 3 : 6} placeholder={channel === 'sms' ? 'Hey {{first_name}} — paid $100 study, 1 min to see if you qualify: {{screener_url}}' : 'Hi {{first_name}},\n\n…'} value={body} onChange={(e) => setBody(e.target.value)} />
+      {channel === 'email' && <div className="flex gap-2 mb-2">
+        <input className={inp} placeholder="Button label (optional) e.g. See if you qualify" value={ctaLabel} onChange={(e) => setCtaLabel(e.target.value)} />
+        <input className={inp} placeholder="Button link e.g. {{screener_url}} or {{dashboard_url}}" value={ctaUrl} onChange={(e) => setCtaUrl(e.target.value)} />
+        <button className={btn2} type="button" onClick={async () => { try { const r = await api('email-preview', { method: 'POST', body: JSON.stringify({ body, eyebrow, cta_label: ctaLabel, cta_url: ctaUrl }) }); setPreview(r.html) } catch (e: any) { setErr(e.message) } }}>Preview</button>
+      </div>}
+      {preview && channel === 'email' && <div className="mb-2 border border-[#D4C5B0] rounded overflow-hidden"><div className="flex justify-between items-center px-3 py-1 bg-[#FAF8F5] text-xs"><span>Preview (sample merge values)</span><button className="underline" onClick={() => setPreview(null)}>close</button></div><iframe title="Email preview" srcDoc={preview} style={{ width: '100%', height: 520, border: 0, background: '#f3f3f4' }} /></div>}
       <div className="flex items-center justify-between">
         <span className="text-xs text-[#6B5D4F]">Merge fields: {'{{first_name}} {{last_name}} {{email}} {{state}} {{test}} {{dashboard_url}} {{screener_url}}'}{channel === 'sms' && ` · ${body.length} chars`}</span>
         <button className={btn} disabled={busy || !body || (channel === 'email' && !subject)} onClick={send}>{busy ? 'Sending…' : `Send ${channel.toUpperCase()}`}</button>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { researchAdminClient, requireAdmin, noDb, mergeTemplate } from '@/lib/research/server'
 import { sendEmail, sendSMSDetailed } from '@/lib/sendgrid'
+import { renderResearchEmail } from '@/lib/research/email'
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://hedgepayments.com'
 
@@ -16,7 +17,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ messages: data })
 }
 
-// POST { tester_ids[], channel: 'sms'|'email', subject?, body, test_id? }
+// POST { tester_ids[], channel: 'sms'|'email', subject?, body, test_id?, screener_id?, cta_label?, cta_url?, eyebrow? }
 // Merge fields: {{first_name}} {{last_name}} {{email}} {{state}} {{test}} {{dashboard_url}} {{screener_url}} (needs screener_id)
 export async function POST(req: NextRequest) {
   const denied = requireAdmin(req); if (denied) return denied
@@ -56,7 +57,12 @@ export async function POST(req: NextRequest) {
       else { const r = await sendSMSDetailed({ to: t.phone, body: text }); ok = r.ok; if (!ok) reason = r.error }
     } else {
       if (!t.email_opt_in) reason = 'email opted out'
-      else ok = await sendEmail({ to: t.email, subject: mergeTemplate(subject, vars), text, html: text.replace(/\n/g, '<br/>'), fromName: 'Hedge Research' })
+      else {
+        const ctaUrl = b.cta_url ? mergeTemplate(String(b.cta_url), vars) : ''
+        const html = renderResearchEmail({ body: text, preheader: text.slice(0, 120), eyebrow: b.eyebrow ? mergeTemplate(String(b.eyebrow), vars) : undefined,
+          cta: ctaUrl ? { label: mergeTemplate(String(b.cta_label || 'Open'), vars), url: ctaUrl } : null })
+        ok = await sendEmail({ to: t.email, subject: mergeTemplate(subject, vars), text: ctaUrl ? `${text}\n\n${ctaUrl}` : text, html, fromName: 'Hedge Research' })
+      }
       if (!ok && !reason) reason = 'sendgrid send failed (check SENDGRID_* env)'
     }
     await db.from('research_messages').insert({
