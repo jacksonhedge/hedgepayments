@@ -77,6 +77,20 @@ const USER_STEPS = [
   { n: '04', title: 'Get paid', desc: '$10–$100 per completed test depending on length and requirements, paid to Venmo, Cash App, PayPal or Zelle — plus you keep what you win.' },
 ]
 
+const LOGOS = [
+  { name: 'DraftKings', src: '/logos/draftkings.png' },
+  { name: 'FanDuel', src: '/logos/fanduel.avif' },
+  { name: 'Polymarket', src: '/logos/polymarket.png' },
+  { name: 'Kalshi', src: '/logos/kalshi.png' },
+  { name: 'ProphetX', src: '/logos/prophetx.png' },
+  { name: 'FOMO', src: '/logos/fomo.png' },
+  { name: 'Splash Sports', src: '/logos/splash-white.png' },
+  { name: 'Underdog', src: '/logos/underdog.png' },
+  { name: 'BetMGM', src: '/logos/betmgm.png' },
+  { name: 'Caesars', src: '/logos/caesars.png' },
+  { name: 'Fanatics', src: '/logos/fanatics.png' },
+]
+
 type Audience = 'businesses' | 'users'
 
 type FormState = { name: string; email: string; company: string; title: string; message: string }
@@ -154,7 +168,19 @@ export default function ResearchPage() {
           <a className={`${s.btn} ${s.btnPrimary}`} href="#contact">Request a proposal</a>
           <a className={s.btn} href="#network">See the network</a>
         </div>
+        <Subscribe />
       </header>
+
+      <section className={s.logos} aria-label="Platforms we test on">
+        <p className={s.tickerLabel}>Tested on the platforms that matter</p>
+        <ul className={s.logoRow}>
+          {LOGOS.map((l) => (
+            <li key={l.name} className={s.logoItem}>
+              <img src={l.src} alt={l.name} title={l.name} />
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <ReviewTicker />
 
@@ -275,6 +301,52 @@ export default function ResearchPage() {
           © {new Date().getFullYear()} Hedge · <a href="/">hedgepayments.com</a>
         </div>
       </footer>
+    </div>
+  )
+}
+
+function Subscribe() {
+  const [email, setEmail] = useState('')
+  const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
+  const go = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setState('sending')
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email, name: email.split('@')[0], source: 'research' }),
+      })
+      if (!res.ok) throw new Error('bad')
+      setState('done')
+      setEmail('')
+    } catch {
+      setState('error')
+    }
+  }
+  return (
+    <div className={s.subscribe}>
+      <p className={s.subscribeTitle}>Subscribe to Hedge Research</p>
+      <p className={s.subscribeSub}>Monthly benchmarks and findings from the network. No spam.</p>
+      {state === 'done' ? (
+        <p className={s.subscribeDone}>You&apos;re in — first report lands in your inbox soon.</p>
+      ) : (
+        <form onSubmit={go} className={s.subscribeForm}>
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@company.com"
+            className={s.input}
+            aria-label="Email"
+          />
+          <button type="submit" disabled={state === 'sending'} className={`${s.btn} ${s.btnPrimary}`}>
+            {state === 'sending' ? 'Subscribing…' : 'Subscribe'}
+          </button>
+        </form>
+      )}
+      {state === 'error' && <p className={s.err}>Couldn&apos;t subscribe — try again or email research@hedgepayments.com.</p>}
     </div>
   )
 }

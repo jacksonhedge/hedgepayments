@@ -184,3 +184,21 @@
 .opt:hover { color: var(--ink); }
 .optOn { border-color: var(--ink); color: var(--ink); }
 .optEx { margin-top: 8px; border-style: dashed; }
+
+/* Subscribe */
+.subscribe { margin-top: 40px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); max-width: 560px; }
+.subscribeTitle { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+.subscribeSub { font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+.subscribeForm { display: flex; gap: 10px; }
+.subscribeForm .input { flex: 1; min-width: 0; }
+.subscribeForm .btn { flex: none; justify-content: center; }
+@media (max-width: 520px) { .subscribeForm { flex-direction: column; } .subscribeForm .btn { width: 100%; } }
+.subscribeDone { font-size: 14px; margin: 0; color: #8fe0b0; }
+
+/* Logo strip */
+.logos { border-top: 1px solid var(--line); padding: 28px 0 24px; }
+.logoRow { list-style: none; margin: 0 auto; padding: 0 24px; max-width: 1040px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; }
+.logoItem { height: 36px; display: flex; align-items: center; }
+.logoItem img { height: 100%; width: auto; max-width: 120px; object-fit: contain; border-radius: 6px; opacity: 0.9; }
+.logoItem:hover img { opacity: 1; }
+@media (max-width: 600px) { .logoItem { height: 28px; } .logoItem img { max-width: 92px; } }

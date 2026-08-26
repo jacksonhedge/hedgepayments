@@ -10,7 +10,7 @@ const CONVERTKIT_FORM_ID = process.env.CONVERTKIT_FORM_ID || '8047084';
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, referralCode } = await req.json();
+    const { name, email, referralCode, source } = await req.json();
 
     if (!email || !name) {
       return NextResponse.json(
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       // Continue with ConvertKit anyway - we'll log the error but not fail the request
     } else {
       console.log('Successfully saved subscriber to Supabase:', supabaseResult.data);
-      await notifySlack(`📧 New subscriber: ${name} <${email}>`);
+      await notifySlack(`📧 New subscriber${source ? ` (${source})` : ''}: ${name} <${email}>`);
     }
 
     // Split the name into first and last
