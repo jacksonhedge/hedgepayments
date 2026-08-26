@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { researchAdminClient, requireAdmin, noDb, mergeTemplate } from '@/lib/research/server'
-import { sendEmail, sendSMS } from '@/lib/sendgrid'
+import { sendEmail, sendSMSDetailed } from '@/lib/sendgrid'
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://hedgepayments.com'
 
@@ -53,8 +53,7 @@ export async function POST(req: NextRequest) {
     if (channel === 'sms') {
       if (!t.phone) reason = 'no phone'
       else if (!t.sms_opt_in) reason = 'sms opted out'
-      else ok = await sendSMS({ to: t.phone, body: text })
-      if (!ok && !reason) reason = 'twilio send failed (check TWILIO_* env)'
+      else { const r = await sendSMSDetailed({ to: t.phone, body: text }); ok = r.ok; if (!ok) reason = r.error }
     } else {
       if (!t.email_opt_in) reason = 'email opted out'
       else ok = await sendEmail({ to: t.email, subject: mergeTemplate(subject, vars), text, html: text.replace(/\n/g, '<br/>'), fromName: 'Hedge Research' })

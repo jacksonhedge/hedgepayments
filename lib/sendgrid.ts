@@ -99,39 +99,39 @@ export async function sendBulkEmail(recipients: string[], options: Omit<EmailOpt
  * Note: This requires a Twilio account and phone number
  */
 export async function sendSMS(options: SMSOptions): Promise<boolean> {
-  if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_FROM_NUMBER) {
-    console.error('Twilio credentials not configured');
-    return false;
-  }
+  const r = await sendSMSDetailed(options);
+  return r.ok;
+}
 
+// Like sendSMS but returns Twilio's error code/message so callers can log a real reason.
+export async function sendSMSDetailed(options: SMSOptions): Promise<{ ok: boolean; sid?: string; error?: string }> {
+  if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_FROM_NUMBER) {
+    const missing = [!TWILIO_ACCOUNT_SID && 'TWILIO_ACCOUNT_SID', !TWILIO_AUTH_TOKEN && 'TWILIO_AUTH_TOKEN', !TWILIO_FROM_NUMBER && 'TWILIO_FROM_NUMBER'].filter(Boolean).join(', ');
+    return { ok: false, error: `missing env: ${missing}` };
+  }
   try {
     const response = await fetch(
-      `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`,
+      `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID.trim()}/Messages.json`,
       {
         method: 'POST',
         headers: {
-          'Authorization': 'Basic ' + Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString('base64'),
+          'Authorization': 'Basic ' + Buffer.from(`${TWILIO_ACCOUNT_SID.trim()}:${TWILIO_AUTH_TOKEN.trim()}`).toString('base64'),
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams({
-          To: options.to,
-          From: TWILIO_FROM_NUMBER,
-          Body: options.body
-        })
+        body: new URLSearchParams({ To: options.to, From: TWILIO_FROM_NUMBER.trim(), Body: options.body })
       }
     );
-
+    const data: any = await response.json().catch(() => ({}));
     if (response.ok) {
-      console.log('SMS sent successfully to:', options.to);
-      return true;
-    } else {
-      const error = await response.json();
-      console.error('Error sending SMS:', error);
-      return false;
+      console.log('SMS sent successfully to:', options.to, data.sid);
+      return { ok: true, sid: data.sid };
     }
+    const error = `twilio ${response.status}${data.code ? ` code ${data.code}` : ''}: ${data.message || 'unknown error'}${data.more_info ? ` (${data.more_info})` : ''}`;
+    console.error('Error sending SMS:', error);
+    return { ok: false, error };
   } catch (error: any) {
     console.error('Error sending SMS:', error);
-    return false;
+    return { ok: false, error: `network: ${error?.message || error}` };
   }
 }
 
