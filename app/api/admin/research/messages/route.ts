@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
 }
 
 // POST { tester_ids[], channel: 'sms'|'email', subject?, body, test_id? }
-// Merge fields: {{first_name}} {{last_name}} {{email}} {{state}} {{test}} {{dashboard_url}}
+// Merge fields: {{first_name}} {{last_name}} {{email}} {{state}} {{test}} {{dashboard_url}} {{screener_url}} (needs screener_id)
 export async function POST(req: NextRequest) {
   const denied = requireAdmin(req); if (denied) return denied
   const db = researchAdminClient(); if (!db) return noDb()
@@ -38,9 +38,15 @@ export async function POST(req: NextRequest) {
     testTitle = t?.title || null
   }
 
+  let screenerSlug: string | null = null
+  if (b.screener_id) {
+    const { data: sc } = await db.from('research_screeners').select('slug').eq('id', b.screener_id).maybeSingle()
+    screenerSlug = sc?.slug || null
+  }
+
   const results: { tester_id: string; ok: boolean; reason?: string }[] = []
   for (const t of testers || []) {
-    const vars = { first_name: t.first_name, last_name: t.last_name, email: t.email, state: t.state, test: testTitle, dashboard_url: `${SITE}/research/dashboard` }
+    const vars = { first_name: t.first_name, last_name: t.last_name, email: t.email, state: t.state, test: testTitle, dashboard_url: `${SITE}/research/dashboard`, screener_url: screenerSlug ? `${SITE}/research/s/${screenerSlug}?eid=${t.invite_token}` : '' }
     const text = mergeTemplate(body, vars)
     let ok = false
     let reason: string | undefined

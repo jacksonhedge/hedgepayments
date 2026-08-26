@@ -9,6 +9,7 @@ import { PAYOUT_TIERS } from '../../research/testerConfig'
 type Tester = { id: string; email: string; phone: string | null; first_name: string; last_name: string | null; age_bucket: string; state: string; platforms: string[]; verticals: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; payout_method: string | null; payout_handle: string | null; notes: string | null; created_at: string; research_assignments: { id: string; status: string; test_id: string }[]; research_messages: { id: string; channel: string; sent_at: string }[] }
 type Test = { id: string; title: string; platform_id: string | null; description: string | null; instructions: string | null; payout_cents: number; payout_max_cents: number | null; tier: string; est_minutes: number | null; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string } | null; research_assignments: { id: string; status: string; tester_id: string; paid_cents: number | null }[] }
 type Platform = { id: string; slug: string; name: string; kind: string }
+type Screener = { id: string; slug: string; title: string; intro: string | null; test_id: string | null; questions: any[]; status: string; created_at: string; research_tests: { title: string } | null; research_screener_responses: { id: string; tester_id: string | null; email: string; full_name: string | null; answers: Record<string, any>; qualified: boolean; disqualified_by: string | null; created_at: string }[] }
 type Msg = { id: string; channel: string; subject: string | null; body: string; status: string; error: string | null; sent_at: string; research_testers: { first_name: string; email: string } | null }
 
 const TESTER_STATUSES = ['applied', 'approved', 'active', 'paused', 'rejected']
@@ -21,7 +22,8 @@ const btn2 = 'px-3 py-1.5 rounded text-sm border border-[#D4C5B0] text-[#2C2416]
 
 export default function ResearchAdmin() {
   const [secret, setSecret] = useState('')
-  const [tab, setTab] = useState<'testers' | 'tests' | 'messages'>('testers')
+  const [tab, setTab] = useState<'testers' | 'tests' | 'screeners' | 'messages'>('testers')
+  const [screeners, setScreeners] = useState<Screener[]>([])
   const [testers, setTesters] = useState<Tester[]>([])
   const [tests, setTests] = useState<Test[]>([])
   const [platforms, setPlatforms] = useState<Platform[]>([])
@@ -45,8 +47,8 @@ export default function ResearchAdmin() {
     if (!secret) return
     setErr('')
     try {
-      const [t, x, m] = await Promise.all([api('testers'), api('tests'), api('messages')])
-      setTesters(t.testers); setTests(x.tests); setPlatforms(x.platforms); setMsgs(m.messages)
+      const [t, x, m, sc] = await Promise.all([api('testers'), api('tests'), api('messages'), api('screeners')])
+      setTesters(t.testers); setTests(x.tests); setPlatforms(x.platforms); setMsgs(m.messages); setScreeners(sc.screeners)
     } catch (e: any) { setErr(e.message) }
   }, [api, secret])
   useEffect(() => { reload() }, [reload])
@@ -94,7 +96,7 @@ export default function ResearchAdmin() {
       {toast && <div className="mb-4 p-3 rounded bg-green-50 text-green-800 text-sm">{toast}</div>}
 
       <div className="flex gap-2 mb-6 border-b border-[#D4C5B0]">
-        {(['testers', 'tests', 'messages'] as const).map((k) => (
+        {(['testers', 'tests', 'screeners', 'messages'] as const).map((k) => (
           <button key={k} onClick={() => setTab(k)} className={`px-4 py-2 text-sm capitalize ${tab === k ? 'border-b-2 border-[#2C2416] font-semibold' : 'text-[#6B5D4F]'}`}>{k}</button>
         ))}
       </div>
@@ -109,7 +111,7 @@ export default function ResearchAdmin() {
             <select className={inp} value={filter.platform} onChange={(e) => setFilter({ ...filter, platform: e.target.value })}><option value="">Any platform</option>{platforms.map((p) => <option key={p.slug} value={p.slug}>{p.name}</option>)}</select>
           </div>
 
-          {selected.size > 0 && <Composer selected={Array.from(selected)} tests={tests} api={api} onDone={(m) => { flash(m); setSelected(new Set()); reload() }} />}
+          {selected.size > 0 && <Composer selected={Array.from(selected)} tests={tests} screeners={screeners} api={api} onDone={(m) => { flash(m); setSelected(new Set()); reload() }} />}
 
           <div className="overflow-x-auto bg-white border border-[#D4C5B0] rounded">
             <table className="w-full text-sm">
@@ -146,6 +148,8 @@ export default function ResearchAdmin() {
 
       {tab === 'tests' && <TestsTab tests={tests} testers={testers} platforms={platforms} api={api} onChange={(m) => { flash(m); reload() }} onError={setErr} />}
 
+      {tab === 'screeners' && <ScreenersTab screeners={screeners} tests={tests} api={api} onChange={(m) => { flash(m); reload() }} onError={setErr} onInvite={(ids) => { setSelected(new Set(ids)); setTab('testers') }} />}
+
       {tab === 'messages' && (
         <div className="bg-white border border-[#D4C5B0] rounded divide-y divide-[#F0E8DD]">
           {msgs.length === 0 && <div className="p-6 text-center text-[#6B5D4F] text-sm">No messages sent yet.</div>}
@@ -162,18 +166,19 @@ export default function ResearchAdmin() {
   )
 }
 
-function Composer({ selected, tests, api, onDone }: { selected: string[]; tests: Test[]; api: (p: string, i?: RequestInit) => Promise<any>; onDone: (m: string) => void }) {
+function Composer({ selected, tests, screeners, api, onDone }: { selected: string[]; tests: Test[]; screeners: Screener[]; api: (p: string, i?: RequestInit) => Promise<any>; onDone: (m: string) => void }) {
   const [channel, setChannel] = useState<'sms' | 'email'>('sms')
   const [subject, setSubject] = useState('')
   const [body, setBody] = useState('')
   const [testId, setTestId] = useState('')
+  const [screenerId, setScreenerId] = useState('')
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
 
   const send = async () => {
     setBusy(true); setErr('')
     try {
-      const r = await api('messages', { method: 'POST', body: JSON.stringify({ tester_ids: selected, channel, subject, body, test_id: testId || null }) })
+      const r = await api('messages', { method: 'POST', body: JSON.stringify({ tester_ids: selected, channel, subject, body, test_id: testId || null, screener_id: screenerId || null }) })
       onDone(`${channel.toUpperCase()} sent to ${r.sent}${r.failed.length ? `, ${r.failed.length} failed (${r.failed.map((f: any) => f.reason).join('; ')})` : ''}`)
       setBody('')
     } catch (e: any) { setErr(e.message) } finally { setBusy(false) }
@@ -195,11 +200,14 @@ function Composer({ selected, tests, api, onDone }: { selected: string[]; tests:
           <option value="">No test linked</option>{tests.map((t) => <option key={t.id} value={t.id}>{t.title} ({t.status})</option>)}
         </select>
         <button className={btn2} disabled={busy || !testId} onClick={invite}>Invite selected to test</button>
+        <select className="border border-[#D4C5B0] rounded px-2 py-1 text-sm" value={screenerId} onChange={(e) => setScreenerId(e.target.value)}>
+          <option value="">No screener link</option>{screeners.filter((x) => x.status === 'open').map((x) => <option key={x.id} value={x.id}>Screener: {x.title}</option>)}
+        </select>
       </div>
       {channel === 'email' && <input className={`${inp} mb-2`} placeholder="Subject" value={subject} onChange={(e) => setSubject(e.target.value)} />}
-      <textarea className={`${inp} mb-2`} rows={channel === 'sms' ? 3 : 6} placeholder={channel === 'sms' ? 'Hey {{first_name}} — a paid {{test}} test is ready. Details: {{dashboard_url}}' : 'Hi {{first_name}},\n\n…'} value={body} onChange={(e) => setBody(e.target.value)} />
+      <textarea className={`${inp} mb-2`} rows={channel === 'sms' ? 3 : 6} placeholder={channel === 'sms' ? 'Hey {{first_name}} — paid $100 study, 1 min to see if you qualify: {{screener_url}}' : 'Hi {{first_name}},\n\n…'} value={body} onChange={(e) => setBody(e.target.value)} />
       <div className="flex items-center justify-between">
-        <span className="text-xs text-[#6B5D4F]">Merge fields: {'{{first_name}} {{last_name}} {{email}} {{state}} {{test}} {{dashboard_url}}'}{channel === 'sms' && ` · ${body.length} chars`}</span>
+        <span className="text-xs text-[#6B5D4F]">Merge fields: {'{{first_name}} {{last_name}} {{email}} {{state}} {{test}} {{dashboard_url}} {{screener_url}}'}{channel === 'sms' && ` · ${body.length} chars`}</span>
         <button className={btn} disabled={busy || !body || (channel === 'email' && !subject)} onClick={send}>{busy ? 'Sending…' : `Send ${channel.toUpperCase()}`}</button>
       </div>
       {err && <p className="text-red-700 text-sm mt-2">{err}</p>}
@@ -287,6 +295,80 @@ function TestsTab({ tests, testers, platforms, api, onChange, onError }: { tests
           )
         })}
       </div>
+    </div>
+  )
+}
+
+function ScreenersTab({ screeners, tests, api, onChange, onError, onInvite }: { screeners: Screener[]; tests: Test[]; api: (p: string, i?: RequestInit) => Promise<any>; onChange: (m: string) => void; onError: (m: string) => void; onInvite: (testerIds: string[]) => void }) {
+  const [slug, setSlug] = useState('betting-hero-apps'); const [testId, setTestId] = useState(''); const [open, setOpen] = useState<string | null>(null)
+  const [editing, setEditing] = useState<Screener | null>(null); const [json, setJson] = useState('')
+  const site = typeof window !== 'undefined' ? window.location.origin : ''
+
+  const createTemplate = async () => {
+    try { await api('screeners', { method: 'POST', body: JSON.stringify({ template: 'betting_hero', slug, test_id: testId || null }) }); onChange('Screener created from Betting Hero template') } catch (e: any) { onError(e.message) }
+  }
+  const startEdit = (sc: Screener) => { setEditing(sc); setJson(JSON.stringify({ title: sc.title, intro: sc.intro, questions: sc.questions }, null, 2)) }
+  const saveEdit = async () => {
+    if (!editing) return
+    try { const p = JSON.parse(json); await api('screeners', { method: 'PATCH', body: JSON.stringify({ id: editing.id, ...p }) }); setEditing(null); onChange('Screener saved') } catch (e: any) { onError(e.message) }
+  }
+  const setStatus = async (id: string, status: string) => { try { await api('screeners', { method: 'PATCH', body: JSON.stringify({ id, status }) }); onChange('Updated') } catch (e: any) { onError(e.message) } }
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-white border border-[#D4C5B0] rounded p-4 flex flex-wrap gap-2 items-end">
+        <div><div className="text-xs mb-1">New screener from template</div><input className={inp} value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="slug (url)" /></div>
+        <select className={inp + ' w-auto'} value={testId} onChange={(e) => setTestId(e.target.value)}><option value="">Auto-assign qualified to test… (optional)</option>{tests.map((t) => <option key={t.id} value={t.id}>{t.title}</option>)}</select>
+        <button className={btn} onClick={createTemplate}>Create Betting Hero–style screener</button>
+        <span className="text-xs text-[#6B5D4F]">9 questions: availability → state → name → category use → app inventory (exclusive “none”) → casino/sports mix → payout platform → deposit consent. Edit the JSON after.</span>
+      </div>
+
+      {editing && (
+        <div className="bg-white border border-[#2C2416] rounded p-4 space-y-2">
+          <div className="font-semibold text-sm">Editing /research/s/{editing.slug}</div>
+          <textarea className={`${inp} font-mono text-xs`} rows={22} value={json} onChange={(e) => setJson(e.target.value)} />
+          <div className="text-xs text-[#6B5D4F]">Question fields: id, type (single|multi|text|yesno), prompt, options[], exclusive, required, disqualify[], maps_to (state|first_name|last_name|platforms|phone)</div>
+          <div className="flex gap-2"><button className={btn} onClick={saveEdit}>Save</button><button className={btn2} onClick={() => setEditing(null)}>Cancel</button></div>
+        </div>
+      )}
+
+      {screeners.map((sc) => {
+        const r = sc.research_screener_responses; const q = r.filter((x) => x.qualified)
+        const dqBy: Record<string, number> = {}; r.filter((x) => !x.qualified).forEach((x) => { dqBy[x.disqualified_by || '?'] = (dqBy[x.disqualified_by || '?'] || 0) + 1 })
+        return (
+          <div key={sc.id} className="bg-white border border-[#D4C5B0] rounded p-4">
+            <div className="flex justify-between items-start gap-3 flex-wrap">
+              <div>
+                <div className="font-semibold">{sc.title} <span className="text-xs font-normal text-[#6B5D4F]">/research/s/{sc.slug}</span></div>
+                <div className="text-xs text-[#6B5D4F]">{sc.questions.length} questions · {r.length} responses · {q.length} qualified{Object.keys(dqBy).length ? ` · out at: ${Object.entries(dqBy).map(([k, n]) => `${k} (${n})`).join(', ')}` : ''}{sc.research_tests ? ` · auto-assigns to “${sc.research_tests.title}”` : ''}</div>
+                <div className="text-xs text-[#6B5D4F] mt-1">Open link: <span className="font-mono">{site}/research/s/{sc.slug}</span> · per-tester links via <span className="font-mono">{'{{screener_url}}'}</span> in the composer</div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <select className="border border-[#D4C5B0] rounded px-1 py-0.5 text-xs" value={sc.status} onChange={(e) => setStatus(sc.id, e.target.value)}>{['draft', 'open', 'closed'].map((x) => <option key={x}>{x}</option>)}</select>
+                <button className={btn2} onClick={() => startEdit(sc)}>Edit</button>
+                <button className={btn2} onClick={() => setOpen(open === sc.id ? null : sc.id)}>{open === sc.id ? 'Hide' : 'Responses'}</button>
+                {q.length > 0 && <button className={btn} onClick={() => onInvite(q.map((x) => x.tester_id).filter(Boolean) as string[])}>Select {q.length} qualified →</button>}
+              </div>
+            </div>
+            {open === sc.id && (
+              <div className="mt-3 border-t border-[#F0E8DD] pt-3 overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead className="text-left text-[#6B5D4F]"><tr><th className="p-1">Who</th><th className="p-1">Result</th>{sc.questions.map((qq: any) => <th key={qq.id} className="p-1">{qq.id}</th>)}<th className="p-1">When</th></tr></thead>
+                  <tbody>{r.map((x) => (
+                    <tr key={x.id} className="border-t border-[#F0E8DD] align-top">
+                      <td className="p-1 whitespace-nowrap">{x.full_name || '—'}<br /><span className="text-[#6B5D4F]">{x.email}</span></td>
+                      <td className="p-1">{x.qualified ? <span className="text-green-700">qualified</span> : <span className="text-red-700">out: {x.disqualified_by}</span>}</td>
+                      {sc.questions.map((qq: any) => <td key={qq.id} className="p-1 max-w-[160px]">{Array.isArray(x.answers[qq.id]) ? x.answers[qq.id].join(', ') : x.answers[qq.id] ?? ''}</td>)}
+                      <td className="p-1 whitespace-nowrap">{new Date(x.created_at).toLocaleDateString()}</td>
+                    </tr>))}
+                    {r.length === 0 && <tr><td colSpan={3 + sc.questions.length} className="p-3 text-center text-[#6B5D4F]">No responses yet.</td></tr>}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )
+      })}
     </div>
   )
 }

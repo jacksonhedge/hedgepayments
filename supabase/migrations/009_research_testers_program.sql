@@ -3,3 +3,4 @@
 -- See the live migration in the Supabase dashboard for the authoritative SQL.
 -- 2026-08-25 (research_payout_tiers_and_methods): testers.payout_method/payout_handle,
 -- tests.payout_max_cents/tier/est_minutes with $10–$100 check, assignments.paid_cents.
+-- 2026-08-26 (research_screeners): testers.invite_token/consent_*, research_screeners, research_screener_responses.

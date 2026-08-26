@@ -9,6 +9,7 @@ import { ASSIGNMENT_LABEL, TESTER_STATUS_LABEL, PAYOUT_METHODS } from '../tester
 type Tester = { id: string; first_name: string; email: string; phone: string | null; state: string; age_bucket: string; platforms: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; payout_method: string | null; payout_handle: string | null }
 type Assignment = { id: string; status: string; paid_cents: number | null; submission_url: string | null; tester_notes: string | null; paid_at: string | null; research_tests: { id: string; title: string; description: string | null; instructions: string | null; payout_cents: number; payout_max_cents: number | null; est_minutes: number | null; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string; kind: string } | null } }
 type Platform = { slug: string; name: string; kind: string }
+type Resp = { id: string; qualified: boolean; created_at: string; research_screeners: { title: string } | null }
 type Msg = { id: string; channel: string; subject: string | null; body: string; sent_at: string }
 
 export default function TesterDashboard() {
@@ -17,6 +18,7 @@ export default function TesterDashboard() {
   const [assignments, setAssignments] = useState<Assignment[]>([])
   const [platforms, setPlatforms] = useState<Platform[]>([])
   const [messages, setMessages] = useState<Msg[]>([])
+  const [responses, setResponses] = useState<Resp[]>([])
   const [loginEmail, setLoginEmail] = useState('')
   const [loginState, setLoginState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [busy, setBusy] = useState<string | null>(null)
@@ -28,12 +30,14 @@ export default function TesterDashboard() {
   }, [])
 
   const load = async () => {
-    const [t, a, p, m] = await Promise.all([
+    const [t, a, p, m, r5] = await Promise.all([
       supabaseBrowser.from('research_testers').select('*').maybeSingle(),
       supabaseBrowser.from('research_assignments').select('*, research_tests(*, research_platforms(name,kind))').order('created_at', { ascending: false }),
       supabaseBrowser.from('research_platforms').select('slug,name,kind').eq('active', true).order('name'),
       supabaseBrowser.from('research_messages').select('id,channel,subject,body,sent_at').order('sent_at', { ascending: false }).limit(20),
+      supabaseBrowser.from('research_screener_responses').select('id,qualified,created_at,research_screeners(title)').order('created_at', { ascending: false }),
     ])
+    setResponses(((r5 as any).data || []) as Resp[])
     setTester(t.data as Tester | null)
     setAssignments((a.data || []) as Assignment[])
     setPlatforms(p.data || [])
@@ -161,6 +165,11 @@ export default function TesterDashboard() {
             </div>
           )
         })}
+
+        {responses.length > 0 && <>
+          <h2 className={s.h2} style={{ fontSize: 20, marginTop: 40 }}>Screeners</h2>
+          {responses.map((r) => <div key={r.id} className={s.testCard} style={{ gap: 2 }}><div className={s.testHead}><span className={s.itemName}>{r.research_screeners?.title || 'Screener'}</span><span className={`${s.pill} ${r.qualified ? s.pillLive : ''}`}>{r.qualified ? 'Qualified' : 'Not a match'}</span></div><div className={s.small}>{new Date(r.created_at).toLocaleDateString()}</div></div>)}
+        </>}
 
         <h2 className={s.h2} style={{ fontSize: 20, marginTop: 40 }}>Your platforms</h2>
         <p className={s.small} style={{ marginBottom: 8 }}>Tap to update which apps you have accounts on — it changes which tests you get matched to.</p>
