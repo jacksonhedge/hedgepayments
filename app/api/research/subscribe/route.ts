@@ -33,7 +33,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Could not save' }, { status: 500 })
   }
 
+  // Not awaited: keeps response timing identical to the duplicate-email path so
+  // the endpoint can't be used to probe which addresses are already subscribed.
   const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  await notifySlack(`🔔 *Research subscriber* (${channel}): ${esc(name)} · ${esc(email)}${phone ? ' · ' + phone : ''}`)
+  void notifySlack(`🔔 *Research subscriber* (${channel}): ${esc(name)} · ${esc(email)}${phone ? ' · ' + phone : ''}`).catch(() => {})
   return NextResponse.json({ success: true })
 }
