@@ -10,7 +10,7 @@
   --green: #2e7d32;
   --display: var(--font-sora), var(--font-inter), system-ui, sans-serif;
   --body: var(--font-inter), -apple-system, "Helvetica Neue", Segoe UI, Roboto, system-ui, sans-serif;
-  --mono: var(--font-space-mono), ui-monospace, Menlo, monospace;
+  --mono: var(--font-mono), ui-monospace, Menlo, monospace;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--body);
