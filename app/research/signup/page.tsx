@@ -40,15 +40,8 @@ export default function ResearchSignup() {
       })
       const j = await res.json()
       if (!res.ok) throw new Error(j.error || 'Something went wrong')
-      if (j.emailed === false) {
-        // Server couldn't send the branded welcome email (SendGrid not
-        // configured) — fall back to Supabase's own magic-link email.
-        const { error } = await supabaseBrowser.auth.signInWithOtp({
-          email: f.email.trim().toLowerCase(),
-          options: { emailRedirectTo: `${window.location.origin}/research/dashboard` },
-        })
-        if (error) throw error
-      }
+      // Signup succeeds regardless of email delivery — the welcome email (sent
+      // server-side) is a courtesy, not a confirmation step.
       setStatus('sent')
     } catch (e: any) {
       setErr(e.message || 'Something went wrong'); setStatus('error')
@@ -70,10 +63,10 @@ export default function ResearchSignup() {
       <div className={s.narrow}>
         {status === 'sent' ? (
           <>
-            <span className={s.eyebrow}>You&apos;re in</span>
-            <h1 className={s.h2}>Check your email.</h1>
-            <p className={s.lede}>We sent a welcome email to <strong style={{ color: 'var(--ink)' }}>{f.email}</strong>. The button inside logs you straight into your tester dashboard — no password needed — where you&apos;ll see the tests you&apos;re matched to and get paid for.</p>
-            <div className={`${s.notice} ${s.noticeOk}`}>We&apos;ll text or email you when a paid test matches your platforms and state. Nothing to do until then.</div>
+            <span className={s.eyebrow}>Application received</span>
+            <h1 className={s.h2}>You&apos;re in{f.first_name ? `, ${f.first_name.trim()}` : ''}.</h1>
+            <p className={s.lede}>Welcome to the tester panel. We sent a welcome email to <strong style={{ color: 'var(--ink)' }}>{f.email}</strong> with a one-click link to your dashboard, where you&apos;ll see the tests you&apos;re matched to and get paid for.</p>
+            <div className={`${s.notice} ${s.noticeOk}`}>We&apos;ll text or email you when a paid test matches your platforms and state. Nothing else to do until then.</div>
           </>
         ) : (
           <>
