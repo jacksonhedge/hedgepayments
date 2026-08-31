@@ -47,8 +47,19 @@ export default function TesterDashboard() {
 
   const sendLink = async (e: React.FormEvent) => {
     e.preventDefault(); setLoginState('sending')
-    const { error } = await supabaseBrowser.auth.signInWithOtp({ email: loginEmail.trim().toLowerCase(), options: { emailRedirectTo: `${window.location.origin}/research/dashboard` } })
-    setLoginState(error ? 'error' : 'sent')
+    const email = loginEmail.trim().toLowerCase()
+    try {
+      // Branded login email from our server; falls back to Supabase's default
+      // magic-link email only when SendGrid isn't configured.
+      const res = await fetch('/api/research/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email }) })
+      const j = await res.json()
+      if (!res.ok) throw new Error(j.error || 'Could not send login link')
+      if (j.emailed === false) {
+        const { error } = await supabaseBrowser.auth.signInWithOtp({ email, options: { emailRedirectTo: `${window.location.origin}/research/dashboard` } })
+        if (error) throw error
+      }
+      setLoginState('sent')
+    } catch { setLoginState('error') }
   }
 
   const setAssignment = async (id: string, patch: Partial<Assignment>) => {

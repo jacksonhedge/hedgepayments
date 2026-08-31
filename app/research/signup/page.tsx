@@ -40,12 +40,15 @@ export default function ResearchSignup() {
       })
       const j = await res.json()
       if (!res.ok) throw new Error(j.error || 'Something went wrong')
-      // Passwordless login: magic link drops them on the dashboard.
-      const { error } = await supabaseBrowser.auth.signInWithOtp({
-        email: f.email.trim().toLowerCase(),
-        options: { emailRedirectTo: `${window.location.origin}/research/dashboard` },
-      })
-      if (error) throw error
+      if (j.emailed === false) {
+        // Server couldn't send the branded welcome email (SendGrid not
+        // configured) — fall back to Supabase's own magic-link email.
+        const { error } = await supabaseBrowser.auth.signInWithOtp({
+          email: f.email.trim().toLowerCase(),
+          options: { emailRedirectTo: `${window.location.origin}/research/dashboard` },
+        })
+        if (error) throw error
+      }
       setStatus('sent')
     } catch (e: any) {
       setErr(e.message || 'Something went wrong'); setStatus('error')
@@ -67,9 +70,9 @@ export default function ResearchSignup() {
       <div className={s.narrow}>
         {status === 'sent' ? (
           <>
-            <span className={s.eyebrow}>Application received</span>
+            <span className={s.eyebrow}>You&apos;re in</span>
             <h1 className={s.h2}>Check your email.</h1>
-            <p className={s.lede}>We sent a login link to <strong style={{ color: 'var(--ink)' }}>{f.email}</strong>. Open it to reach your tester dashboard, where you&apos;ll see the tests you&apos;re matched to and get paid for.</p>
+            <p className={s.lede}>We sent a welcome email to <strong style={{ color: 'var(--ink)' }}>{f.email}</strong>. The button inside logs you straight into your tester dashboard — no password needed — where you&apos;ll see the tests you&apos;re matched to and get paid for.</p>
             <div className={`${s.notice} ${s.noticeOk}`}>We&apos;ll text or email you when a paid test matches your platforms and state. Nothing to do until then.</div>
           </>
         ) : (

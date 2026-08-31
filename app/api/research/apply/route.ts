@@ -3,9 +3,12 @@ import { researchAdminClient, noDb, normalizePhone } from '@/lib/research/server
 import { notifySlack } from '@/lib/slack'
 import { cleanCode, recordReferral } from '@/lib/research/referrals'
 import { cleanAttribution, sourceLabel } from '@/lib/research/attribution'
+import { emailConfigured, sendMagicLinkEmail } from '@/lib/research/loginEmail'
 
-// Tester application from /research/signup. Upserts by email; the client then
-// sends a Supabase magic link so the tester can reach /research/dashboard.
+// Tester application from /research/signup. Inserts by email, then sends a
+// branded welcome email carrying the magic link to /research/dashboard.
+// `emailed: false` in the response tells the client SendGrid isn't configured
+// so it can fall back to Supabase's own signInWithOtp email.
 export async function POST(req: NextRequest) {
   let b: Record<string, any>
   try { b = await req.json() } catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
@@ -32,10 +35,14 @@ export async function POST(req: NextRequest) {
 
   // Unauthenticated endpoint: never modify an existing profile (anyone could
   // overwrite another tester's phone/name by resubmitting their email). Existing
-  // testers just get the magic link from the client and edit in the dashboard.
+  // testers just get a login-link email and edit in the dashboard.
   // Response is identical either way so emails can't be enumerated.
-  const { data: existing } = await db.from('research_testers').select('id').eq('email', email).maybeSingle()
-  if (existing) return NextResponse.json({ success: true })
+  const { data: existing } = await db.from('research_testers').select('id,first_name').eq('email', email).maybeSingle()
+  if (existing) {
+    if (!emailConfigured()) return NextResponse.json({ success: true, emailed: false })
+    const r = await sendMagicLinkEmail(db, { email, first_name: existing.first_name, tester_id: existing.id }, 'login')
+    return NextResponse.json({ success: true, emailed: r.ok })
+  }
 
   const row = { email, first_name, last_name, state, age_bucket, phone, platforms, verticals, payout_method, payout_handle,
     sms_opt_in: !!phone && b.sms_opt_in !== false, referral_source: b.referral_source ? String(b.referral_source).slice(0, 200) : null, referral_code,
@@ -47,5 +54,7 @@ export async function POST(req: NextRequest) {
   }
   await recordReferral(db, referral_code, 'apply', { testerId: inserted?.id, email })
   await notifySlack(`🧪 *New research tester*: ${first_name}${last_name ? ' ' + last_name : ''} · ${state} · ${age_bucket} · ${email}${phone ? ' · ' + phone : ''}${referral_code ? ' · ref ' + referral_code : ''}\nPlatforms: ${platforms.join(', ') || '—'}`)
-  return NextResponse.json({ success: true })
+  if (!emailConfigured()) return NextResponse.json({ success: true, emailed: false })
+  const r = await sendMagicLinkEmail(db, { email, first_name, tester_id: inserted?.id }, 'welcome')
+  return NextResponse.json({ success: true, emailed: r.ok })
 }
