@@ -6,10 +6,10 @@ import { PAYOUT_TIERS } from '../../research/testerConfig'
 // Hedge Research admin: testers, tests, assignments, and outbound SMS/email.
 // Auth = ADMIN_SECRET bearer (same as /api/admin/send-email), kept in sessionStorage (cleared when the tab closes).
 
-type Tester = { id: string; email: string; phone: string | null; first_name: string; last_name: string | null; age_bucket: string; state: string; platforms: string[]; verticals: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; signup_source: string | null; signup_path: string | null; attribution: Record<string, any> | null; payout_method: string | null; payout_handle: string | null; notes: string | null; created_at: string; research_assignments: { id: string; status: string; test_id: string }[]; research_messages: { id: string; channel: string; sent_at: string }[] }
+type Tester = { id: string; email: string; phone: string | null; first_name: string; last_name: string | null; age_bucket: string; state: string; platforms: string[]; verticals: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; email_verified_at: string | null; signup_source: string | null; signup_path: string | null; attribution: Record<string, any> | null; payout_method: string | null; payout_handle: string | null; notes: string | null; created_at: string; research_assignments: { id: string; status: string; test_id: string }[]; research_messages: { id: string; channel: string; sent_at: string }[] }
 type Test = { id: string; title: string; platform_id: string | null; description: string | null; instructions: string | null; payout_cents: number; payout_max_cents: number | null; tier: string; est_minutes: number | null; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string } | null; research_assignments: { id: string; status: string; tester_id: string; paid_cents: number | null }[] }
 type Platform = { id: string; slug: string; name: string; kind: string }
-type Screener = { id: string; slug: string; title: string; intro: string | null; test_id: string | null; questions: any[]; status: string; created_at: string; research_tests: { title: string } | null; research_screener_responses: { id: string; tester_id: string | null; email: string; full_name: string | null; answers: Record<string, any>; qualified: boolean; disqualified_by: string | null; created_at: string }[] }
+type Screener = { id: string; slug: string; title: string; intro: string | null; test_id: string | null; questions: any[]; status: string; is_onboarding: boolean; created_at: string; research_tests: { title: string } | null; research_screener_responses: { id: string; tester_id: string | null; email: string; full_name: string | null; answers: Record<string, any>; qualified: boolean; disqualified_by: string | null; created_at: string }[] }
 type RefStat = { code: string; owner_name: string; owner_email: string | null; owner_type: string; active: boolean; created_at: string; subscribes: number; applies: number; total: number; last_referral_at: string | null }
 type RefEvent = { id: string; code: string; code_known: boolean; event: string; referred_email: string | null; created_at: string }
 type Msg = { id: string; channel: string; subject: string | null; body: string; status: string; error: string | null; sent_at: string; research_testers: { first_name: string; email: string } | null }
@@ -132,7 +132,7 @@ export default function ResearchAdmin() {
                   <tr key={t.id} className="border-t border-[#F0E8DD] align-top">
                     <td className="p-2"><input type="checkbox" checked={selected.has(t.id)} onChange={() => toggle(t.id)} /></td>
                     <td className="p-2"><div className="font-semibold">{t.first_name} {t.last_name}</div>{t.notes && <div className="text-xs text-[#6B5D4F]">{t.notes}</div>}</td>
-                    <td className="p-2 text-xs"><div>{t.email}{!t.email_opt_in && ' 🚫'}</div><div>{t.phone || <span className="text-[#9a8b7a]">no phone</span>}{t.phone && !t.sms_opt_in && ' 🚫'}</div></td>
+                    <td className="p-2 text-xs"><div>{t.email}{t.email_verified_at && <span className="text-green-700" title={`Email verified ${new Date(t.email_verified_at).toLocaleDateString()}`}> ✓</span>}{!t.email_opt_in && ' 🚫'}</div><div>{t.phone || <span className="text-[#9a8b7a]">no phone</span>}{t.phone && !t.sms_opt_in && ' 🚫'}</div></td>
                     <td className="p-2">{t.state} · {t.age_bucket}</td>
                     <td className="p-2 text-xs max-w-[200px]">{t.platforms.join(', ') || '—'}</td>
                     <td className="p-2 text-xs">{t.payout_method ? `${t.payout_method}: ${t.payout_handle}` : <span className="text-red-700">not set</span>}</td>
@@ -371,6 +371,11 @@ function ScreenersTab({ screeners, tests, api, onChange, onError, onInvite }: { 
                 <div className="text-xs text-[#6B5D4F] mt-1">Open link: <span className="font-mono">{site}/research/s/{sc.slug}</span> · per-tester links via <span className="font-mono">{'{{screener_url}}'}</span> in the composer</div>
               </div>
               <div className="flex gap-2 items-center">
+                <button
+                  className={sc.is_onboarding ? 'px-3 py-1.5 rounded text-sm bg-green-700 text-white' : btn2}
+                  title="The onboarding screener is offered to every new tester right after signup"
+                  onClick={async () => { try { await api('screeners', { method: 'PATCH', body: JSON.stringify({ id: sc.id, is_onboarding: !sc.is_onboarding }) }); onChange(sc.is_onboarding ? 'No longer the onboarding screener' : 'Set as the post-signup onboarding screener') } catch (e: any) { onError(e.message) } }}
+                >{sc.is_onboarding ? 'Onboarding ✓' : 'Make onboarding'}</button>
                 <select className="border border-[#D4C5B0] rounded px-1 py-0.5 text-xs" value={sc.status} onChange={(e) => setStatus(sc.id, e.target.value)}>{['draft', 'open', 'closed'].map((x) => <option key={x}>{x}</option>)}</select>
                 <button className={btn2} onClick={() => startEdit(sc)}>Edit</button>
                 <button className={btn2} onClick={() => setOpen(open === sc.id ? null : sc.id)}>{open === sc.id ? 'Hide' : 'Responses'}</button>

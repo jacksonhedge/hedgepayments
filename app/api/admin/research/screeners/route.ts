@@ -31,7 +31,9 @@ export async function PATCH(req: NextRequest) {
   const b = await req.json()
   if (!b.id) return NextResponse.json({ error: 'id required' }, { status: 400 })
   const patch: Record<string, any> = {}
-  for (const k of ['title', 'intro', 'questions', 'status', 'test_id']) if (k in b) patch[k] = b[k]
+  for (const k of ['title', 'intro', 'questions', 'status', 'test_id', 'is_onboarding']) if (k in b) patch[k] = b[k]
+  // Only one screener can be the post-signup onboarding screener.
+  if (patch.is_onboarding === true) await db.from('research_screeners').update({ is_onboarding: false }).eq('is_onboarding', true)
   const { error } = await db.from('research_screeners').update(patch).eq('id', b.id)
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ success: true })

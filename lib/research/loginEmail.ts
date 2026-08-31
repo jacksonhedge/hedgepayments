@@ -30,6 +30,9 @@ export async function sendMagicLinkEmail(
     console.error('generateLink failed:', error?.message)
     return { ok: false, reason: error?.message || 'could not generate login link' }
   }
+  // Same underlying token as the button: entering the code (verifyOtp type
+  // 'email') or clicking the link both verify the address and log them in.
+  const otp = data?.properties?.email_otp || undefined
 
   const first = (t.first_name || '').trim()
   const hey = first ? `Hey ${first} —` : 'Hey —'
@@ -38,13 +41,14 @@ export async function sendMagicLinkEmail(
     ? 'Welcome to Hedge Research — your dashboard is ready'
     : 'Your Hedge Research login link'
   const body = welcome
-    ? `${hey} welcome to Hedge Research. You're on the tester panel.\n\nWhen a paid test matches your apps, age and state, we'll text or email you. Every completed test pays $10–$100 depending on how long it takes and what it requires.\n\nYour dashboard shows the tests you're matched to, your payouts and your profile. The button below logs you in — no password needed.`
+    ? `${hey} welcome to Hedge Research. You're on the tester panel.\n\nWhen a paid test matches your apps, age and state, we'll text or email you. Every completed test pays $10–$100 depending on how long it takes and what it requires.\n\n${otp ? 'Your verification code is below — enter it back on the signup page, or just hit the button to jump straight into your dashboard. Either one verifies your email.' : 'The button below logs you into your dashboard — no password needed.'}`
     : `${hey} here's your one-time login link for your Hedge Research dashboard. No password needed. It expires in about an hour; request a new one from the dashboard any time.`
   const html = renderResearchEmail({
     body,
     preheader: welcome ? "You're on the panel — open your tester dashboard." : 'One-time login link for your tester dashboard.',
     eyebrow: welcome ? "You're in" : 'Log in',
     cta: { label: 'Open your tester dashboard', url },
+    code: welcome ? otp : undefined,
   })
   const ok = await sendEmail({ to: t.email, subject, text: `${body}\n\n${url}`, html, fromName: 'Hedge Research', disableClickTracking: true })
 

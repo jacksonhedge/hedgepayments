@@ -19,6 +19,7 @@ export type ResearchEmailOpts = {
   cta?: { label: string; url: string } | null
   eyebrow?: string          // e.g. "Paid study · $100"
   footerNote?: string
+  code?: string             // one-time verification code, shown in a box above the CTA
 }
 
 export function renderResearchEmail(o: ResearchEmailOpts): string {
@@ -27,6 +28,11 @@ export function renderResearchEmail(o: ResearchEmailOpts): string {
          <a href="${esc(o.cta.url)}" style="display:inline-block;padding:14px 26px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:10px;font-family:Helvetica,Arial,sans-serif;">${esc(o.cta.label)} &rarr;</a>
        </td></tr></table>
        <p style="margin:0 0 20px;font-size:12px;line-height:1.5;color:${MUTED};">Button not working? Copy this link: <a href="${esc(o.cta.url)}" style="color:${GREEN};word-break:break-all;">${esc(o.cta.url)}</a></p>`
+    : ''
+  const code = o.code
+    ? `<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:4px 0 24px;"><tr><td style="background:#f3f9f5;border:1px solid #cfe8d8;border-radius:10px;padding:14px 26px;">
+         <span style="font-family:'Courier New',Courier,monospace;font-size:26px;font-weight:700;letter-spacing:0.3em;color:${INK};">${esc(o.code)}</span>
+       </td></tr></table>`
     : ''
   return `<!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Hedge Research</title></head>
@@ -43,6 +49,7 @@ ${o.preheader ? `<div style="display:none;max-height:0;overflow:hidden;opacity:0
     <tr><td style="background:#ffffff;border:1px solid #e6e6e9;border-radius:16px;padding:36px 36px 24px;">
       ${o.eyebrow ? `<p style="margin:0 0 14px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:${GREEN};font-weight:700;">${esc(o.eyebrow)}</p>` : ''}
       ${paragraphs(o.body)}
+      ${code}
       ${cta}
     </td></tr>
     <tr><td style="padding:20px 8px 0;font-size:12px;line-height:1.6;color:${MUTED};">

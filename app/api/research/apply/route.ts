@@ -47,14 +47,21 @@ export async function POST(req: NextRequest) {
   const row = { email, first_name, last_name, state, age_bucket, phone, platforms, verticals, payout_method, payout_handle,
     sms_opt_in: !!phone && b.sms_opt_in !== false, referral_source: b.referral_source ? String(b.referral_source).slice(0, 200) : null, referral_code,
     attribution, signup_source: sourceLabel(attribution), signup_path: '/research/signup' }
-  const { data: inserted, error } = await db.from('research_testers').insert(row).select('id').single()
+  const { data: inserted, error } = await db.from('research_testers').insert(row).select('id,invite_token').single()
   if (error) {
     console.error('research_testers insert failed:', error.message)
     return NextResponse.json({ error: 'Could not save application' }, { status: 500 })
   }
   await recordReferral(db, referral_code, 'apply', { testerId: inserted?.id, email })
   await notifySlack(`🧪 *New research tester*: ${first_name}${last_name ? ' ' + last_name : ''} · ${state} · ${age_bucket} · ${email}${phone ? ' · ' + phone : ''}${referral_code ? ' · ref ' + referral_code : ''}\nPlatforms: ${platforms.join(', ') || '—'}`)
-  if (!emailConfigured()) return NextResponse.json({ success: true, emailed: false })
+
+  // Post-signup screener: the one screener flagged is_onboarding. Only returned
+  // for brand-new signups (the eid link is per-tester).
+  const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://hedgepayments.com'
+  const { data: sc } = await db.from('research_screeners').select('slug,title').eq('is_onboarding', true).eq('status', 'open').limit(1).maybeSingle()
+  const screener_url = sc && inserted?.invite_token ? `${SITE}/research/s/${sc.slug}?eid=${inserted.invite_token}` : null
+
+  if (!emailConfigured()) return NextResponse.json({ success: true, emailed: false, screener_url, screener_title: sc?.title || null })
   const r = await sendMagicLinkEmail(db, { email, first_name, tester_id: inserted?.id }, 'welcome')
-  return NextResponse.json({ success: true, emailed: r.ok })
+  return NextResponse.json({ success: true, emailed: r.ok, screener_url, screener_title: sc?.title || null })
 }

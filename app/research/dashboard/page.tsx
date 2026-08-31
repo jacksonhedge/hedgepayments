@@ -6,7 +6,7 @@ import s from '../research.module.css'
 import { supabaseBrowser } from '../../utils/supabase-browser'
 import { ASSIGNMENT_LABEL, TESTER_STATUS_LABEL, PAYOUT_METHODS } from '../testerConfig'
 
-type Tester = { id: string; first_name: string; email: string; phone: string | null; state: string; age_bucket: string; platforms: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; payout_method: string | null; payout_handle: string | null }
+type Tester = { id: string; first_name: string; email: string; phone: string | null; state: string; age_bucket: string; platforms: string[]; status: string; sms_opt_in: boolean; email_opt_in: boolean; payout_method: string | null; payout_handle: string | null; email_verified_at: string | null }
 type Assignment = { id: string; status: string; paid_cents: number | null; submission_url: string | null; tester_notes: string | null; paid_at: string | null; research_tests: { id: string; title: string; description: string | null; instructions: string | null; payout_cents: number; payout_max_cents: number | null; est_minutes: number | null; status: string; starts_at: string | null; ends_at: string | null; research_platforms: { name: string; kind: string } | null } }
 type Platform = { slug: string; name: string; kind: string }
 type Resp = { id: string; qualified: boolean; created_at: string; research_screeners: { title: string } | null }
@@ -38,6 +38,13 @@ export default function TesterDashboard() {
       supabaseBrowser.from('research_screener_responses').select('id,qualified,created_at,research_screeners(title)').order('created_at', { ascending: false }),
     ])
     setResponses(((r5 as any).data || []) as Resp[])
+    // A logged-in session proves ownership of the email (magic link or OTP), so
+    // stamp verification the first time they land here.
+    if (t.data && !t.data.email_verified_at) {
+      const now = new Date().toISOString()
+      supabaseBrowser.from('research_testers').update({ email_verified_at: now }).eq('id', t.data.id).then(() => {})
+      t.data.email_verified_at = now
+    }
     setTester(t.data as Tester | null)
     setAssignments((a.data || []) as Assignment[])
     setPlatforms(p.data || [])

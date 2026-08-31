@@ -15,6 +15,9 @@ export default function ResearchSignup() {
   const [verts, setVerts] = useState<string[]>([])
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [err, setErr] = useState('')
+  const [screener, setScreener] = useState<{ url: string; title: string | null } | null>(null)
+  const [code, setCode] = useState('')
+  const [verify, setVerify] = useState<'idle' | 'checking' | 'verified' | 'error'>('idle')
 
   useEffect(() => {
     supabaseBrowser.from('research_platforms').select('slug,name,kind,min_age').eq('active', true).order('name')
@@ -42,10 +45,23 @@ export default function ResearchSignup() {
       if (!res.ok) throw new Error(j.error || 'Something went wrong')
       // Signup succeeds regardless of email delivery — the welcome email (sent
       // server-side) is a courtesy, not a confirmation step.
+      if (j.screener_url) setScreener({ url: j.screener_url, title: j.screener_title || null })
       setStatus('sent')
     } catch (e: any) {
       setErr(e.message || 'Something went wrong'); setStatus('error')
     }
+  }
+
+  // Optional email verification: the 6-digit code from the welcome email is the
+  // same one-time token as its button. Verifying also logs the tester in.
+  const verifyCode = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setVerify('checking')
+    const email = f.email.trim().toLowerCase()
+    const { error } = await supabaseBrowser.auth.verifyOtp({ email, token: code.trim(), type: 'email' })
+    if (error) { setVerify('error'); return }
+    await supabaseBrowser.from('research_testers').update({ email_verified_at: new Date().toISOString() }).eq('email', email)
+    setVerify('verified')
   }
 
   return (
@@ -66,7 +82,35 @@ export default function ResearchSignup() {
             <span className={s.eyebrow}>Application received</span>
             <h1 className={s.h2}>You&apos;re in{f.first_name ? `, ${f.first_name.trim()}` : ''}.</h1>
             <p className={s.lede}>Welcome to the tester panel. We sent a welcome email to <strong style={{ color: 'var(--ink)' }}>{f.email}</strong> with a one-click link to your dashboard, where you&apos;ll see the tests you&apos;re matched to and get paid for.</p>
+
+            {screener && (
+              <div style={{ margin: '20px 0' }}>
+                <a href={screener.url} className={`${s.btn} ${s.btnPrimary}`} style={{ display: 'inline-block', textDecoration: 'none' }}>
+                  Start the qualifying screener →
+                </a>
+                <p className={s.small} style={{ marginTop: 8 }}>{screener.title ? `“${screener.title}” — a` : 'A'} couple of quick questions that match you to your first paid tests.</p>
+              </div>
+            )}
+
             <div className={`${s.notice} ${s.noticeOk}`}>We&apos;ll text or email you when a paid test matches your platforms and state. Nothing else to do until then.</div>
+
+            <div style={{ marginTop: 24 }}>
+              {verify === 'verified' ? (
+                <div className={`${s.notice} ${s.noticeOk}`}>Email verified ✓ &nbsp;You&apos;re logged in — <a href="/research/dashboard" style={{ color: 'inherit', fontWeight: 700 }}>open your dashboard →</a></div>
+              ) : (
+                <form onSubmit={verifyCode}>
+                  <label className={s.label}>Verify your email now (optional) — enter the 6-digit code from the welcome email</label>
+                  <div className={s.formRow}>
+                    <input className={s.input} inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="123456" value={code}
+                      onChange={(e) => { setCode(e.target.value.replace(/\D/g, '')); if (verify === 'error') setVerify('idle') }} />
+                    <button type="submit" className={`${s.btn} ${s.btnPrimary}`} disabled={code.trim().length !== 6 || verify === 'checking'}>
+                      {verify === 'checking' ? 'Checking…' : 'Verify'}
+                    </button>
+                  </div>
+                  {verify === 'error' && <p className={s.err}>That code didn&apos;t work — it may have expired or already been used. The email button works just as well.</p>}
+                </form>
+              )}
+            </div>
           </>
         ) : (
           <>
