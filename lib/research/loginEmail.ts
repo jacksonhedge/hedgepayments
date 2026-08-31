@@ -46,7 +46,7 @@ export async function sendMagicLinkEmail(
     eyebrow: welcome ? "You're in" : 'Log in',
     cta: { label: 'Open your tester dashboard', url },
   })
-  const ok = await sendEmail({ to: t.email, subject, text: `${body}\n\n${url}`, html, fromName: 'Hedge Research' })
+  const ok = await sendEmail({ to: t.email, subject, text: `${body}\n\n${url}`, html, fromName: 'Hedge Research', disableClickTracking: true })
 
   if (t.tester_id) {
     await db.from('research_messages').insert({

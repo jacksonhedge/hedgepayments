@@ -38,6 +38,10 @@ export interface EmailOptions {
   templateId?: string;
   dynamicTemplateData?: Record<string, any>;
   fromName?: string;
+  // Disable SendGrid click tracking. Required for one-time links (magic login
+  // links): tracking rewrites URLs through sendgrid.net and scanner prefetch of
+  // the redirect can consume the token before the recipient clicks.
+  disableClickTracking?: boolean;
 }
 
 export interface SMSOptions {
@@ -62,6 +66,9 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       ...(options.templateId && {
         templateId: options.templateId,
         dynamicTemplateData: options.dynamicTemplateData || {}
+      }),
+      ...(options.disableClickTracking && {
+        trackingSettings: { clickTracking: { enable: false, enableText: false } }
       })
     };
 
